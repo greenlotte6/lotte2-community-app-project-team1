@@ -4,10 +4,17 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM - ClickUp Style</title>
-    <link rel="stylesheet" href="/css/main/layout.css" />
+    <link rel="stylesheet" href="/css/main/main.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
+    />
+    <!-- Pretendard Font -->
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
     <style>
       body {
@@ -59,7 +66,38 @@
     <!-- ✅ Main Content -->
     <main>
       <div class="buy_form_1">
-        <p>회사 및 대표 설정(순서6)</p>
+        <p class="h3">회사 및 대표 설정</p>
+        <p class="texts">회사이름</p>
+        <input
+          type="text"
+          name="companyName"
+          class="input-default"
+          style="border: 1px solid black"
+        />
+        <p class="texts">대표이름</p>
+        <input
+          type="text"
+          name="ceoName"
+          class="input-default"
+          style="border: 1px solid black"
+        />
+        <p class="texts">대표 이메일</p>
+        <input
+          type="text"
+          name="email"
+          class="input-default"
+          style="border: 1px solid black"
+        />
+        <p class="texts">회사 로고</p>
+        <input
+          type="file"
+          name="file"
+          class="input-default"
+          style="border: 1px solid black"
+        />
+        <div>
+          <button class="btn">설정완료</button>
+        </div>
       </div>
     </main>
 

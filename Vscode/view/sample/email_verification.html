@@ -4,10 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM - ClickUp Style</title>
-    <link rel="stylesheet" href="/css/main/layout.css" />
+    <link rel="stylesheet" href="/css/main/main.css" />
+
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
+    />
+    <!-- Pretendard Font -->
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
     <style>
       body {
@@ -59,7 +67,25 @@
     <!-- ✅ Main Content -->
     <main>
       <div class="buy_form_1">
-        <p>이메일 인증(순서5)</p>
+        <p class="h3">이메일 인증</p>
+        <p class="h2">
+          관리자 계정이 생성되었습니다.이메일 인증을 진행해주세요.
+        </p>
+        <p>이메일 주소</p>
+        <input
+          class="inp"
+          type="text"
+          name="email"
+          placeholder="이메일 주소"
+          style="border: 1px solid black"
+        />
+
+        <p style="color: red">유효한 이메일을 입력해주세요</p>
+
+        <div>
+          <button class="btn1">이메일 전송</button> <br />
+          <button class="btn2">이메일 인증</button>
+        </div>
       </div>
     </main>
 
