@@ -13,10 +13,6 @@ li {
   list-style: none;
 }
 
-input {
-  border: #dededf;
-}
-
 #header_main {
   width: 1200px;
   height: 80px;
