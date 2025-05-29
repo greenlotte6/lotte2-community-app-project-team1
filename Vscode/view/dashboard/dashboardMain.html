@@ -14,11 +14,50 @@
   </head>
   <body>
     <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li><a href="#"><img src="/images/dashboard.png" alt="dashboard" /></a></li>
+          <li><a href="#"><img src="/images/document.png" alt="document" /></a></li>
+          <li><a href="#"><img  src="/images/calendar.png" alt="calendar" /></a></li>
+          <li><a href="#"><img src="/images/message.png" alt="message" /></a></li>
+          <li><a href="#"><img src="/images/message-board.png" alt="message-board" /></a></li>
+          <li><a href="#"><img src="/images/director.png" alt="director" /></a></li>
+          <li><a href="#"><img src="/images/cloud-computing.png" alt="cloud-computing" /></a></li>
+          <li><a href="#"><img src="/images/setting.png" alt="setting" /></a></li>
+        </ul>
+      </div>
       <div class="container">
-        <header></header>
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell">
+            </div>
+          </div>
+        </header>
         <main></main>
         <footer></footer>
       </div>
     </div>
+    <script>
+      const toggleInput = document.getElementById("darkModeToggle");
+
+toggleInput.addEventListener("change", () => {
+  document.body.classList.toggle("dark-mode");
+  document.querySelector(".container").classList.toggle("dark-mode");
+});
+    </script>
   </body>
 </html>
