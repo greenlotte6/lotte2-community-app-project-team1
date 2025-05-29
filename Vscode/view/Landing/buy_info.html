@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J2SM - ClickUp Style</title>
+    <link rel="stylesheet" href="/css/main/main.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      
+       * {
+      margin: 0;
+      padding: 0;
+      font-family: "Pretendard Variable", Pretendard, sans-serif;
+      font-size: 16px;
+      color: #333;
+      }
+      a {
+        text-decoration: none;
+      }
+      ul,
+      li {
+        list-style: none;
+      }
+      body {
+        font-family: "Inter", "Helvetica Neue", sans-serif;
+      }
+      .buy_form_1{
+        width: 1200px;
+        height: 800px;
+        box-sizing: border-box;
+      }
+      .main_1 {
+        width: 35%;
+        height: 100%;
+        float: left;
+        text-align: center;
+      }
+
+
+      .sub_1 {
+        height: 30%;
+        padding-top: 120px;
+        margin: 0 18px;
+      
+      }
+
+      .sub_1 h1 {
+        font-size: 35px;
+        font-weight: 600;
+      }
+      .sub_2 {
+        height: 35%;
+        box-sizing: border-box;
+
+      }
+      .sub_3{
+        height: 35%;
+      }
+
+      .heading-underline {
+        font-size: 32px;
+        font-weight: bold;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+      }
+
+     
+
+      .desc-text {
+        font-size: 14px;
+        color: #555;
+        margin-top: 10px;
+      }
+
+      .artwork-text {
+        font-size: 12px;
+        color: #888;
+        margin-top: 50px;
+        text-align: center;
+      }
+
+      .pay-logos {
+        margin: 20px 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      .pay-logos img {
+        width: 40px;
+        height: auto;
+      }
+
+      .eng-desc {
+        font-size: 13px;
+        text-align: center;
+        color: #444;
+      }
+
+
+      .main_2 {
+        width: 65%;
+        height: 100%;
+        float: left;
+        padding-top:150px;
+      }
+   
+      .cards {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      }
+
+      .card {
+        border-radius: 10px;
+        padding: 20px;
+        width: 220px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        float: left;
+      }
+     
+      
+      .title_F {
+        color : #1a9b50;
+        font-weight: 600;
+        font-size: 23px;
+        margin-bottom: 10px;
+      }
+
+      .title_M {
+        color : #3498db;
+        font-weight: 600;
+        font-size: 23px;
+        margin-bottom: 10px;
+      }
+
+      .title_Y {
+        color : #f1c40f;
+        font-weight: 600;
+        font-size: 23px;
+        margin-bottom: 10px;
+      }
+
+
+      .card .price {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+      .card ul {
+        list-style: none;
+        padding: 0;
+        margin-bottom: 20px;
+      }
+      .card ul li {
+        margin: 15px 0;
+      }
+      .free { border: 3px solid #1a9b50; }
+      .month { border: 3px solid #3498db; }
+      .year { border: 3px solid #f1c40f; }
+
+      
+      .btn {
+        width: 200px;
+        background: #27ae60;
+        color: white;
+        padding: 10px 20px;
+        text-decoration: none;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .month .btn { background: #2980b9; }
+      .year .btn { background: #f39c12; }
+
+
+      .btn:hover {
+        background: #0c6d34de;
+      }
+
+      .month .btn:hover {
+        background: #08588d;
+      }
+
+      .year .btn:hover {
+        background: #c77c04;
+      }
+
+      
+
+    </style>
+  </head>
+  <body class="bg-white text-gray-800">
+    <!-- ✅ Header -->
+    <header>
+      <div id="header_main">
+        <div id="header_logo">
+          <div>
+            <img src="/images/mini_logo.png" alt="J2" />
+            <img src="/images/logo.png" alt="J2SM" />
+          </div>
+          <div>
+            <span>The everything app, for work.</span>
+          </div>
+        </div>
+
+        <nav>
+          <a href="#">기능소개</a>
+          <a href="#">이용요금</a>
+          <a href="#">지원센터</a>
+        </nav>
+
+        <!-- Contact Sales 버튼 -->
+
+        <div id="header_right">
+          <button
+            id="contact_btn"
+            class="border border-purple-600 text-purple-600 px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-600 hover:text-white transition duration-200"
+          >
+            Contact Sales
+          </button>
+
+          <!-- 로그인 버튼 -->
+          <button
+            id="header_login_btn"
+            class="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition"
+          >
+            로그인
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ✅ Main Content -->
+   <main>
+      <div class="buy_form_1">
+        <div class="main_1">
+          <div class="sub_1">
+            <h1 class="heading-underline">제품 및 가격안내</h1>
+            <div class="check"><img src="/images/check.png" alt=line /></div>
+            <p class="desc-text">
+              규모, 환경, 예산에 맞게 도입할 수 있는 다양한 유형의 제품을 합리적인 가격으로 제공합니다.
+            </p>
+          </div>
+          <div class="sub_2"></div>
+          <div class="sub_3">
+            <p class="artwork-text">Artwork에 세계를 체험해보세요.</p>
+            <div class="pay-logos">
+              <img src="/images/visa.png" alt="Visa" />
+              <img src="/images/mastercard-logo.png" alt="Mastercard" />
+              <img src="/images/amex.png" alt="American Express" />
+              <img src="/images/paypal.png" alt="Paypal" />
+              <img src="/images/bitcoin.png" alt="Bitcoin" />
+              <img src="/images/ethereum.png" alt="Ethereum" />
+            </div>
+            <p class="eng-desc">We accept Visa, American Express, Mastercard, Paypal and Crypto</p>
+          </div>
+        </div>
+        <div class="main_2">
+            <div class="cards">
+              <div class="card free">
+                <div class="card text">
+                  <p class="title_F">Free 요금제</p>
+                  <h3>무료 체험 요금제입니다.</h3>
+                  <div class="price">0원</div>
+                  <h3>월 요금(1인당)</h3>
+                  <ul>
+                    <li>✔  체험용 기본 기능 제공 (제한적)</li>
+                    <li>✔  체험용 템플릿 2개</li>
+                    <li>✔  드라이브 5GB 제공</li>
+                    <li style="color: red;">X 커스터마이징 불가</li>
+                    <li style="color: red;">X 제휴사 콘텐츠 사용 불가</li>
+                  </ul>
+                </div>
+                <div class="btn"><a href="#">결제 하기</a></div>
+              </div>
+
+              <div class="card month">
+                <div class="card text">
+                  <p class="title_M">Month 요금제</p>
+                  <h3>월별 결제 요금제입니다.</h3>
+                  <div class="price">100,000원</div>
+                  <h3>월 요금(1인당)</h3>
+                  <ul>
+                    <li>✔  체험용 포함 전체 기능 제공</li>
+                    <li>✔  템플릿 최대 10개</li>
+                    <li>✔  드라이브 60GB</li>
+                    <li>✔  제휴사 콘텐츠 일부 제공</li>
+                    <li>✔  커스터마이징 가능</li>
+                  </ul>
+                </div>
+                <div class="btn"><a href="#">결제 하기</a></div>
+              </div>
+
+              <div class="card year">
+                <div class="card text">
+                  <p class="title_Y">Year 요금제</p>
+                  <h3>1년 결제 요금제입니다.</h3>
+                  <div class="price">1,000,000원</div>
+                  <h3>월 요금(1인당)</h3>
+                  <ul>
+                    <li>✔  전체 기능 제공</li>
+                    <li>✔  템플릿 제한 없음</li>
+                    <li>✔  드라이브 무제한 제공</li>
+                    <li>✔  제휴 콘텐츠 전체 제공</li>
+                    <li>✔  스튜디오 기능 무제한</li><br/>
+                  </ul>
+                </div>
+                <div class="btn"><a href="#">결제 하기</a></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ✅ Footer -->
+    <footer class="text-center text-sm text-gray-500 py-8 border-t mt-16">
+      © 2025 J2SM. All rights reserved.
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100 text-gray-800">
+    <div class="flex h-screen">
+      <!-- Sidebar -->
+      <aside class="w-20 bg-white shadow flex flex-col items-center py-4">
+        <div class="mb-6">
+          <div class="h-12 w-12 bg-gray-300 rounded-full mb-2"></div>
+          <h1 class="text-xs font-bold">J2SM</h1>
+        </div>
+        <nav class="flex flex-col space-y-4 mt-6">
+          <button class="w-10 h-10 bg-gray-200 rounded-md"></button>
+          <button class="w-10 h-10 bg-gray-200 rounded-md"></button>
+          <button class="w-10 h-10 bg-gray-200 rounded-md"></button>
+          <button class="w-10 h-10 bg-gray-200 rounded-md"></button>
+          <button class="w-10 h-10 bg-gray-200 rounded-md"></button>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-6">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-lg font-semibold">DashBoard 2안</h2>
+          <div class="flex items-center space-x-2">
+            <span class="text-sm">DarkMode</span>
+            <input type="checkbox" class="toggle" />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-6">
+          <!-- Personal Details & Schedule -->
+          <section
+            class="bg-white rounded-lg p-6 shadow col-span-2 flex justify-between"
+          >
+            <div>
+              <h3 class="font-semibold mb-2 text-blue-600">Personal Details</h3>
+              <div class="flex items-center space-x-4">
+                <div
+                  class="w-28 h-36 bg-gray-200 flex items-center justify-center"
+                >
+                  📷
+                </div>
+                <button class="mt-2 px-3 py-1 bg-gray-100 shadow rounded">
+                  Verification Photo
+                </button>
+                <ul class="text-sm space-y-1 ml-6">
+                  <li><strong>Name:</strong> Tomiwa Oyelodu Dolapo</li>
+                  <li><strong>Gender:</strong> Female</li>
+                  <li><strong>Date of Birth:</strong> August 27th, 1989</li>
+                  <li><strong>Nationality:</strong> Nigerian</li>
+                </ul>
+              </div>
+            </div>
+            <div>
+              <h3 class="font-semibold mb-2 text-blue-600">Schedule</h3>
+              <ul class="text-sm">
+                <li>오늘 (5월 27일): 오전 9시 사무실, 클론 팀 회의</li>
+                <li>수 (5월 28일): 프로젝트 시작모드, 오전 12시 - 사무실</li>
+                <li>목 (5월 29일): 프로젝트 연관회의, 오전 12시 - 사무실</li>
+                <li>금 (5월 30일): 프로젝트 회의자료, 오전 12시 - 사무실</li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Recent Visits -->
+          <section class="bg-white rounded-lg p-6 shadow col-span-2">
+            <h3 class="font-semibold mb-4 text-blue-600">Recent Visits</h3>
+            <div class="flex space-x-4">
+              <div
+                class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded shadow text-xs"
+              >
+                새 페이지
+              </div>
+              <div
+                class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded shadow text-xs"
+              >
+                새 페이지
+              </div>
+              <div
+                class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded shadow text-xs"
+              >
+                새 페이지
+              </div>
+              <div
+                class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded shadow text-xs"
+              >
+                새 페이지
+              </div>
+              <div
+                class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded shadow text-xs"
+              >
+                새 페이지
+              </div>
+              <div
+                class="w-20 h-20 bg-gray-100 flex items-center justify-center rounded shadow text-xs"
+              >
+                새 페이지
+              </div>
+            </div>
+          </section>
+
+          <!-- Project -->
+          <section class="bg-white rounded-lg p-6 shadow">
+            <h3 class="font-semibold mb-2 text-blue-600">Project</h3>
+            <div
+              class="w-full h-48 bg-gray-100 rounded flex items-center justify-center"
+            >
+              프로젝트 썸네일
+            </div>
+          </section>
+
+          <!-- Calendar -->
+          <section class="bg-white rounded-lg p-6 shadow">
+            <h3 class="font-semibold mb-2 text-blue-600">Calendar</h3>
+            <div
+              class="w-full h-48 bg-gray-100 rounded flex items-center justify-center"
+            >
+              캘린더 썸네일
+            </div>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

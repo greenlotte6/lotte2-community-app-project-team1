@@ -5,21 +5,84 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM - ClickUp Style</title>
     <link rel="stylesheet" href="/css/main/main.css" />
-
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <!-- Pretendard Font -->
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
-    />
     <style>
+
+      * {
+      margin: 0;
+      padding: 0;
+      font-family: "Pretendard Variable", Pretendard, sans-serif;
+      font-size: 16px;
+      color: #333;
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      ul,
+      li {
+        list-style: none;
+      }
       body {
         font-family: "Inter", "Helvetica Neue", sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      
+      .buy {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 40px 30px;
+        max-width: 600px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+     
+      .buy .icon {
+        margin-bottom: 16px;
+      }
+
+      .buy .icon img {
+        width: 40px;
+        height: 40px;
+      }
+
+      
+      .buy h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+
+      
+      .buy p {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 24px;
+      }
+
+     
+      .buy button {
+        background-color: #2d6cdf;
+        color: white;
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .buy button:hover {
+        background-color: #1c54b3;
       }
     </style>
   </head>
@@ -66,26 +129,16 @@
 
     <!-- ✅ Main Content -->
     <main>
-      <div class="buy_form_1">
-        <p class="h3">이메일 인증</p>
-        <p class="h2">
-          관리자 계정이 생성되었습니다.이메일 인증을 진행해주세요.
-        </p>
-        <p>이메일 주소</p>
-        <input
-          class="inp"
-          type="text"
-          name="email"
-          placeholder="이메일 주소"
-          style="border: 1px solid black"
-        />
-
-        <p style="color: red">유효한 이메일을 입력해주세요</p>
-
-        <div>
-          <button class="btn1">이메일 전송</button> <br />
-          <button class="btn2">이메일 인증</button>
+      <div class="container">
+        <div class="buy">
+          <div class="icon">
+          </div>
+          <h2>구매 완료</h2>
+          <p>구매가 성공적으로 완료되었습니다. 아래에서 관리자 계정을 설정해주세요.</p>
+          <button>아이디와 비밀번호 직접 입력</button>
         </div>
+      </div>
+  </div>
       </div>
     </main>
 

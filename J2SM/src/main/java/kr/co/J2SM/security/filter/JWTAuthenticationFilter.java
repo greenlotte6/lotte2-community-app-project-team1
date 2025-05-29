@@ -2,6 +2,7 @@ package kr.co.J2SM.security.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -35,15 +36,28 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
         log.info("doFilterInternal...1 : " + path);
 
-        // 토큰 추출
-        String header = request.getHeader(AUTH_HEADER);
-        log.info("doFilterInternal...2 : " + header);
+        // HttpOnly 쿠키에서 토큰 추출
 
         String token = null;
 
-        if(header != null && header.startsWith(TOKEN_PREFIX)){
-            token = header.substring(TOKEN_PREFIX.length());
+        Cookie[] cookies = request.getCookies();
+        if(cookies != null) {
+            for(Cookie cookie : cookies) {
+                if (cookie.getName().equals("access_token")) {
+                    token = cookie.getValue();
+                }
+            }
         }
+
+//        // 토큰 추출
+//        String header = request.getHeader(AUTH_HEADER);
+//        log.info("doFilterInternal...2 : " + header);
+//
+//        String token = null;
+//
+//        if(header != null && header.startsWith(TOKEN_PREFIX)){
+//            token = header.substring(TOKEN_PREFIX.length());
+//        }
 
         log.info("doFilterInternal...3 : " + token);
 
