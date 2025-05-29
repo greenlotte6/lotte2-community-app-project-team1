@@ -3,155 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - J2SM</title>
+    <title>J2SM Login</title>
+    <link rel="stylesheet" href="/css/layer/user/user.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
       rel="stylesheet"
     />
-    <style>
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Inter", sans-serif;
-      }
 
-      body,
-      html {
-        height: 100%;
+    <script>
+      function togglePassword() {
+      const pw = document.getElementById("password");
+      const toggle = document.querySelector(".toggle-password");
+      if (pw.type === "password") {
+        pw.type = "text";
+        toggle.textContent = "🔓";
+      } else {
+        pw.type = "password";
+        toggle.textContent = "🔒";
       }
-
-      .container {
-        display: flex;
-        height: 100vh;
-        border: 4px solid #52b4ff;
-        border-radius: 12px;
-        overflow: hidden;
-      }
-
-      .left {
-        flex: 1;
-        background: url("https://images.unsplash.com/photo-1603899124473-1b89f273bd1d?auto=format&fit=crop&w=1050&q=80")
-          no-repeat center center;
-        background-size: cover;
-        position: relative;
-      }
-
-      .left p {
-        position: absolute;
-        bottom: 10px;
-        left: 10px;
-        color: white;
-        font-size: 12px;
-        background-color: rgba(0, 0, 0, 0.5);
-        padding: 4px 8px;
-        border-radius: 4px;
-      }
-
-      .right {
-        flex: 1;
-        background-color: #fff;
-        padding: 60px 40px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .logo {
-        font-size: 32px;
-        font-weight: bold;
-        margin-bottom: 10px;
-      }
-
-      .greeting {
-        margin-bottom: 30px;
-        font-size: 18px;
-      }
-
-      form {
-        display: flex;
-        flex-direction: column;
-      }
-
-      input[type="email"],
-      input[type="password"] {
-        padding: 12px;
-        margin-bottom: 16px;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-      }
-
-      .options {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        font-size: 14px;
-      }
-
-      button {
-        padding: 12px;
-        background-color: #2563eb;
-        color: white;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        font-size: 16px;
-        margin-bottom: 16px;
-      }
-
-      .google-button {
-        background-color: #f3f4f6;
-        color: #111827;
-        border: 1px solid #d1d5db;
-      }
-
-      .signup-link {
-        text-align: center;
-        font-size: 14px;
-        margin-top: 10px;
-      }
-
-      .signup-link a {
-        color: #2563eb;
-        text-decoration: none;
-      }
-
-      .footer {
-        margin-top: auto;
-        font-size: 12px;
-        color: #9ca3af;
-        text-align: center;
-      }
-    </style>
+    }
+    </script>
+   
   </head>
   <body>
     <div class="container">
-      <div class="left">
-        <p>Photo by Eberhard Grossgasteiger</p>
-      </div>
-      <div class="right">
-        <div class="logo">J2SM</div>
-        <div class="greeting">Nice to see you again</div>
-        <form>
-          <input type="email" placeholder="Email or phone number" required />
-          <input type="password" placeholder="Enter password" required />
-          <div class="options">
-            <label><input type="checkbox" /> Remember me</label>
-            <a href="#" style="color: #2563eb; text-decoration: none"
-              >Forgot password?</a
-            >
+      <main>
+        <div id="user_page">
+          <img src="/images/user/login.jpg" alt="로그인 화면">
+          <div id="login_form">
+            <img src="/logo.png" alt="로고">
+            <div>
+              <p class="txt_bold">안녕하세요, J2SM에 오신 것을 환영합니다.</p>
+              <form action="#" id="login">
+                <p>Login</p>
+                <input type="text" name="uid" placeholder="아이디를 입력해주세요." required>
+
+                <p>Password</p>
+
+                <div class="input_wrap">
+                  <input type="password" name="pass" id="password" placeholder="비밀번호를 입력하세요" required>
+                  <span class="toggle-password" onclick="togglePassword()">🔒</span>
+                </div>
+
+                <div class="select_box">
+                    <label class="switch">
+                      <input type="checkbox" name="remember">
+                      <span class="slider round"></span>
+                      자동 로그인
+
+                      <div class="find">
+                        <a href="#">아이디 찾기</a>
+                        <a href="#">비밀번호 찾기</a>
+                      </div>
+                    </label>
+                </div>
+
+                <div id="social_login">
+                  <a href="#">
+                    <img src="/images/user/kakao_small.png" alt="카카오 로그인">
+                  </a>
+                  <a href="#">
+                    <img src="/images/user/naver_small.png" alt="네이버 로그인">
+                  </a>
+                  <a href="#">
+                    <img src="/images/user/google_small.png" alt="구글 로그인">
+                  </a>
+                </div>
+                
+              </form>
+              
+
+
+            </div>
+            
+
+          
           </div>
-          <button type="submit">Sign in</button>
-          <button type="button" class="google-button">
-            Sign in with Google
-          </button>
-        </form>
-        <div class="signup-link">
-          Don’t have an account? <a href="#">Sign up now</a>
+            
         </div>
-        <div class="footer">© J2SM</div>
-      </div>
-    </div>
+      </main>
   </body>
 </html>

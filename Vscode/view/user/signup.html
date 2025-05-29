@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J2SM Login</title>
+    <link rel="stylesheet" href="/css/layer/user/user.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      function togglePassword() {
+      const pw = document.getElementById("password");
+      const toggle = document.querySelector(".toggle-password");
+      if (pw.type === "password") {
+        pw.type = "text";
+        toggle.textContent = "🔓";
+      } else {
+        pw.type = "password";
+        toggle.textContent = "🔒";
+      }
+    }
+    </script>
+   
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <div id="user_page">
+          <img src="/images/user/login.jpg" alt="로그인 화면">
+          <div id="login_form">
+            <img src="/logo.png" alt="로고">
+            <div>
+              <p class="txt_title">회원가입</p>
+              <form action="#" id="login">
+               
+                <div class="signUp">
+                  <label for="name">이름</label>
+                  <input type="text" name="name" placeholder="이름을 입력해주세요." required>
+
+                  <p>Password</p>
+
+
+
+                  <div class="input_wrap">
+                    <input type="password" name="pass" id="password" placeholder="비밀번호를 입력하세요" required>
+                    <span class="toggle-password" onclick="togglePassword()">🔒</span>
+                  </div>
+
+                </div>
+
+
+                
+
+                
+              </form>
+              
+
+
+            </div>
+            
+
+          
+          </div>
+            
+        </div>
+      </main>
+  </body>
+</html>
