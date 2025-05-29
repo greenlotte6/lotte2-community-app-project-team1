@@ -10,8 +10,78 @@
       rel="stylesheet"
     />
     <style>
+     * {
+      margin: 0;
+      padding: 0;
+      font-family: "Pretendard Variable", Pretendard, sans-serif;
+      font-size: 16px;
+      color: #333;
+      }
+      
+      a {
+        text-decoration: none;
+      }
+      ul,
+      li {
+        list-style: none;
+      }
       body {
         font-family: "Inter", "Helvetica Neue", sans-serif;
+      }
+
+      .container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      
+      .buy_end {
+        background-color: #ffffff;
+        border-radius: 12px;
+        padding: 40px 30px;
+        max-width: 600px;
+        text-align: center;
+        padding-top: 280px;
+      }
+
+     
+      .buy_end .icon {
+        margin-bottom: 16px;
+      }
+
+      .buy_end .icon img {
+        width: 40px;
+        height: 40px;
+      }
+
+      
+      .buy_end h2 {
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 12px;
+      }
+
+      
+      .buy_end p {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 24px;
+      }
+
+     
+      .buy_end button {
+        background-color: #2d6cdf;
+        color: white;
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .buy_end button:hover {
+        background-color: #1c54b3;
       }
     </style>
   </head>
@@ -58,8 +128,14 @@
 
     <!-- ✅ Main Content -->
     <main>
-      <div class="buy_form_1">
-        <p>결제하기 페이지 (순서2)</p>
+       <div class="container">
+        <div class="buy_end">
+          <div class="icon">
+          </div>
+          <h2>Month 요금제 결제</h2>
+          <p>결제 금액:$50-선택한 요금제로 결제를 진행하세요.</p>
+          <button>결제하기</button>
+        </div>
       </div>
     </main>
 
