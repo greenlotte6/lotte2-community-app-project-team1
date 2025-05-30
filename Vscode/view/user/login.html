@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM Login</title>
-    <link rel="stylesheet" href="/css/layer/user/user.css">
+    <link rel="stylesheet" href="/css/layer/user/user.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
       rel="stylesheet"
@@ -12,75 +12,82 @@
 
     <script>
       function togglePassword() {
-      const pw = document.getElementById("password");
-      const toggle = document.querySelector(".toggle-password");
-      if (pw.type === "password") {
-        pw.type = "text";
-        toggle.textContent = "🔓";
-      } else {
-        pw.type = "password";
-        toggle.textContent = "🔒";
+        const pw = document.getElementById("password");
+        const toggle = document.querySelector(".toggle-password");
+        if (pw.type === "password") {
+          pw.type = "text";
+          toggle.textContent = "🔓";
+        } else {
+          pw.type = "password";
+          toggle.textContent = "🔒";
+        }
       }
-    }
     </script>
-   
   </head>
   <body>
     <div class="container">
       <main>
         <div id="user_page">
-          <img src="/images/user/login.jpg" alt="로그인 화면">
+          <img src="/images/user/login.jpg" alt="로그인 화면" />
           <div id="login_form">
-            <img src="/logo.png" alt="로고">
+            <img src="/logo.png" alt="로고" />
             <div>
               <p class="txt_bold">안녕하세요, J2SM에 오신 것을 환영합니다.</p>
               <form action="#" id="login">
                 <p>아이디</p>
-                <input type="text" name="uid" placeholder="아이디를 입력해주세요." required>
+                <input
+                  type="text"
+                  name="uid"
+                  placeholder="아이디를 입력해주세요."
+                  required
+                />
 
                 <p>비밀번호</p>
 
                 <div class="input_wrap">
-                  <input type="password" name="pass" id="password" placeholder="비밀번호를 입력하세요" required>
-                  <span class="toggle-password" onclick="togglePassword()">🔒</span>
+                  <input
+                    type="password"
+                    name="pass"
+                    id="password"
+                    placeholder="비밀번호를 입력하세요"
+                    required
+                  />
+                  <span class="toggle-password" onclick="togglePassword()"
+                    >🔒</span
+                  >
                 </div>
 
                 <div class="select_box">
-                    <label class="switch">
-                      <input type="checkbox" name="remember">
-                      <span class="slider round"></span>
-                      자동 로그인
+                  <label class="switch">
+                    <input type="checkbox" name="remember" />
+                    <span class="slider round"></span>
+                    자동 로그인
 
-                      <div class="find_tag">
-                        <a href="#">아이디 찾기</a>
-                        <a href="#">비밀번호 찾기</a>
-                      </div>
-                    </label>
-               
-                     <button type="submit" class="login_btn">
-                      로그인
-                    </button>
-                  </div>
-        
+                    <div class="find_tag">
+                      <a href="#">아이디 찾기</a>
+                      <a href="#">비밀번호 찾기</a>
+                    </div>
+                  </label>
+
+                  <button type="submit" class="login_btn">로그인</button>
+                </div>
               </form>
 
-                <div id="social_login">
-                  <a href="#">
-                    <img src="/images/user/kakao_small.png" alt="카카오 로그인">
-                  </a>
-                  <a href="#">
-                    <img src="/images/user/naver_small.png" alt="네이버 로그인">
-                  </a>
-                  <a href="#">
-                    <img src="/images/user/google_small.png" alt="구글 로그인">
-                  </a>
-                </div>
-
+              <div id="social_login">
+                <a href="#">
+                  <img src="/images/user/kakao_small.png" alt="카카오 로그인" />
+                </a>
+                <a href="#">
+                  <img src="/images/user/naver_small.png" alt="네이버 로그인" />
+                </a>
+                <a href="#">
+                  <img src="/images/user/google_small.png" alt="구글 로그인" />
+                </a>
+              </div>
             </div>
-
           </div>
-            
         </div>
       </main>
+    </div>
   </body>
 </html>
