@@ -45,11 +45,6 @@ header {
   height: 40px;
 }
 
-header nav {
-  border: 1px solid #ceceea;
-  border-radius: 15px;
-}
-
 #header_logo span {
   margin-top: 5px;
   font-size: 10px;
@@ -71,6 +66,9 @@ header nav {
 
 #header_main nav {
   float: left;
+  position: relative;
+  top: 17px;
+  left: 257px;
 }
 
 .header_contact {
