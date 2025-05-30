@@ -3,14 +3,21 @@
   <head>
     <meta charset="UTF-8" />
     <title>Dashboard</title>
-    <!-- Pretendard Font -->
     <link
       rel="stylesheet"
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
     <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
+
+    <script src="/scripts/dashboardMain.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -84,23 +91,180 @@
             <div class="topArea">
               <div class="mainProfile">
                 <h3>Personal Details</h3>
-                <div class="infoArea"></div>
+                <div class="infoArea">
+                  <div class="photoBox">
+                    <div class="photoPlaceholder"></div>
+                    <button class="verifyBtn">Verification Photo</button>
+                  </div>
+                  <ul class="detailList">
+                    <li><strong>Name:</strong>정상수</li>
+                    <li><strong>Rank:</strong> Manager</li>
+                    <li>
+                      <div class="attendanceArea">
+                        <div class="currentTime" id="currentTime">--:--:--</div>
+                        <div class="btnGroup">
+                          <button class="workBtn" id="checkInBtn">출근</button>
+                          <button class="workBtn" id="checkOutBtn">퇴근</button>
+                        </div>
+                        <div class="statusMessage" id="statusMessage"></div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="scheduleArea">
+                <h3>Schedule</h3>
+                <div class="scheduleinfo">
+                  <table class="scheduleTable">
+                    <tbody>
+                      <tr>
+                        <td>오늘<br />5월 27일</td>
+                        <td>
+                          오전 9시 사무실<br /><strong>짧은 팀 회의</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>오늘<br />5월 27일</td>
+                        <td>
+                          오전 9시 사무실<br /><strong>짧은 팀 회의</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>오늘<br />5월 27일</td>
+                        <td>
+                          오전 9시 사무실<br /><strong>짧은 팀 회의</strong>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>오늘<br />5월 27일</td>
+                        <td>
+                          오전 9시 사무실<br /><strong>짧은 팀 회의</strong>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
-            <div class="midArea"></div>
-            <div class="bottomArea"></div>
+            <div class="midArea">
+              <div class="recentArea">
+                <div class="titleArea">
+                  <h3>Recent Visits</h3>
+                </div>
+                <div class="visitSlider">
+                  <div class="visitArea" id="visitArea">
+                    <!-- 반복되는 카드만 출력하는 영역 -->
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                    <div class="visitPageCard">
+                      <a href=""><img src="/images/File.svg" alt="icon" /></a>
+                      <p>새 페이지</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="bottomArea">
+              <div class="projectArea">
+                <h3>Project</h3>
+                <div class="projectList">
+                  <ul>
+                    <li>
+                      <a href=""
+                        ><div class="projectContent">제목제에에에에목</div></a
+                      >
+                    </li>
+                    <li>
+                      <a href=""
+                        ><div class="projectContent">제목제에에에에목</div></a
+                      >
+                    </li>
+                    <li>
+                      <a href=""
+                        ><div class="projectContent">제목제에에에에목</div></a
+                      >
+                    </li>
+                    <li>
+                      <a href=""
+                        ><div class="projectContent">제목제에에에에목</div></a
+                      >
+                    </li>
+                    <li>
+                      <a href=""
+                        ><div class="projectContent">제목제에에에에목</div></a
+                      >
+                    </li>
+                    <li>
+                      <a href=""
+                        ><div class="projectContent">제목제에에에에목</div></a
+                      >
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="calendarArea">
+                <h3>Calendar</h3>
+                <input id="miniCalendar" type="text" placeholder="날짜 선택" />
+              </div>
+            </div>
           </div>
         </main>
         <footer></footer>
       </div>
     </div>
-    <script>
-      const toggleInput = document.getElementById("darkModeToggle");
-
-      toggleInput.addEventListener("change", () => {
-        document.body.classList.toggle("dark-mode");
-        document.querySelector(".container").classList.toggle("dark-mode");
-      });
-    </script>
   </body>
 </html>
