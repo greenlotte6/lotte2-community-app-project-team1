@@ -47,8 +47,7 @@ body {
 .wrapperside ul li {
   margin-bottom: 35px;
   height: 55px;
- justify-content: center;
-
+  justify-content: center;
 }
 .wrapperside ul li:nth-of-type(1) {
   background-color: white;
@@ -67,6 +66,7 @@ body {
   height: auto;
   background-color: white;
   border-radius: 20px;
+  padding: 20px 20px 0 30px;
 }
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ기본설정/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
@@ -83,12 +83,13 @@ header {
 .container header img {
   width: 150px;
   height: 90px;
-  margin-left: 25px;
+  position: relative;
+  bottom: 20px;
 }
 .darkmode {
   position: relative;
-  left: 575px;
-  bottom: 18px;
+  left: 555px;
+  bottom: 38px;
 }
 .dark-mode-btn {
   background-color: transparent;
@@ -162,15 +163,40 @@ input:checked + .slider::before {
   color: #333;
 }
 
-.container .alert img{
+.container .alert img {
   width: 43px;
   height: 43px;
   position: relative;
-  bottom: 15px;
+  bottom: 35px;
   right: 10px;
 }
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡHeader/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+main {
+  width: 100%;
+  height: 740px;
+  background-color: #d9d9d9;
+  border-radius: 20px;
+  display: flex;
+}
+main aside {
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+  border-top: 1px solid #d9d9d9;
+  box-sizing: border-box;
+}
+main .contentArea {
+  width: 1180px;
+  height: 720px;
+  background-color: white;
+  border-radius: 20px;
+  position: relative;
+  left: 20px;
+  margin: 10px 0 15px 0;
+}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡFooterㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡFooter/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
