@@ -70,6 +70,7 @@ li {
 .input_wrap {
   position: relative;
 }
+
 .toggle-password {
   position: absolute;
   right: 10px;
@@ -136,14 +137,26 @@ input:checked + .slider::before {
   padding-left: 10px;
 }
 
-.find {
+.find_tag {
+  margin-left: 30px;
   float: right;
   padding-bottom: 2.5px;
 }
 
-.find a {
+.find_tag a {
   font-size: 12px;
   color: #017bff;
+}
+
+.find {
+  border-top: 2px solid #ebebeb;
+  padding-top: 20px;
+  margin-top: 20px;
+  height: auto;
+}
+
+.find input {
+  border: none;
 }
 
 .select_box {
@@ -167,6 +180,17 @@ input:checked + .slider::before {
   font-size: 24px;
   font-weight: bolder;
   margin-top: 20px;
+}
+
+.txt_subtitle {
+  font-size: 18px;
+  font-weight: bolder;
+  margin-top: 15px;
+}
+
+.txt_sub {
+  font-size: 14px;
+  color: #666;
 }
 
 .signUp {
@@ -217,4 +241,10 @@ input:checked + .slider::before {
   background-color: #2f7bff;
   color: white;
   border-radius: 5px;
+}
+
+.pass_result {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #ebebeb;
 }

@@ -43,16 +43,19 @@
                   <label for="email">이메일</label>
                   <input type="text" name="email" class="m-10" placeholder="이메일을 입력해주세요." required>
 
-                  <label for="pass">비밀번호</label>
+                  <label for="tempPass">암호 번호</label>
+                  <input type="text" name="tempPass" class="m-10" placeholder="암호 번호를 입력해주세요." required >
+
                   <div class="input_wrap">
+                    <label for="pass">비밀번호</label>
                     <input type="password" name="pass" id="password" placeholder="비밀번호를 입력하세요" required>
-                    <span class="toggle-password" onclick="togglePassword()">🔒</span>
+                    <span class="toggle-password" onclick="togglePassword()" style="top:70%">🔒</span>
                   </div>
 
                    <div class="input_wrap">
                     <label for="pass2">비밀번호 확인</label>
                     <input type="password" name="pass2" id="password" placeholder="비밀번호를 입력하세요" required>
-                    <span class="toggle-password" onclick="togglePassword()">🔒</span>
+                    <span class="toggle-password" onclick="togglePassword()" style="top:70%">🔒</span>
                   </div>
 
                   <div class="form-row">
@@ -78,7 +81,7 @@
                   </div>
 
                 </div>
-
+                
                 <button type="submit" class="login_btn">
                       회원가입
                 </button>
