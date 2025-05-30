@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM - ClickUp Style</title>
     <link rel="stylesheet" href="/css/layer/main.css" />
-    <link rel="stylesheet" href="/css/main/Landing/credit.css" />
+    <link rel="stylesheet" href="/css/main/Landing/qnaview.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
@@ -65,20 +65,50 @@
     </header>
 
     <!-- ✅ Main Content -->
-    <main>
-      <div class="buy_form_1">
-        <p class="h3">회사 및 대표 설정</p>
-        <p class="texts">회사이름</p>
-        <input type="text" name="companyName" class="input-default" />
-        <p class="texts">대표이름</p>
-        <input type="text" name="ceoName" class="input-default" />
-        <p class="texts">대표 이메일</p>
-        <input type="text" name="email" class="input-default" />
-        <p class="texts">회사 로고</p>
-        <input type="file" name="file" class="input-default" />
-        <div>
-          <button class="btn">설정완료</button>
-        </div>
+    <main class="qna-detail-container">
+      <h2 class="qna-title">문의 상세 내역</h2>
+      <p class="qna-subtitle">문의하실 내용을 입력해주세요.</p>
+
+      <div class="qna-box">
+        <button class="close-button">×</button>
+
+        <section class="qna-section">
+          <h4 class="qna-section-title">회사 정보</h4>
+          <div class="qna-field">
+            <p class="qna-label">회사 이름</p>
+            <p class="qna-value font-bold">그린 컴퓨터 아카데미</p>
+          </div>
+          <div class="qna-field">
+            <p class="qna-label">이름</p>
+            <p class="qna-value font-bold">그린컴</p>
+          </div>
+          <div class="qna-field">
+            <p class="qna-label">문의 내역</p>
+            <input type="text" class="qna-input" placeholder="문의 내역" />
+          </div>
+        </section>
+
+        <hr class="divider" />
+
+        <section class="qna-section">
+          <h4 class="qna-section-title">담당자 정보</h4>
+          <div class="qna-field">
+            <p class="qna-label">이름</p>
+            <p class="qna-value">관리자</p>
+          </div>
+          <div class="qna-field">
+            <p class="qna-label">이메일</p>
+            <p class="qna-value text-blue-600">green@gmail.com</p>
+          </div>
+          <div class="qna-field">
+            <p class="qna-label">휴대폰</p>
+            <p class="qna-value font-semibold">010-1212-1744</p>
+          </div>
+          <div class="qna-field">
+            <p class="qna-label">답변 내역</p>
+            <input type="text" class="qna-input" placeholder="답변 내역" />
+          </div>
+        </section>
       </div>
     </main>
 

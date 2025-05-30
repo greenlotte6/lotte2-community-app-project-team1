@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM - ClickUp Style</title>
     <link rel="stylesheet" href="/css/layer/main.css" />
-    <link rel="stylesheet" href="/css/main/Landing/credit.css" />
     <link
       href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="/css/main/Landing/qna.css" />
     <!-- Pretendard Font -->
     <link
       rel="stylesheet"
@@ -66,19 +66,44 @@
 
     <!-- ✅ Main Content -->
     <main>
-      <div class="buy_form_1">
-        <p class="h3">회사 및 대표 설정</p>
-        <p class="texts">회사이름</p>
-        <input type="text" name="companyName" class="input-default" />
-        <p class="texts">대표이름</p>
-        <input type="text" name="ceoName" class="input-default" />
-        <p class="texts">대표 이메일</p>
-        <input type="text" name="email" class="input-default" />
-        <p class="texts">회사 로고</p>
-        <input type="file" name="file" class="input-default" />
-        <div>
-          <button class="btn">설정완료</button>
-        </div>
+      <div class="contact-container">
+        <h3 class="contact-title">문의하기</h3>
+        <p class="contact-subtitle">문의하실 내용을 입력해주세요.</p>
+
+        <form action="#">
+          <div class="contact-form-box">
+            <div>
+              <p class="contact-label">회사 이름</p>
+              <input type="text" name="companyName" class="contact-input" />
+
+              <p class="contact-label">업종</p>
+              <input type="text" name="industry" class="contact-input" />
+
+              <div class="contact-row">
+                <div>
+                  <p class="contact-label">이름</p>
+                  <input type="text" name="username" class="contact-input" />
+                </div>
+                <div>
+                  <p class="contact-label">이메일</p>
+                  <input type="email" name="email" class="contact-input" />
+                </div>
+              </div>
+
+              <p class="contact-label">임시 비밀번호</p>
+              <input
+                type="password"
+                name="tempPassword"
+                class="contact-input"
+              />
+
+              <p class="contact-label">문의사항</p>
+              <textarea name="message" class="contact-textarea"></textarea>
+
+              <button type="submit" class="contact-button">문의 하기</button>
+            </div>
+          </div>
+        </form>
       </div>
     </main>
 

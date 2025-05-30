@@ -1,0 +1,126 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+a {
+  text-decoration: none;
+}
+ul,
+li {
+  list-style: none;
+}
+body {
+  font-family: "Inter", "Helvetica Neue", sans-serif;
+}
+.container {
+  max-width: 700px;
+  margin: 80px auto;
+  background: white;
+  border-radius: 12px;
+  padding: 40px 30px;
+  text-align: center;
+}
+/* buy_form_2 전체 박스 */
+.buy_form_2 .container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background-color: #fff;
+  border: 2px solid #3b82f6; /* 파란 강조 */
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+/* 제목 */
+.step-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+/* 설명 */
+.step-desc {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #555;
+}
+
+/* 공통 라벨 */
+.form-group label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+  display: block;
+  margin-top: 20px;
+}
+
+.register-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+}
+
+.register-input:focus {
+  border-color: #a3241c;
+  outline: none;
+}
+
+/* 아이디 + 중복확인 가로 배치 */
+.id-field {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.id-field input {
+  flex: 1;
+}
+
+/* 중복 확인 버튼 */
+.btn-check {
+  padding: 10px 16px;
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-check:hover {
+  background-color: #1d4ed8;
+}
+
+/* 다음 단계 버튼 */
+.btn-next {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px 0;
+  background-color: #cf261a;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-next:hover {
+  background-color: #881e16;
+}
