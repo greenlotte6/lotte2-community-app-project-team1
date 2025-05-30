@@ -13,6 +13,77 @@
       body {
         font-family: "Inter", "Helvetica Neue", sans-serif;
       }
+
+      body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+      }
+
+      .footer {
+        background-color: #eecfe8;
+        color: #d1d5db;
+        padding: 40px 20px 20px;
+      }
+
+      .footer-top {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 30px;
+        width: 1200px;
+        margin: 0 auto;
+        padding: 30px 0;
+      }
+
+      .footer-column {
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .footer-column h4 {
+        font-size: 16px;
+        margin-bottom: 20px;
+        color: white;
+      }
+
+      .footer-column ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .footer-column li {
+        margin-bottom: 10px;
+        font-size: 14px;
+      }
+
+      .store-badges img {
+        width: 130px;
+        margin-bottom: 20px;
+        display: block;
+      }
+
+      .footer-bottom {
+        padding-top: 15px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        width: 1200px;
+        margin: 0 auto;
+      }
+
+      .footer-bottom p {
+        font-size: 14px;
+        color: #9ca3af;
+      }
+
+      .footer-links a {
+        margin-left: 20px;
+        font-size: 14px;
+        color: #9ca3af;
+        text-decoration: none;
+      }
+
     </style>
   </head>
   <body class="bg-white text-gray-800">
@@ -60,9 +131,7 @@
     <main>
       <!-- Hero Section -->
       <section class="text-center py-20 px-4">
-        <h1 class="text-6xl font-extrabold mb-6 text-gray-900 tracking-tight">
-          J2SM
-        </h1>
+        <img src="/images/logo.png" style="width: 400px; margin: 0 auto;"  alt="메인 로고">
         <div class="space-x-4">
           <button
             class="bg-gradient-to-r from-pink-500 to-purple-600 text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition"
@@ -78,8 +147,8 @@
       </section>
 
       <!-- Feature Section -->
-      <section class="text-center px-6">
-        <h2 class="text-3xl font-bold mb-6">J2SM 오피스 하나면 충분해요!</h2>
+      <section class="text-center px-6 pb-[100px]">
+        <h2 class="text-3xl font-bold mb-6 margin-bottom py-10">J2SM 오피스 하나면 충분해요!</h2>
 
         <!-- Tab Menu -->
         <div class="inline-flex bg-gray-100 rounded-full p-1 mb-10">
@@ -89,51 +158,108 @@
             그룹웨어
           </button>
           <button class="px-5 py-2 rounded-full text-sm text-gray-500">
-            경리회계
+            캘린더
           </button>
           <button class="px-5 py-2 rounded-full text-sm text-gray-500">
-            영업지원
+            드라이브
           </button>
           <button class="px-5 py-2 rounded-full text-sm text-gray-500">
-            설문관리
+            채팅
           </button>
         </div>
 
         <!-- Features Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-4xl mx-auto">
-          <div
-            class="bg-purple-50 p-6 rounded-2xl shadow hover:shadow-md transition"
-          >
-            <h3 class="font-semibold text-lg text-purple-700 mb-2">캘린더</h3>
-            <p class="text-gray-600 text-sm">
-              일정을 공유하고 확인할 수 있는 스마트 캘린더 기능
-            </p>
-            <a
-              href="#"
-              class="text-purple-600 text-sm mt-2 inline-block font-medium"
-              >자세히 보기 →</a
+        <div class="pb-[100px]">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+            <div
+              class="bg-blue-50 p-6 rounded-2xl shadow hover:shadow-md transition"
             >
-          </div>
-          <div
-            class="bg-pink-50 p-6 rounded-2xl shadow hover:shadow-md transition"
-          >
-            <h3 class="font-semibold text-lg text-pink-700 mb-2">설문</h3>
-            <p class="text-gray-600 text-sm">
-              설문을 손쉽게 만들고 분석하는 기능
-            </p>
-            <a
-              href="#"
-              class="text-pink-600 text-sm mt-2 inline-block font-medium"
-              >자세히 보기 →</a
+              <h3 class="font-semibold text-lg text-blue-700 mb-2">다양한 업무기능을 담은 그룹웨어</h3>
+              <p class="text-gray-600 text-sm">
+                회사의 체계적인 업무관리부터 협업까지<br/> 도와주는 포탈 서비스예요.
+              </p>
+              <a
+                href="#"
+                class="text-blue-600 text-sm mt-2 inline-block font-medium"
+                >더보기 →</a
+              >
+            </div>
+            <div
+              class="bg-purple-50 p-6 rounded-2xl shadow hover:shadow-md transition"
             >
+              <h3 class="font-semibold text-lg text-purple-700 mb-2">캘린더</h3>
+              <p class="text-gray-600 text-sm">
+                일정을 공유하고 확인할 수 있는 스마트 캘린더 기능
+              </p>
+              <a
+                href="#"
+                class="text-purple-600 text-sm mt-2 inline-block font-medium"
+                >자세히 보기 →</a
+              >
+            </div>
+            <div
+              class="bg-pink-50 p-6 rounded-2xl shadow hover:shadow-md transition"
+            >
+              <h3 class="font-semibold text-lg text-pink-700 mb-2">채팅</h3>
+              <p class="text-gray-600 text-sm">
+                실시간 채팅을 이용해 원활한 소통이 가능해요.
+              </p>
+              <a
+                href="#"
+                  class="text-pink-600 text-sm mt-2 inline-block font-medium"
+                >자세히 보기 →</a
+              >
+            </div>
           </div>
         </div>
-      </section>
+      </div>
     </main>
-
-    <!-- ✅ Footer -->
-    <footer class="text-center text-sm text-gray-500 py-8 border-t mt-16">
-      © 2025 J2SM. All rights reserved.
+    <footer class="footer">
+      <div class="footer-top">
+        <div class="footer-column">
+          <h4>Column One</h4>
+          <ul>
+            <li>Twenty One</li>
+            <li>Thirty Two</li>
+            <li>Fourty Three</li>
+            <li>Fifty Four</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Column Two</h4>
+          <ul>
+            <li>Sixty Five</li>
+            <li>Seventy Six</li>
+            <li>Eighty Seven</li>
+            <li>Ninety Eight</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Column Three</h4>
+          <ul>
+            <li>One Two</li>
+            <li>Three Four</li>
+            <li>Five Six</li>
+            <li>Seven Eight</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Column Four</h4>
+          <div class="store-badges">
+            <img src="images/app-store icon.png" alt="App Store" />
+            <img src="images/Play_Store.png" alt="Google Play" />
+          </div>
+         
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>CompanyName © 2025. All rights reserved.</p>
+        <div class="footer-links">
+          <a href="#">version</a>
+        </div>
+      </div>
     </footer>
-  </body>
+   
+</body>
 </html>
+
