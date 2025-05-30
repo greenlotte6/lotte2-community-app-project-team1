@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>J2SM 아이디찾기</title>
+    <link rel="stylesheet" href="/css/layer/user/user.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      function togglePassword() {
+      const pw = document.getElementById("password");
+      const toggle = document.querySelector(".toggle-password");
+      if (pw.type === "password") {
+        pw.type = "text";
+        toggle.textContent = "🔓";
+      } else {
+        pw.type = "password";
+        toggle.textContent = "🔒";
+      }
+    }
+    </script>
+   
+  </head>
+  <body>
+    <div class="container">
+      <main>
+        <div id="user_page">
+          <img src="/images/user/login.jpg" alt="로그인 화면">
+          <div id="login_form">
+            <img src="/logo.png" alt="로고">
+            <div>
+              <p class="txt_title">아이디찾기</p>
+              <form action="#" id="login">
+               
+                <div class="signUp">
+                  <label for="hp">휴대폰</label>
+                  <input type="text" name="hp" class="m-10" placeholder="휴대폰 번호를 입력해주세요." required>
+  
+                  <label for="hpCheck">휴대폰 인증</label>
+                  <input type="text" name="hpCheck" class="m-10" placeholder="코드번호 입력해주세요." required>
+                </div>
+
+                <button type="submit" class="login_btn">
+                      아이디찾기
+                </button>
+
+
+
+ 
+              </form>
+              
+
+
+            </div>
+            
+
+          
+          </div>
+            
+        </div>
+      </main>
+  </body>
+</html>
