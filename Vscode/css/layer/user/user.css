@@ -174,3 +174,36 @@ input:checked + .slider::before {
   margin-top: 20px;
   height: auto;
 }
+
+.form-row {
+  display: flex;
+  gap: 20px; /* 요소 간 간격 조정 */
+  align-items: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+}
+
+.form-group {
+  margin-top: 10px;
+}
+
+#login #profile {
+  width: 85px;
+  border: none;
+}
+
+#login #rdate {
+  box-sizing: border-box;
+  width: 140px;
+}
+
+.m-10 {
+  margin-bottom: 10px;
+}
