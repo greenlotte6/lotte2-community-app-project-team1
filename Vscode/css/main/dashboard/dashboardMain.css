@@ -25,6 +25,7 @@ body {
   margin-top: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   display: flex;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 .profileArea {
   width: 80px;
@@ -49,6 +50,11 @@ body {
   height: 55px;
   justify-content: center;
 }
+.wrapperside ul li:hover {
+  background-color: white;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
 .wrapperside ul li:nth-of-type(1) {
   background-color: white;
   border-top-left-radius: 20px;
@@ -67,6 +73,7 @@ body {
   background-color: white;
   border-radius: 20px;
   padding: 20px 20px 0 30px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ기본설정/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
@@ -172,6 +179,47 @@ input:checked + .slider::before {
 }
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡHeader/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAsideㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+.container.dark-mode aside {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.container.dark-mode .sidemenu h3,
+.container.dark-mode .sidemenu a {
+  color: #ccc;
+}
+
+main aside {
+  width: 250px;
+  height: 100%;
+  background-color: white;
+  border-radius: 20px;
+  border-top: 1px solid #d9d9d9;
+  box-sizing: border-box;
+  padding: 20px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.sidemenu {
+  text-align: center;
+  margin-top: 15px;
+}
+.sideTop {
+  border-bottom: 1px solid;
+  margin-bottom: 20px;
+}
+.sidemenu h3 {
+  font-size: 24px;
+  margin-bottom: 25px;
+  color: #898989;
+}
+.sidemenu a {
+  color: #898989;
+}
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 main {
   width: 100%;
@@ -180,14 +228,7 @@ main {
   border-radius: 20px;
   display: flex;
 }
-main aside {
-  width: 250px;
-  height: 100%;
-  background-color: white;
-  border-radius: 20px;
-  border-top: 1px solid #d9d9d9;
-  box-sizing: border-box;
-}
+
 main .contentArea {
   width: 1180px;
   height: 720px;
@@ -196,6 +237,15 @@ main .contentArea {
   position: relative;
   left: 20px;
   margin: 10px 0 15px 0;
+  overflow: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  white-space: nowrap;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.container.dark-mode .contentArea {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
 }
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡFooterㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
