@@ -1,13 +1,14 @@
 import React from "react";
-import { MainLayout } from "../../layouts/MainLayout";
-import { Login } from "../../components/user/Login";
+import UserLayout from "../../layouts/UserLayout";
+import "../../styles/layer/user.scss";
+import Login from "../../components/user/Login";
 
-export const LoginPage = () => {
+const LoginPage = () => {
   return (
-    <MainLayout>
-      <div id="user">
-        <Login />
-      </div>
-    </MainLayout>
+    <UserLayout>
+      <Login></Login>
+    </UserLayout>
   );
 };
+
+export default LoginPage;
