@@ -1,14 +1,13 @@
 import React from "react";
 import UserLayout from "../../layouts/UserLayout";
+import FindPass from "../../components/user/FindPass";
 
-import Login from "../../components/user/Login";
-
-const LoginPage = () => {
+const FindPassPage = () => {
   return (
     <UserLayout>
-      <Login></Login>
+      <FindPass />
     </UserLayout>
   );
 };
 
-export default LoginPage;
+export default FindPassPage;

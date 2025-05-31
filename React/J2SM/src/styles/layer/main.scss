@@ -195,3 +195,73 @@ main {
 .btn2:hover {
   background-color: #cbd5e0;
 }
+
+.footer {
+  background-color: #eecfe8;
+  color: #d1d5db;
+  padding: 40px 20px 20px;
+}
+
+.footer-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  width: 1200px;
+  margin: 0 auto;
+  padding: 30px 0;
+}
+
+.footer-column {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.footer-column h4 {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: white;
+}
+
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-column li {
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+
+.store-badges img {
+  width: 130px;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.footer-bottom {
+  padding-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-bottom p {
+  font-size: 14px;
+  color: #9ca3af;
+}
+
+.footer-links a {
+  margin-left: 20px;
+  font-size: 14px;
+  color: #9ca3af;
+  text-decoration: none;
+}
+
+.Landing_logo {
+  width: 400px;
+  margin: 0 auto;
+}
