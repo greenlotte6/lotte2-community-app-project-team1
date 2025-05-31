@@ -3,11 +3,11 @@ import { MainPage } from "../pages/main/MainPage";
 import { HelloPage } from "../pages/introduction/HelloPage";
 import { DirectionPage } from "../pages/introduction/DirectionPage";
 import { ListPage } from "../pages/market/ListPage";
-import { LoginPage } from "../pages/user/LoginPage";
 import { TermsPage } from "../pages/user/TermsPage";
 import { RegisterPage } from "../pages/user/RegisterPage";
 import { AdminMainPage } from "../pages/admin/AdminMainPage";
 import { lazy, Suspense } from "react";
+import LoginPage from "../pages/user/LoginPage";
 
 // prettier-ignore
 const AdminProductRegisterPage = lazy(() =>  import("../pages/admin/product/RegisterPage"));
@@ -18,8 +18,10 @@ const BoardModifyPage = lazy(() => import("../pages/board/ModifyPage"));
 
 // 라우터 생성
 const router = createBrowserRouter([
-  { path: "/user/login", element: <MainPage /> },
+  // J2SM 이식중인 라우터
+  { path: "/user/login", element: <LoginPage /> },
 
+  // 여기 밑은 팜스토리 라우터
   { path: "/", element: <MainPage /> },
 
   { path: "/introduction/hello", element: <HelloPage /> },
@@ -27,7 +29,6 @@ const router = createBrowserRouter([
 
   { path: "/market/list", element: <ListPage /> },
 
-  { path: "/user/login", element: <LoginPage /> },
   { path: "/user/terms", element: <TermsPage /> },
   { path: "/user/register", element: <RegisterPage /> },
   { path: "/user/logout", element: null },

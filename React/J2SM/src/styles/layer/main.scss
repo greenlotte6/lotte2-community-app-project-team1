@@ -1,0 +1,197 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Pretendard Variable", Pretendard, sans-serif;
+  font-size: 16px;
+  color: #333;
+}
+a {
+  text-decoration: none;
+}
+ul,
+li {
+  list-style: none;
+}
+
+#header_main {
+  width: 1200px;
+  height: 80px;
+  margin: 0 auto;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+header {
+  border-bottom: 1px solid #ceceea;
+}
+
+#header_logo {
+  width: 250px;
+  height: 40;
+  float: left;
+  border: 1px solid #ceceea;
+  border-radius: 15px;
+  padding: 10px;
+}
+
+#header_logo div {
+  float: left;
+  width: 50%;
+}
+
+#header_logo div:nth-child(2) {
+  border-left: 1px solid #ceceea;
+  padding-left: 10px;
+  height: 40px;
+}
+
+#header_logo span {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #272a31;
+  display: inline-block;
+}
+
+#header_logo img {
+  float: left;
+  width: 80px;
+  height: 40px;
+}
+
+#header_logo img:nth-child(1) {
+  margin-top: 5px;
+  width: 30px;
+  height: 30px;
+}
+
+#header_main nav {
+  float: left;
+  position: relative;
+  top: 17px;
+  left: 257px;
+}
+
+.header_contact {
+  width: 150px;
+  height: 100%;
+  float: right;
+  border: 1px solid #ceceea;
+  border-radius: 15px;
+  text-align: center;
+}
+
+.header_contact span {
+  display: inline-block;
+  margin-top: 15px;
+}
+
+#contact_btn {
+  margin-right: 20px;
+}
+
+#header_right {
+  float: right;
+  margin-top: 10px;
+}
+
+main {
+  width: 1200px;
+  height: auto;
+  min-height: 800px;
+  margin: 0 auto;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+.buy_form_1 {
+  margin: 0 auto;
+  width: 400px;
+  height: auto;
+  min-height: 600px;
+}
+
+.buy_form_2 {
+  margin: 0 auto;
+  width: 600px;
+  height: auto;
+  min-height: 600px;
+}
+
+.buy_form_3 {
+  margin-top: 60px;
+  width: 100%;
+  height: auto;
+  min-height: 600px;
+}
+
+.input-default {
+  padding: 8px;
+  width: 100%;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+.texts {
+  margin-top: 15px;
+}
+
+.btn {
+  background-color: green;
+  color: white;
+  padding: 10px 55px;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+.btn:hover {
+  background-color: #333; /* hover 보라 */
+}
+
+.h3 {
+  font-size: 20px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.h2 {
+  font-size: 14px;
+  font-weight: 400;
+  text-align: center;
+  color: #333;
+}
+
+.inp {
+  width: 300px;
+  height: auto;
+  margin-top: 10px;
+}
+
+.btn1 {
+  background-color: #6b46c1; /* 보라색 */
+  color: white;
+  padding: 10px 55px;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 30px;
+  box-sizing: border-box;
+}
+
+.btn1:hover {
+  background-color: #553c9a; /* hover 보라 */
+}
+
+.btn2 {
+  background-color: #e2e8f0;
+  color: #2d3748;
+  padding: 10px 55px;
+  border-radius: 8px;
+  margin-top: 13px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.btn2:hover {
+  background-color: #cbd5e0;
+}
