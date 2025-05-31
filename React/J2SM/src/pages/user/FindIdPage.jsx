@@ -1,14 +1,13 @@
 import React from "react";
 import UserLayout from "../../layouts/UserLayout";
+import FindId from "../../components/user/FindId";
 
-import Login from "../../components/user/Login";
-
-const LoginPage = () => {
+const FindIdPage = () => {
   return (
     <UserLayout>
-      <Login></Login>
+      <FindId />
     </UserLayout>
   );
 };
 
-export default LoginPage;
+export default FindIdPage;

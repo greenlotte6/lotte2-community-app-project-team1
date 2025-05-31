@@ -3,6 +3,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./styles/App.scss";
 import "./styles/Admin.scss";
+import "./styles/layer/Main.scss";
+import "./styles/layer/user.scss";
 import { MainLayout } from "./layouts/MainLayout";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/router";
