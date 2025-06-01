@@ -1,3 +1,6 @@
+#container_Landing {
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -94,7 +97,7 @@ header {
   margin-top: 10px;
 }
 
-main {
+#container_Lading main {
   width: 1200px;
   height: auto;
   min-height: 800px;
@@ -264,4 +267,369 @@ main {
 .Landing_logo {
   width: 400px;
   margin: 0 auto;
+}
+
+/* 제품 구매 페이지 css*/
+.buy_form_1 {
+  width: 1200px;
+  height: 800px;
+  box-sizing: border-box;
+}
+.main_1 {
+  width: 35%;
+  height: 100%;
+  float: left;
+  text-align: center;
+}
+
+.sub_1 {
+  height: 30%;
+  padding-top: 120px;
+  margin: 0 18px;
+}
+
+.sub_1 h1 {
+  font-size: 35px;
+  font-weight: 600;
+}
+.sub_2 {
+  height: 35%;
+  box-sizing: border-box;
+}
+.sub_3 {
+  height: 35%;
+}
+
+.heading-underline {
+  font-size: 32px;
+  font-weight: bold;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.desc-text {
+  font-size: 14px;
+  color: #555;
+  margin-top: 10px;
+}
+
+.artwork-text {
+  font-size: 12px;
+  color: #888;
+  margin-top: 50px;
+  text-align: center;
+}
+
+.pay-logos {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.pay-logos img {
+  width: 40px;
+  height: auto;
+}
+
+.eng-desc {
+  font-size: 13px;
+  text-align: center;
+  color: #444;
+}
+
+.main_2 {
+  width: 65%;
+  height: 100%;
+  float: left;
+  padding-top: 150px;
+}
+
+.cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  border-radius: 10px;
+  padding: 20px;
+  width: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  float: left;
+}
+
+.title_F {
+  color: #1a9b50;
+  font-weight: 600;
+  font-size: 23px;
+  margin-bottom: 10px;
+}
+
+.title_M {
+  color: #3498db;
+  font-weight: 600;
+  font-size: 23px;
+  margin-bottom: 10px;
+}
+
+.title_Y {
+  color: #f1c40f;
+  font-weight: 600;
+  font-size: 23px;
+  margin-bottom: 10px;
+}
+
+.card .price {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.card ul {
+  list-style: none;
+  padding: 0;
+  margin-bottom: 20px;
+}
+.card ul li {
+  margin: 15px 0;
+}
+.free {
+  border: 3px solid #1a9b50;
+}
+.month {
+  border: 3px solid #3498db;
+}
+.year {
+  border: 3px solid #f1c40f;
+}
+
+.btn {
+  width: 200px;
+  background: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.month .btn {
+  background: #2980b9;
+}
+.year .btn {
+  background: #f39c12;
+}
+
+.btn:hover {
+  background: #0c6d34de;
+}
+
+.month .btn:hover {
+  background: #08588d;
+}
+
+.year .btn:hover {
+  background: #c77c04;
+}
+
+/* 제품 결제 페이지 */
+.buy_end {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px 30px;
+  max-width: 600px;
+  text-align: center;
+  padding-top: 280px;
+}
+
+.buy_end .icon {
+  margin-bottom: 16px;
+}
+
+.buy_end .icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.buy_end h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.buy_end p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.buy_end button {
+  background-color: #2d6cdf;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.buy_end button:hover {
+  background-color: #1c54b3;
+}
+
+/* 결제 완료 페이지 */
+.buy {
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 40px 30px;
+  max-width: 600px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.shadow {
+  padding: 40px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.buy .icon {
+  margin-bottom: 16px;
+}
+
+.buy .icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.buy h2 {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+.buy p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 24px;
+}
+
+.buy button {
+  background-color: #2d6cdf;
+  color: white;
+  padding: 10px 20px;
+  font-size: 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.buy button:hover {
+  background-color: #1c54b3;
+}
+
+/* 관리자 생성 페이지*/
+/* buy_form_2 전체 박스 */
+.buy_form_2 .container {
+  max-width: 600px;
+  margin: 60px auto;
+  padding: 40px 30px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+/* 제목 */
+.step-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+/* 설명 */
+.step-desc {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #555;
+}
+
+/* 공통 라벨 */
+.form-group label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+  display: block;
+  margin-top: 20px;
+}
+
+.register-input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+}
+
+.register-input:focus {
+  border-color: #a3241c;
+  outline: none;
+}
+
+/* 아이디 + 중복확인 가로 배치 */
+.id-field {
+  display: flex;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.id-field input {
+  flex: 1;
+}
+
+/* 중복 확인 버튼 */
+.btn-check {
+  padding: 10px 16px;
+  background-color: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-check:hover {
+  background-color: #1d4ed8;
+}
+
+/* 다음 단계 버튼 */
+.btn-next {
+  margin-top: 30px;
+  width: 100%;
+  padding: 14px 0;
+  background-color: #cf261a;
+  color: white;
+  border: none;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-next:hover {
+  background-color: #881e16;
 }

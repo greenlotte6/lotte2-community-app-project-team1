@@ -34,8 +34,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: wnstj050505@gmail.com
-    password: yhrh mdjx drdo ithj
+    username: clsrntkdgh@gmail.com
+    password: redohcjnlkzeagdo
     properties:
       mail:
         smtp:
@@ -71,16 +71,28 @@ spring:
         com.zaxxer.hikari: TRACE
 
   jpa:
-    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database: mysql
     hibernate:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-    show-sql: false
-    open-in-view: false
     properties:
       hibernate:
         format_sql: true
-        use_sql_comments: true
+        show_sql: false
+
+
+#  jpa:
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+#    hibernate:
+#      ddl-auto: create
+#      naming:
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+#    show-sql: false
+#    open-in-view: false
+#    properties:
+#      hibernate:
+#        format_sql: true
+#        use_sql_comments: true
 
 

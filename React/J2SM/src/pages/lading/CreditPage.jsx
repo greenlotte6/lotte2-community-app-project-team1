@@ -1,11 +1,13 @@
 import React from "react";
+import Credit from "../../components/lading/Credit";
 import { MainLayout } from "../../layouts/MainLayout";
-import { Main } from "../../components/lading/Main";
 
-export const MainPage = () => {
+const CreditPage = () => {
   return (
     <MainLayout>
-      <Main />
+      <Credit />
     </MainLayout>
   );
 };
+
+export default CreditPage;
