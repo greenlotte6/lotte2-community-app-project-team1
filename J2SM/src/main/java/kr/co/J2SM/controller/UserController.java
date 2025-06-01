@@ -4,11 +4,8 @@ import kr.co.J2SM.dto.UserDTO;
 import kr.co.J2SM.service.UserService;
 import kr.co.J2SM.util.JWTProvider;
 import kr.co.J2SM.dto.TermsDTO;
-import kr.co.J2SM.dto.UserDTO;
 import kr.co.J2SM.entity.User;
 import kr.co.J2SM.security.MyUserDetails;
-import kr.co.J2SM.service.UserService;
-import kr.co.J2SM.util.JWTProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
@@ -18,10 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.util.HashMap;
@@ -137,5 +131,10 @@ public class UserController {
         return ResponseEntity.ok(termsDTO);
     }
 
+    @GetMapping("/user/idCheck")
+    public ResponseEntity<Boolean> idCheck(@RequestParam("uid") String uid){
+        boolean exist = userService.existId(uid);
+        return ResponseEntity.ok(exist);
+    }
 
 }

@@ -1,7 +1,10 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // src 폴더 안의 모든 JS, JSX, TS, TSX 파일 포함
+    "./src/pages/main/MainPage.jsx",
+    "./src/components/common/Footer.jsx",
+    "./src/components/common/Header.jsx",
+    "./src/components/lading/Main.jsx",
     "./public/index.html", // public 폴더의 index.html도 포함 (필요 시)
   ],
   theme: {
