@@ -5,6 +5,7 @@ logging:
     org.hibernate.SQL: debug
     org.hibernate.type.descriptor.sql.BasicBinder: trace
 
+
     #jasypt:
     #encryptor:
     #password: ${JASYPT_ENCRYPTOR_PASSWORD}
@@ -34,8 +35,8 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: clsrntkdgh@gmail.com
-    password: redohcjnlkzeagdo
+    username: wnstj050505@gmail.com
+    password: yhrh mdjx drdo ithj
     properties:
       mail:
         smtp:
@@ -71,28 +72,16 @@ spring:
         com.zaxxer.hikari: TRACE
 
   jpa:
-    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    show-sql: false
+    open-in-view: false
     properties:
       hibernate:
         format_sql: true
-        show_sql: false
-
-
-#  jpa:
-#    database-platform: org.hibernate.dialect.MySQL8Dialect
-#    hibernate:
-#      ddl-auto: create
-#      naming:
-#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
-#    show-sql: false
-#    open-in-view: false
-#    properties:
-#      hibernate:
-#        format_sql: true
-#        use_sql_comments: true
+        use_sql_comments: true
 
 

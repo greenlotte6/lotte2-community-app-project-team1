@@ -1,5 +1,11 @@
 import axios from "axios";
-import { USER_LOGIN, USER_LOGOUT, USER_REGISTER, USER_TERMS } from "./_http";
+import {
+  USER_ID_CHECK,
+  USER_LOGIN,
+  USER_LOGOUT,
+  USER_REGISTER,
+  USER_TERMS,
+} from "./_http";
 
 export const getTerms = async () => {
   try {
@@ -38,6 +44,17 @@ export const getUserLogout = async () => {
     const response = await axios.get(`${USER_LOGOUT}`, {
       withCredentials: true,
     });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 아이디 체크
+export const checkId = async (data) => {
+  try {
+    const response = await axios.get(`${USER_ID_CHECK}`, data);
     console.log(response);
     return response.data;
   } catch (err) {
