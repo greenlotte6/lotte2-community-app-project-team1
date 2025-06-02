@@ -53,6 +53,7 @@
           </li>
         </ul>
       </div>
+
       <div class="container">
         <header>
           <div class="headerArea">
@@ -71,6 +72,7 @@
             </div>
           </div>
         </header>
+
         <main>
           <aside>
             <div class="sidemenu">
@@ -80,138 +82,162 @@
               <div class="sidelink"><a href="#">MemberShip</a></div>
               <div class="childArea">
                 <div>
-                  <img src="/images/Users.svg" alt="users" /><a href="#"
-                    >Employee Management</a
-                  ><img src="/images/Vector.svg" alt="vector" />
+                  <img src="/images/Home.svg" alt="users" />
+                  <a href="/view/Admin/adminMain.html">Home</a>
+                  <img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <div>
-                  <img src="/images/Users.svg" alt="users" /><a href="#"
-                    >MemberShip</a
-                  ><img src="/images/Vector.svg" alt="vector" />
+                  <img src="/images/Users.svg" alt="users" />
+                  <a href="/view/Admin/adminEmploy.html">Employee Management</a>
+                  <img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <div>
-                  <img src="/images/Users.svg" alt="users" /><a href="#"
-                    >Payment details</a
-                  ><img src="/images/Vector.svg" alt="vector" />
+                  <img src="/images/Users.svg" alt="users" />
+                  <a href="/view/Admin/adminMembership.html">MemberShip</a>
+                  <img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <div>
+                  <img src="/images/Credit card.svg" alt="users" />
+                  <a href="#">Payment details</a>
+                  <img src="/images/Vector.svg" alt="vector" />
                 </div>
               </div>
             </div>
           </aside>
+
           <div class="contentArea">
             <div class="topArea">
               <div class="Title">
-                <h3>Employee Management</h3>
+                <h3>MemberShip</h3>
               </div>
             </div>
+
             <div class="midArea">
-              <div class="plusBtn">
-                <button type="button">
-                  <img src="/images/user-add 1.svg" alt="useradd" /> 초대하기
-                </button>
+              <div class="memberShipArea">
+                <!-- Basic -->
+                <div class="GetStarted" id="basic">
+                  <h3>Basic</h3>
+                  <p>소규모 팀을 위한 실속형 플랜</p>
+                  <del>12,900</del>
+                  <h4>9,900</h4>
+                  <p>Basic - ₩9,900 /월</p>
+                  <button type="button" id="openInviteModalBtn">
+                    Get Started</button
+                  ><br />
+                  <div class="explanation">
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />일정/할일
+                      공유</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />메신저 및
+                      공지사항 게시판</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />본 파일 공유
+                      및 문서 작성 도구</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />대상 :
+                      스타트업, 소규모 조직<br />(3~10인 이하)</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Standard -->
+                <div class="GetStarted" id="standard">
+                  <h3>Standard</h3>
+                  <p>대부분의 기능을 사용할 수 있는 플랜</p>
+                  <del>24,900</del>
+                  <h4>19,900</h4>
+                  <p>Standard - ₩19,900 /월</p>
+                  <button type="button" id="openInviteModalBtn">
+                    Get Started</button
+                  ><br />
+                  <div class="explanation">
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />Basic 기능
+                      포함</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />프로젝트
+                      관리(칸반/간트차트)</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />외부 캘린더
+                      연동(Google/Outlook)</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />문서 공동 작성
+                      및 버전 관리</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />관리자
+                      대시보드 제공</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />대상 : 일반
+                      중소기업, 프로젝트 기반 팀</span
+                    >
+                  </div>
+                </div>
+
+                <!-- Premium -->
+                <div class="GetStarted" id="premium">
+                  <h3>Premium</h3>
+                  <p>대규모 조직을 위한 고급 플랜</p>
+                  <del>42,000</del>
+                  <h4>34,900</h4>
+                  <p>Premium - ₩34,900 /월</p>
+                  <button type="button" id="openInviteModalBtn">
+                    Get Started</button
+                  ><br />
+                  <div class="explanation">
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />Standard 기능
+                      포함</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />고급 보안 정책
+                      및 사용자 권한 설정</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />커스터마이징
+                      가능한 워크플로우</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />연동 API,
+                      ERP/CRM 연계</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />전담 고객 지원
+                      매니저</span
+                    ><br />
+                    <span
+                      ><img src="/images/Check.svg" alt="check" />대기업, 기관,
+                      고보안·고도화된 <br />
+                      운영 환경 필요 조직</span
+                    >
+                  </div>
+                </div>
               </div>
-              <div class="listArea">
-                <table>
-                  <tbody>
-                    <tr>
-                      <th><input type="checkbox" /></th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Phone Number</th>
-                      <th>Department</th>
-                      <th>Position</th>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" /></td>
-                      <td>
-                        <div>
-                          <img src="/images/user.png" alt="" /><span
-                            >정상수</span
-                          >
-                        </div>
-                      </td>
-                      <td>asd123@naver.com</td>
-                      <td>010-1234-4644</td>
-                      <td>Backend</td>
-                      <td>Manager</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" /></td>
-                      <td>
-                        <div>
-                          <img src="/images/user.png" alt="" /><span
-                            >정상수</span
-                          >
-                        </div>
-                      </td>
-                      <td>asd123@naver.com</td>
-                      <td>010-1234-4644</td>
-                      <td>Backend</td>
-                      <td>Manager</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" /></td>
-                      <td>
-                        <div>
-                          <img src="/images/user.png" alt="" /><span
-                            >정상수</span
-                          >
-                        </div>
-                      </td>
-                      <td>asd123@naver.com</td>
-                      <td>010-1234-4644</td>
-                      <td>Backend</td>
-                      <td>Manager</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" /></td>
-                      <td>
-                        <div>
-                          <img src="/images/user.png" alt="" /><span
-                            >정상수</span
-                          >
-                        </div>
-                      </td>
-                      <td>asd123@naver.com</td>
-                      <td>010-1234-4644</td>
-                      <td>Backend</td>
-                      <td>Manager</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" /></td>
-                      <td>
-                        <div>
-                          <img src="/images/user.png" alt="" /><span
-                            >정상수</span
-                          >
-                        </div>
-                      </td>
-                      <td>asd123@naver.com</td>
-                      <td>010-1234-4644</td>
-                      <td>Backend</td>
-                      <td>Manager</td>
-                    </tr>
-                    <tr>
-                      <td><input type="checkbox" /></td>
-                      <td>
-                        <div>
-                          <img src="/images/user.png" alt="" /><span
-                            >정상수</span
-                          >
-                        </div>
-                      </td>
-                      <td>asd123@naver.com</td>
-                      <td>010-1234-4644</td>
-                      <td>Backend</td>
-                      <td>Manager</td>
-                    </tr>
-                  </tbody>
-                </table>
+              <div class="modalOverlay" id="inviteModal">
+                <div class="modalContent">
+                  <h3>사원 초대</h3>
+                  <input type="text" placeholder="회사명 입력" />
+                  <input type="text" placeholder="부서 입력" />
+                  <input type="text" placeholder="직책 입력" />
+                  <input type="text" placeholder="성명 입력" />
+                  <input type="text" placeholder="이메일 입력" />
+                  <div class="modalButtons">
+                    <button id="inviteConfirmBtn">초대</button>
+                    <button id="inviteCancelBtn">취소</button>
+                  </div>
+                </div>
               </div>
             </div>
-            <div class="bottomArea"></div>
           </div>
         </main>
-        <footer></footer>
       </div>
     </div>
   </body>
