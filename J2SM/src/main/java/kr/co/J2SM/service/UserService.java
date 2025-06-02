@@ -3,12 +3,16 @@ package kr.co.J2SM.service;
 import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
-import kr.co.J2SM.dto.TermsDTO;
-import kr.co.J2SM.dto.UserDTO;
-import kr.co.J2SM.entity.Terms;
-import kr.co.J2SM.entity.User;
-import kr.co.J2SM.repository.TermsRepository;
-import kr.co.J2SM.repository.UserRepository;
+import kr.co.J2SM.dto.user.TermsDTO;
+import kr.co.J2SM.dto.user.UserDTO;
+import kr.co.J2SM.entity.user.Terms;
+import kr.co.J2SM.entity.user.User;
+import kr.co.J2SM.entity.company.Company;
+import kr.co.J2SM.entity.company.Department;
+import kr.co.J2SM.repository.DepartmentRepository;
+import kr.co.J2SM.repository.user.TermsRepository;
+import kr.co.J2SM.repository.user.UserRepository;
+import kr.co.J2SM.repository.company.CompanyRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,6 +21,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -27,8 +32,10 @@ public class UserService{
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
-    private final ModelMapper modelMapper;
+    private final CompanyRepository companyRepository;
+    private final DepartmentRepository departmentRepository;
     private final TermsRepository termsRepository;
+    private final ModelMapper modelMapper;
     private final JavaMailSenderImpl mailSender;
 
     public String register(UserDTO userDTO) {
@@ -90,5 +97,16 @@ public class UserService{
             log.error(e.getMessage());
         }
         return String.valueOf(code);
+    }
+
+    public void companyAll() {
+
+        Company company = Company.builder()
+                .cno(1)
+                .build();
+        List<Department> list = departmentRepository.findByCompany(company);
+
+        System.out.println(list);
+
     }
 }

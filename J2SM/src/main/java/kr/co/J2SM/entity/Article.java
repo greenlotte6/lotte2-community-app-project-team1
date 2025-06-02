@@ -1,6 +1,7 @@
 package kr.co.J2SM.entity;
 
 import jakarta.persistence.*;
+import kr.co.J2SM.entity.user.User;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 

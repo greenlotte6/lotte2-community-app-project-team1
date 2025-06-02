@@ -3,7 +3,7 @@ package kr.co.J2SM.util;
 
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
-import kr.co.J2SM.entity.User;
+import kr.co.J2SM.entity.user.User;
 
 import lombok.Getter;
 import lombok.extern.log4j.Log4j2;

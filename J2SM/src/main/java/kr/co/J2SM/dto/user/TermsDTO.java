@@ -1,4 +1,4 @@
-package kr.co.J2SM.dto;
+package kr.co.J2SM.dto.user;
 
 import lombok.*;
 

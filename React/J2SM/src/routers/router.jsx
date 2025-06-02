@@ -10,6 +10,7 @@ import CreditPage from "../pages/lading/CreditPage";
 import CreditResultPage from "../pages/lading/CreditResultPage";
 import AdminRegisterPage from "../pages/lading/AdminRegisterPage";
 import EmailValidPage from "../pages/lading/EmailValidPage";
+import AdminInfoRegisterPage from "../pages/lading/AdminInfoRegisterPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -22,6 +23,7 @@ const router = createBrowserRouter([
   { path: "/credit/result", element: <CreditResultPage /> },
   { path: "/credit/register", element: <AdminRegisterPage /> },
   { path: "/credit/email", element: <EmailValidPage /> },
+  { path: "/credit/info", element: <AdminInfoRegisterPage /> },
 
   { path: "/user/login", element: <LoginPage /> },
   { path: "/user/findpass", element: <FindPassPage /> },

@@ -2,7 +2,7 @@
 package kr.co.J2SM.security;
 
 
-import kr.co.J2SM.entity.User;
+import kr.co.J2SM.entity.user.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;

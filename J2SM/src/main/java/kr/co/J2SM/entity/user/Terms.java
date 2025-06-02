@@ -1,4 +1,4 @@
-package kr.co.J2SM.entity;
+package kr.co.J2SM.entity.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

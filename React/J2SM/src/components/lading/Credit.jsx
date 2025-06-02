@@ -1,10 +1,21 @@
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { postMemberShip } from "../../api/userAPI";
 
 const Credit = () => {
   const navigate = useNavigate();
 
   const result = () => {
+    const fetchData = async () => {
+      try {
+        const data = await postMemberShip(type);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
+
     navigate("/credit/result");
   };
 

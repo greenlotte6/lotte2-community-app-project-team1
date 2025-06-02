@@ -1,6 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getVersion } from "../../api/configAPI";
 
 export const Footer = () => {
+  const [version, setVersion] = useState();
+
+  const fetchData = async () => {
+    try {
+      const data = await getVersion();
+      setVersion(data);
+    } catch (err) {
+      setVersion("Localhost 입니다.");
+      console.error(err);
+    }
+  };
+
+  // 호출
+  useEffect(() => {
+    fetchData();
+  }, []); // 최초 한 번만 실행
+
   return (
     <>
       <footer className="footer">
@@ -35,15 +53,15 @@ export const Footer = () => {
           <div className="footer-column">
             <h4>Column Four</h4>
             <div className="store-badges">
-              <img src="images/app-store icon.png" alt="App Store" />
-              <img src="images/Play_Store.png" alt="Google Play" />
+              <img src="/images/app-store icon.png" alt="App Store" />
+              <img src="/images/Play_Store.png" alt="Google Play" />
             </div>
           </div>
         </div>
         <div className="footer-bottom">
           <p>CompanyName © 2025. All rights reserved.</p>
           <div className="footer-links">
-            <a href="#">version</a>
+            <a href="#">{version}</a>
           </div>
         </div>
       </footer>

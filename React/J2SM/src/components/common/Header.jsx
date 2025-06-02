@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Link as ScrollLink } from "react-scroll";
 
 export const Header = () => {
   // 페이지 이동을 위한 navigate
@@ -32,9 +33,15 @@ export const Header = () => {
           </div>
 
           <nav>
-            <a href="#">기능소개</a>
-            <a href="#">이용요금</a>
-            <a href="#">지원센터</a>
+            <ScrollLink to="features" smooth={true} duration={500} offset={-80}>
+              기능소개
+            </ScrollLink>
+            <ScrollLink to="credits" smooth={true} duration={500} offset={-80}>
+              이용요금
+            </ScrollLink>
+            <ScrollLink to="support" smooth={true} duration={500} offset={-80}>
+              지원센터
+            </ScrollLink>
           </nav>
 
           <div id="header_right">
