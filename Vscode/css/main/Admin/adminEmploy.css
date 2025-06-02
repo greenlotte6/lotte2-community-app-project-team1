@@ -331,86 +331,190 @@ main .contentArea {
 }
 .midArea {
   width: 100%;
-  height: 500px;
+  height: auto;
 }
-.memberShipArea {
-  width: 100%;
-  height: 570px;
+.plusBtn {
   display: flex;
   justify-content: space-between;
-  padding: 20px 0 0 0;
+  padding: 20px 15px 15px 5px;
 }
-.GetStarted {
-  padding: 30px 0 0 0;
+.searchArea {
+  align-items: center;
 }
-.GetStarted h3 {
-  font-size: 26px;
-  margin-bottom: 20px;
+.searchArea select {
+  padding: 9px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  position: relative;
+  top: 0.4px;
 }
-.GetStarted p {
-  font-size: 15px;
-  margin-bottom: 10px;
+.searchArea option {
+  font-size: 14px;
 }
-.GetStarted p:nth-of-type(2) {
-  font-size: 11px;
-}
-.GetStarted button {
+.plusBtn input {
   padding: 10px;
-  background-color: #0f62fe;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+.plusBtn button {
+  all: unset;
+  cursor: pointer;
+}
+.searchArea button {
+  background-color: #2f80ed;
   color: white;
   border: none;
-  border-radius: 3px;
-  margin-bottom: 15px;
+  padding: 10px 15px 10px 15px;
+  font-size: 14px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
 }
-.GetStarted del {
-  font-size: 32px;
-  font-weight: bold;
-  color: #b9b9b9;
-  margin-bottom: 10px;
+
+.searchArea button:hover {
+  background-color: #1c6dd0;
+  box-shadow: 0 0 5px rgba(47, 128, 237, 0.4);
 }
-.GetStarted h4 {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 15px;
+.listArea {
+  width: 100%;
 }
-.explanation {
+.listArea table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.midArea table th:nth-of-type(1) {
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.midArea table th:nth-of-type(6) {
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+.midArea th {
+  padding: 15px 10px 15px 10px;
   text-align: left;
+  background-color: #c7defd;
+}
+.midArea td {
+  padding: 10px;
+  font-size: 14px;
+}
+.midArea td div {
+  display: flex;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #c2c2c2;
+  align-items: center;
+}
+.midArea td div img {
+  width: 20px;
+  height: 20px;
+  margin-right: 8px;
   position: relative;
-  left: 17%;
-  line-height: 25px;
-  width: 260px;
+  left: 6px;
 }
-.explanation img {
-  width: 17px;
-  height: 17px;
+.midArea td div span {
+  position: relative;
+  left: 10px;
+  font-size: 14px;
 }
-.explanation span {
-  font-size: 15px;
-}
-#basic {
-  width: 30%;
-  height: 100%;
-  border: 1px solid black;
-  margin-left: 20px;
-  text-align: center;
-}
-#standard {
-  width: 30%;
-  height: 100%;
-  border: 1px solid black;
-  text-align: center;
-}
-#premium {
-  width: 30%;
-  height: 100%;
-  border: 1px solid black;
-  margin-right: 20px;
-  text-align: center;
-}
+
 .bottomArea {
   width: 100%;
   height: auto;
   display: flex;
+}
+.btnArea {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 10px 20px 10px;
+  align-items: center;
+}
+.pg {
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  padding: 7px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: transparent; /* 숫자 안보이게 */
+  position: relative;
+  opacity: 0.6;
+}
+
+.pg.active {
+  padding: 9px;
+  background-color: #2f80ed;
+  color: white;
+  color: transparent; /* 숫자 안보이게 */
+  opacity: 1;
+}
+.pgArea {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.pgArea button {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+.modifyBtn {
+  background-color: #e0f0ff;
+  color: #2f80ed;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.modifyBtn:hover {
+  background-color: #d0e6ff;
+  box-shadow: 0 0 5px rgba(47, 128, 237, 0.4);
+}
+.deleteBtn {
+  background-color: #ffe5e5;
+  color: #e53935;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+.deleteBtn:hover {
+  background-color: #ffc1c1;
+  box-shadow: 0 0 5px rgba(229, 57, 53, 0.4);
+}
+
+body.dark-mode .midArea th {
+  background-color: #5a6b7d; /* 기존 연블루 → 어두운 블루그레이 */
+}
+
+body.dark-mode .searchArea button {
+  background-color: #1f5dbd; /* 기존 블루보다 살짝 어둡게 */
+}
+
+body.dark-mode .modifyBtn {
+  background-color: #2668a8; /* 하늘색 → 짙은 블루 */
+}
+
+body.dark-mode .deleteBtn {
+  background-color: #b94a48; /* 연분홍 → 중간 톤 레드 */
+}
+
+body.dark-mode .pg {
+  background-color: #aaa; /* 회색 점 */
+}
+body.dark-mode .pg.active {
+  background-color: #2f80ed;
 }
 
 body.dark-mode aside {
@@ -446,6 +550,24 @@ body.dark-mode .childArea div a {
 
 body.dark-mode .childArea div img {
   filter: brightness(0.8);
+}
+body.dark-mode .searchArea select,
+body.dark-mode .searchArea option {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+body.dark-mode .searchArea select {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+body.dark-mode .searchArea input {
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+}
+body.dark-mode .searchArea input::placeholder {
+  color: #f0f0f0;
 }
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/

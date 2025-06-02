@@ -250,7 +250,7 @@ main aside {
   margin-top: 15px;
 }
 .sideTop {
-  border-bottom: 1px solid;
+  border-bottom: 2px solid #898989;
   margin-bottom: 20px;
 }
 .sidemenu h3 {
@@ -263,6 +263,27 @@ main aside {
 }
 .sidelink {
   margin-bottom: 20px;
+}
+.childArea div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px;
+  border-radius: 30px;
+  background-color: #c7defd;
+  margin-bottom: 15px;
+}
+.childArea div img {
+  width: 18px;
+  height: 18px;
+}
+.childArea div a {
+  color: #2f80ed;
+  font-size: 14px;
+}
+.childArea div img:nth-of-type(2) {
+  width: 15px;
+  height: 15px;
 }
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
@@ -302,10 +323,17 @@ main .contentArea {
   width: 100%;
   height: auto;
 }
-.mainProfile h3 {
-  font-size: 20px;
-  margin-bottom: 20px;
-  color: #4285f4;
+.Title {
+  border-bottom: 2px solid #898989;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.Title h3 {
+  font-size: 24px;
+  color: #2f80ed;
+  margin-top: 3px;
+  margin-bottom: 28px;
+  margin-left: 10px;
 }
 
 .infoArea {
@@ -513,6 +541,41 @@ main .contentArea {
 }
 .boardList table td {
   padding: 10px 0 10px 0;
+}
+
+body.dark-mode aside {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .sidemenu {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .sideTop {
+  border-bottom: 2px solid #666;
+}
+
+body.dark-mode .sidemenu h3,
+body.dark-mode .sidemenu a {
+  color: #ddd;
+}
+
+body.dark-mode .sidelink {
+  background-color: transparent;
+}
+
+body.dark-mode .childArea div {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .childArea div a {
+  color: #90caf9;
+}
+
+body.dark-mode .childArea div img {
+  filter: brightness(0.8);
 }
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
