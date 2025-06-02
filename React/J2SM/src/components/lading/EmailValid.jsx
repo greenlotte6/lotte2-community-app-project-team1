@@ -4,6 +4,7 @@ import { checkEmail, EmailCodeValid, EmailSend } from "../../api/userAPI";
 
 const EmailValid = () => {
   const navigate = useNavigate();
+
   let validText = "";
   const [userEmailCheck, setUserEmailCheck] = useState(false);
   const [code, setCode] = useState();
@@ -14,7 +15,7 @@ const EmailValid = () => {
   const [showEmailValid, setShowEmailValid] = useState(false);
 
   const move = () => {
-    navigate("/credit/email");
+    navigate("/credit/info");
   };
 
   const [email, setEmail] = useState();
@@ -86,7 +87,7 @@ const EmailValid = () => {
           const data = await EmailCodeValid(code);
 
           if (data == "인증 성공") {
-            alert("인증 성공");
+            move();
           } else {
             alert("인증 실패");
           }

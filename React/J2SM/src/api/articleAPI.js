@@ -1,9 +1,9 @@
 import axios from "axios";
-import { ARTICLE_LIST, ARTICLE_WRITE } from "./_http";
+import { ARTICLE_LIST, ARTICLE_WRITE, VERSION } from "./_http";
 
-export const getArticleAll = async (pg, cate) => {
+export const getArticleAll = async () => {
   try {
-    const response = await axios.get(`${ARTICLE_LIST}?pg=${pg}&cate=${cate}`, {
+    const response = await axios.get(`${VERSION}`, {
       withCredentials: true,
     });
     console.log(response);

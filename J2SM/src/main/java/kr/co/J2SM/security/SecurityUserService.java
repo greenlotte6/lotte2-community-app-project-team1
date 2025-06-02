@@ -1,7 +1,7 @@
 package kr.co.J2SM.security;
 
-import kr.co.J2SM.entity.User;
-import kr.co.J2SM.repository.UserRepository;
+import kr.co.J2SM.entity.user.User;
+import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetails;

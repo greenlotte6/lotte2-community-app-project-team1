@@ -46,7 +46,7 @@ spring:
             enable: true
   application:
     name: J2SM
-    version: SNAPSHOT
+    version: 0.0.1-SNAPSHOT
 
   thymeleaf:
     prefix: classpath:/templates

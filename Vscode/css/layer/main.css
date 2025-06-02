@@ -109,6 +109,7 @@ main {
   width: auto;
   height: auto;
   min-height: 600px;
+  overflow: hidden;
 }
 
 .buy_form_2 {

@@ -2,11 +2,11 @@ package kr.co.J2SM.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import kr.co.J2SM.dto.UserDTO;
+import kr.co.J2SM.dto.user.UserDTO;
 import kr.co.J2SM.service.UserService;
 import kr.co.J2SM.util.JWTProvider;
-import kr.co.J2SM.dto.TermsDTO;
-import kr.co.J2SM.entity.User;
+import kr.co.J2SM.dto.user.TermsDTO;
+import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.security.MyUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -133,43 +133,38 @@ public class UserController {
         TermsDTO termsDTO = userService.terms();
         return ResponseEntity.ok(termsDTO);
     }
-
+    
+    
+    // 아이디 검증 메서드
     @GetMapping("/idCheck")
     public ResponseEntity<Boolean> idCheck(@RequestParam("uid") String uid){
         boolean exist = userService.existId(uid);
         return ResponseEntity.ok(exist);
     }
-
+    
+    
+    // 아이디 검증 성공 시 세션 저장
     @GetMapping("/idCheck/success")
     public ResponseEntity idCheck(@RequestParam("uid") String uid,
                                   @RequestParam("pass") String pass,
                                   HttpServletRequest req){
-
-        System.out.println(uid);
-        System.out.println(pass);
-
+        
         HttpSession session = req.getSession();
 
         UserDTO userDTO = UserDTO.builder()
                 .uid(uid)
                 .pass(pass)
+                .membership((String) session.getAttribute("membership"))
                 .build();
+
+        log.info("아이디 검증 성공 시 " + userDTO);
+
         session.setAttribute("user",userDTO);
 
         return ResponseEntity.ok("ok");
     }
-
-    @GetMapping("/idCheck/test")
-    public ResponseEntity idCheck(
-                                  HttpServletRequest req){
-        HttpSession session = req.getSession();
-
-        UserDTO userDTO = (UserDTO) session.getAttribute("user");
-        System.out.println(userDTO);
-
-        return ResponseEntity.ok(userDTO);
-    }
-
+    
+    // 이메일 중복 체크
     @GetMapping("/emailCheck")
     public ResponseEntity emailCheck(@RequestParam("email") String email,
                                         HttpServletRequest req){
@@ -186,6 +181,7 @@ public class UserController {
         return ResponseEntity.ok(exist);
     }
 
+    // 이메일 코드 전송
     @GetMapping("/emailSend")
     public ResponseEntity emailSend(@RequestParam("email") String email,
                                       HttpServletRequest req){
@@ -196,10 +192,12 @@ public class UserController {
 
         HttpSession session = req.getSession();
         session.setAttribute("AuthCode", code);
+        session.setAttribute("email", email);
 
         return ResponseEntity.ok(code);
     }
 
+    // 이메일 코드 검증
     @GetMapping("/emailCodeValid")
     public ResponseEntity codeValid(@RequestParam("code") String code,
                                     HttpServletRequest req){
@@ -207,11 +205,10 @@ public class UserController {
         HttpSession session = req.getSession();
         String AuthCode = (String) session.getAttribute("AuthCode");
 
-        System.out.println(AuthCode);
-        System.out.println(code);
-
-
         if(AuthCode.equals(code)){
+            UserDTO userDTO = (UserDTO) session.getAttribute("user");
+            userDTO.setEmail( (String) session.getAttribute("email"));
+            session.setAttribute("user", userDTO);
             return ResponseEntity.ok("인증 성공");    
         }else{
             return ResponseEntity.ok("인증실패");
@@ -219,5 +216,35 @@ public class UserController {
 
     }
 
+    @PostMapping("/membership")
+    public ResponseEntity membership(@RequestBody UserDTO userDTO,
+                                     HttpServletRequest req){
+        
+        HttpSession session = req.getSession();
+        session.setAttribute("membership", userDTO.getMembership());
+        log.info("membership : " + userDTO.getMembership());
+        return ResponseEntity.ok("ok");
+
+    }
+
+
+    /* 테스트 용 곧 삭제 */
+    @GetMapping("/company")
+    public ResponseEntity company(){
+        userService.companyAll();
+        return ResponseEntity.ok("ok");
+    }
+
+
+    @GetMapping("/idCheck/test")
+    public ResponseEntity idCheck(
+            HttpServletRequest req){
+        HttpSession session = req.getSession();
+
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        System.out.println(userDTO);
+
+        return ResponseEntity.ok(userDTO);
+    }
 
 }

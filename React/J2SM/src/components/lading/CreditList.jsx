@@ -86,7 +86,7 @@ const CreditList = () => {
                 <br />
               </ul>
             </div>
-            <div class="btn" style={{ marginTop: "55px" }}>
+            <div class="btn">
               <Link to="/credit/choice?type=Premium">결제 하기</Link>
             </div>
           </div>
