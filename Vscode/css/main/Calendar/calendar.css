@@ -58,10 +58,11 @@
     }
 
     .event {
-      background-color: #f6b3dc;
-      padding: 4px;
-      margin-top: 5px;
-      font-size: 12px;
+      font-size: 13px;
+      padding-left: 5px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .modal {
@@ -133,6 +134,13 @@
       color: #f0f0f0;
     }
 
+    .edit-button{
+      border-radius: 20px;
+      width: 250px;
+      height: 30px;
+      margin: 0 auto;
+      background-color: #a1c4fd;
+    }
     .event-range {
       background-color: #9cb7e2;
       color: #fff;
@@ -160,6 +168,12 @@
     .flatpickr-calendar {
      max-width: 18% !important;
     }
+
+    input[type="text"] {
+      background-color: white;
+      z-index: 10000;
+      position: relative;
+    }
     
     #view-schedule-modal {
         position: absolute;
@@ -174,4 +188,39 @@
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         display: none;
         border-radius: 8px;
+    }
+
+    #detail-schedule-modal textarea {
+      resize: vertical;
+      padding: 6px;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+   
+    #detail-schedule-modal label {
+      text-align: left;
+      font-size: 14px;
+      margin-top: 6px;
+    }
+ 
+    .flatpickr-calendar {
+     max-width: 16.3% !important;
+    }
+
+    .modal-view {
+      position: absolute;
+      z-index: 1000;
+      display: none;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      transition: opacity 0.2s ease;
+      opacity: 0.7;
+      
+    }
+
+        
+    .flatpickr-input {
+      display:block;
     }

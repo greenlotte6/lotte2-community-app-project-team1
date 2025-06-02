@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
+
+    <script src="/scripts/dashboardMain.js"></script>
+    <style>
+    h2 {
+      margin-bottom: 10px;
+    }
+    .board-main{
+      padding-top: 30px;
+      border-top: 3px solid black;
+    }
+
+    .board-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .board-top select,
+    .board-top input[type="text"] {
+      padding: 5px;
+      font-size: 14px;
+    }
+
+    .board-top button {
+      padding: 6px 10px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    thead {
+      background-color: #8dbff7;
+      color: white;
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+    }
+
+    td.title {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    .pagination {
+      margin-top: 20px;
+      text-align: center;
+    }
+
+    .pagination span,
+    .pagination a {
+      margin: 0 5px;
+      cursor: pointer;
+      text-decoration: none;
+      color: black;
+    }
+
+    .pagination a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="#"><img src="/images/Grid.svg" alt="dashboard" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/File text.svg" alt="document" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Calendar.svg" alt="calendar" /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Settings.svg" alt="setting" /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+        <main>
+          <aside>
+            <div class="sidemenu">
+              <div class="sideTop">
+                <h3>N Board</h3>
+              </div>
+              <a href="#">Home</a>
+            </div>
+          </aside>
+          <div class="contentArea">
+           <div class="board-main">
+            <div class="board-top">
+                <select>
+                  <option>공지사항</option>
+                </select>
+                <div>
+                  <input type="text" placeholder="검색어를 입력하세요">
+                  <button>검색</button>
+                </div>
+              </div>
+              <table>
+                <thead>
+                  <tr>
+                    <th>번호</th>
+                    <th>제목</th>
+                    <th>작성자</th>
+                    <th>작성일</th>
+                    <th>조회</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td class="title">[중요]사내 일정 공유드립니다.</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td class="title">사내 회식 일정(자율)</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>1924</td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td class="title">사내 건강검진 일정 공유</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td class="title">5월 행사 일정 공유</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td class="title">3차 성과발표회 일정</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td class="title">결제서류 제출 방법</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="pagination">
+                <span>&lt;</span>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <span>&gt;</span>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer></footer>
+      </div>
+    </div>
+  </body>
+</html>
