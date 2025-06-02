@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AdminMain</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <link rel="stylesheet" href="/css/main/Admin/adminMain.css" />
+
+    <script src="/scripts/adminMain.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="#"><img src="/images/Monitor.svg" alt="admin" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/File text.svg" alt="document" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Calendar.svg" alt="calendar" /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Settings.svg" alt="setting" /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+        <main>
+          <aside>
+            <div class="sidemenu">
+              <div class="sideTop">
+                <h3>Admin</h3>
+              </div>
+              <div class="sidelink"><a href="#">Main</a><br /></div>
+              <div class="sidelink"><a href="#">MemberShip</a></div>
+            </div>
+          </aside>
+          <div class="contentArea">
+            <div class="topArea">
+              <div class="mainProfile">
+                <h3>CompanyName</h3>
+                <div class="infoArea">
+                  <div class="chartBox">
+                    <canvas id="departmentChart"></canvas>
+                  </div>
+                  <div class="chartBox">
+                    <canvas id="userStatusChart"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="midArea">
+              <div class="memberShipArea">
+                <div class="titleArea">
+                  <h3>활성화된 멤버쉽</h3>
+                </div>
+                <div class="memberShip"></div>
+              </div>
+            </div>
+            <div class="bottomArea">
+              <div class="boardArea">
+                <h3>게시판</h3>
+                <div class="boardList">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="boardArea">
+                <h3>게시판</h3>
+                <div class="boardList">
+                  <table>
+                    <tbody>
+                      <tr>
+                        <th>제목</th>
+                        <th>내용</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                      <tr>
+                        <td>제목</td>
+                        <td>내용</td>
+                        <td>작성자</td>
+                        <td>작성일</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer></footer>
+      </div>
+    </div>
+  </body>
+</html>

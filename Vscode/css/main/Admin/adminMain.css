@@ -75,6 +75,21 @@ body {
   padding: 20px 20px 0 30px;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
+.container.dark-mode .mainProfile h3,
+.container.dark-mode .titleArea h3,
+.container.dark-mode .bottomArea h3 {
+  color: #90caf9; /* 연한 하늘색 */
+}
+
+.container.dark-mode .chartBox {
+  background-color: #3a3a3a;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+}
+
+.container.dark-mode .chartBox canvas {
+  background-color: transparent;
+}
+
 body.dark-mode .projectContent {
   background-color: #3a3a3a;
   color: #ccc;
@@ -246,6 +261,9 @@ main aside {
 .sidemenu a {
   color: #898989;
 }
+.sidelink {
+  margin-bottom: 20px;
+}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 main {
@@ -292,9 +310,11 @@ main .contentArea {
 
 .infoArea {
   display: flex;
+  justify-content: space-between;
   align-items: flex-start;
-  gap: 30px;
-  flex-wrap: wrap;
+  gap: 20px;
+  flex-wrap: nowrap;
+  width: 100%;
 }
 
 .photoBox {
@@ -309,6 +329,29 @@ main .contentArea {
   background-color: #ddd;
   border: 2px dashed #ccc;
   border-radius: 10px;
+}
+.chartBox {
+  flex: 1 1 0; /* 비율 기반 너비 설정 */
+  min-width: 0;
+  max-width: 50%; /* 화면의 절반까지만 */
+  height: 300px;
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+}
+#departmentChart {
+  position: relative;
+  left: 120px;
+}
+#userStatusChart {
+  position: relative;
+  top: 55px;
+}
+.bottomArea {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .verifyBtn {
@@ -335,7 +378,6 @@ main .contentArea {
   display: inline-block;
   width: 60px;
   color: #555;
-  margin-right: 15px;
 }
 .container.dark-mode .photoPlaceholder {
   background-color: #444;
@@ -409,98 +451,29 @@ main .contentArea {
 }
 
 .mainProfile {
-  width: 50%;
-}
-
-.scheduleArea {
-  width: 50%;
-}
-.scheduleArea h3 {
-  font-size: 20px;
-  margin-bottom: 20px;
-  color: #4285f4;
-}
-.scheduleTable {
   width: 100%;
-  line-height: 24px;
-}
-.scheduleTable td {
-  padding-bottom: 10px;
 }
 .midArea {
   width: 100%;
   height: auto;
 }
-.recentArea {
+.memberShipArea {
   width: 100%;
+  height: auto;
   margin-top: 20px;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
-.recentArea h3 {
+.titleArea {
+  margin-bottom: 15px;
+}
+.memberShipArea h3 {
   font-size: 20px;
   margin-bottom: 20px;
   color: #4285f4;
 }
 
-.visitPageCard {
-  width: 80px;
-  height: 80px;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  box-shadow: 0 0 0 1px #eee;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: box-shadow 0.2s ease, background-color 0.2s ease;
-  scroll-snap-align: start;
-  flex-shrink: 0;
-}
-.visitPageCard:hover {
-  background-color: #f0f0f0;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  transform: scale(1.05);
-}
-.visitPageCard img {
-  width: 20px;
-  height: 20px;
-  margin-bottom: 6px;
-  opacity: 0.6;
-}
-.visitPageCard p {
-  font-size: 12px;
-  color: #555;
-  margin: 0;
-}
-.visitArea {
-  display: grid;
-  grid-auto-flow: column; /* 한 줄로 배치 */
-  grid-auto-columns: max-content; /* 카드 크기만큼 칸 생성 */
-  gap: 12px;
-  overflow-x: auto; /* 가로 스크롤 가능 */
-  padding-bottom: 10px;
-  scroll-snap-type: x mandatory; /* 부드럽게 스냅 이동 */
-  -ms-overflow-style: none; /* IE */
-  scrollbar-width: none; /* Firefox */
-}
-
-.visitArea::-webkit-scrollbar {
-  display: none;
-}
-
-.visitSlider {
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.visitArea.dragging {
-  cursor: grabbing;
-  cursor: -webkit-grabbing;
-}
-.visitArea {
-  scroll-behavior: smooth;
-}
 .bottomArea {
   width: 100%;
   height: auto;
@@ -511,128 +484,35 @@ main .contentArea {
   margin-bottom: 20px;
   color: #4285f4;
 }
-.bottomArea .projectArea {
+.bottomArea .boardArea {
   width: 48%;
 }
-.projectContent {
-  padding: 5px;
-  background-color: rgb(235, 235, 235);
-  border-radius: 8px;
-  margin-bottom: 15px;
-  color: #898989;
-  transition: all 0.2s ease-in-out;
+.boardList table {
+  width: 100%;
 }
-.projectContent:hover {
-  background-color: rgb(220, 220, 220); /* 살짝 밝게 */
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
-  color: #555; /* 글자색 강조 */
-  font-weight: 600; /* 진하게 */
-  transition: all 0.2s ease-in-out;
-  transform: scale(1.03);
+.boardList table th {
+  padding: 10px 0 10px 0;
 }
-
-.bottomArea .calendarArea {
-  width: 48%;
-  background-color: white;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
-  margin-left: 30px;
+.boardList table th:nth-of-type(1) {
+  width: 80px;
 }
-.flatpickr-calendar {
-  width: 100% !important;
-  max-width: 100% !important;
+.boardList table th:nth-of-type(2) {
+  width: 130px;
 }
-
-.flatpickr-innerContainer {
-  width: 100% !important;
-  display: flex;
-  flex-direction: column;
+.boardList table th:nth-of-type(3) {
+  width: 50px;
 }
-
-.flatpickr-weekdays,
-.dayContainer {
-  width: 100% !important;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+.boardList table th:nth-of-type(4) {
+  width: 90px;
 }
-body.dark-mode .calendarArea {
-  background-color: #2a2a2a;
-  color: #fff;
-}
-
-.flatpickr-rContainer {
-  width: 375px;
-}
-.numInputWrapper {
-  display: none;
-}
-.numInput {
-  display: none;
-}
-
-.calendarWrapper {
-  display: flex;
-  gap: 20px;
-  align-items: flex-start;
-}
-
-.scheduleInfoBox {
-  flex: 1;
-  padding: 10px;
-  background-color: #f8f8f8;
-  border-radius: 10px;
-  font-size: 14px;
-  color: #333;
-  min-width: 120px;
-}
-
-.scheduleInfoBox ul {
-  padding-left: 18px;
-  margin-top: 5px;
-}
-
-.scheduleInfoBox li {
-  margin-bottom: 4px;
-  list-style: disc;
-}
-
-/* 다크모드용 */
-.container.dark-mode .scheduleInfoBox {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-}
-
-.flatpickr-input {
-  display: none;
-}
-
-/* 달력 전체 너비 강제 설정 */
-.flatpickr-calendar {
-  width: 100% !important;
-  max-width: 100% !important;
-}
-
-/* 날짜 표시하는 영역도 강제 설정 */
-.flatpickr-days,
-.dayContainer {
-  width: 100% !important;
-  max-width: 100% !important;
-  display: flex !important;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-
-/* 날짜 각각 크기 균등하게 */
-.flatpickr-day {
-  flex: 1 0 calc(100% / 7); /* 7일 기준으로 1줄 나누기 */
-  max-width: calc(100% / 7);
-  height: 36px;
-  line-height: 36px;
+.boardList table td:nth-of-type(3) {
   text-align: center;
-  border-radius: 6px;
-  margin-bottom: 4px;
+}
+.boardList table td:nth-of-type(4) {
+  text-align: center;
+}
+.boardList table td {
+  padding: 10px 0 10px 0;
 }
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
