@@ -13,6 +13,7 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
+    <link rel="stylesheet" href="/css/main/Calendar/calendar.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
@@ -20,73 +21,24 @@
     <script src="/scripts/dashboardMain.js"></script>
 
     <style>
-
-      body {
-      overflow-x: hidden;
+    #detail-schedule-modal textarea {
+      resize: vertical;
+      padding: 6px;
+      border-radius: 6px;
+      font-family: inherit;
     }
-      #calendar-container {
-      width: 100%;
-      max-width: 1000px;
-      margin: 10px auto;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      overflow-x: hidden;
+   
+    #detail-schedule-modal label {
+      text-align: left;
+      font-size: 14px;
+      margin-top: 6px;
     }
-
-    .calendar-header {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-      font-size: 18px;
-      font-weight: bold;
+ 
+    .flatpickr-calendar {
+     max-width: 16.3% !important;
     }
 
-    .calendar-header button {
-      background: none;
-      border: none;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .calendar-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .calendar-table th,
-    .calendar-table td {
-      width: 14.28%;
-      height: 90px;
-      border: 1px solid #ddd;
-      vertical-align: top;
-    }
-
-    .calendar-table th {
-      background: #0A468C;
-      color: white;
-      height: 40px;
-      padding-top: 20px;
-    }
-
-    .calendar-table td {
-      cursor: pointer;
-      position: relative;
-    }
-
-    .calendar-table td:hover {
-      background-color: #f0f0f0;
-    }
-
-    .event {
-      background-color: #f6b3dc;
-      padding: 4px;
-      margin-top: 5px;
-      font-size: 12px;
-    }
-
-    .modal {
+    .modal-view {
       position: absolute;
       z-index: 1000;
       display: none;
@@ -94,110 +46,13 @@
       border-radius: 10px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
       padding: 20px;
-      text-align: center;
       transition: opacity 0.2s ease;
       opacity: 0.7;
-    }
-        /* 🔸 마우스 위치에 뜨는 간편 모달 */
-    .simple-modal {
-      position: absolute;
-      width: 200px;
+      
     }
 
-    /* 🔸 화면 중앙에 뜨는 세부 모달 */
-    .detail-modal {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 300px;
-      max-width: 90%;
-    }
-
-    .modal-content {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .close {
-      position: absolute;
-      top: 10px;
-      right: 15px;
-      font-size: 20px;
-      cursor: pointer;
-    }
-
-    .import-note {
-      margin-top: 30px;
-      font-size: 13px;
-      color: #666;
-      text-align: center;
-    }
-    .dim {
-    color: #dbd6d6;
-    }
-
-    .calen{
-      border-radius: 20px;
-      width: 250px;
-      height: 30px;
-      margin: 0 auto;
-      background-color: #a1c4fd;
-    }
-
-    .calen:hover{
-      border-radius: 20px;
-      width: 250px;
-      height: 30px;
-      margin: 0 auto;
-      background-color: #0b5ee2;
-      color: #f0f0f0;
-    }
-
-    .event-range {
-      background-color: #a1c4fd;
-      color: #fff;
-      padding: 4px 6px;
-      border-radius: 6px;
-      text-align: center;
-      font-size: 12px;
-      height: 20px;
-      white-space: nowrap;
-    }
-
-    #detail-schedule-modal textarea {
-      resize: vertical;
-      padding: 6px;
-      border-radius: 6px;
-      font-family: inherit;
-    }
-    #detail-schedule-modal label {
-      text-align: left;
-      font-size: 14px;
-      margin-top: 6px;
-    }
  
-.flatpickr-calendar {
-  /* width: 100% !important; */
-  max-width: 18% !important;
-}
-#view-schedule-modal {
-  position: absolute;
-  top: 50%;
-  left: 60%;
-  transform: translate(-50%, -50%); /* 중앙 정렬 */
-  z-index: 9999; /* 캘린더보다 위에 출력 */
-  background-color: white;
-  border: 1px solid #ccc;
-  padding: 20px;
-  width: 300px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-  display: none;
-  border-radius: 8px;
-}
-
-    
+   
     </style>
   </head>
   <body>
@@ -265,7 +120,7 @@
               <div class="sideTop">
                 <h3>Calendar</h3>
               </div>
-              <a href="#">내 캘린더</a>
+              <a href="#">내 캘린더</a><br/><br/>
               <a href="#">공유 캘린더</a>
             </div>
           </aside>
@@ -310,279 +165,255 @@
   </body>
 
     <div id="detail-schedule-modal" class="modal detail-modal">
-  <div class="modal-content" onclick="event.stopPropagation()">
-    <span class="close" onclick="closeDetailModal()">&times;</span>
-    <h3>세부일정 등록</h3>
+      <div class="modal-content" onclick="event.stopPropagation()">
+        <span class="close" onclick="closeDetailModal()">&times;</span>
+        <h3>세부일정 등록</h3>
 
-    <label>일정 제목</label>
-    <input type="text" id="detail-title" class="form-input" placeholder="일정 제목" />
+        <label>일정 제목</label>
+        <input type="text" id="detail-title" class="form-input" placeholder="일정 제목" />
 
-    <label>시작 날짜</label>
-    <input type="date" id="start-date" class="form-input" />
+        <label>시작 날짜</label>
+        <input type="date" id="start-date" class="form-input" />
 
-    <label>종료 날짜</label>
-    <input type="date" id="end-date" class="form-input" />
+        <label>종료 날짜</label>
+        <input type="date" id="end-date" class="form-input" />
 
-    <label>비고</label>
-    <textarea id="detail-note" rows="3" placeholder="추가 메모..."></textarea>
+        <label>장소</label>
+        <input type="text" id="place" class="form-input" placeholder="장소" />
 
-    <button class="calen" onclick="submitDetailSchedule()">등록</button>
-  </div>
-</div>
+        <label>참석 인원</label>
+        <input type="text" id="member" class="form-input" placeholder="참석 인원" />
 
-<div id="view-schedule-modal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <span class="close" onclick="closeViewModal()">&times;</span>
-    <h3>일정 상세 보기</h3>
-    <p><strong>날짜:</strong> <span id="view-date"></span></p>
-    <p><strong>제목:</strong> <span id="view-title"></span></p>
-    <p><strong>메모:</strong> <span id="view-note"></span></p>
-  </div>
-</div>
+        <label>세부 일정</label>
+        <textarea id="detail-note" rows="3" placeholder="추가 메모..."></textarea>
 
-  <script>
-let currentYear = new Date().getFullYear();
-let currentMonth = new Date().getMonth() + 1;
-let schedules = [];
+        <button class="calen" onclick="submitDetailSchedule()">등록</button>
+      </div>
+    </div>
 
-function renderCalendar(year, month) {
-  const calendarBody = document.getElementById("calendar-body");
-  const title = document.getElementById("calendar-title");
-  title.innerText = `${year}.${String(month).padStart(2, '0')}`;
-  calendarBody.innerHTML = "";
+    <div id="view-schedule-modal" class="modal-view" style="display:none;">
+      <div class="modal-content">
+        <span class="close" onclick="closeViewModal()">&times;</span>
+        <h3 style="text-align: center;">일정 상세 보기</h3>
+        <p><strong>날짜:</strong> <span id="view-date"></span></p>
+        <p><strong>제목:</strong> <span id="view-title"></span></p>
+        <p><strong>장소:</strong> <span id="view-place"></span></p>
+        <p><strong>참석자:</strong> <span id="view-member"></span></p>
+        <p><strong>메모:</strong> <span id="view-note"></span></p>
+      </div>
+      <div style="padding: 20px;"><button class="calen" onclick="editSchedule()">수정하기</button></div>
+    </div>
 
-  const firstDay = new Date(year, month - 1, 1).getDay();
-  const lastDate = new Date(year, month, 0).getDate();
-  const prevLastDate = new Date(year, month - 1, 0).getDate();
+<script>
+    let currentYear = new Date().getFullYear();
+    let currentMonth = new Date().getMonth() + 1;
+    let schedules = [];
 
-  let nextMonthDate = 1;
+    function renderCalendar(year, month) {
+      const calendarBody = document.getElementById("calendar-body");
+      const title = document.getElementById("calendar-title");
+      title.innerText = `${year}.${String(month).padStart(2, '0')}`;
+      calendarBody.innerHTML = "";
 
-  for (let i = 0; i < 6; i++) {
-    const row = document.createElement("tr");
+      const firstDay = new Date(year, month - 1, 1).getDay();
+      const lastDate = new Date(year, month, 0).getDate();
+      const prevLastDate = new Date(year, month - 1, 0).getDate();
 
-    for (let j = 0; j < 7; j++) {
-      const cell = document.createElement("td");
-      const cellIndex = i * 7 + j;
-      const dayOffset = cellIndex - firstDay;
+      let nextMonthDate = 1;
 
-      if (dayOffset < 0) {
-        // 이전 달 날짜
-        const day = prevLastDate + dayOffset + 1;
-        cell.innerText = day;
-        cell.classList.add("dim");
-      } else if (dayOffset >= lastDate) {
-        // 다음 달 날짜
-        cell.innerText = nextMonthDate++;
-        cell.classList.add("dim");
-      } else {
-        // 현재 달 날짜
-        const currentDate = dayOffset + 1;
-        const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
-        cell.innerText = currentDate;
+      for (let i = 0; i < 6; i++) {
+        const row = document.createElement("tr");
 
-        const event = schedules.find(e => e.date === dateStr);
-     if (event) {
-  const div = document.createElement("div");
-  div.className = "event";
-  div.textContent = event.title;
-  div.style.backgroundColor = event.color;
-  
-  if (event.note) {
-    div.title = event.note;
-  }
+        for (let j = 0; j < 7; j++) {
+          const cell = document.createElement("td");
+          const cellIndex = i * 7 + j;
+          const dayOffset = cellIndex - firstDay;
 
-  // ✅ 일정 클릭 시 상세보기 모달 열기
-  div.onclick = (e) => {
-    e.stopPropagation(); // 부모 td의 클릭 방지
-    openViewModal(event);
-  };
+          if (dayOffset < 0) {
+            const day = prevLastDate + dayOffset + 1;
+            cell.innerText = day;
+            cell.classList.add("dim");
+          } else if (dayOffset >= lastDate) {
+            cell.innerText = nextMonthDate++;
+            cell.classList.add("dim");
+          } else {
+            const currentDate = dayOffset + 1;
+            const dateStr = `${year}-${String(month).padStart(2, '0')}-${String(currentDate).padStart(2, '0')}`;
+            cell.innerText = currentDate;
 
-  cell.appendChild(div);
+            const eventsOnThisDay = schedules.filter(e => e.start <= dateStr && e.end >= dateStr);
 
-}
+            eventsOnThisDay.forEach(event => {
+              const div = document.createElement("div");
+              div.className = "event";
+              div.textContent = event.title;
+              div.style.backgroundColor = event.color;
+              if (event.note) div.title = event.note;
 
-        cell.onclick = (e) => openModal(year, month, currentDate, e);
+              div.onclick = (e) => {
+                e.stopPropagation();
+                openViewModal(event);
+              };
+
+              cell.appendChild(div);
+            });
+
+            cell.onclick = (e) => openModal(year, month, currentDate, e);
+          }
+
+          row.appendChild(cell);
+        }
+        calendarBody.appendChild(row);
+      }
+    }
+
+    function openModal(year, month, date, clickEvent = null) {
+      const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+      const modal = document.getElementById("schedule-modal");
+      document.getElementById("modal-date").value = formattedDate;
+      document.getElementById("modal-title").value = "";
+
+      if (clickEvent) {
+        const modalWidth = 300;
+        const modalHeight = 220;
+        const rect = clickEvent.target.getBoundingClientRect();
+
+        let x = rect.left + window.scrollX - 500;
+        let y = rect.top + window.scrollY - modalHeight + 120;
+
+        if (x + modalWidth > window.innerWidth + window.scrollX) {
+          x = window.innerWidth + window.scrollX - modalWidth - 10;
+        }
+        if (y < window.scrollY + 10) {
+          y = rect.bottom + window.scrollY + 10;
+        }
+
+        modal.style.left = `${x}px`;
+        modal.style.top = `${y}px`;
       }
 
-      row.appendChild(cell);
+      modal.style.display = "block";
+      setTimeout(() => {
+        document.getElementById("modal-title").focus();
+      }, 100);
     }
 
-    calendarBody.appendChild(row);
-  }
-}
-
-function openModal(year, month, date, clickEvent = null) {
-  const formattedDate = `${year}-${String(month).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-  const modal = document.getElementById("schedule-modal");
-
-  document.getElementById("modal-date").value = formattedDate;
-
-  const existing = schedules.find(e => e.date === formattedDate);
-  document.getElementById("modal-title").value = existing ? existing.title : "";
-
-  if (clickEvent) {
-    const modalWidth = 300;
-    const modalHeight = 220;
-    const rect = clickEvent.target.getBoundingClientRect();
-
-    let x = rect.left + window.scrollX - 300;
-    let y = rect.top + window.scrollY - modalHeight + 100;
-
-    // 오른쪽 넘침 방지
-    if (x + modalWidth > window.innerWidth + window.scrollX) {
-      x = window.innerWidth + window.scrollX - modalWidth - 10;
+    function closeModal() {
+      document.getElementById("schedule-modal").style.display = "none";
     }
 
-    // 위쪽 넘침 방지
-    if (y < window.scrollY + 10) {
-      y = rect.bottom + window.scrollY + 10;
+    function saveSchedule() {
+      const date = document.getElementById("modal-date").value;
+      const title = document.getElementById("modal-title").value;
+      if (!title) return alert("일정 제목을 입력하세요.");
+
+      const color = getRandomColor();
+
+      schedules.push({
+        start: date,
+        end: date,
+        title,
+        color
+      });
+
+      closeModal();
+      renderCalendar(currentYear, currentMonth);
     }
 
-    modal.style.left = `${x}px`;
-    modal.style.top = `${y}px`;
-  }
+    function prevMonth() {
+      if (currentMonth === 1) {
+        currentMonth = 12;
+        currentYear--;
+      } else {
+        currentMonth--;
+      }
+      renderCalendar(currentYear, currentMonth);
+    }
 
-  modal.style.display = "block";
+    function nextMonth() {
+      if (currentMonth === 12) {
+        currentMonth = 1;
+        currentYear++;
+      } else {
+        currentMonth++;
+      }
+      renderCalendar(currentYear, currentMonth);
+    }
 
-  setTimeout(() => {
-    document.getElementById("modal-title").focus();
-  }, 100);
-}
+    function getRandomColor() {
+      const colors = ['#f6b3dc', '#a1c4fd', '#ffd59e', '#c3f584', '#c0aaff', '#ffaaa5', '#ffda77'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
 
-function closeModal() {
-  document.getElementById("schedule-modal").style.display = "none";
-}
+    window.addEventListener("click", function (event) {
+      const scheduleModal = document.getElementById("schedule-modal");
+      const detailModal = document.getElementById("detail-schedule-modal");
+      if (event.target === scheduleModal) closeModal();
+      if (event.target === detailModal) closeDetailModal();
+    });
 
-function saveSchedule() {
-  const date = document.getElementById("modal-date").value;
-  const title = document.getElementById("modal-title").value;
-  if (!title) return alert("일정 제목을 입력하세요.");
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape") {
+        closeModal();
+        closeViewModal();
+      }
+    });
 
-  const existing = schedules.find(e => e.date === date);
-  const color = existing ? existing.color : getRandomColor();
+    document.addEventListener("DOMContentLoaded", () => {
+      renderCalendar(currentYear, currentMonth);
+    });
 
-  // 기존 일정 제거 후 새로 추가
-  schedules = schedules.filter(e => e.date !== date);
-  schedules.push({ date, title, color });
+    function openDetailModal() {
+      closeModal();
+      const modal = document.getElementById("detail-schedule-modal");
+      document.getElementById("detail-title").value = "";
+      document.getElementById("start-date").value = "";
+      document.getElementById("end-date").value = "";
+      document.getElementById("place").value = "";
+      document.getElementById("member").value = "";
+      document.getElementById("detail-note").value = "";
+      modal.style.display = "block";
 
-  closeModal();
-  renderCalendar(currentYear, currentMonth);
-}
+      flatpickr("#start-date", { dateFormat: "Y-m-d" });
+      flatpickr("#end-date", { dateFormat: "Y-m-d" });
+    }
 
-function prevMonth() {
-  if (currentMonth === 1) {
-    currentMonth = 12;
-    currentYear--;
-  } else {
-    currentMonth--;
-  }
-  renderCalendar(currentYear, currentMonth);
-}
+    function submitDetailSchedule() {
+      const title = document.getElementById("detail-title").value;
+      const start = document.getElementById("start-date").value;
+      const end = document.getElementById("end-date").value;
+      const place = document.getElementById("place").value;
+      const member = document.getElementById("member").value;
+      const note = document.getElementById("detail-note").value;
 
-function nextMonth() {
-  if (currentMonth === 12) {
-    currentMonth = 1;
-    currentYear++;
-  } else {
-    currentMonth++;
-  }
-  renderCalendar(currentYear, currentMonth);
-}
+      if (!title || !start || !end) return alert("모든 항목을 입력하세요.");
 
-function getRandomColor() {
-  const colors = ['#f6b3dc', '#a1c4fd', '#ffd59e', '#c3f584', '#c0aaff', '#ffaaa5', '#ffda77'];
-  return colors[Math.floor(Math.random() * colors.length)];
-}
+      const color = getRandomColor();
 
-window.addEventListener("click", function (event) {
-  const scheduleModal = document.getElementById("schedule-modal");
-  const detailModal = document.getElementById("detail-schedule-modal");
+      schedules.push({ title, start, end, color, note, place, member });
+      closeDetailModal();
+      renderCalendar(currentYear, currentMonth);
+    }
 
-  if (event.target === scheduleModal) {
-    closeModal();
-  }
-  if (event.target === detailModal) {
-    closeDetailModal();
-  }
-});
+    function closeDetailModal() {
+      const modal = document.getElementById("detail-schedule-modal");
+      modal.style.display = "none";
+    }
 
-// ESC 키 누르면 모달 닫기
-document.addEventListener("keydown", function (event) {
-  if (event.key === "Escape") {
-    closeModal();
-  }
-});
+    function openViewModal(schedule) {
+      document.getElementById("view-date").textContent = `${schedule.start} ~ ${schedule.end}`;
+      document.getElementById("view-title").textContent = schedule.title;
+      document.getElementById("view-place").textContent = schedule.place || "-";
+      document.getElementById("view-member").textContent = schedule.member || "-";
+      document.getElementById("view-note").textContent = schedule.note || "(메모 없음)";
+      document.getElementById("view-schedule-modal").style.display = "block";
+    }
 
-document.addEventListener("DOMContentLoaded", () => {
-  renderCalendar(currentYear, currentMonth);
-});
-
-  let flatpickrStart = null;
-  let flatpickrEnd = null;
-
-function openDetailModal() {
-  closeModal();
-  const modal = document.getElementById("detail-schedule-modal");
-  modal.style.display = "block";
-
-  if (!flatpickrStart) {
-    flatpickrStart = flatpickr("#start-date", { dateFormat: "Y-m-d" });
-  }
-  if (!flatpickrEnd) {
-    flatpickrEnd = flatpickr("#end-date", { dateFormat: "Y-m-d" });
-  }
-}
-
-
-
-// 등록 버튼 클릭 시 처리 (샘플 동작)
-function submitDetailSchedule() {
-  const title = document.getElementById("detail-title").value;
-  const start = document.getElementById("start-date").value;
-  const end = document.getElementById("end-date").value;
-  const note = document.getElementById("detail-note").value; // ✅ 추가된 부분
-
-  if (!title || !start || !end) return alert("모든 항목을 입력하세요.");
-
-  const color = '#a1c4fd';
-  const startDate = new Date(start);
-  const endDateObj = new Date(end);
-
-  while (startDate <= endDateObj) {
-    const dateStr = startDate.toISOString().split("T")[0];
-    schedules = schedules.filter(e => e.date !== dateStr);
-    schedules.push({ date: dateStr, title, color, note }); // ✅ note 추가
-    startDate.setDate(startDate.getDate() + 1);
-  }
-   closeDetailModal(); // 모달 닫기
-  renderCalendar(currentYear, currentMonth);
-
-}
-function closeDetailModal() {
-  const modal = document.getElementById("detail-schedule-modal");
-  modal.style.display = "none";
-}
-
+    function closeViewModal() {
+      document.getElementById("view-schedule-modal").style.display = "none";
+    }
 </script>
-<script>
-  function openViewModal(schedule) {
-    document.getElementById("view-date").textContent = schedule.date;
-    document.getElementById("view-title").textContent = schedule.title;
-    document.getElementById("view-note").textContent = schedule.note || "(메모 없음)";
-    document.getElementById("view-schedule-modal").style.display = "block";
-  }
 
-  function closeViewModal() {
-    document.getElementById("view-schedule-modal").style.display = "none";
-  }
-
-  // ESC 키 누르면 뷰 모달 닫기
-  document.addEventListener("keydown", function(event) {
-    if (event.key === "Escape") {
-      closeViewModal();
-    }
-  });
-</script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
 </html>
