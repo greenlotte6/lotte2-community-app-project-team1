@@ -1,5 +1,7 @@
 package kr.co.J2SM.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import kr.co.J2SM.dto.UserDTO;
 import kr.co.J2SM.service.UserService;
 import kr.co.J2SM.util.JWTProvider;
@@ -24,13 +26,14 @@ import java.util.Map;
 @Log4j2
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JWTProvider jwtProvider;
 
-    @PostMapping("/user/login")
+    @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserDTO userDTO){
 
         log.info("login...1 : " + userDTO);
@@ -91,7 +94,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/user/logout")
+    @GetMapping("/logout")
     public ResponseEntity logout(){
         //httpOnly Cookie 생성
         ResponseCookie accessTokenCookie= ResponseCookie.from("access_token", "")
@@ -116,7 +119,7 @@ public class UserController {
         return ResponseEntity.ok().headers(headers).body(null);
     }
 
-    @PostMapping("/user")
+    @PostMapping
     public Map<String, String> register(@RequestBody UserDTO userDTO){
 
         log.info(userDTO);
@@ -131,10 +134,90 @@ public class UserController {
         return ResponseEntity.ok(termsDTO);
     }
 
-    @GetMapping("/user/idCheck")
+    @GetMapping("/idCheck")
     public ResponseEntity<Boolean> idCheck(@RequestParam("uid") String uid){
         boolean exist = userService.existId(uid);
         return ResponseEntity.ok(exist);
     }
+
+    @GetMapping("/idCheck/success")
+    public ResponseEntity idCheck(@RequestParam("uid") String uid,
+                                  @RequestParam("pass") String pass,
+                                  HttpServletRequest req){
+
+        System.out.println(uid);
+        System.out.println(pass);
+
+        HttpSession session = req.getSession();
+
+        UserDTO userDTO = UserDTO.builder()
+                .uid(uid)
+                .pass(pass)
+                .build();
+        session.setAttribute("user",userDTO);
+
+        return ResponseEntity.ok("ok");
+    }
+
+    @GetMapping("/idCheck/test")
+    public ResponseEntity idCheck(
+                                  HttpServletRequest req){
+        HttpSession session = req.getSession();
+
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        System.out.println(userDTO);
+
+        return ResponseEntity.ok(userDTO);
+    }
+
+    @GetMapping("/emailCheck")
+    public ResponseEntity emailCheck(@RequestParam("email") String email,
+                                        HttpServletRequest req){
+
+        HttpSession session = req.getSession();
+
+        UserDTO userDTO = (UserDTO) session.getAttribute("user");
+        Boolean exist = userService.findUserEmail(email);
+
+        if(exist == true && userDTO != null){
+            userDTO.setEmail(email);
+        }
+
+        return ResponseEntity.ok(exist);
+    }
+
+    @GetMapping("/emailSend")
+    public ResponseEntity emailSend(@RequestParam("email") String email,
+                                      HttpServletRequest req){
+
+        log.info("email 인증 코드 전송 : " + email);
+
+        String code = userService.sendEmailCode(email);
+
+        HttpSession session = req.getSession();
+        session.setAttribute("AuthCode", code);
+
+        return ResponseEntity.ok(code);
+    }
+
+    @GetMapping("/emailCodeValid")
+    public ResponseEntity codeValid(@RequestParam("code") String code,
+                                    HttpServletRequest req){
+
+        HttpSession session = req.getSession();
+        String AuthCode = (String) session.getAttribute("AuthCode");
+
+        System.out.println(AuthCode);
+        System.out.println(code);
+
+
+        if(AuthCode.equals(code)){
+            return ResponseEntity.ok("인증 성공");    
+        }else{
+            return ResponseEntity.ok("인증실패");
+        }
+
+    }
+
 
 }

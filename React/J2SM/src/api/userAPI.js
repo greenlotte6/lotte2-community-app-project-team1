@@ -1,6 +1,10 @@
 import axios from "axios";
 import {
+  USER_EMAIL_CHECK,
+  USER_EMAIL_SEND,
+  USER_EMAIL_VALID,
   USER_ID_CHECK,
+  USER_ID_SUCCESS,
   USER_LOGIN,
   USER_LOGOUT,
   USER_REGISTER,
@@ -54,7 +58,62 @@ export const getUserLogout = async () => {
 // 아이디 체크
 export const checkId = async (data) => {
   try {
-    const response = await axios.get(`${USER_ID_CHECK}`, data);
+    const response = await axios.get(`${USER_ID_CHECK}?uid=${data.uid}`);
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 아이디 체크 성공 시 세션에 데이터 저장
+export const checkIdSuccess = async (data) => {
+  try {
+    const response = await axios.get(
+      `${USER_ID_SUCCESS}?uid=${data.uid}&pass=${data.pass}`,
+      {
+        withCredentials: true, // ★ 세션 유지 위해 꼭 필요
+      }
+    );
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 이메일 인증
+export const checkEmail = async (data) => {
+  try {
+    const response = await axios.get(`${USER_EMAIL_CHECK}?email=${data}`, {
+      withCredentials: true, // ★ 세션 유지 위해 꼭 필요
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 이메일 인증
+export const EmailSend = async (data) => {
+  try {
+    const response = await axios.get(`${USER_EMAIL_SEND}?email=${data}`, {
+      withCredentials: true, // ★ 세션 유지 위해 꼭 필요
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 이메일 인증
+export const EmailCodeValid = async (data) => {
+  try {
+    const response = await axios.get(`${USER_EMAIL_VALID}?code=${data}`, {
+      withCredentials: true, // ★ 세션 유지 위해 꼭 필요
+    });
     console.log(response);
     return response.data;
   } catch (err) {
