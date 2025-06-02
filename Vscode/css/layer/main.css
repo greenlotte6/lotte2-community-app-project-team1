@@ -104,8 +104,9 @@ main {
 }
 
 .buy_form_1 {
-  margin: 0 auto;
-  width: 400px;
+  margin: 80px auto;
+  min-width: 400px;
+  width: auto;
   height: auto;
   min-height: 600px;
 }
@@ -169,7 +170,7 @@ main {
 }
 
 .btn1 {
-  background-color: #6b46c1; /* 보라색 */
+  background-color: #cf261a;
   color: white;
   padding: 10px 55px;
   border-radius: 8px;
@@ -179,12 +180,12 @@ main {
 }
 
 .btn1:hover {
-  background-color: #553c9a; /* hover 보라 */
+  background-color: #aa2a2a;
 }
 
 .btn2 {
   background-color: #e2e8f0;
-  color: #2d3748;
+  color: #272a31;
   padding: 10px 55px;
   border-radius: 8px;
   margin-top: 13px;
@@ -194,4 +195,46 @@ main {
 
 .btn2:hover {
   background-color: #cbd5e0;
+}
+
+.buy_form {
+  width: 600px;
+  padding: 20px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
+}
+
+.buy_form input {
+  width: 100%;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease;
+  background-color: #fff;
+}
+
+.buy_form .buy_title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.step-desc {
+  font-size: 15px;
+  text-align: center;
+  margin-bottom: 24px;
+  color: #555;
+}
+
+.buy_input {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: #444;
+  display: block;
+  margin-top: 20px;
 }
