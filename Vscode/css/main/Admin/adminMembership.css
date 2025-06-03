@@ -475,8 +475,13 @@ body.dark-mode .childArea div img {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  width: 320px;
+  width: 700px;
   text-align: center;
+}
+
+.modalinfo {
+  font-size: 24px;
+  margin-bottom: 30px;
 }
 
 .modalContent input {
@@ -489,7 +494,7 @@ body.dark-mode .childArea div img {
 }
 
 .modalButtons button {
-  padding: 8px 16px;
+  padding: 15px 40px;
   margin: 0 8px;
   border: none;
   border-radius: 6px;
@@ -518,5 +523,49 @@ body.dark-mode .modalContent input {
   color: #f0f0f0;
   border: 1px solid #666;
 }
-
+.modalContent h3 {
+  margin-bottom: 14px;
+}
+.inside {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-top: 25px;
+}
+.leftside select {
+  padding: 7px 235px;
+  margin-bottom: 20px;
+}
+.cardnum {
+  text-align: left;
+}
+.leftside input {
+  width: 102.4px;
+  border-radius: 4px;
+  margin-right: 15px;
+}
+.leftside input:nth-of-type(4) {
+  margin-right: 0;
+}
+#cnum {
+  width: 500px;
+}
+#cvc {
+  width: 500px;
+}
+#cpass {
+  width: 500px;
+}
+.leftside h3 {
+  margin-bottom: 10px;
+}
+.rightside {
+  border-left: 2px solid #898989;
+  padding-left: 10px;
+  padding-top: 20px;
+  line-height: 25px;
+}
+.rightside h3 {
+  margin-bottom: 20px;
+}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModal/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/

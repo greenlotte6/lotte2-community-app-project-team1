@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>MyPage</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="/css/main/MyPage/MyPage.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/editorjs@2.29.1/dist/editor.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/paragraph@2.0.0/dist/paragraph.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/header@2.7.0/dist/header.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/list@1.7.0/dist/list.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@editorjs/checklist@1.3.0/dist/checklist.min.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="#"><img src="/images/Grid.svg" alt="admin" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/File text.svg" alt="document" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Calendar.svg" alt="calendar" /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Settings.svg" alt="setting" /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+        <main>
+          <aside>
+            <div class="sidemenu">
+              <div class="sideTop">
+                <h3>MyPage</h3>
+              </div>
+              <div class="childArea">
+                <div class="menuItem">
+                  <img src="/images/File text.svg" alt="users" /><a href="#"
+                    >MyPage</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <ul class="subMenu">
+                  <li><a href="#">더미더미더미</a></li>
+                  <li><a href="#">더미더미더미</a></li>
+                </ul>
+                <div class="menuItem">
+                  <img src="/images/File text.svg" alt="users" /><a href="#"
+                    >Share</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <ul class="subMenu">
+                  <li><a href="#">더미더미더미</a></li>
+                  <li><a href="#">더미더미더미</a></li>
+                </ul>
+                <div class="menuItem">
+                  <img src="/images/File text.svg" alt="users" /><a href="#"
+                    >Favorites</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <ul class="subMenu">
+                  <li><a href="#">더미더미더미</a></li>
+                  <li><a href="#">더미더미더미</a></li>
+                </ul>
+              </div>
+            </div>
+          </aside>
+          <div class="contentArea">
+            <div class="topArea">
+              <div class="favoriteshare">
+                <img src="/images/star.png" alt="fav" />
+                <p>공유하기</p>
+              </div>
+              <div class="titleArea">
+                <input type="text" placeholder="Title" />
+              </div>
+            </div>
+            <div class="midArea">
+              <div
+                id="editorjs"
+                style="background: white; padding: 20px; border-radius: 10px"
+              ></div>
+            </div>
+            <div class="bottomArea"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+    <script src="/scripts/MyPage.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const editor = new EditorJS({
+          holder: "editorjs",
+          placeholder: "시작해보세요...",
+          tools: {
+            paragraph: { class: Paragraph, inlineToolbar: true },
+            header: { class: Header, inlineToolbar: true },
+            list: { class: List, inlineToolbar: true },
+            checklist: { class: Checklist, inlineToolbar: true },
+          },
+        });
+      });
+    </script>
+  </body>
+</html>

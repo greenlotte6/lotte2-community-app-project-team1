@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AdminMain</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="/css/main/Admin/adminCredit.css" />
+    <script src="/scripts/adminCredit.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="#"><img src="/images/Monitor.svg" alt="admin" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/File text.svg" alt="document" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Calendar.svg" alt="calendar" /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Settings.svg" alt="setting" /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+        <main>
+          <aside>
+            <div class="sidemenu">
+              <div class="sideTop">
+                <h3>Admin</h3>
+              </div>
+              <div class="sidelink"><a href="#">Employee Management</a></div>
+              <div class="childArea">
+                <div>
+                  <img src="/images/Home.svg" alt="users" /><a
+                    href="/view/Admin/adminMain.html"
+                    >Home</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <div>
+                  <img src="/images/Users.svg" alt="users" /><a
+                    href="/view/Admin/adminEmploy.html"
+                    >Employee Management</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <div>
+                  <img src="/images/Users.svg" alt="users" /><a
+                    href="/view/Admin/adminMembership.html"
+                    >MemberShip</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+                <div>
+                  <img src="/images/Users.svg" alt="users" /><a
+                    href="/view/Admin/adminCredit.html"
+                    >Payment details</a
+                  ><img src="/images/Vector.svg" alt="vector" />
+                </div>
+              </div>
+            </div>
+          </aside>
+          <div class="contentArea">
+            <div class="topArea">
+              <div class="Title">
+                <h3>Employee Management</h3>
+              </div>
+            </div>
+            <div class="midArea">
+              <div class="listArea" id="tableContainer">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>결제일</th>
+                      <th>결제수단</th>
+                      <th>결제 금액</th>
+                      <th>등급</th>
+                      <th>청구 상태</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tableBody">
+                    <!-- JS로 데이터 렌더링 -->
+                  </tbody>
+                </table>
+              </div>
+              <!--
+              <div class="listArea">
+                <table>
+                  <tbody>
+                    <tr>
+                      <th><input type="checkbox" /></th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Phone Number</th>
+                      <th>Department</th>
+                      <th>Position</th>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                    <tr>
+                      <td><input type="checkbox" /></td>
+                      <td>
+                        <div>
+                          <img src="/images/user.png" alt="" /><span
+                            >정상수</span
+                          >
+                        </div>
+                      </td>
+                      <td>asd123@naver.com</td>
+                      <td>010-1234-4644</td>
+                      <td>Backend</td>
+                      <td>Manager</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              -->
+            </div>
+            <div class="bottomArea">
+              <div class="btnArea">
+                <div class="pgbtn">
+                  <div class="pgArea">
+                    <button class="pg"></button>
+                    <button class="pg"></button>
+                    <button class="pg"></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

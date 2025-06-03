@@ -1,12 +1,14 @@
 document.addEventListener("DOMContentLoaded", () => {
   const toggleInput = document.getElementById("darkModeToggle");
   const inviteModal = document.getElementById("inviteModal");
-  const openModalBtn = document.getElementById("openInviteModalBtn");
+  const openModalBtns = document.querySelectorAll(".openInviteModalBtn");
   const closeModalBtn = document.getElementById("inviteCancelBtn");
 
   //모달
-  openModalBtn.addEventListener("click", () => {
-    inviteModal.style.display = "flex";
+  openModalBtns.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      inviteModal.style.display = "flex";
+    });
   });
 
   closeModalBtn.addEventListener("click", () => {

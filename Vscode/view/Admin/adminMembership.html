@@ -98,7 +98,7 @@
                 </div>
                 <div>
                   <img src="/images/Credit card.svg" alt="users" />
-                  <a href="#">Payment details</a>
+                  <a href="/view/Admin/adminCredit.html">Payment details</a>
                   <img src="/images/Vector.svg" alt="vector" />
                 </div>
               </div>
@@ -121,7 +121,7 @@
                   <del>12,900</del>
                   <h4>9,900</h4>
                   <p>Basic - ₩9,900 /월</p>
-                  <button type="button" id="openInviteModalBtn">
+                  <button type="button" class="openInviteModalBtn">
                     Get Started</button
                   ><br />
                   <div class="explanation">
@@ -151,7 +151,7 @@
                   <del>24,900</del>
                   <h4>19,900</h4>
                   <p>Standard - ₩19,900 /월</p>
-                  <button type="button" id="openInviteModalBtn">
+                  <button type="button" class="openInviteModalBtn">
                     Get Started</button
                   ><br />
                   <div class="explanation">
@@ -189,7 +189,7 @@
                   <del>42,000</del>
                   <h4>34,900</h4>
                   <p>Premium - ₩34,900 /월</p>
-                  <button type="button" id="openInviteModalBtn">
+                  <button type="button" class="openInviteModalBtn">
                     Get Started</button
                   ><br />
                   <div class="explanation">
@@ -223,10 +223,42 @@
               </div>
               <div class="modalOverlay" id="inviteModal">
                 <div class="modalContent">
-                  <h3>결제 정보</h3>
-                  <input type="text" placeholder="회사명 입력" />
+                  <h3 class="modalinfo">결제 정보</h3>
+                  <div class="inside">
+                    <div class="leftside">
+                      <select>
+                        <option>VISA</option>
+                        <option>PayPal</option>
+                        <option>Master</option>
+                      </select>
+                      <div class="cardnum">
+                        <h3>Card number</h3>
+                        <input type="text" /><input type="text" /><input
+                          type="text"
+                        /><input type="text" />
+                      </div>
+                      <div class="cardnum">
+                        <h3>Expriy date</h3>
+                        <input type="text" id="cnum" placeholder="MM/YY" />
+                      </div>
+                      <div class="cardnum">
+                        <h3>CVC</h3>
+                        <input type="text" id="cvc" placeholder="CVC" />
+                      </div>
+                      <div class="cardnum">
+                        <h3>Card password</h3>
+                        <input type="text" id="cpass" placeholder="Password" />
+                      </div>
+                    </div>
+                    <div class="rightside">
+                      <span>Product Name</span>
+                      <h3>Standard 구매</h3>
+                      <span>Payment amount</span>
+                      <h3>₩ 9,900</h3>
+                    </div>
+                  </div>
                   <div class="modalButtons">
-                    <button id="inviteConfirmBtn">초대</button>
+                    <button id="inviteConfirmBtn">결제</button>
                     <button id="inviteCancelBtn">취소</button>
                   </div>
                 </div>
