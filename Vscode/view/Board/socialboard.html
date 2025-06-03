@@ -22,11 +22,9 @@
     h2 {
       margin-bottom: 10px;
     }
-    .side-icon{
-      padding: 0 10px;
-    }
     .board-main{
       height: 60%;
+      padding-top: 30px;
       border-top: 3px solid black;
       box-sizing: border-box;
     }
@@ -36,7 +34,6 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
-      padding-top: 10px;
     }
 
     .board-top select,
@@ -46,13 +43,9 @@
     }
 
     .board-top button {
-     padding: 6px 10px;
-     font-size: 15px;
-     cursor: pointer;
-     color: #ffffff;
-     background-color: #4285f4;
-     border-radius: revert;
-     border: none;
+      padding: 6px 10px;
+      font-size: 14px;
+      cursor: pointer;
     }
 
     table {
@@ -61,21 +54,17 @@
     }
 
     thead {
-      background-color: #e3e6ec;
-     border-radius: revert;
+      background-color: #8dbff7;
       color: white;
-      opacity: 0.5;
-      
     }
 
     th, td {
       padding: 12px;
       text-align: center;
-      border-bottom: 1px solid beige;
     }
 
     td.title {
-      
+      text-align: left;
       padding-left: 20px;
     }
 
@@ -103,11 +92,9 @@
 
     .board-left{
       width: 50%;
-      margin: 10px;
     }
     .board-right{
       width: 50%;
-      margin: 10px;
     }
   </style>
   </head>
@@ -176,16 +163,18 @@
               <div class="sideTop">
                 <h3>N Board</h3>
               </div>
-              <a class="side-icon" href="#">HOME</a><br/>
-              <a href="#">내 그룹</a><br/>
-              <a href="#">공유 그룹</a>
+              <a href="#">Home</a>
             </div>
           </aside>
           <div class="contentArea">
            <div class="board-main">
             <div class="board-top">
+                <select>
+                  <option>공지사항</option>
+                </select>
                 <div>
-                  <P>공지사항</P>
+                  <input type="text" placeholder="검색어를 입력하세요">
+                  <button>검색</button>
                 </div>
               </div>
               <table>
@@ -227,107 +216,37 @@
                     <td>2025.05.24</td>
                     <td>17</td>
                   </tr>
-                 
+                  <tr>
+                    <td>5</td>
+                    <td class="title">3차 성과발표회 일정</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td class="title">결제서류 제출 방법</td>
+                    <td>홍길동</td>
+                    <td>2025.05.24</td>
+                    <td>17</td>
+                  </tr>
                 </tbody>
               </table>
 
               <div class="pagination">
-                <a href="#">MORE</a>
+                <span>&lt;</span>
+                <a href="#">1</a>
+                <a href="#">2</a>
+                <a href="#">3</a>
+                <a href="#">4</a>
+                <a href="#">5</a>
+                <a href="#">6</a>
+                <span>&gt;</span>
               </div>
             </div>
             <div class="board-sub">
-              <div class="board-left">
-                <table>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                      <th>조회</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td class="title">[중요]사내 일정 공유드립니다.</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>17</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td class="title">사내 회식 일정(자율)</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>1924</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td class="title">사내 건강검진 일정 공유</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>17</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td class="title">5월 행사 일정 공유</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>17</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="pagination">
-                  <a href="#">MORE</a>
-                </div>
-              </div>
-              <div class="board-right">
-                     <table>
-                  <thead>
-                    <tr>
-                      <th></th>
-                      <th>제목</th>
-                      <th>작성자</th>
-                      <th>작성일</th>
-                      <th>조회</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td class="title">[중요]사내 일정 공유드립니다.</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>17</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td class="title">사내 회식 일정(자율)</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>1924</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td class="title">사내 건강검진 일정 공유</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>17</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td class="title">5월 행사 일정 공유</td>
-                      <td>홍길동</td>
-                      <td>2025.05.24</td>
-                      <td>17</td>
-                    </tr>
-                  </tbody>
-                </table>
-                <div class="pagination">
-                  <a href="#">MORE</a>
-              </div>
-              </div>
+              <div class="board-left"></div>
+              <div class="board-right"></div>
             </div>
           </div>
         </main>
