@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Element } from "react-scroll";
 import FeatureIntro from "../main/FeatureIntro";
 import CreditList from "./CreditList";
+import ImageList from "../main/ImageList";
 
 export const Main = () => {
   const navigate = useNavigate();
@@ -41,6 +42,10 @@ export const Main = () => {
 
       <Element name="credits">
         <CreditList />
+      </Element>
+
+      <Element name="showImage">
+        <ImageList />
       </Element>
     </>
   );

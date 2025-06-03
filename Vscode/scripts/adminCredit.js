@@ -1,23 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
   const toggleInput = document.getElementById("darkModeToggle");
-  const inviteModal = document.getElementById("inviteModal");
-  const openModalBtn = document.getElementById("openInviteModalBtn");
-  const closeModalBtn = document.getElementById("inviteCancelBtn");
-
-  //모달
-  openModalBtn.addEventListener("click", () => {
-    inviteModal.style.display = "flex";
-  });
-
-  closeModalBtn.addEventListener("click", () => {
-    inviteModal.style.display = "none";
-  });
-
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      inviteModal.style.display = "none";
-    }
-  });
 
   // 🌙 다크모드 토글
   toggleInput?.addEventListener("change", () => {
@@ -27,14 +9,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // 👥 샘플 데이터
   const allData = [...Array(100)].map((_, i) => ({
-    name: `정상수${i + 1}`,
-    email: `email${i}@test.com`,
-    phone: `010-0000-${i.toString().padStart(4, "0")}`,
-    dept: `Backend`,
-    position: `Manager`,
+    day: `2025-05-29`,
+    method: `신용카드`,
+    amount: `34,900`,
+    rating: `Premium`,
+    status: `정상`,
   }));
 
-  const rowsPerPage = 7;
+  const rowsPerPage = 10;
   let currentPage = 0;
 
   // 📄 테이블 렌더 함수
@@ -49,23 +31,11 @@ document.addEventListener("DOMContentLoaded", () => {
     pageData.forEach((row) => {
       const tr = document.createElement("tr");
       tr.innerHTML = `
-        <td><input type="checkbox" class="rowCheckbox" /></td>
-        <td><div><img src="/images/user.png" alt="" /><span>${row.name}</span></div></td>
-        <td>${row.email}</td>
-        <td>${row.phone}</td>
-        <td>
-          <select>
-            <option>${row.dept}</option>
-            <option>${row.dept}</option>
-            <option>${row.dept}</option>
-          </select></td>
-        <td>
-          <select>
-            <option>${row.position}</option>
-            <option>${row.position}</option>
-            <option>${row.position}</option>
-          </select>
-        </td>
+        <td>${row.day}</td>
+        <td>${row.method}</td>
+        <td>${row.amount}</td>
+        <td>${row.rating}</td>
+        <td>${row.status}</td>
       `;
       tbody.appendChild(tr);
     });
@@ -127,12 +97,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderTablePage(currentPage);
       }
     }
-  });
-
-  const checkAllBox = document.getElementById("checkAll");
-  checkAllBox.addEventListener("change", () => {
-    const checkboxes = document.querySelectorAll("#tableBody .rowCheckbox");
-    checkboxes.forEach((cb) => (cb.checked = checkAllBox.checked));
   });
 
   // 초기 실행

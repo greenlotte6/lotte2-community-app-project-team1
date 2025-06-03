@@ -321,6 +321,7 @@ main .contentArea {
 .Title {
   border-bottom: 2px solid #898989;
   width: 100%;
+  margin-bottom: 20px;
 }
 .Title h3 {
   font-size: 24px;
@@ -388,7 +389,7 @@ main .contentArea {
   border-top-left-radius: 15px;
   border-bottom-left-radius: 15px;
 }
-.midArea table th:nth-of-type(6) {
+.midArea table th:nth-of-type(5) {
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
 }
@@ -398,9 +399,8 @@ main .contentArea {
   background-color: #c7defd;
 }
 .midArea td {
-  padding: 10px;
+  padding: 15px;
   font-size: 14px;
-  color: #616161;
 }
 .midArea td div {
   display: flex;
@@ -421,17 +421,6 @@ main .contentArea {
   position: relative;
   left: 10px;
   font-size: 14px;
-  color: #616161;
-}
-.midArea td select {
-  border: none;
-  font-size: 14px;
-  color: #616161;
-}
-.midArea td option {
-  border: none;
-  font-size: 14px;
-  color: #616161;
 }
 
 .bottomArea {
@@ -442,7 +431,7 @@ main .contentArea {
 .btnArea {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 40px 10px 20px 10px;
   align-items: center;
 }
