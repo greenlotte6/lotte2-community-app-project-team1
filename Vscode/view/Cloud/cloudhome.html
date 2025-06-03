@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>AdminMain</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="/css/main/Cloud/cloudhome.css" />
+    <script src="/scripts/adminEmploy.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="#"><img src="/images/Monitor.svg" alt="admin" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/File text.svg" alt="document" /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Calendar.svg" alt="calendar" /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="#"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="#"><img src="/images/Settings.svg" alt="setting" /></a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+
+        <main>
+          <aside>
+            <div class="sidemenu">
+              <div class="sideTop">Cloud</div>
+              <div><button>+신규</button></div>
+
+              <div style="display: flex; align-items: center; margin-top: 13px">
+                <img
+                  src="/images/Cloudhome.png.png"
+                  alt="홈"
+                  style="width: 40px; height: 40px; margin-right: 10px"
+                />
+                <div style="font-weight: 400"><a href="">홈</a></div>
+              </div>
+
+              <div style="display: flex; align-items: center; margin-top: 25px">
+                <img
+                  src="/images/Mydrive.png"
+                  alt="내 드라이브"
+                  style="width: 29px; height: 29px; margin-right: 10px"
+                />
+                <div style="font-weight: 400"><a href="">내 드라이브</a></div>
+              </div>
+
+              <div
+                class="main-cloud"
+                style="border-top: 1px solid black; margin-top: 20px"
+              ></div>
+
+              <div style="display: flex; align-items: center; margin-top: 30px">
+                <img
+                  src="/images/Sharedrive.png"
+                  alt="공유 드라이브"
+                  style="width: 29px; height: 29px; margin-right: 10px"
+                />
+                <div style="font-weight: 400"><a href="">공유 드라이브</a></div>
+              </div>
+
+              <div style="display: flex; align-items: center; margin-top: 30px">
+                <img
+                  src="/images/Recent Drive.png"
+                  alt="최근 드라이브"
+                  style="width: 29px; height: 29px; margin-right: 10px"
+                />
+                <div style="font-weight: 400"><a href="">최근 드라이브</a></div>
+              </div>
+
+              <div style="display: flex; align-items: center; margin-top: 30px">
+                <img
+                  src="/images/Critical drive.png"
+                  alt="중요 드라이브"
+                  style="width: 29px; height: 29px; margin-right: 10px"
+                />
+                <div style="font-weight: 400"><a href="">중요 드라이브</a></div>
+              </div>
+
+              <div style="display: flex; align-items: center; margin-top: 30px">
+                <img
+                  src="/images/Wastebasket.png"
+                  alt="휴지통"
+                  style="width: 29px; height: 29px; margin-right: 10px"
+                />
+                <div style="font-weight: 400"><a href="">휴지통</a></div>
+              </div>
+
+              <div style="margin-top: 30px">
+                <div
+                  style="
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 10px;
+                  "
+                >
+                  <img
+                    src="/images/cloud-computing.png"
+                    alt="저장용량"
+                    style="width: 29px; height: 29px; margin-right: 10px"
+                  />
+                  <div style="font-weight: 400"><a href="">저장용량</a></div>
+                </div>
+                <div class="storage">
+                  <p>4.7GB / 15GB</p>
+                  <div class="storage-bar">
+                    <div class="used" style="width: 100%"></div>
+                  </div>
+                  <button class="buy-btn">저장용량 구매</button>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <div class="contentArea">
+            <div class="topArea">
+              <div class="Title">
+                <img src="/images/Cloud.svg" alt="클라우드" />
+                <h3>Cloud</h3>
+              </div>
+            </div>
+
+            <div class="cloud-main">
+              <h3>Cloud 저장소 입니다.</h3>
+
+              <!-- ✅ 수정된 검색 입력 form -->
+              <form class="search-bar" action="/cloud/search" method="get">
+                <input
+                  type="text"
+                  id="query"
+                  name="query"
+                  placeholder="Cloud 검색"
+                  style="
+                    padding: 6px 10px;
+                    border: none;
+                    background-color: #f0eaf7;
+                  "
+                />
+                <button
+                  type="submit"
+                  style="background: none; border: none; padding: 0"
+                >
+                  <img
+                    src="/images/search.png"
+                    alt="검색"
+                    class="search-icon"
+                  />
+                </button>
+              </form>
+            </div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
