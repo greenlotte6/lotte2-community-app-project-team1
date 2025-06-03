@@ -1,15 +1,14 @@
 package kr.co.J2SM.entity.user;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+import kr.co.J2SM.entity.company.Department;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -26,16 +25,18 @@ public class User {
     private String hp;    //전화번호
     private String role;  //등급(유저, 관리자)
     private String company; //회사
-    private String department; //부서
     private String Position; // 직책
-    private String profileSname; // 프로필 변경 이름
-    private String profileOname; // 프로필 기존 이름
+    private String profileImage; // 프로필 이미지
 
     private String membership; // 요금제(Free, Basic, Standard, Premium  )
     
     @CreationTimestamp
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
+    
+    @ManyToOne
+    @JoinColumn(name = "department")
+    private Department department; // 부서
 
     @PrePersist
     public void prePersist() {

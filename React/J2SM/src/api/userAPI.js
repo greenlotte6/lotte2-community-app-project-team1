@@ -13,7 +13,9 @@ import {
 
 export const postUser = async (data) => {
   try {
-    const response = await axios.post(`${USER_REGISTER}`, data);
+    const response = await axios.post(`${USER_REGISTER}`, data, {
+      withCredentials: true,
+    });
     console.log(response);
     return response.data;
   } catch (err) {

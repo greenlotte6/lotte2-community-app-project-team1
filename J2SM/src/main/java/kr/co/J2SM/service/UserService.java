@@ -109,4 +109,46 @@ public class UserService{
         System.out.println(list);
 
     }
+
+    // 관리자 회원가입
+    public void register(UserDTO userDTO, UserDTO user) {
+        String encoded = passwordEncoder.encode(user.getPass());
+        user.setPass(encoded);
+        user.setName(userDTO.getName());
+        user.setHp(userDTO.getHp());
+        user.setCompany(userDTO.getCompany());
+        user.setPosition("CEO");
+        user.setRole("ADMIN");
+        user.setProfileImage(userDTO.getProfileImage());
+
+        Company company = registerCompany(userDTO.getCompany());
+        Department department = registerDepartment(company, "총무팀" );
+
+        User userEntity = modelMapper.map(user, User.class);
+        userEntity.setDepartment(department);
+
+        userRepository.save(userEntity);
+        
+    }
+
+    // 회사 등록(회사 관리자 생성 시 )
+    public Company registerCompany(String companyName){
+        Company company = Company.builder()
+                .companyName(companyName)
+                .build();
+
+        Company savedCompany= companyRepository.save(company);
+        return savedCompany;
+    }
+
+    // 부서 등록(관리자)
+    public Department registerDepartment(Company company, String departmentName){
+        Department department = Department.builder()
+                .departmentName(departmentName)
+                .company(company)
+                .build();
+
+        Department savedDepartment = departmentRepository.save(department);
+        return savedDepartment;
+    }
 }

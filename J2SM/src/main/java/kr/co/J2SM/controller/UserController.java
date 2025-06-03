@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.J2SM.dto.user.UserDTO;
 import kr.co.J2SM.service.UserService;
+import kr.co.J2SM.util.CustomFileUtil;
 import kr.co.J2SM.util.JWTProvider;
 import kr.co.J2SM.dto.user.TermsDTO;
 import kr.co.J2SM.entity.user.User;
@@ -18,9 +19,12 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Log4j2
@@ -31,6 +35,7 @@ public class UserController {
 
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
+    private final CustomFileUtil fileUtil;
     private final JWTProvider jwtProvider;
 
     @PostMapping("/login")
@@ -120,11 +125,34 @@ public class UserController {
     }
 
     @PostMapping
-    public Map<String, String> register(@RequestBody UserDTO userDTO){
+    public Map<String, String> register(UserDTO userDTO, HttpServletRequest req){
+
+        // 이미지 등록
+
+        List<MultipartFile> files = new ArrayList<>();
+        files.add(userDTO.getProfile());
+
+        Map<String, String> uploadFileNames = fileUtil.saveFiles(files);
+        userDTO.setProfileImage( uploadFileNames.get("profile"));
+
+        // 관리자 등록 할 때 uid는 세션으로 가져옴으로서 uid는 null
+        if(userDTO.getUid() == null){
+            // 관리자 회원 가입 로직
+
+            HttpSession session = req.getSession();
+            UserDTO user = (UserDTO) session.getAttribute("user");
+
+            if(user != null){
+                userService.register(userDTO, user);
+            }
+        }else{
+            // 일반 회원가입 로직
+        }
 
         log.info(userDTO);
 
-        String uid = userService.register(userDTO);
+        // String uid = userService.register(userDTO);
+        String uid = "user";
         return Map.of("userid", uid);
     }
 
