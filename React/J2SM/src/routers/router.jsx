@@ -11,6 +11,7 @@ import CreditResultPage from "../pages/lading/CreditResultPage";
 import AdminRegisterPage from "../pages/lading/AdminRegisterPage";
 import EmailValidPage from "../pages/lading/EmailValidPage";
 import AdminInfoRegisterPage from "../pages/lading/AdminInfoRegisterPage";
+import FindIdResultPage from "../pages/user/FindIdResultPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -28,6 +29,7 @@ const router = createBrowserRouter([
   { path: "/user/login", element: <LoginPage /> },
   { path: "/user/findpass", element: <FindPassPage /> },
   { path: "/user/findid", element: <FindIdPage /> },
+  { path: "/user/findid/result", element: <FindIdResultPage /> },
 
   // 여기 밑은 팜스토리 라우터
   { path: "/user/register", element: <RegisterPage /> },

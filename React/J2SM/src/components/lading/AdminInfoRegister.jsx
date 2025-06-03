@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { postUser } from "../../api/userAPI";
+import { useNavigate } from "react-router-dom";
 
 const initState = {
   name: "",
@@ -8,6 +9,12 @@ const initState = {
 };
 
 const AdminInfoRegister = () => {
+  const navigate = useNavigate();
+
+  const move = () => {
+    navigate("/user/login");
+  };
+
   const [user, setUser] = useState({ ...initState });
   const refProfile = useRef();
 
@@ -42,7 +49,7 @@ const AdminInfoRegister = () => {
         console.log(data);
 
         // 요청 후 로그인 창으로
-        navigate("/user/login");
+        move();
       } catch (err) {
         console.error(err);
       }
