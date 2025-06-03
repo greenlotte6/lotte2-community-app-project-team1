@@ -26,6 +26,7 @@ export const USER_EMAIL_CHECK = `${SERVER_HOST}/user/emailCheck`;
 export const USER_EMAIL_SEND = `${SERVER_HOST}/user/emailSend`;
 export const USER_EMAIL_VALID = `${SERVER_HOST}/user/emailCodeValid`;
 export const USER_UID_BY_HP = `${SERVER_HOST}/user/findHp`;
+export const USER_PASS_MODIFY = `${SERVER_HOST}/user/modify`;
 
 // article
 export const ARTICLE_WRITE = `${SERVER_HOST}/article`;

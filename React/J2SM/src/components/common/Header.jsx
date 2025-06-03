@@ -2,6 +2,7 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
 import useAuth from "../../hooks/useAuth";
+import { getUserLogout } from "../../api/userAPI";
 
 export const Header = () => {
   // 페이지 이동을 위한 navigate
@@ -20,6 +21,28 @@ export const Header = () => {
     navigate("/user/login");
   };
 
+  // 로그아웃
+  const logoutHandler = () => {
+    // 로그아웃 서버 요청
+    const fetchData = async () => {
+      try {
+        const data = await getUserLogout();
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // 호출
+    fetchData();
+
+    // 로그아웃 처리
+    logout();
+
+    // 로그인 이동
+    navigate("/user/login");
+  };
+
   return (
     <>
       <header>
@@ -30,10 +53,7 @@ export const Header = () => {
               <img src="/images/logo.png" alt="J2SM" />
             </div>
             <div>
-              <span>
-                The everything app, for work.
-                {!username ? <>로그아웃 상태</> : <>로그인 상태</>}
-              </span>
+              <span>The everything app, for work.</span>
             </div>
           </div>
 
@@ -76,13 +96,27 @@ export const Header = () => {
               Contact Sales
             </button>
 
-            <button
-              id="header_login_btn"
-              className="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition"
-              onClick={loginHandler}
-            >
-              로그인
-            </button>
+            {!username ? (
+              <>
+                <button
+                  id="header_login_btn"
+                  className="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition"
+                  onClick={loginHandler}
+                >
+                  로그인
+                </button>
+              </>
+            ) : (
+              <>
+                <button
+                  id="header_login_btn"
+                  className="bg-purple-600 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-700 transition"
+                  onClick={logoutHandler}
+                >
+                  로그아웃
+                </button>
+              </>
+            )}
           </div>
         </div>
       </header>
