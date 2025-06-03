@@ -57,13 +57,13 @@ export const Header = () => {
               이용요금
             </ScrollLink>
             <ScrollLink
-              to="support"
+              to="showImage"
               smooth={true}
               duration={500}
               offset={-80}
               className="hover:text-purple-600 hover:underline underline-offset-8 cursor-pointer transition"
             >
-              지원센터
+              이미지소개
             </ScrollLink>
           </nav>
 
