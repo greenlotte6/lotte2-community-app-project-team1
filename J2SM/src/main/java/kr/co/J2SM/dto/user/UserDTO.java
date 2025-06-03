@@ -1,6 +1,8 @@
 package kr.co.J2SM.dto.user;
 
+import kr.co.J2SM.dto.company.DepartmentDTO;
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 
@@ -19,14 +21,21 @@ public class UserDTO {
     private String hp;    //전화번호
     private String role;  //등급(유저, 관리자)
     private String company; //회사
-    private String department; //부서
+    private String Position; // 직책 (관리자: CEO)
 
-    private String profileSname; // 프로필 변경 이름
-    private String profileOname; // 프로필 기존 이름
+    // 부서 정보
+    private DepartmentDTO department;
+    private String departmentName; //부서 (관리자는 총무팀 고정)
+
+    private String profileImage; // 프로필 이미지
 
     private String membership; // 요금제(Free, Basic, Standard, Premium  )
 
+    private MultipartFile profile; 
+
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
+
+
 
 }

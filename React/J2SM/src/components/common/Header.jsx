@@ -32,14 +32,32 @@ export const Header = () => {
             </div>
           </div>
 
-          <nav>
-            <ScrollLink to="features" smooth={true} duration={500} offset={-80}>
+          <nav className="flex gap-10 text-gray-700 font-semibold text-base">
+            <ScrollLink
+              to="features"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              className="hover:text-purple-600 hover:underline underline-offset-8 cursor-pointer transition"
+            >
               기능소개
             </ScrollLink>
-            <ScrollLink to="credits" smooth={true} duration={500} offset={-80}>
+            <ScrollLink
+              to="credits"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              className="hover:text-purple-600 hover:underline underline-offset-8 cursor-pointer transition"
+            >
               이용요금
             </ScrollLink>
-            <ScrollLink to="support" smooth={true} duration={500} offset={-80}>
+            <ScrollLink
+              to="support"
+              smooth={true}
+              duration={500}
+              offset={-80}
+              className="hover:text-purple-600 hover:underline underline-offset-8 cursor-pointer transition"
+            >
               지원센터
             </ScrollLink>
           </nav>

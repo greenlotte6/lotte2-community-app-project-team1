@@ -1,4 +1,11 @@
-const SERVER_HOST = "http://localhost:8080";
+// const SERVER_HOST = "http://localhost:8080";
+
+// 베포 테스트
+const isLocalhost = window.location.hostname.includes("localhost");
+
+const SERVER_HOST = isLocalhost
+  ? "http://localhost:8080" // 로컬 개발 서버
+  : "http://3.34.124.218:8080"; // 운영 서버
 
 // 버전 정보
 export const VERSION = `${SERVER_HOST}/version`;
