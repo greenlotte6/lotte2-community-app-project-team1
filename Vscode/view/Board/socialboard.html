@@ -22,11 +22,16 @@
     h2 {
       margin-bottom: 10px;
     }
+    .side-icon{
+      padding: 0 10px;
+    }
     .board-main{
       height: 60%;
-      padding-top: 30px;
-      border-top: 3px solid black;
       box-sizing: border-box;
+    }
+    .line {
+        border-bottom: 2px solid black;
+        margin-bottom: 15px;
     }
 
     .board-top {
@@ -34,6 +39,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 10px;
+      padding-top: 10px;
     }
 
     .board-top select,
@@ -43,9 +49,30 @@
     }
 
     .board-top button {
-      padding: 6px 10px;
-      font-size: 14px;
-      cursor: pointer;
+     padding: 6px 10px;
+     font-size: 15px;
+     cursor: pointer;
+     color: #ffffff;
+     background-color: #4285f4;
+     border-radius: revert;
+     border: none;
+    }
+
+    .board-click{
+     float: right;
+
+    }
+    .board-click button{
+     width: 80px; 
+     height: 35px;  
+     padding: 6px 10px;
+     font-size: 15px;
+     cursor: pointer;
+     color: #ffffff;
+     background-color: #4285f4;
+     border-radius:5px;
+     border: none;
+     margin-bottom: 10px;
     }
 
     table {
@@ -54,17 +81,22 @@
     }
 
     thead {
-      background-color: #8dbff7;
+      background-color: #e3e6ec;
+     border-radius: revert;
       color: white;
+      opacity: 0.5;
+      
     }
 
     th, td {
       padding: 12px;
       text-align: center;
+      border-bottom: 1px solid beige;
+      font-size: 15px;
     }
 
     td.title {
-      text-align: left;
+      
       padding-left: 20px;
     }
 
@@ -92,10 +124,242 @@
 
     .board-left{
       width: 50%;
+      margin: 10px;
     }
     .board-right{
       width: 50%;
+      margin: 10px;
     }
+
+    .side-icon{
+        margin: 15px;
+    }
+
+     /* 모달 스타일 */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .modal {
+      width: 400px;
+      margin: auto;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+      padding: 24px;
+      position: relative;
+    }
+
+    .modal-header {
+      font-size: 14px;
+      color: #5f6368;
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: 500;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .icon-circle {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f1f3f4;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 20px;
+      font-size: 28px;
+      color: #5f6368;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+      width: 95%;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #dadce0;
+      border-radius: 4px;
+      font-size: 14px;
+      resize: none;
+    }
+
+    .form-group textarea {
+      height: 80px;
+    }
+
+    .email-suffix {
+      display: flex;
+      align-items: center;
+    }
+
+    .email-suffix input {
+      flex: 1;
+    }
+
+    .email-suffix span {
+      margin-left: 5px;
+      font-size: 14px;
+      color: #5f6368;
+    }
+
+    .char-count {
+      font-size: 12px;
+      color: #5f6368;
+      text-align: right;
+    }
+
+    .modal-footer {
+      text-align: right;
+    }
+
+    .next-button {
+      color: #1a73e8;
+      font-weight: bold;
+      text-decoration: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 16px;
+      top: 16px;
+      font-size: 20px;
+      cursor: pointer;
+      color: #5f6368;
+      background-color: #ffffff;
+      border: none;
+    }
+
+    #writeModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    }
+
+        .write-container {
+      max-width: 800px;
+      margin: auto;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    input[type="text"],
+    input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 15px;
+    }
+
+    .editor-toolbar {
+      margin-bottom: 10px;
+    }
+
+    .editor-toolbar button {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 5px 10px;
+      margin-right: 5px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .editor-toolbar input[type="color"] {
+      vertical-align: middle;
+      margin-left: 8px;
+    }
+
+    .editor-area {
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      min-height: 200px;
+      padding: 10px;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .btn-area {
+      text-align: right;
+    }
+
+    .btn-area button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      font-size: 15px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background-color: #4285f4;
+      color: white;
+    }
+
+    .btn-cancel {
+      background-color: #aaa;
+      color: white;
+    }
+
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+    gap: 5px;
+  }
+
+  .pagination button {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    border: none;
+  }
+
+  .pagination button.active {
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+  }
+</style>
+
   </style>
   </head>
   <body>
@@ -159,99 +423,270 @@
         </header>
         <main>
           <aside>
-            <div class="sidemenu">
-              <div class="sideTop">
-                <h3>N Board</h3>
-              </div>
-              <a href="#">Home</a>
+             <div class="sidemenu">
+              <div class="sideTop"><h3>N Board</h3></div>
+              <div class="side-icon"><a href="#">HOME</a></div>
+              <div class="side-icon"><button id="openModalBtn">+ New BOARD</button></div>
+              <div class="side-icon"><a href="#">🔒공지사항</a></div>
+              <div class="side-icon"><a href="#">사내게시판</a></div>
+              <div class="side-icon"><a href="#">익명게시판</a></div>
             </div>
           </aside>
-          <div class="contentArea">
-           <div class="board-main">
-            <div class="board-top">
-                <select>
-                  <option>공지사항</option>
-                </select>
-                <div>
-                  <input type="text" placeholder="검색어를 입력하세요">
-                  <button>검색</button>
+            <div class="contentArea">
+            <div class="line"></div>
+            <div class="board-main">
+                <div class="board-top">
+                    <select>
+                    <option>공지사항</option>
+                    <option>사내게시판</option>
+                    <option>익명게시판</option>
+                    </select>
+                    <div>
+                     <select>
+                       <option>전체</option>
+                       <option>제목</option>
+                       <option>글쓴이</option>
+                     </select>
+                     <input type="text" placeholder="검색어를 입력하세요" style="width: 180px; height: 20px;">
+                     <button>검색</button>
+                    </div>
+                </div>
+                <div class="board-click">
+                    <button id="openWriteModalBtn">글쓰기</button>
+                </div>
+                <table>
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" id="selectAll" /></th>
+                        <th>제목</th>
+                        <th>작성자</th>
+                        <th>작성일</th>
+                        <th>조회</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">[중요]사내 일정 공유드립니다.</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 회식 일정(자율)</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>1924</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 건강검진 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">5월 행사 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                      <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">[중요]사내 일정 공유드립니다.</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 회식 일정(자율)</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>1924</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 건강검진 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">5월 행사 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                      <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">[중요]사내 일정 공유드립니다.</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 회식 일정(자율)</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>1924</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 건강검진 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">5월 행사 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                      <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">[중요]사내 일정 공유드립니다.</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 회식 일정(자율)</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>1924</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 건강검진 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">5월 행사 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                      <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">[중요]사내 일정 공유드립니다.</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 회식 일정(자율)</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>1924</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">사내 건강검진 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td><input type="checkbox" class="rowCheckbox" /></td>
+                        <td class="title">5월 행사 일정 공유</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div id="pagination" class="pagination"></div>
                 </div>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th></th>
-                    <th>제목</th>
-                    <th>작성자</th>
-                    <th>작성일</th>
-                    <th>조회</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td class="title">[중요]사내 일정 공유드립니다.</td>
-                    <td>홍길동</td>
-                    <td>2025.05.24</td>
-                    <td>17</td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td class="title">사내 회식 일정(자율)</td>
-                    <td>홍길동</td>
-                    <td>2025.05.24</td>
-                    <td>1924</td>
-                  </tr>
-                  <tr>
-                    <td>3</td>
-                    <td class="title">사내 건강검진 일정 공유</td>
-                    <td>홍길동</td>
-                    <td>2025.05.24</td>
-                    <td>17</td>
-                  </tr>
-                  <tr>
-                    <td>4</td>
-                    <td class="title">5월 행사 일정 공유</td>
-                    <td>홍길동</td>
-                    <td>2025.05.24</td>
-                    <td>17</td>
-                  </tr>
-                  <tr>
-                    <td>5</td>
-                    <td class="title">3차 성과발표회 일정</td>
-                    <td>홍길동</td>
-                    <td>2025.05.24</td>
-                    <td>17</td>
-                  </tr>
-                  <tr>
-                    <td>6</td>
-                    <td class="title">결제서류 제출 방법</td>
-                    <td>홍길동</td>
-                    <td>2025.05.24</td>
-                    <td>17</td>
-                  </tr>
-                </tbody>
-              </table>
-
-              <div class="pagination">
-                <span>&lt;</span>
-                <a href="#">1</a>
-                <a href="#">2</a>
-                <a href="#">3</a>
-                <a href="#">4</a>
-                <a href="#">5</a>
-                <a href="#">6</a>
-                <span>&gt;</span>
-              </div>
-            </div>
-            <div class="board-sub">
-              <div class="board-left"></div>
-              <div class="board-right"></div>
             </div>
           </div>
         </main>
         <footer></footer>
       </div>
     </div>
+       <!-- 모달 -->
+    <div id="boardModal" class="modal-overlay">
+      <div class="modal-content">
+        <!-- 복제된 게시판 뷰 -->
+        <div class="modal">
+          <div><button id="closeModalBtn" class="close-btn">&times;</button></div>
+          <div class="modal-header">새 게시판 만들기</div>
+          <div class="modal-title">게시판 정보 입력</div>
+
+          <div class="icon-circle">👩</div>
+
+          <div class="form-group">
+            <input type="text" placeholder="게시판 이름">
+          </div>
+
+          <div class="form-group">
+            <textarea placeholder="게시판 설명"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <span class="next-button">만들기</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 글쓰기 모달 -->
+        <div id="writeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal">
+            <div>
+                <button id="closeWriteModalBtn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-header">게시글 작성</div>
+            <div class="modal-title">새 글쓰기</div>
+
+            <div class="form-group">
+                <input type="text" id="post-title" placeholder="제목을 입력하세요" />
+            </div>
+            <!-- 텍스트 편집 툴 
+            <div class="form-group">
+                <label>글자 크기</label>
+                <select onchange="document.execCommand('fontSize', false, this.value)">
+                <option value="3">보통</option>
+                <option value="4">크게</option>
+                <option value="5">더 크게</option>
+                </select>
+
+                <label>글자 색상</label>
+                <input type="color" onchange="document.execCommand('foreColor', false, this.value)" />
+            </div> -->
+
+            <div class="form-group">
+                <div contenteditable="true" id="rich-editor">
+                     <textarea type="text" placeholder="내용을 입력하세요" ></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>파일 첨부</label><br />
+                <input type="file" id="post-file" />
+            </div>
+
+
+            <div class="modal-footer">
+                <span class="next-button">등록</span>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <script src="/scripts/board.js"></script>
+ 
   </body>
 </html>
