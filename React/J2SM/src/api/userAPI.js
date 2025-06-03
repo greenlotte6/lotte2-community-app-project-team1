@@ -9,6 +9,7 @@ import {
   USER_LOGIN,
   USER_LOGOUT,
   USER_MEMBERSHIP_SAVE,
+  USER_PASS_MODIFY,
   USER_REGISTER,
   USER_UID_BY_HP,
 } from "./_http";
@@ -29,6 +30,22 @@ export const postUserLogin = async (data) => {
   try {
     const response = await axios.post(`${USER_LOGIN}`, data, {
       withCredentials: true,
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const postModifyPass = async (data) => {
+  try {
+    const response = await axios.post(`${USER_PASS_MODIFY}`, data, {
+      withCredentials: true,
+
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
     console.log(response);
     return response.data;

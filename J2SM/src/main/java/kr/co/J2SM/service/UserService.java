@@ -164,4 +164,16 @@ public class UserService{
         }
         return "유저 정보가 없습니다";
     }
+
+    public Boolean modifyPass(UserDTO userDTO) {
+        Optional<User> optUser = userRepository.findByEmail(userDTO.getEmail());
+        if(optUser.isPresent()) {
+            User user = optUser.get();
+            String encoded = passwordEncoder.encode(userDTO.getPass());
+            user.setPass(encoded);
+            userRepository.save(user);
+            return true;
+        }
+        return false;
+    }
 }

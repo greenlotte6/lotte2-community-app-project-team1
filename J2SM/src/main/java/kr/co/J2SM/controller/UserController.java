@@ -211,6 +211,7 @@ public class UserController {
         HttpSession session = req.getSession();
 
         UserDTO userDTO = (UserDTO) session.getAttribute("user");
+
         Boolean exist = userService.findUserEmail(email);
 
         if(exist == true && userDTO != null){
@@ -244,10 +245,15 @@ public class UserController {
         HttpSession session = req.getSession();
         String AuthCode = (String) session.getAttribute("AuthCode");
 
+
         if(AuthCode.equals(code)){
+
             UserDTO userDTO = (UserDTO) session.getAttribute("user");
-            userDTO.setEmail( (String) session.getAttribute("email"));
-            session.setAttribute("user", userDTO);
+            if(userDTO != null){
+                userDTO.setEmail( (String) session.getAttribute("email"));
+                session.setAttribute("user", userDTO);
+            }
+
             return ResponseEntity.ok("인증 성공");    
         }else{
             return ResponseEntity.ok("인증실패");
@@ -266,8 +272,16 @@ public class UserController {
 
     }
 
+    @PostMapping("/modify")
+    public ResponseEntity modifyPass(@RequestBody UserDTO userDTO) {
+        log.info("비밀번호 변경 : " + userDTO);
+        Boolean success = userService.modifyPass(userDTO);
+        return ResponseEntity.ok(success);
+    }
 
-    /* 테스트 용 곧 삭제 */
+
+
+        /* 테스트 용 곧 삭제 */
     @GetMapping("/company")
     public ResponseEntity company(){
         userService.companyAll();
@@ -285,5 +299,7 @@ public class UserController {
 
         return ResponseEntity.ok(userDTO);
     }
+
+
 
 }
