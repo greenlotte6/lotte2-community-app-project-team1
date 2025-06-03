@@ -1,19 +1,65 @@
-import React from "react";
+import React, { useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import { Link, useNavigate } from "react-router-dom";
+import { postUserLogin } from "../../api/userAPI";
+import Logo from "./Logo";
 
+const initState = {
+  uid: "",
+  pass: "",
+};
 const Login = () => {
+  const [user, setUser] = useState({ ...initState });
+  const navigate = useNavigate();
+
+  const { login } = useAuth();
+
+  // 핸들러
+  const changeHandler = (e) => {
+    e.preventDefault();
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    // 서버 요청 정의
+    const fetchData = async () => {
+      try {
+        // 로그인
+        const data = await postUserLogin(user);
+        console.log(data);
+
+        if (data.username) {
+          // context login 호출
+          login(data.username);
+
+          // 메인 이동(컴포넌트 라우팅)
+          navigate("/");
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    // 호출
+    fetchData();
+  };
+
   return (
     <div id="user_page">
       <img src="/images/user/login.jpg" alt="로그인 화면" />
       <div id="login_form">
-        <img src="/images/logo.png" alt="로고" />
+        <Logo />
         <div>
           <p className="txt_bold">안녕하세요, J2SM에 오신 것을 환영합니다.</p>
-          <form action="#" id="login">
+          <form onSubmit={submitHandler} id="login">
             <p>아이디</p>
             <input
               type="text"
               name="uid"
               placeholder="아이디를 입력해주세요."
+              onChange={changeHandler}
               required
             />
 
@@ -25,11 +71,9 @@ const Login = () => {
                 name="pass"
                 id="password"
                 placeholder="비밀번호를 입력하세요"
+                onChange={changeHandler}
                 required
               />
-              <span className="toggle-password" onClick="togglePassword()">
-                🔒
-              </span>
             </div>
 
             <div className="select_box">
@@ -38,8 +82,8 @@ const Login = () => {
                 <span className="slider round"></span>
                 자동 로그인
                 <div className="find_tag">
-                  <a href="#">아이디 찾기ㅣ</a>
-                  <a href="#">비밀번호 찾기</a>
+                  <Link to="/user/findid">아이디 찾기ㅣ</Link>
+                  <Link to="/user/findpass">비밀번호 찾기</Link>
                 </div>
               </label>
 

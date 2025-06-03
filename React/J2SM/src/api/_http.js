@@ -18,12 +18,14 @@ export const USER_LOGOUT = `${SERVER_HOST}/user/logout`;
 
 // 유저 아이디 체크
 export const USER_ID_CHECK = `${SERVER_HOST}/user/idCheck`;
+export const USER_HP_CHECK = `${SERVER_HOST}/user/hpCheck`;
 export const USER_ID_SUCCESS = `${SERVER_HOST}/user/idCheck/success`;
 export const USER_MEMBERSHIP_SAVE = `${SERVER_HOST}/user/membership`;
 
 export const USER_EMAIL_CHECK = `${SERVER_HOST}/user/emailCheck`;
 export const USER_EMAIL_SEND = `${SERVER_HOST}/user/emailSend`;
 export const USER_EMAIL_VALID = `${SERVER_HOST}/user/emailCodeValid`;
+export const USER_UID_BY_HP = `${SERVER_HOST}/user/findHp`;
 
 // article
 export const ARTICLE_WRITE = `${SERVER_HOST}/article`;

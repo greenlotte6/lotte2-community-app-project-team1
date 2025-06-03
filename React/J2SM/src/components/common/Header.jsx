@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Link as ScrollLink } from "react-scroll";
+import useAuth from "../../hooks/useAuth";
 
 export const Header = () => {
   // 페이지 이동을 위한 navigate
   const navigate = useNavigate();
+  const { username, logout } = useAuth();
 
   const home = () => {
     navigate("/");
@@ -28,7 +30,10 @@ export const Header = () => {
               <img src="/images/logo.png" alt="J2SM" />
             </div>
             <div>
-              <span>The everything app, for work.</span>
+              <span>
+                The everything app, for work.
+                {!username ? <>로그아웃 상태</> : <>로그인 상태</>}
+              </span>
             </div>
           </div>
 

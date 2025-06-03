@@ -151,4 +151,17 @@ public class UserService{
         Department savedDepartment = departmentRepository.save(department);
         return savedDepartment;
     }
+
+    public boolean existHp(String hp) {
+        return userRepository.existsByHp(hp);
+    }
+
+    public String findUidByHp(String hp) {
+        Optional<User> optUser = userRepository.findByHp(hp);
+        if(optUser.isPresent()) {
+            User user = optUser.get();
+            return user.getUid();
+        }
+        return "유저 정보가 없습니다";
+    }
 }

@@ -1,11 +1,12 @@
 import React from "react";
+import Logo from "./Logo";
 
 const FindPass = () => {
   return (
     <div id="user_page">
       <img src="/images/user/login.jpg" alt="로그인 화면" />
       <div id="login_form">
-        <img src="/images/logo.png" alt="로고" />
+        <Logo />
         <div>
           <p class="txt_title">비밀번호찾기</p>
           <form action="#" id="login">

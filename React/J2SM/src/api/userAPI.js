@@ -3,12 +3,14 @@ import {
   USER_EMAIL_CHECK,
   USER_EMAIL_SEND,
   USER_EMAIL_VALID,
+  USER_HP_CHECK,
   USER_ID_CHECK,
   USER_ID_SUCCESS,
   USER_LOGIN,
   USER_LOGOUT,
   USER_MEMBERSHIP_SAVE,
   USER_REGISTER,
+  USER_UID_BY_HP,
 } from "./_http";
 
 export const postUser = async (data) => {
@@ -77,6 +79,17 @@ export const checkId = async (data) => {
   }
 };
 
+// 아이디 체크
+export const checkHp = async (data) => {
+  try {
+    const response = await axios.get(`${USER_HP_CHECK}?hp=${data}`);
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 // 아이디 체크 성공 시 세션에 데이터 저장
 export const checkIdSuccess = async (data) => {
   try {
@@ -119,10 +132,23 @@ export const EmailSend = async (data) => {
   }
 };
 
-// 이메일 인증
+// 이메일코드 인증
 export const EmailCodeValid = async (data) => {
   try {
     const response = await axios.get(`${USER_EMAIL_VALID}?code=${data}`, {
+      withCredentials: true, // ★ 세션 유지 위해 꼭 필요
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// 전화번호로 uid 가져오기
+export const getUidByHp = async (data) => {
+  try {
+    const response = await axios.get(`${USER_UID_BY_HP}?hp=${data}`, {
       withCredentials: true, // ★ 세션 유지 위해 꼭 필요
     });
     console.log(response);

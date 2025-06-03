@@ -88,8 +88,6 @@ public class UserController {
             Map<String, Object> map = new HashMap<>();
             map.put("grantType", "Bearer");
             map.put("username", user.getUid());
-            //map.put("accessToken", access);
-            //map.put("refreshToken", refresh);
 
             return ResponseEntity.ok().headers(headers).body(map);
 
@@ -169,8 +167,21 @@ public class UserController {
         boolean exist = userService.existId(uid);
         return ResponseEntity.ok(exist);
     }
+
+    // 휴대폰 검증 메서드
+    @GetMapping("/hpCheck")
+    public ResponseEntity<Boolean> hpCheck(@RequestParam("hp") String hp){
+        boolean exist = userService.existHp(hp);
+        log.info("휴대폰 검증 결과 : " + exist);
+        return ResponseEntity.ok(exist);
+    }
     
-    
+    @GetMapping("/findHp")
+    public ResponseEntity findHp(@RequestParam("hp") String hp){
+        String uid = userService.findUidByHp(hp);
+        return ResponseEntity.ok(uid);
+    }
+
     // 아이디 검증 성공 시 세션 저장
     @GetMapping("/idCheck/success")
     public ResponseEntity idCheck(@RequestParam("uid") String uid,
