@@ -2,14 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>드라이브 홈</title>
+    <title>최근 드라이브</title>
     <link
       rel="stylesheet"
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <link rel="stylesheet" href="/css/main/Cloud/cloudhome.css" />
+    <link rel="stylesheet" href="/css/main/Cloud/Mydrive.css" />
     <script src="/scripts/cloud.js"></script>
   </head>
   <body>
@@ -86,18 +86,16 @@
             <div class="sidemenu">
               <div class="sideTop">Cloud</div>
               <div><button class="new-drive">+ 신규</button></div>
-
               <div style="display: flex; align-items: center; margin-top: 13px">
                 <img
                   src="/images/Cloudhome.png.png"
                   alt="홈"
-                  style="width: 40px; height: 40px; margin-right: 10px"
+                  style="width: 29px; height: 29px; margin-right: 10px"
                 />
-                <div style="font-weight: 800">
+                <div style="font-weight: 400">
                   <a href="/view/Cloud/cloudhome.html">홈</a>
                 </div>
               </div>
-
               <div style="display: flex; align-items: center; margin-top: 25px">
                 <img
                   src="/images/Mydrive.png"
@@ -113,6 +111,16 @@
                 class="main-cloud"
                 style="border-top: 1px solid black; margin-top: 20px"
               ></div>
+              <div style="display: flex; align-items: center; margin-top: 30px">
+                <img
+                  src="/images/Recent Drive.png"
+                  alt="최근 드라이브"
+                  style="width: 40px; height: 40px; margin-right: 10px"
+                />
+                <div style="font-weight: 800">
+                  <a href="/view/Cloud/recentdrives.html">최근 드라이브</a>
+                </div>
+              </div>
 
               <div style="display: flex; align-items: center; margin-top: 30px">
                 <img
@@ -122,17 +130,6 @@
                 />
                 <div style="font-weight: 400">
                   <a href="/view/Cloud/shareDrive.html">공유 드라이브</a>
-                </div>
-              </div>
-
-              <div style="display: flex; align-items: center; margin-top: 30px">
-                <img
-                  src="/images/Recent Drive.png"
-                  alt="최근 드라이브"
-                  style="width: 29px; height: 29px; margin-right: 10px"
-                />
-                <div style="font-weight: 400">
-                  <a href="/view/Cloud/recentdrives.html">최근 드라이브</a>
                 </div>
               </div>
 
@@ -193,7 +190,7 @@
             </div>
 
             <div class="cloud-main">
-              <h3>Cloud 저장소 입니다.</h3>
+              <h3>최근 드라이브</h3>
 
               <!-- ✅ 수정된 검색 입력 form -->
               <form class="search-bar" action="/cloud/search" method="get">
@@ -261,7 +258,7 @@
                     <td>minhyeok</td>
                     <td>000보고서</td>
                     <td>문서</td>
-                    <td>내 드라이브</td>
+                    <td>공유 드라이브</td>
                     <td style="position: relative">
                       <span>2020.00.00</span>
                       <img
@@ -299,7 +296,7 @@
                     <td>minhyeok</td>
                     <td>000보고서</td>
                     <td>문서</td>
-                    <td>내 드라이브</td>
+                    <td>공유 드라이브</td>
                     <td style="position: relative">
                       <span>2020.00.00</span>
                       <img
@@ -337,7 +334,7 @@
                     <td>minhyeok</td>
                     <td>000보고서</td>
                     <td>문서</td>
-                    <td>내 드라이브</td>
+                    <td>공유 드라이브</td>
                     <td style="position: relative">
                       <span>2020.00.00</span>
                       <img
@@ -375,7 +372,7 @@
                     <td>minhyeok</td>
                     <td>000보고서</td>
                     <td>문서</td>
-                    <td>내 드라이브</td>
+                    <td>공유 드라이브</td>
                     <td style="position: relative">
                       <span>2020.00.00</span>
                       <img
@@ -413,45 +410,7 @@
                     <td>minhyeok</td>
                     <td>000보고서</td>
                     <td>문서</td>
-                    <td>내 드라이브</td>
-                    <td style="position: relative">
-                      <span>2020.00.00</span>
-                      <img
-                        class="tableimg"
-                        src="/images/Seemore.png"
-                        alt="더보기"
-                      />
-                      <div class="dropdown-menu">
-                        <ul>
-                          <li>
-                            <button type="button" class="favorite-btn">
-                              즐겨찾기
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" class="download-btn">
-                              다운로드
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" class="rename-btn">
-                              이름 변경
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" class="delete-btn">
-                              휴지통
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>minhyeok</td>
-                    <td>000보고서</td>
-                    <td>문서</td>
-                    <td>내 드라이브</td>
+                    <td>공유 드라이브</td>
                     <td style="position: relative">
                       <span>2020.00.00</span>
                       <img
@@ -486,6 +445,131 @@
                     </td>
                   </tr>
                 </table>
+                <div>
+                  <table class="drivetables">
+                    <tr>
+                      <th style="text-align: left">어제</th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                      <th></th>
+                    </tr>
+                    <tr>
+                      <td>minhyeok</td>
+                      <td>000보고서</td>
+                      <td>문서</td>
+                      <td>공유 드라이브</td>
+                      <td style="position: relative">
+                        <span>2020.00.00</span>
+                        <img
+                          class="tableimg"
+                          src="/images/Seemore.png"
+                          alt="더보기"
+                        />
+                        <div class="dropdown-menu">
+                          <ul>
+                            <li>
+                              <button type="button" class="favorite-btn">
+                                즐겨찾기
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="download-btn">
+                                다운로드
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="rename-btn">
+                                이름 변경
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="delete-btn">
+                                휴지통
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>minhyeok</td>
+                      <td>000보고서</td>
+                      <td>문서</td>
+                      <td>공유 드라이브</td>
+                      <td style="position: relative">
+                        <span>2020.00.00</span>
+                        <img
+                          class="tableimg"
+                          src="/images/Seemore.png"
+                          alt="더보기"
+                        />
+                        <div class="dropdown-menu">
+                          <ul>
+                            <li>
+                              <button type="button" class="favorite-btn">
+                                즐겨찾기
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="download-btn">
+                                다운로드
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="rename-btn">
+                                이름 변경
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="delete-btn">
+                                휴지통
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>minhyeok</td>
+                      <td>000보고서</td>
+                      <td>문서</td>
+                      <td>공유 드라이브</td>
+                      <td style="position: relative">
+                        <span>2020.00.00</span>
+                        <img
+                          class="tableimg"
+                          src="/images/Seemore.png"
+                          alt="더보기"
+                        />
+                        <div class="dropdown-menu">
+                          <ul>
+                            <li>
+                              <button type="button" class="favorite-btn">
+                                즐겨찾기
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="download-btn">
+                                다운로드
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="rename-btn">
+                                이름 변경
+                              </button>
+                            </li>
+                            <li>
+                              <button type="button" class="delete-btn">
+                                휴지통
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
