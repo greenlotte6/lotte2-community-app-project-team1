@@ -12,9 +12,12 @@ import AdminRegisterPage from "../pages/lading/AdminRegisterPage";
 import EmailValidPage from "../pages/lading/EmailValidPage";
 import AdminInfoRegisterPage from "../pages/lading/AdminInfoRegisterPage";
 import FindIdResultPage from "../pages/user/FindIdResultPage";
+import QnaPage from "../pages/lading/QnaPage";
+import QnaViewPage from "../pages/lading/QnaViewPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
+  /* 랜딩 라우터 시작 */
   // J2SM 이식중인 라우터
   { path: "/", element: <MainPage /> },
 
@@ -26,14 +29,20 @@ const router = createBrowserRouter([
   { path: "/credit/email", element: <EmailValidPage /> },
   { path: "/credit/info", element: <AdminInfoRegisterPage /> },
 
+  // 문의 페이지
+  { path: "/qna", element: <QnaPage /> },
+  { path: "/qna/view", element: <QnaViewPage /> },
+
+  /* 랜딩 라우터 종료 */
+
+  /* 유저 라우터 시작 */
   { path: "/user/login", element: <LoginPage /> },
   { path: "/user/findpass", element: <FindPassPage /> },
   { path: "/user/findid", element: <FindIdPage /> },
   { path: "/user/findid/result", element: <FindIdResultPage /> },
-
-  // 여기 밑은 팜스토리 라우터
   { path: "/user/register", element: <RegisterPage /> },
   { path: "/user/logout", element: null },
+  /* 유저 라우터 종료 */
 ]);
 
 // 라우터 내보내기
