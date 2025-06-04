@@ -55,7 +55,7 @@ body {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
-.wrapperside ul li:nth-of-type(7) {
+.wrapperside ul li:nth-of-type(1) {
   background-color: white;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -647,3 +647,31 @@ body.dark-mode .modalContent input {
 }
 
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModal/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+body.dark-mode .wrapper {
+  background-color: #1e1e1e;
+  transition: background-color 0.3s ease;
+}
+/* ✅ .wrapperside ul li hover 시 배경색 대응 */
+body.dark-mode .wrapperside ul li:hover,
+body.dark-mode .wrapperside ul li:nth-of-type(1) {
+  background-color: #2f2f2f;
+}
+/* 다크모드 - 로고/알림 아이콘 반전 */
+body.dark-mode .headerlogo img,
+body.dark-mode .alert img {
+  filter: invert(1);
+  opacity: 0.85;
+}
+/* ✅ searchArea 안의 이미지 (아이콘 등) 어두운 배경에 맞게 */
+body.dark-mode .searchArea img {
+  filter: brightness(0.8) contrast(1.1);
+  opacity: 0.85;
+}
+
+/* ✅ 테이블 안의 select 및 option 다크모드 대응 */
+body.dark-mode .midArea td select,
+body.dark-mode .midArea td option {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}

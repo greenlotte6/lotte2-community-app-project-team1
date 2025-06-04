@@ -55,7 +55,7 @@ body {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
-.wrapperside ul li:nth-of-type(1) {
+.wrapperside ul li:nth-of-type(8) {
   background-color: white;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -264,27 +264,6 @@ main aside {
 .sidelink {
   margin-bottom: 20px;
 }
-.childArea div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 8px;
-  border-radius: 30px;
-  background-color: #c7defd;
-  margin-bottom: 15px;
-}
-.childArea div img {
-  width: 18px;
-  height: 18px;
-}
-.childArea div a {
-  color: #2f80ed;
-  font-size: 14px;
-}
-.childArea div img:nth-of-type(2) {
-  width: 15px;
-  height: 15px;
-}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 main {
@@ -325,197 +304,96 @@ main .contentArea {
 }
 .Title h3 {
   font-size: 24px;
-  color: #2f80ed;
+  color: #000000;
   margin-top: 3px;
   margin-bottom: 28px;
   margin-left: 10px;
 }
+section {
+  margin-bottom: 40px;
+}
 .midArea {
   width: 100%;
   height: auto;
+  padding: 20px;
 }
-.plusBtn {
+.midArea h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+.midArea .semi {
+  line-height: 30px;
+}
+.semi select {
+  margin-left: 20px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 15px;
+}
+.semi option {
+  font-size: 14px;
+}
+.semi input {
+  margin-left: 20px;
+  padding: 5px 10px;
+}
+.range {
+  width: 700px;
+}
+input[type="file"] {
+  display: none; /* 기본 파일 업로드 버튼 숨김 */
+}
+
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background-color: #2f80ed;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.custom-file-upload:hover {
+  background-color: #1a5fcc;
+}
+
+.projectcontent {
+  border: 2px solid rgb(48, 48, 48);
   display: flex;
+  border-radius: 10px;
+  padding: 30px 30px;
   justify-content: space-between;
-  padding: 20px 15px 15px 5px;
-}
-.searchArea {
+  width: 800px;
   align-items: center;
 }
-.searchArea select {
-  padding: 9px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  position: relative;
-  top: 0.4px;
+.projectcontent img {
+  width: 35px;
+  height: 35px;
 }
-.searchArea option {
-  font-size: 14px;
-}
-.plusBtn input {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-}
-.plusBtn button {
+.projectcontent button {
   all: unset;
   cursor: pointer;
 }
-.searchArea button {
-  background-color: #2f80ed;
-  color: white;
-  border: none;
-  padding: 10px 15px 10px 15px;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.searchArea button:hover {
-  background-color: #1c6dd0;
-  box-shadow: 0 0 5px rgba(47, 128, 237, 0.4);
-}
-.listArea {
-  width: 100%;
-}
-.listArea table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.midArea table th:nth-of-type(1) {
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
-.midArea table th:nth-of-type(5) {
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
-.midArea th {
-  padding: 15px 10px 15px 10px;
-  text-align: left;
-  background-color: #c7defd;
-}
-.midArea td {
-  padding: 15px;
-  font-size: 14px;
-}
-.midArea td div {
-  display: flex;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #c2c2c2;
-  align-items: center;
-}
-.midArea td div img {
-  width: 20px;
-  height: 20px;
-  margin-right: 8px;
+.contenttext {
   position: relative;
-  left: 6px;
+  right: 140px;
+  line-height: 30px;
 }
-.midArea td div span {
-  position: relative;
-  left: 10px;
-  font-size: 14px;
+.contenttext span {
+  font-size: 24px;
+  font-weight: 700;
+  color: #646464;
 }
-
+.contenttext p {
+  color: #646464;
+}
 .bottomArea {
   width: 100%;
   height: auto;
   display: flex;
-}
-.btnArea {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 40px 10px 20px 10px;
-  align-items: center;
-}
-.pg {
-  background-color: #e0e0e0;
-  color: #333;
-  border: none;
-  padding: 7px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: transparent; /* 숫자 안보이게 */
-  position: relative;
-  opacity: 0.6;
-}
-
-.pg.active {
-  padding: 9px;
-  background-color: #2f80ed;
-  color: white;
-  color: transparent; /* 숫자 안보이게 */
-  opacity: 1;
-}
-.pgArea {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-}
-.pgArea button {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.modifyBtn {
-  background-color: #e0f0ff;
-  color: #2f80ed;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-.modifyBtn:hover {
-  background-color: #d0e6ff;
-  box-shadow: 0 0 5px rgba(47, 128, 237, 0.4);
-}
-.deleteBtn {
-  background-color: #ffe5e5;
-  color: #e53935;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-.deleteBtn:hover {
-  background-color: #ffc1c1;
-  box-shadow: 0 0 5px rgba(229, 57, 53, 0.4);
-}
-
-body.dark-mode .midArea th {
-  background-color: #5a6b7d; /* 기존 연블루 → 어두운 블루그레이 */
-}
-
-body.dark-mode .searchArea button {
-  background-color: #1f5dbd; /* 기존 블루보다 살짝 어둡게 */
-}
-
-body.dark-mode .modifyBtn {
-  background-color: #2668a8; /* 하늘색 → 짙은 블루 */
-}
-
-body.dark-mode .deleteBtn {
-  background-color: #b94a48; /* 연분홍 → 중간 톤 레드 */
-}
-
-body.dark-mode .pg {
-  background-color: #aaa; /* 회색 점 */
-}
-body.dark-mode .pg.active {
-  background-color: #2f80ed;
 }
 
 body.dark-mode aside {
@@ -552,27 +430,8 @@ body.dark-mode .childArea div a {
 body.dark-mode .childArea div img {
   filter: brightness(0.8);
 }
-body.dark-mode .searchArea select,
-body.dark-mode .searchArea option {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 1px solid #555;
-}
-body.dark-mode .searchArea select {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 1px solid #555;
-}
-body.dark-mode .searchArea input {
-  background-color: #2a2a2a;
-  border: 1px solid #555;
-}
-body.dark-mode .searchArea input::placeholder {
-  color: #f0f0f0;
-}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-
 .modalOverlay {
   display: none;
   position: fixed;
@@ -602,10 +461,12 @@ body.dark-mode .searchArea input::placeholder {
   margin-bottom: 20px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  text-align: center;
 }
 
 .modalButtons button {
-  padding: 8px 16px;
+  width: 80px;
+  height: 40px;
   margin: 0 8px;
   border: none;
   border-radius: 6px;
@@ -634,65 +495,41 @@ body.dark-mode .modalContent input {
   color: #f0f0f0;
   border: 1px solid #666;
 }
-
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModal/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-/* 기본 텍스트 색상 */
-body.dark-mode,
-body.dark-mode * {
-  color: #f0f0f0;
-}
+/*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡdark/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+/* 다크모드 누락 대응 - 한 번에 정리 */
 
-/* 기본 배경 */
-body.dark-mode {
-  background-color: #121212;
-}
-
-/* 테이블 셀 */
-body.dark-mode .midArea td {
-  background-color: #1e1e1e;
-  border-top: 1px solid #444;
-  border-bottom: 1px solid #444;
-}
-
-/* 버튼 텍스트 가독성 */
-body.dark-mode button {
-  color: #f0f0f0;
-}
-
-/* 테이블 내부 div 등 */
-body.dark-mode .midArea td div {
-  background-color: #444;
-}
-
-/* modal 버튼 */
-body.dark-mode .modalButtons button {
-  background-color: #444;
-  color: #f0f0f0;
-  border: 1px solid #777;
-}
-
-/* modal 버튼 예외: 확인/취소는 기존대로 유지 */
-body.dark-mode #inviteConfirmBtn {
-  background-color: #2f80ed;
-  color: white;
-}
-
-body.dark-mode #inviteCancelBtn {
-  background-color: #666;
-  color: white;
-}
 body.dark-mode .wrapper {
-  background-color: #1e1e1e;
-  transition: background-color 0.3s ease;
+  background-color: #1a1a1a;
 }
-/* ✅ .wrapperside ul li hover 시 배경색 대응 */
+
+body.dark-mode .wrapperside {
+  background-color: #2a2a2a;
+}
+
 body.dark-mode .wrapperside ul li:hover,
-body.dark-mode .wrapperside ul li:nth-of-type(1) {
-  background-color: #2f2f2f;
+body.dark-mode .wrapperside ul li:nth-of-type(6) {
+  background-color: #444;
 }
-/* 다크모드 - 로고/알림 아이콘 반전 */
-body.dark-mode .headerlogo img,
-body.dark-mode .alert img {
-  filter: invert(1);
-  opacity: 0.85;
+
+body.dark-mode .headerArea {
+  background-color: transparent;
+}
+
+body.dark-mode input,
+body.dark-mode select,
+body.dark-mode button {
+  background-color: #2f2f2f;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+
+body.dark-mode .custom-file-upload {
+  background-color: #555;
+  color: #f0f0f0;
+  border-color: #777;
+}
+body.dark-mode .alert img,
+body.dark-mode .headerlogo img {
+  filter: invert(1); /* 흰색으로 반전 */
 }
