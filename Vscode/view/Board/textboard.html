@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Dashboard</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
+    <link rel="stylesheet" href="/css/main/Board/textboard.css" />
+
+    <script src="/scripts/dashboardMain.js"></script>
+   
+
+  </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="/view/Admin/adminMain.html"
+              ><img src="/images/Grid.svg" alt="dashboard"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/MyPage/MyPage.html"
+              ><img src="/images/File text.svg" alt="document"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Calendar/calendar.html"
+              ><img src="/images/Calendar.svg" alt="calendar"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Chatting/Chatting.html"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Board/board.html"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Project/Project.html"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Cloud/cloudhome.html"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Setting/Setting.html"
+              ><img src="/images/Settings.svg" alt="setting"
+            /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+        <main>
+          <aside>
+             <div class="sidemenu">
+              <div class="sideTop"><h3>N Board</h3></div>
+              <div class="side-icon"><a href="#">HOME</a></div>
+              <div class="side-icon"><button id="openModalBtn">+ New BOARD</button></div>
+              <div class="side-icon"><a href="#">🔒공지사항</a></div>
+              <div class="side-icon"><a href="#">사내게시판</a></div>
+              <div class="side-icon"><a href="#">익명게시판</a></div>
+            </div>
+          </aside>
+          <div class="contentArea">
+            <div class="line"></div>
+            <div class="contents-main">
+            <div class="post-header">
+              <div class="post-title">[공지사항] 사내 워크숍 일정 안내</div>
+              <div class="post-meta">작성자: 홍길동 | 작성일: 2025.06.04 | 조회수: 45</div>
+            </div>
+
+            <div class="post-content">
+              안녕하세요. <br />
+              사내 워크숍 일정과 장소를 아래와 같이 안내드립니다.<br /><br />
+              ● 일정: 2025년 6월 15일 ~ 16일<br />
+              ● 장소: OO리조트<br />
+              ● 준비물: 개인 세면도구, 필기도구 등<br /><br />
+              많은 참여 부탁드립니다.
+            </div>
+            <div class="post-attachments">
+              <h4>첨부파일</h4>
+              <ul>
+                <li><a href="/uploads/workshop_info.pdf" download>워크숍 안내문.pdf</a></li>
+              </ul>
+            </div>
+            <form class="comment-form">
+              <button class="memo-button" type="submit">삭제</button>
+              <button class="memo-button" type="submit">수정</button>
+            </form>
+
+            <div class="comment-section">
+              <h3>댓글</h3>
+              <form class="comment-form">
+                <textarea placeholder="댓글을 입력하세요..."></textarea>
+                <button type="submit">등록</button>
+              </form>
+              <div class="comment-list">
+                <div class="comment">
+                  <div class="comment-author">김철수</div>
+                  <div class="comment-content">좋은 일정 감사합니다!</div>
+                </div>
+                <div class="comment">
+                  <div class="comment-author">이영희</div>
+                  <div class="comment-content">워크숍 기대되네요~ 😊</div>
+                </div>
+                <div class="comment">
+                  <div class="comment-author">김형우</div>
+                  <div class="comment-content">감사합니다</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </main>
+        <footer></footer>
+      </div>
+    </div>
+       <!-- 모달 -->
+    <div id="boardModal" class="modal-overlay">
+      <div class="modal-content">
+        <!-- 복제된 게시판 뷰 -->
+        <div class="modal">
+          <div><button id="closeModalBtn" class="close-btn">&times;</button></div>
+          <div class="modal-header">새 게시판 만들기</div>
+          <div class="modal-title">게시판 정보 입력</div>
+
+          <div class="icon-circle">👩</div>
+
+          <div class="form-group">
+            <input type="text" placeholder="게시판 이름">
+          </div>
+
+          <div class="form-group">
+            <textarea placeholder="게시판 설명"></textarea>
+          </div>
+
+          <div class="modal-footer">
+            <span class="next-button">만들기</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- 글쓰기 모달 -->
+        <div id="writeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content">
+            <div class="modal">
+            <div>
+                <button id="closeWriteModalBtn" class="close-btn">&times;</button>
+            </div>
+            <div class="modal-header">게시글 작성</div>
+            <div class="modal-title">새 글쓰기</div>
+
+            <div class="form-group">
+                <input type="text" id="post-title" placeholder="제목을 입력하세요" />
+            </div>
+            <!-- 텍스트 편집 툴 
+            <div class="form-group">
+                <label>글자 크기</label>
+                <select onchange="document.execCommand('fontSize', false, this.value)">
+                <option value="3">보통</option>
+                <option value="4">크게</option>
+                <option value="5">더 크게</option>
+                </select>
+
+                <label>글자 색상</label>
+                <input type="color" onchange="document.execCommand('foreColor', false, this.value)" />
+            </div> -->
+
+            <div class="form-group">
+                <div contenteditable="true" id="rich-editor">
+                     <textarea type="text" placeholder="내용을 입력하세요" ></textarea>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>파일 첨부</label><br />
+                <input type="file" id="post-file" />
+            </div>
+
+
+            <div class="modal-footer">
+                <span class="next-button">등록</span>
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <script src="/scripts/board.js"></script>
+ 
+  </body>
+</html>

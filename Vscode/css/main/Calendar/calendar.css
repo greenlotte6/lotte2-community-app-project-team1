@@ -156,6 +156,7 @@
       height: 30px;
       margin: 0 auto;
       background-color: #a1c4fd;
+      
     }
     .event-range {
       background-color: #9cb7e2;
@@ -264,4 +265,14 @@
       display: flex !important;
       flex-wrap: wrap;
       justify-content: space-between;
+    }
+
+    .s_button{
+      padding-top: 40px;
+      margin-left: 100px;
+    }
+
+    .calendar-table td:hover {
+      background-color: inherit !important;
+      cursor: default !important;
     }

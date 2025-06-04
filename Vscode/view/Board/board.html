@@ -7,209 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
+    <link rel="stylesheet" href="/css/main/Board/board.css" />
     <script src="/scripts/dashboardMain.js"></script>
-    <style>
-      h2 {
-        margin-bottom: 10px;
-      }
-      .side-icon {
-        padding: 0 10px;
-        margin: 15px;
-      }
-      .board-main {
-        height: 58%;
-        box-sizing: border-box;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
-        margin: 0 10px;
-      }
-      .line {
-        border-bottom: 2px solid black;
-        margin-bottom: 15px;
-      }
-      .board-top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 10px;
-        padding-top: 20px;
-      }
-      .board-top select,
-      .board-top input[type="text"] {
-        padding: 5px;
-        font-size: 14px;
-      }
-      .board-top button {
-        padding: 6px 10px;
-        font-size: 15px;
-        cursor: pointer;
-        color: #ffffff;
-        background-color: #4285f4;
-        border-radius: revert;
-        border: none;
-      }
-      table {
-        width: 100%;
-        border-collapse: collapse;
-      }
-      thead {
-        background-color: #e3e6ec;
-        border-radius: revert;
-        color: white;
-        opacity: 0.5;
-      }
-      th,
-      td {
-        padding: 12px;
-        text-align: center;
-        border-bottom: 1px solid beige;
-        font-size: 15px;
-      }
-      td.title {
-        padding-left: 20px;
-      }
-      .pagination {
-        margin-top: 20px;
-        text-align: center;
-      }
-      .pagination span,
-      .pagination a {
-        margin: 0 5px;
-        cursor: pointer;
-        text-decoration: none;
-        color: black;
-      }
-      .pagination a:hover {
-        text-decoration: underline;
-      }
-      .board-sub {
-        height: auto;
-        display: flex;
-      }
-      .board-left,
-      .board-right {
-        width: 50%;
-        margin: 10px;
-        box-sizing: border-box;
-        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
-        border-radius: 20px;
-      }
-      .board-main_1 {
-        margin: 10px;
-      }
-
-      /* 모달 스타일 */
-      .modal-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 1000;
-      }
-      .modal {
-      width: 400px;
-      margin: auto;
-      background: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      padding: 24px;
-      position: relative;
-    }
-
-    .modal-header {
-      font-size: 14px;
-      color: #5f6368;
-      margin-bottom: 10px;
-    }
-
-    .modal-title {
-      font-size: 20px;
-      font-weight: 500;
-      text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .icon-circle {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background-color: #f1f3f4;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      margin: 0 auto 20px;
-      font-size: 28px;
-      color: #5f6368;
-    }
-
-    .form-group {
-      margin-bottom: 20px;
-      width: 95%;
-    }
-
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #dadce0;
-      border-radius: 4px;
-      font-size: 14px;
-      resize: none;
-    }
-
-    .form-group textarea {
-      height: 80px;
-    }
-
-    .email-suffix {
-      display: flex;
-      align-items: center;
-    }
-
-    .email-suffix input {
-      flex: 1;
-    }
-
-    .email-suffix span {
-      margin-left: 5px;
-      font-size: 14px;
-      color: #5f6368;
-    }
-
-    .char-count {
-      font-size: 12px;
-      color: #5f6368;
-      text-align: right;
-    }
-
-    .modal-footer {
-      text-align: right;
-    }
-
-    .next-button {
-      color: #1a73e8;
-      font-weight: bold;
-      text-decoration: none;
-      cursor: pointer;
-      font-size: 14px;
-    }
-
-    .close-btn {
-      position: absolute;
-      right: 16px;
-      top: 16px;
-      font-size: 20px;
-      cursor: pointer;
-      color: #5f6368;
-      background-color: #ffffff;
-      border: none;
-    }
-    </style>
   </head>
   <body>
     <div class="wrapper">
@@ -218,14 +17,46 @@
           <img src="/images/user.png" alt="profile" />
         </div>
         <ul>
-          <li><a href="#"><img src="/images/Grid.svg" alt="dashboard" /></a></li>
-          <li><a href="#"><img src="/images/File text.svg" alt="document" /></a></li>
-          <li><a href="#"><img src="/images/Calendar.svg" alt="calendar" /></a></li>
-          <li><a href="#"><img src="/images/Message square.svg" alt="message" /></a></li>
-          <li><a href="#"><img src="/images/Clipboard.svg" alt="message-board" /></a></li>
-          <li><a href="#"><img src="/images/gmail_groups.svg" alt="director" /></a></li>
-          <li><a href="#"><img src="/images/Cloud.svg" alt="cloud-computing" /></a></li>
-          <li><a href="#"><img src="/images/Settings.svg" alt="setting" /></a></li>
+          <li>
+            <a href="/view/Admin/adminMain.html"
+              ><img src="/images/Grid.svg" alt="dashboard"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/MyPage/MyPage.html"
+              ><img src="/images/File text.svg" alt="document"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Calendar/calendar.html"
+              ><img src="/images/Calendar.svg" alt="calendar"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Chatting/Chatting.html"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Board/board.html"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Project/Project.html"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Cloud/cloudhome.html"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Setting/Setting.html"
+              ><img src="/images/Settings.svg" alt="setting"
+            /></a>
+          </li>
         </ul>
       </div>
       <div class="container">
@@ -273,13 +104,25 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td class="title">[중요]사내 일정 공유드립니다.</td>
+                      <td class="title">[공지사항] 사내 워크숍 일정 안내</td>
                       <td>홍길동</td>
-                      <td>2025.05.24</td>
+                      <td>2025.06.04</td>
                       <td>17</td>
                     </tr>
                     <tr>
                       <td class="title">사내 회식 일정(자율)</td>
+                      <td>홍길동</td>
+                      <td>2025.05.24</td>
+                      <td>1924</td>
+                    </tr>
+                    <tr>
+                      <td class="title">사내 네트워크 조율</td>
+                      <td>홍길동</td>
+                      <td>2025.05.24</td>
+                      <td>1924</td>
+                    </tr>
+                    <tr>
+                      <td class="title">금주 식단 안내</td>
                       <td>홍길동</td>
                       <td>2025.05.24</td>
                       <td>1924</td>
@@ -292,7 +135,10 @@
             <div class="board-sub">
               <div class="board-left">
                 <div class="board-main_1">
-                  <div class="board-top"><h3>사내게시판</h3></div>
+                  <div class="board-top_1">
+                    <h3>사내게시판</h3>
+                    <a class="add_menu" onclick="removeBoard(this)">🗑</a>
+                  </div>
                   <table>
                     <thead>
                       <tr>
@@ -309,6 +155,12 @@
                         <td>2025.05.24</td>
                         <td>17</td>
                       </tr>
+                      <tr>
+                        <td class="title">[중요]사내 일정 공유드립니다.</td>
+                        <td>홍길동</td>
+                        <td>2025.05.24</td>
+                        <td>17</td>
+                      </tr>
                     </tbody>
                   </table>
                   <div class="pagination"><a href="#">MORE</a></div>
@@ -316,7 +168,10 @@
               </div>
               <div class="board-right">
                 <div class="board-main_1">
-                  <div class="board-top"><h3>익명게시판</h3></div>
+                  <div class="board-top_1">
+                    <h3>익명게시판</h3>
+                    <a class="add_menu" onclick="removeBoard(this)">🗑</a>
+                  </div>
                   <table>
                     <thead>
                       <tr>
@@ -363,7 +218,7 @@
           <div class="icon-circle">👩</div>
 
           <div class="form-group">
-            <input type="text" placeholder="게시판 이름">
+            <input id="newBoardName" type="text" placeholder="게시판 이름">
           </div>
 
           <div class="form-group">
@@ -371,7 +226,7 @@
           </div>
 
           <div class="modal-footer">
-            <span class="next-button">만들기</span>
+            <span class="next-button" onclick="createNewBoard()">만들기</span>
           </div>
         </div>
       </div>
