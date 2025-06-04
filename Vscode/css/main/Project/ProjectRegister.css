@@ -55,7 +55,7 @@ body {
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
 }
-.wrapperside ul li:nth-of-type(1) {
+.wrapperside ul li:nth-of-type(6) {
   background-color: white;
   border-top-left-radius: 20px;
   border-bottom-left-radius: 20px;
@@ -88,15 +88,6 @@ body {
 
 .container.dark-mode .chartBox canvas {
   background-color: transparent;
-}
-
-body.dark-mode .projectContent {
-  background-color: #3a3a3a;
-  color: #ccc;
-}
-body.dark-mode .projectContent:hover {
-  background-color: #555;
-  color: #fff;
 }
 body.dark-mode .visitPageCard {
   background-color: #3a3a3a;
@@ -285,6 +276,38 @@ main aside {
   width: 15px;
   height: 15px;
 }
+.subMenu {
+  display: none;
+}
+
+.subMenu li {
+  margin-bottom: 6px;
+}
+
+.subMenu li a {
+  color: #2f80ed;
+  font-size: 13px;
+}
+.addcl button {
+  all: unset;
+  cursor: pointer;
+  background-color: #7bb0ff;
+  padding: 10px;
+  width: 190px;
+  border-radius: 10px;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.addcl button img {
+  width: 20px;
+  height: 20px;
+  margin-right: 10px;
+}
+.addcl button span {
+  color: white;
+  position: relative;
+  bottom: 3.7px;
+}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 main {
@@ -322,6 +345,16 @@ main .contentArea {
   border-bottom: 2px solid #898989;
   width: 100%;
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.Title button {
+  all: unset;
+  cursor: pointer;
+}
+.Title button img {
+  width: 25px;
+  height: 25px;
 }
 .Title h3 {
   font-size: 24px;
@@ -330,192 +363,70 @@ main .contentArea {
   margin-bottom: 28px;
   margin-left: 10px;
 }
+.Title input {
+  border: none;
+  padding: 10px;
+  font-size: 18px;
+}
+.Title input:focus {
+  outline: none;
+}
 .midArea {
   width: 100%;
   height: auto;
+  padding: 20px;
 }
-.plusBtn {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px 15px 15px 5px;
+.itemArea {
+  width: 300px;
+  height: 500px;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
-.searchArea {
-  align-items: center;
-}
-.searchArea select {
-  padding: 9px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  position: relative;
-  top: 0.4px;
-}
-.searchArea option {
-  font-size: 14px;
-}
-.plusBtn input {
+.itemArea input {
   padding: 10px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  font-size: 14px;
+  border: none;
 }
-.plusBtn button {
+.itemArea input:focus {
+  outline: none;
+}
+.itemArea button {
   all: unset;
   cursor: pointer;
 }
-.searchArea button {
-  background-color: #2f80ed;
-  color: white;
-  border: none;
-  padding: 10px 15px 10px 15px;
-  font-size: 14px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-
-.searchArea button:hover {
-  background-color: #1c6dd0;
-  box-shadow: 0 0 5px rgba(47, 128, 237, 0.4);
-}
-.listArea {
-  width: 100%;
-}
-.listArea table {
-  width: 100%;
-  border-collapse: collapse;
-}
-.midArea table th:nth-of-type(1) {
-  border-top-left-radius: 15px;
-  border-bottom-left-radius: 15px;
-}
-.midArea table th:nth-of-type(5) {
-  border-top-right-radius: 15px;
-  border-bottom-right-radius: 15px;
-}
-.midArea th {
-  padding: 15px 10px 15px 10px;
-  text-align: left;
-  background-color: #c7defd;
-}
-.midArea td {
-  padding: 15px;
-  font-size: 14px;
-}
-.midArea td div {
+.itemtop {
   display: flex;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  background-color: #c2c2c2;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #898989;
+}
+.itemtop button,
+input {
+  margin-bottom: 10px;
+}
+.itemmid {
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+.itemmid button {
+  font-size: 15px;
+}
+.itembot {
+  display: flex;
   align-items: center;
 }
-.midArea td div img {
+.itembot img {
   width: 20px;
-  height: 20px;
-  margin-right: 8px;
   position: relative;
-  left: 6px;
+  top: 4px;
+  margin-right: 10px;
 }
-.midArea td div span {
-  position: relative;
-  left: 10px;
-  font-size: 14px;
-}
-
 .bottomArea {
   width: 100%;
   height: auto;
   display: flex;
-}
-.btnArea {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  padding: 40px 10px 20px 10px;
-  align-items: center;
-}
-.pg {
-  background-color: #e0e0e0;
-  color: #333;
-  border: none;
-  padding: 7px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: transparent; /* 숫자 안보이게 */
-  position: relative;
-  opacity: 0.6;
-}
-
-.pg.active {
-  padding: 9px;
-  background-color: #2f80ed;
-  color: white;
-  color: transparent; /* 숫자 안보이게 */
-  opacity: 1;
-}
-.pgArea {
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  align-items: center;
-}
-.pgArea button {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-}
-.modifyBtn {
-  background-color: #e0f0ff;
-  color: #2f80ed;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-.modifyBtn:hover {
-  background-color: #d0e6ff;
-  box-shadow: 0 0 5px rgba(47, 128, 237, 0.4);
-}
-.deleteBtn {
-  background-color: #ffe5e5;
-  color: #e53935;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
-}
-.deleteBtn:hover {
-  background-color: #ffc1c1;
-  box-shadow: 0 0 5px rgba(229, 57, 53, 0.4);
-}
-
-body.dark-mode .midArea th {
-  background-color: #5a6b7d; /* 기존 연블루 → 어두운 블루그레이 */
-}
-
-body.dark-mode .searchArea button {
-  background-color: #1f5dbd; /* 기존 블루보다 살짝 어둡게 */
-}
-
-body.dark-mode .modifyBtn {
-  background-color: #2668a8; /* 하늘색 → 짙은 블루 */
-}
-
-body.dark-mode .deleteBtn {
-  background-color: #b94a48; /* 연분홍 → 중간 톤 레드 */
-}
-
-body.dark-mode .pg {
-  background-color: #aaa; /* 회색 점 */
-}
-body.dark-mode .pg.active {
-  background-color: #2f80ed;
 }
 
 body.dark-mode aside {
@@ -552,27 +463,8 @@ body.dark-mode .childArea div a {
 body.dark-mode .childArea div img {
   filter: brightness(0.8);
 }
-body.dark-mode .searchArea select,
-body.dark-mode .searchArea option {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 1px solid #555;
-}
-body.dark-mode .searchArea select {
-  background-color: #2a2a2a;
-  color: #f0f0f0;
-  border: 1px solid #555;
-}
-body.dark-mode .searchArea input {
-  background-color: #2a2a2a;
-  border: 1px solid #555;
-}
-body.dark-mode .searchArea input::placeholder {
-  color: #f0f0f0;
-}
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-
 .modalOverlay {
   display: none;
   position: fixed;
@@ -591,8 +483,51 @@ body.dark-mode .searchArea input::placeholder {
   padding: 30px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  width: 320px;
+  width: 900px;
   text-align: center;
+  height: auto;
+}
+.list {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.list img {
+  width: 40px;
+}
+.listtop {
+  padding: 20px 0;
+  margin: 0 15px 20px 15px;
+  border-bottom: 2px solid rgb(155, 155, 155);
+}
+.employeelist .menuItem {
+  width: 300px;
+  border-radius: 10px;
+}
+.employeelist .childArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* ⬅️ .menuItem을 가로 중앙 정렬 */
+}
+.employeelist .subMenu {
+  margin-top: 0;
+  padding-left: 0;
+}
+.employeelist .childArea div {
+  display: flex;
+  justify-content: center;
+}
+.employeelist {
+  width: 45%;
+  height: 600px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+.inproject {
+  width: 45%;
+  height: 600px;
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .modalContent input {
@@ -602,10 +537,12 @@ body.dark-mode .searchArea input::placeholder {
   margin-bottom: 20px;
   border-radius: 6px;
   border: 1px solid #ccc;
+  text-align: center;
 }
 
 .modalButtons button {
-  padding: 8px 16px;
+  width: 80px;
+  height: 40px;
   margin: 0 8px;
   border: none;
   border-radius: 6px;
@@ -634,65 +571,85 @@ body.dark-mode .modalContent input {
   color: #f0f0f0;
   border: 1px solid #666;
 }
-
 /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModal/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
-/* 기본 텍스트 색상 */
-body.dark-mode,
-body.dark-mode * {
+body.dark-mode .alert img,
+body.dark-mode .headerlogo img {
+  filter: invert(1); /* 흰색으로 반전 */
+}
+
+/* ✅ 다크모드에서 li hover 색상 대응 */
+body.dark-mode .wrapperside ul li:hover,
+body.dark-mode .wrapperside ul li:nth-of-type(6) {
+  background-color: #444;
+}
+
+/* ✅ 아이콘 전체 밝게 */
+body.dark-mode .wrapperside ul img {
+  filter: brightness(2);
+}
+
+/* ✅ 모달 내부 양쪽 박스 대응 */
+body.dark-mode .employeelist,
+body.dark-mode .inproject {
+  background-color: #3a3a3a;
   color: #f0f0f0;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
 }
 
-/* 기본 배경 */
-body.dark-mode {
-  background-color: #121212;
+/* ✅ 모달 내부 메뉴 텍스트 대응 */
+body.dark-mode .employeelist .childArea a {
+  color: #90caf9;
 }
 
-/* 테이블 셀 */
-body.dark-mode .midArea td {
+/* ✅ 모달 내부 아이콘 */
+body.dark-mode .employeelist .childArea img {
+  filter: brightness(2);
+}
+/*--------------------------------------------------------------------------------*/
+/* ✅ main 전체 배경 */
+body.dark-mode main {
   background-color: #1e1e1e;
-  border-top: 1px solid #444;
-  border-bottom: 1px solid #444;
 }
 
-/* 버튼 텍스트 가독성 */
-body.dark-mode button {
+/* ✅ .itemArea 카드 */
+body.dark-mode .itemArea {
+  background-color: #3a3a3a;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
   color: #f0f0f0;
 }
 
-/* 테이블 내부 div 등 */
-body.dark-mode .midArea td div {
-  background-color: #444;
-}
-
-/* modal 버튼 */
-body.dark-mode .modalButtons button {
-  background-color: #444;
+/* ✅ .itemmid 내부 카드 */
+body.dark-mode .itemmid {
+  background-color: #2f2f2f;
   color: #f0f0f0;
-  border: 1px solid #777;
+  box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
 }
 
-/* modal 버튼 예외: 확인/취소는 기존대로 유지 */
-body.dark-mode #inviteConfirmBtn {
-  background-color: #2f80ed;
-  color: white;
+/* ✅ .Title 영역 텍스트 */
+body.dark-mode .Title h3 {
+  color: #90caf9;
 }
 
-body.dark-mode #inviteCancelBtn {
-  background-color: #666;
+/* ✅ .Title input 텍스트 입력 */
+body.dark-mode .Title input {
+  background-color: #3a3a3a;
+  color: #f0f0f0;
+  border: 1px solid #555;
+}
+
+/* ✅ 버튼 hover 대응 */
+body.dark-mode .modalButtons button:hover {
+  opacity: 0.9;
+}
+
+/* ✅ addcl 버튼 내부 텍스트 및 배경 대응 */
+body.dark-mode .addcl button {
+  background-color: #5c94dd;
+}
+
+body.dark-mode .addcl button span {
   color: white;
 }
 body.dark-mode .wrapper {
-  background-color: #1e1e1e;
-  transition: background-color 0.3s ease;
-}
-/* ✅ .wrapperside ul li hover 시 배경색 대응 */
-body.dark-mode .wrapperside ul li:hover,
-body.dark-mode .wrapperside ul li:nth-of-type(1) {
-  background-color: #2f2f2f;
-}
-/* 다크모드 - 로고/알림 아이콘 반전 */
-body.dark-mode .headerlogo img,
-body.dark-mode .alert img {
-  filter: invert(1);
-  opacity: 0.85;
+  background-color: #1a1a1a;
 }
