@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Setting</title>
+    <link
+      rel="stylesheet"
+      as="style"
+      crossorigin
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="/css/main/Setting/Setting.css" />
+    <script src="/scripts/Setting.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="wrapperside">
+        <div class="profileArea">
+          <img src="/images/user.png" alt="profile" />
+        </div>
+        <ul>
+          <li>
+            <a href="/view/dashboard/dashboardMain.html"
+              ><img src="/images/Grid.svg" alt="dashboard"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/MyPage/MyPage.html"
+              ><img src="/images/File text.svg" alt="document"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Calendar/calendar.html"
+              ><img src="/images/Calendar.svg" alt="calendar"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Chatting/Chatting.html"
+              ><img src="/images/Message square.svg" alt="message"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Board/board.html"
+              ><img src="/images/Clipboard.svg" alt="message-board"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Project/Project.html"
+              ><img src="/images/gmail_groups.svg" alt="director"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Cloud/cloudhome.html"
+              ><img src="/images/Cloud.svg" alt="cloud-computing"
+            /></a>
+          </li>
+          <li>
+            <a href="/view/Setting/Setting.html"
+              ><img src="/images/Settings.svg" alt="setting"
+            /></a>
+          </li>
+        </ul>
+      </div>
+      <div class="container">
+        <header>
+          <div class="headerArea">
+            <div class="headerlogo">
+              <a href="#"><img src="/images/logo.png" alt="J2SMLogo" /></a>
+            </div>
+            <div class="darkmode">
+              <label class="toggle-switch">
+                <span class="label-text">DARK MODE</span>
+                <input type="checkbox" id="darkModeToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="alert">
+              <img src="/images/bell.png" alt="bell" />
+            </div>
+          </div>
+        </header>
+        <main>
+          <aside>
+            <div class="sidemenu">
+              <div class="sideTop">
+                <h3>Setting</h3>
+              </div>
+              <div class="childArea">
+                <a href="#">Home</a>
+              </div>
+            </div>
+          </aside>
+          <div class="contentArea">
+            <div class="topArea">
+              <div class="Title">
+                <h3>Setting</h3>
+              </div>
+            </div>
+            <div class="midArea">
+              <section>
+                <h4>PageSetting</h4>
+                <div class="semi">
+                  <label>폰트 사이즈</label><br />
+                  <input type="range" class="range" />
+                  <br />
+                </div>
+                <div class="semi">
+                  <label>언어 설정</label><br />
+                  <select>
+                    <option>한국어</option>
+                    <option>영어</option>
+                  </select>
+                </div>
+              </section>
+
+              <!-- Calendar Setting -->
+              <section>
+                <h4>CalendarSetting</h4>
+                <div class="semi">
+                  <label>알림 시간 설정</label><br />
+                  <input type="time" />
+                  ~
+                  <input type="time" />
+                </div>
+              </section>
+
+              <!-- Chatting Setting -->
+              <section>
+                <h4>ChattingSetting</h4>
+                <div class="semi">
+                  <label>알림 방식 설정</label><br />
+                  <select>
+                    <option>이메일</option>
+                    <option>메세지</option>
+                    <option>페이지</option>
+                  </select>
+                </div>
+              </section>
+
+              <!-- NoticeBoard Setting -->
+              <section>
+                <div class="semi">
+                  <h4>NoticeBoardSetting</h4>
+                  <p>추후에 추가 예정</p>
+                </div>
+              </section>
+
+              <!-- Project Setting -->
+              <section>
+                <h4>ProjectSetting</h4>
+                <div class="semi">
+                  <label>프로젝트 알림</label><br />
+                  <label class="toggle-switch">
+                    <span class="label-text">켜기/끄기</span>
+                    <input type="checkbox" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+              </section>
+
+              <!-- Cloud Setting -->
+              <section>
+                <h4>CloudSetting</h4>
+                <div class="semi">
+                  <label>자동 백업 여부</label><br />
+                  <label class="toggle-switch">
+                    <span class="label-text">켜기/끄기</span>
+                    <input type="checkbox" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <br />
+                <div class="semi">
+                  <label>항상 알림 설정</label><br />
+                  <label class="toggle-switch">
+                    <span class="label-text">켜기/끄기</span>
+                    <input type="checkbox" />
+                    <span class="slider"></span>
+                  </label>
+                </div>
+                <br />
+                <div class="semi">
+                  <label class="custom-file-upload"
+                    >기본 경로 설정<br />
+                    <input type="file" />
+                  </label>
+                </div>
+              </section>
+            </div>
+            <div class="bottomArea"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

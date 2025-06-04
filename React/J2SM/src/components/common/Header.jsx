@@ -17,8 +17,8 @@ export const Header = () => {
     navigate("/user/login");
   };
 
-  const inquireHandler = () => {
-    navigate("/user/login");
+  const qnaHandler = () => {
+    navigate("/qna");
   };
 
   // 로그아웃
@@ -91,7 +91,7 @@ export const Header = () => {
             <button
               id="contact_btn"
               className="border border-purple-600 text-purple-600 px-5 py-2 rounded-full text-sm font-medium hover:bg-purple-600 hover:text-white transition duration-200"
-              onClick={loginHandler}
+              onClick={qnaHandler}
             >
               Contact Sales
             </button>

@@ -583,3 +583,6 @@ body.dark-mode .storage-bar .used {
   color: #eee;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
+body.dark-mode h4 {
+  color: white;
+}

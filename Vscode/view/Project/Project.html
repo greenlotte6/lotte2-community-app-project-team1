@@ -2,15 +2,15 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Share</title>
+    <title>Project</title>
     <link
       rel="stylesheet"
       as="style"
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <link rel="stylesheet" href="/css/main/MyPage/Share.css" />
-    <script src="/scripts/Share.js" defer></script>
+    <link rel="stylesheet" href="/css/main/Project/Project.css" />
+    <script src="/scripts/Project.js"></script>
   </head>
   <body>
     <div class="wrapper">
@@ -83,12 +83,17 @@
           <aside>
             <div class="sidemenu">
               <div class="sideTop">
-                <h3>MyPage</h3>
+                <h3>Project</h3>
+                <div class="addcl">
+                  <button type="button" id="openInviteModalBtn">
+                    <img src="/images/Plus.svg" /><span>New Project</span>
+                  </button>
+                </div>
               </div>
               <div class="childArea">
                 <div class="menuItem">
                   <img src="/images/File text.svg" alt="users" /><a href="#"
-                    >MyPage</a
+                    >진행중인 프로젝트</a
                   ><img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <ul class="subMenu">
@@ -97,16 +102,7 @@
                 </ul>
                 <div class="menuItem">
                   <img src="/images/File text.svg" alt="users" /><a href="#"
-                    >Share</a
-                  ><img src="/images/Vector.svg" alt="vector" />
-                </div>
-                <ul class="subMenu">
-                  <li><a href="#">더미더미더미</a></li>
-                  <li><a href="#">더미더미더미</a></li>
-                </ul>
-                <div class="menuItem">
-                  <img src="/images/File text.svg" alt="users" /><a href="#"
-                    >Favorites</a
+                    >완료된 프로젝트</a
                   ><img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <ul class="subMenu">
@@ -118,23 +114,35 @@
           </aside>
           <div class="contentArea">
             <div class="topArea">
-              <div class="favoriteshare">
-                <img src="/images/star.png" alt="fav" />
-                <p>공유하기</p>
-              </div>
-              <div class="titleArea">
-                <input type="text" placeholder="Title" />
+              <div class="Title">
+                <h3>My Project</h3>
               </div>
             </div>
             <div class="midArea">
-              <div
-                id="editorjs"
-                style="background: white; padding: 20px; border-radius: 10px"
-              ></div>
+              <div class="projectcontent">
+                <img src="/images/Layers.svg" alt="layericon" />
+                <div class="contenttext">
+                  <span>롯데 사내 프로그램 프로젝트</span><br />
+                  <p>in progress</p>
+                </div>
+                <button><img src="/images/Trash 2.svg" alt="trash" /></button>
+              </div>
             </div>
             <div class="bottomArea"></div>
           </div>
         </main>
+      </div>
+    </div>
+    <div class="modalOverlay" id="inviteModal">
+      <div class="modalContent">
+        <h3>새 프로젝트 생성</h3>
+        <input type="text" placeholder="프로젝트 이름 입력" />
+        <div class="modalButtons">
+          <button id="inviteConfirmBtn">
+            <a href="/view/Project/ProjectRegister.html">세부 설정</a>
+          </button>
+          <button id="inviteCancelBtn">취소</button>
+        </div>
       </div>
     </div>
   </body>
