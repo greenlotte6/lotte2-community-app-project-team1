@@ -3,7 +3,7 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./styles/App.scss";
 import "./styles/Admin.scss";
-import "./styles/layer/main.scss";
+import "./styles/layer/mains.scss";
 import "./styles/layer/user.scss";
 import "./styles/layer/qna.scss";
 import { MainLayout } from "./layouts/MainLayout";
