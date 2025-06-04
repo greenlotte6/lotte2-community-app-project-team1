@@ -5,6 +5,7 @@ import "./styles/App.scss";
 import "./styles/Admin.scss";
 import "./styles/layer/main.scss";
 import "./styles/layer/user.scss";
+import "./styles/layer/qna.scss";
 import { MainLayout } from "./layouts/MainLayout";
 import { RouterProvider } from "react-router-dom";
 import router from "./routers/router";

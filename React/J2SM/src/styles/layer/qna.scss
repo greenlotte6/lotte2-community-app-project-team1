@@ -1,0 +1,286 @@
+/* 전체 문의 폼 컨테이너 */
+.contact-container {
+  max-width: 600px;
+  margin: 100px auto;
+  padding: 40px 30px;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+
+  /* 제목 및 설명 */
+  .contact-title {
+    font-size: 26px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 8px;
+    color: #222;
+  }
+
+  .contact-subtitle {
+    font-size: 15px;
+    text-align: center;
+    margin-bottom: 24px;
+    color: #666;
+  }
+
+  /* 라벨 */
+  .contact-label {
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    color: #444;
+  }
+
+  /* 입력창 공통 스타일 */
+  .contact-input,
+  .contact-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    transition: border-color 0.3s ease;
+    background-color: #fff;
+  }
+
+  /* 포커스 시 */
+  .contact-input:focus,
+  .contact-textarea:focus {
+    border-color: #a3241c;
+    outline: none;
+  }
+
+  /* 텍스트에어리어는 리사이즈 안 되게 */
+  .contact-textarea {
+    height: 80px;
+    resize: none;
+  }
+
+  /* 이름 + 이메일 한 줄에 배치 */
+  .contact-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    margin-top: 16px;
+  }
+
+  .contact-row > div {
+    flex: 1;
+  }
+
+  /* 제출 버튼 */
+  .contact-button {
+    margin-top: 24px;
+    background-color: #cf261a;
+    color: white;
+    border: none;
+    padding: 12px;
+    width: 100%;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+
+  .contact-button:hover {
+    background-color: #881e16;
+  }
+}
+
+.qnaView {
+  body {
+    background-color: #f9fafb;
+    font-family: "Pretendard", "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  /* 제목 & 부제목 */
+  .qna-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 4px;
+  }
+
+  .qna-subtitle {
+    text-align: center;
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 32px;
+  }
+
+  /* 메인 박스 */
+  .qna-box {
+    width: 460px;
+    background-color: #fff;
+    border-radius: 12px;
+    margin: 0 auto;
+    padding: 24px 28px;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 닫기 버튼 */
+  .close-button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+  }
+
+  /* 섹션 제목 */
+  .qna-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #222;
+  }
+
+  /* 필드 그룹 */
+  .qna-field {
+    margin-bottom: 16px;
+  }
+
+  /* 라벨 */
+  .qna-label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  /* 값 */
+  .qna-value {
+    font-size: 15px;
+  }
+
+  .qna-input:focus {
+    border-color: #a3241c;
+    outline: none;
+  }
+
+  /* 입력 필드 */
+  .qna-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+
+  /* 구분선 */
+  .divider {
+    margin: 24px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+}
+
+.qnaView {
+  margin-top: 100px;
+
+  body {
+    background-color: #f9fafb;
+    font-family: "Pretendard", "Helvetica Neue", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333;
+  }
+
+  /* 제목 & 부제목 */
+  .qna-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    margin-top: 40px;
+    margin-bottom: 4px;
+  }
+
+  .qna-subtitle {
+    text-align: center;
+    font-size: 15px;
+    color: #666;
+    margin-bottom: 32px;
+  }
+
+  /* 메인 박스 */
+  .qna-box {
+    width: 460px;
+    background-color: #fff;
+    border-radius: 12px;
+    margin: 0 auto;
+    padding: 24px 28px;
+    position: relative;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  /* 닫기 버튼 */
+  .close-button {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+    color: #666;
+  }
+
+  /* 섹션 제목 */
+  .qna-section-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    color: #222;
+  }
+
+  /* 필드 그룹 */
+  .qna-field {
+    margin-bottom: 16px;
+  }
+
+  /* 라벨 */
+  .qna-label {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  /* 값 */
+  .qna-value {
+    font-size: 15px;
+  }
+
+  .qna-input:focus {
+    border-color: #a3241c;
+    outline: none;
+  }
+
+  /* 입력 필드 */
+  .qna-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+  }
+
+  /* 구분선 */
+  .divider {
+    margin: 24px 0;
+    border: none;
+    border-top: 1px solid #ddd;
+  }
+}
