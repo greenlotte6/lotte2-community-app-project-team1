@@ -14,6 +14,7 @@ import AdminInfoRegisterPage from "../pages/lading/AdminInfoRegisterPage";
 import FindIdResultPage from "../pages/user/FindIdResultPage";
 import QnaPage from "../pages/lading/QnaPage";
 import QnaViewPage from "../pages/lading/QnaViewPage";
+import DashBoardPage from "../pages/DashBoard/DashBoardPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   { path: "/user/register", element: <RegisterPage /> },
   { path: "/user/logout", element: null },
   /* 유저 라우터 종료 */
+
+  /* 대시보드 라우터 종료 */
+  { path: "/dashboard/main", element: <DashBoardPage /> },
+  /* 대시보드 라우터 종료 */
 ]);
 
 // 라우터 내보내기
