@@ -1,0 +1,759 @@
+#DashboardMainLayout {
+  * {
+    margin: 0;
+    padding: 0;
+    font-family: "Pretendard Variable", Pretendard, sans-serif;
+    font-size: 16px;
+    color: #333;
+  }
+  a {
+    text-decoration: none;
+  }
+  ul,
+  li {
+    list-style: none;
+  }
+  body {
+    margin: 0 auto;
+  }
+  .wrapper {
+    width: 1600px;
+    height: auto;
+    padding: 15px 15px 15px 0;
+    background-color: #f5f5f5;
+    margin: 0 auto;
+    border-radius: 20px;
+    margin-top: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .profileArea {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+    margin-bottom: 70px;
+  }
+  .profileArea img {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    position: relative;
+    left: 10px;
+    top: 8px;
+  }
+  .wrapperside ul {
+    padding-left: 0;
+  }
+  .wrapperside ul li {
+    margin-bottom: 35px;
+    height: 55px;
+    justify-content: center;
+  }
+  .wrapperside ul li:hover {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+  .wrapperside ul li:nth-of-type(1) {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
+  .wrapperside ul img {
+    width: 43px;
+    height: 43px;
+    position: relative;
+    left: 20px;
+    top: 7px;
+  }
+  .container {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px 20px 0 30px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  body.dark-mode .projectContent {
+    background-color: #3a3a3a;
+    color: #ccc;
+  }
+  body.dark-mode .projectContent:hover {
+    background-color: #555;
+    color: #fff;
+  }
+  body.dark-mode .visitPageCard {
+    background-color: #3a3a3a;
+    box-shadow: 0 0 0 1px #555;
+  }
+
+  body.dark-mode .visitPageCard:hover {
+    background-color: #555;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+    transform: scale(1.05);
+  }
+
+  body.dark-mode .visitPageCard p {
+    color: #ccc;
+  }
+
+  body.dark-mode .visitPageCard img {
+    opacity: 0.8;
+  }
+
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ기본설정/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡHeaderㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  header {
+    width: 100%;
+    height: auto;
+  }
+  .headerArea {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .container header img {
+    width: 150px;
+    height: 90px;
+    position: relative;
+    bottom: 20px;
+  }
+  .darkmode {
+    position: relative;
+    left: 555px;
+    bottom: 38px;
+  }
+  .dark-mode-btn {
+    background-color: transparent;
+    border: 1px solid #ccc;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .dark-mode-btn:hover {
+    background-color: #eee;
+  }
+
+  body.dark-mode {
+    background-color: #121212;
+    color: #f0f0f0;
+  }
+
+  body.dark-mode .label-text {
+    color: white;
+  }
+
+  .container.dark-mode {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+  }
+  .toggle-switch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+  }
+
+  .toggle-switch input {
+    display: none;
+  }
+
+  .slider {
+    width: 50px;
+    height: 26px;
+    background-color: #ccc;
+    border-radius: 50px;
+    position: relative;
+    transition: background-color 0.3s;
+  }
+
+  .slider::before {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 3px;
+    left: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+  }
+
+  input:checked + .slider {
+    background-color: #379eff;
+  }
+
+  input:checked + .slider::before {
+    transform: translateX(24px);
+  }
+
+  .label-text {
+    font-size: 13px;
+    color: #333;
+  }
+
+  .container .alert img {
+    width: 43px;
+    height: 43px;
+    position: relative;
+    bottom: 35px;
+    right: 10px;
+  }
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡHeader/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAsideㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+
+  .container.dark-mode aside {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .container.dark-mode .sidemenu,
+  .container.dark-mode .sidemenu * {
+    color: #ffffff !important;
+    transition: color 0.3s ease;
+  }
+
+  main aside {
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    border-radius: 20px;
+    border-top: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    padding: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .sidemenu {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .sideTop {
+    border-bottom: 1px solid;
+    margin-bottom: 20px;
+  }
+  .sidemenu h3 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #898989;
+  }
+  .sidemenu a {
+    color: #898989;
+  }
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMainㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  main {
+    width: 100%;
+    height: 740px;
+    background-color: #d9d9d9;
+    border-radius: 20px;
+    display: flex;
+  }
+
+  main .contentArea {
+    width: 1180px;
+    height: 720px;
+    background-color: white;
+    border-radius: 20px;
+    position: relative;
+    left: 20px;
+    margin: 10px 0 15px 0;
+    overflow: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  .container.dark-mode .contentArea,
+  .container.dark-mode .contentArea * {
+    color: #f0f0f0 !important;
+    transition: color 0.3s ease;
+  }
+  .container.dark-mode .contentArea {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+  }
+  .topArea {
+    display: flex;
+    width: 100%;
+    height: auto;
+  }
+  .mainProfile h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #4285f4;
+  }
+
+  .infoArea {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+  }
+
+  .photoBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .photoPlaceholder {
+    width: 160px;
+    height: 200px;
+    background-color: #ddd;
+    border: 2px dashed #ccc;
+    border-radius: 10px;
+  }
+
+  .verifyBtn {
+    margin-top: 12px;
+    padding: 6px 14px;
+    border: none;
+    border-radius: 20px;
+    background-color: #e0e0e0;
+    cursor: pointer;
+    font-size: 14px;
+    color: #333;
+  }
+
+  .detailList {
+    list-style: none;
+    padding: 0;
+  }
+
+  .detailList li {
+    margin-bottom: 10px;
+  }
+
+  .detailList strong {
+    display: inline-block;
+    width: 60px;
+    color: #555;
+    margin-right: 15px;
+  }
+  .container.dark-mode .photoPlaceholder {
+    background-color: #444;
+    border-color: #666;
+  }
+
+  .container.dark-mode .verifyBtn {
+    background-color: #555;
+    color: #eee;
+  }
+
+  .container.dark-mode .detailList strong {
+    color: #bbb;
+  }
+
+  .attendanceArea {
+    margin-top: 20px;
+  }
+
+  .currentTime {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  .btnGroup {
+    display: flex;
+    gap: 10px;
+  }
+
+  .workBtn {
+    padding: 8px 16px;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    background-color: #4285f4;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .workBtn:hover {
+    background-color: #306acb;
+  }
+
+  /* 다크모드 대응 */
+  .container.dark-mode .currentTime {
+    color: #f0f0f0;
+  }
+
+  .container.dark-mode .workBtn {
+    background-color: #555;
+    color: #fff;
+  }
+
+  .container.dark-mode .workBtn:hover {
+    background-color: #777;
+  }
+
+  .statusMessage {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #4caf50;
+  }
+
+  /* 다크모드용 */
+  .container.dark-mode .statusMessage {
+    color: #8bc34a;
+  }
+
+  .mainProfile {
+    width: 50%;
+  }
+
+  .scheduleArea {
+    width: 50%;
+  }
+  .scheduleArea h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #4285f4;
+  }
+  .scheduleTable {
+    width: 100%;
+    line-height: 24px;
+  }
+  .scheduleTable td {
+    padding-bottom: 10px;
+  }
+  .midArea {
+    width: 100%;
+    height: auto;
+  }
+  .recentArea {
+    width: 100%;
+    margin-top: 20px;
+  }
+  .recentArea h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #4285f4;
+  }
+
+  .visitPageCard {
+    width: 80px;
+    height: 80px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 0 0 1px #eee;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s ease, background-color 0.2s ease;
+    scroll-snap-align: start;
+    flex-shrink: 0;
+  }
+  .visitPageCard:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    transform: scale(1.05);
+  }
+  .visitPageCard img {
+    width: 20px;
+    height: 20px;
+    margin-bottom: 6px;
+    opacity: 0.6;
+  }
+  .visitPageCard p {
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+  }
+  .visitArea {
+    display: grid;
+    grid-auto-flow: column; /* 한 줄로 배치 */
+    grid-auto-columns: max-content; /* 카드 크기만큼 칸 생성 */
+    gap: 12px;
+    overflow-x: auto; /* 가로 스크롤 가능 */
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory; /* 부드럽게 스냅 이동 */
+    -ms-overflow-style: none; /* IE */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  .visitArea::-webkit-scrollbar {
+    display: none;
+  }
+
+  .visitSlider {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .visitArea.dragging {
+    cursor: grabbing;
+    cursor: -webkit-grabbing;
+  }
+  .visitArea {
+    scroll-behavior: smooth;
+  }
+  .bottomArea {
+    width: 100%;
+    height: auto;
+    display: flex;
+  }
+  .bottomArea h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: #4285f4;
+  }
+  .bottomArea .projectArea {
+    width: 48%;
+  }
+  .projectContent {
+    padding: 5px;
+    background-color: rgb(235, 235, 235);
+    border-radius: 8px;
+    margin-bottom: 15px;
+    color: #898989;
+    transition: all 0.2s ease-in-out;
+  }
+  .projectContent:hover {
+    background-color: rgb(220, 220, 220); /* 살짝 밝게 */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 */
+    color: #555; /* 글자색 강조 */
+    font-weight: 600; /* 진하게 */
+    transition: all 0.2s ease-in-out;
+    transform: scale(1.03);
+  }
+
+  .bottomArea .calendarArea {
+    width: 48%;
+    background-color: white;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
+    margin-left: 30px;
+  }
+  .flatpickr-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .flatpickr-innerContainer {
+    width: 100% !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .flatpickr-weekdays,
+  .dayContainer {
+    width: 100% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  body.dark-mode .calendarArea {
+    background-color: #2a2a2a;
+    color: #fff;
+  }
+
+  .flatpickr-rContainer {
+    width: 375px;
+  }
+  .numInputWrapper {
+    display: none;
+  }
+  .numInput {
+    display: none;
+  }
+
+  .calendarWrapper {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .scheduleInfoBox {
+    flex: 1;
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #333;
+    min-width: 120px;
+  }
+
+  .scheduleInfoBox ul {
+    padding-left: 18px;
+    margin-top: 5px;
+  }
+
+  .scheduleInfoBox li {
+    margin-bottom: 4px;
+    list-style: disc;
+  }
+
+  /* 다크모드용 */
+  .container.dark-mode .scheduleInfoBox {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+  }
+
+  .flatpickr-input {
+    display: none;
+  }
+
+  /* 달력 전체 너비 강제 설정 */
+  .flatpickr-calendar {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* 날짜 표시하는 영역도 강제 설정 */
+  .flatpickr-days,
+  .dayContainer {
+    width: 100% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  /* 날짜 각각 크기 균등하게 */
+  .flatpickr-day {
+    flex: 1 0 calc(100% / 7); /* 7일 기준으로 1줄 나누기 */
+    max-width: calc(100% / 7);
+    height: 36px;
+    line-height: 36px;
+    text-align: center;
+    border-radius: 6px;
+    margin-bottom: 4px;
+  }
+
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡFooterㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡFooter/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
+  /* wrapper */
+  body.dark-mode .wrapper {
+    background-color: #1a1a1a;
+  }
+
+  /* main 배경 */
+
+  /* projectContent */
+  body.dark-mode .projectContent {
+    background-color: #3a3a3a;
+    color: #ccc;
+  }
+  body.dark-mode .projectContent:hover {
+    background-color: #555;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+  }
+
+  /* detailList 텍스트 */
+  body.dark-mode .detailList strong {
+    color: #ccc;
+  }
+
+  /* visitPageCard */
+  body.dark-mode .visitPageCard {
+    background-color: #3a3a3a;
+    box-shadow: 0 0 0 1px #555;
+  }
+  body.dark-mode .visitPageCard:hover {
+    background-color: #555;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+  }
+  body.dark-mode .visitPageCard p {
+    color: #ccc;
+  }
+  body.dark-mode .visitPageCard img {
+    filter: brightness(1.5);
+  }
+  /* 달력 전체 배경 */
+  body.dark-mode .flatpickr-calendar {
+    background-color: #1e1e1e !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #444 !important;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+  }
+
+  /* 월/년도 선택 헤더 */
+  body.dark-mode .flatpickr-months {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+    border-bottom: 1px solid #444;
+  }
+
+  /* 요일 헤더 */
+  body.dark-mode .flatpickr-weekdays {
+    background-color: #1e1e1e;
+    color: #ccc;
+    border-bottom: 1px solid #444;
+  }
+
+  /* 요일 텍스트 */
+  body.dark-mode .flatpickr-weekday {
+    color: #bbb !important;
+  }
+
+  /* 날짜 셀 기본 */
+  body.dark-mode .flatpickr-day {
+    background-color: #1e1e1e !important;
+    color: #ddd !important;
+    border: none !important;
+  }
+
+  /* 날짜 hover */
+  body.dark-mode .flatpickr-day:hover {
+    background-color: #333 !important;
+    color: #fff !important;
+    border-radius: 6px;
+  }
+
+  /* 오늘 날짜 */
+  body.dark-mode .flatpickr-day.today {
+    background-color: #2f80ed !important;
+    color: white !important;
+    border-radius: 6px;
+  }
+
+  /* 선택된 날짜 */
+  body.dark-mode .flatpickr-day.selected {
+    background-color: #90caf9 !important;
+    color: #000 !important;
+    border-radius: 6px;
+  }
+
+  /* 일자 간격 없는 스타일 (grid gap 제거) */
+  body.dark-mode .flatpickr-day {
+    margin: 0 !important;
+  }
+  /* 이전 달 화살표 */
+  body.dark-mode .flatpickr-prev-month svg {
+    fill: white !important;
+  }
+
+  /* 다음 달 화살표 */
+  body.dark-mode .flatpickr-next-month svg {
+    fill: white !important;
+  }
+  /* ✅ .wrapperside ul li hover 시 배경색 대응 */
+  body.dark-mode .wrapperside ul li:hover,
+  body.dark-mode .wrapperside ul li:nth-of-type(1) {
+    background-color: #2f2f2f;
+  }
+  /* 다크모드 - 로고/알림 아이콘 반전 */
+  body.dark-mode .headerlogo img,
+  body.dark-mode .alert img {
+    filter: invert(1);
+    opacity: 0.85;
+  }
+}
