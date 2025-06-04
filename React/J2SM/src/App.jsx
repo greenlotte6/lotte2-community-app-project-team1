@@ -15,6 +15,7 @@ npm install @reduxjs/toolkit react-redux
 npm add axios
 npm install js-cookie
 npm install sass
+vercel Test
 */
 
 function App() {
