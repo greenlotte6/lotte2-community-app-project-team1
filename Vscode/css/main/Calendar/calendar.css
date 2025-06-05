@@ -18,7 +18,83 @@
       transition: background-color 0.3s ease, color 0.3s ease;
       display: flex;
     }
-      #calendar-container {
+
+    .container.dark-mode aside {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+  transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container.dark-mode .sidemenu,
+    .container.dark-mode .sidemenu * {
+      color: #ffffff !important;
+      transition: color 0.3s ease;
+    }
+
+    main aside {
+      width: 250px;
+      height: 100%;
+      background-color: white;
+      border-radius: 20px;
+      border-top: 1px solid #d9d9d9;
+      box-sizing: border-box;
+      padding: 20px;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .sidemenu {
+      text-align: center;
+      margin-top: 15px;
+    }
+    .sideTop {
+      border-bottom: 2px solid #898989;
+      margin-bottom: 20px;
+    }
+    .sidemenu h3 {
+      font-size: 24px;
+      margin-bottom: 25px;
+      color: #898989;
+    }
+    .sidemenu a {
+      color: #898989;
+    }
+    .sidelink {
+      margin-bottom: 20px;
+    }
+    .childArea div {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-radius: 30px;
+      background-color: #c7defd;
+      margin-bottom: 15px;
+    }
+    .childArea div img {
+      width: 18px;
+      height: 18px;
+    }
+    .childArea div a {
+      color: #2f80ed;
+      font-size: 14px;
+    }
+    .childArea div img:nth-of-type(2) {
+      width: 15px;
+      height: 15px;
+    }
+    .subMenu {
+      display: none;
+    }
+
+    .subMenu li {
+      margin-bottom: 6px;
+    }
+
+    .subMenu li a {
+      color: #2f80ed;
+      font-size: 13px;
+    }
+          #calendar-container {
       width: 100%;
       max-width: 1000px;
       margin: 10px auto;
