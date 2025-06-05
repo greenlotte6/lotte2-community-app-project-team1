@@ -284,11 +284,10 @@
       position: absolute;
       right: 16px;
       top: 16px;
-      
       cursor: pointer;
       color: #5f6368;
-   
       border: none;
+      background-color: #ffffff;
     }
 
     /* */
@@ -336,4 +335,10 @@
       background-color: #f9f9f9;
     }
 
+    /* */
+    
+      .drop-zone.highlight {
+        border: 2px dashed #007bff;
+        background-color: #f0f8ff;
+      }
       

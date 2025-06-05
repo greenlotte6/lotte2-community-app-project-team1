@@ -97,7 +97,7 @@ function removeBoard(el) {
   if (board && confirm("해당 게시판을 삭제하시겠습니까?")) {
     const placeholder = document.createElement('div');
     placeholder.className = board.className;
-    placeholder.innerHTML = `<div class="add-new-board" onclick="openBoardCreateModal(this)"><p>+ 게시판 추가</p></div>`;
+    placeholder.innerHTML = `<div class="add-new-board" onclick="openBoardCreateModal(this)"><p>+ 자주쓰는 게시판 추가</p></div>`;
     board.replaceWith(placeholder);
     lastDeletedBoardPlaceholder = placeholder;
   }
@@ -169,4 +169,129 @@ function openBoardModal(btn) {
 
   // 클릭한 + 버튼이 있는 부모 빈 div 저장
   window.targetEmptyBoard = btn.closest('.empty-board').parentNode;
+}
+
+
+ // 메뉴 토글 기능
+  document.querySelectorAll('.comment-options-button').forEach(button => {
+    button.addEventListener('click', function (e) {
+      e.stopPropagation();
+      const menu = this.nextElementSibling;
+      document.querySelectorAll('.comment-options-menu').forEach(m => {
+        if (m !== menu) m.style.display = 'none';
+      });
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    });
+  });
+
+  // 외부 클릭 시 메뉴 닫기
+  document.addEventListener('click', () => {
+    document.querySelectorAll('.comment-options-menu').forEach(menu => {
+      menu.style.display = 'none';
+    });
+  });
+
+  // 삭제 기능 예시
+  document.querySelectorAll('.delete-comment').forEach(button => {
+    button.addEventListener('click', function () {
+      const comment = this.closest('.comment');
+      comment.remove(); // 삭제 처리
+    });
+  });
+
+  // 수정 기능 예시
+  document.querySelectorAll('.edit-comment').forEach(button => {
+    button.addEventListener('click', function () {
+      const commentContent = this.closest('.comment').querySelector('.comment-content');
+      const originalText = commentContent.textContent;
+      const newText = prompt("댓글을 수정하세요:", originalText);
+      if (newText !== null && newText.trim() !== '') {
+        commentContent.textContent = newText;
+      }
+    });
+  });
+
+
+  const openModalBtn = document.getElementById('openModalBtn');
+if (openModalBtn) {
+  openModalBtn.addEventListener('click', () => {
+    document.getElementById('boardModal').style.display = 'flex';
+  });
+}
+
+
+/* */
+   document.addEventListener("DOMContentLoaded", () => {
+ const modal = document.getElementById("boardModal");
+ const openBtn = document.getElementById("openModalBtn");
+ const closeBtn = document.getElementById("closeModalBtn");
+
+    openBtn.addEventListener("click", () => {
+        modal.style.display = "flex";
+        });
+
+        closeBtn.addEventListener("click", () => {
+          modal.style.display = "none";
+        });
+
+        window.addEventListener("click", (e) => {
+          if (e.target === modal) {
+            modal.style.display = "none";
+          }
+        });
+      });
+  
+
+/* 게시판 추가 모달 */
+ document.addEventListener("DOMContentLoaded", function () {
+    const openBtn = document.getElementById("openWriteModalBtn");
+    const closeBtn = document.getElementById("closeWriteModalBtn");
+    const modal = document.getElementById("writeModal");
+
+    openBtn.addEventListener("click", () => {
+      modal.style.display = "flex";
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.style.display = "none";
+    });
+
+    window.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.style.display = "none";
+      }
+    });
+  });
+
+
+  document.querySelectorAll('.menuItem[draggable="true"]').forEach(item => {
+  item.addEventListener('dragstart', (e) => {
+    e.dataTransfer.setData("text/plain", item.dataset.board);
+  });
+});
+
+const dropZone = document.getElementById("dropZone");
+
+dropZone.addEventListener("dragover", (e) => {
+  e.preventDefault(); // 드롭 허용
+  dropZone.classList.add("highlight"); // 시각 효과
+});
+
+dropZone.addEventListener("dragleave", () => {
+  dropZone.classList.remove("highlight");
+});
+
+dropZone.addEventListener("drop", (e) => {
+  e.preventDefault();
+  dropZone.classList.remove("highlight");
+
+  const boardName = e.dataTransfer.getData("text/plain");
+
+  // 여기에 해당 게시판 로드 로직 삽입
+  openBoard(boardName);
+});
+
+function openBoard(name) {
+  alert(`게시판 "${name}" 열기!`);
+  // 게시판 로딩/생성 함수 연결
 }
