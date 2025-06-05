@@ -1,45 +1,103 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { postInquire } from "../../api/inquire";
 
 const Qna = () => {
   const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    company: "",
+    industry: "",
+    name: "",
+    email: "",
+    memo: "",
+    pass: "",
+  });
 
-  const submitHandler = () => {
-    navigate("/qna/view");
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+
+    const fetchData = async () => {
+      try {
+        const data = await postInquire(formData);
+        console.log(data);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+
+    fetchData();
   };
 
   return (
-    <div class="contact-container">
-      <h3 class="contact-title">문의하기</h3>
-      <p class="contact-subtitle">문의하실 내용을 입력해주세요.</p>
+    <div className="contact-container">
+      <h3 className="contact-title">문의하기</h3>
+      <p className="contact-subtitle">문의하실 내용을 입력해주세요.</p>
 
       <form onSubmit={submitHandler}>
-        <div class="contact-form-box">
+        <div className="contact-form-box">
           <div>
-            <p class="contact-label">회사 이름</p>
-            <input type="text" name="companyName" class="contact-input" />
+            <p className="contact-label">회사 이름</p>
+            <input
+              type="text"
+              name="company"
+              onChange={handleChange}
+              className="contact-input"
+            />
 
-            <p class="contact-label">업종</p>
-            <input type="text" name="industry" class="contact-input" />
+            <p className="contact-label">업종</p>
+            <input
+              type="text"
+              name="industry"
+              onChange={handleChange}
+              className="contact-input"
+            />
 
-            <div class="contact-row">
+            <div className="contact-row">
               <div>
-                <p class="contact-label">이름</p>
-                <input type="text" name="username" class="contact-input" />
+                <p className="contact-label">이름</p>
+                <input
+                  type="text"
+                  name="name"
+                  onChange={handleChange}
+                  className="contact-input"
+                />
               </div>
               <div>
-                <p class="contact-label">이메일</p>
-                <input type="email" name="email" class="contact-input" />
+                <p className="contact-label">이메일</p>
+                <input
+                  type="email"
+                  name="email"
+                  onChange={handleChange}
+                  className="contact-input"
+                />
               </div>
             </div>
 
-            <p class="contact-label">임시 비밀번호</p>
-            <input type="password" name="tempPassword" class="contact-input" />
+            <p className="contact-label">임시 비밀번호</p>
+            <input
+              type="password"
+              name="pass"
+              onChange={handleChange}
+              className="contact-input"
+            />
 
-            <p class="contact-label">문의사항</p>
-            <textarea name="message" class="contact-textarea"></textarea>
+            <p className="contact-label">문의사항</p>
+            <textarea
+              name="memo"
+              onChange={handleChange}
+              className="contact-textarea"
+            ></textarea>
 
-            <button type="submit" class="contact-button">
+            <button type="submit" className="contact-button">
               문의 하기
             </button>
           </div>
