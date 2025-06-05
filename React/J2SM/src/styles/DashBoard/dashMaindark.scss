@@ -1,0 +1,158 @@
+// 📦 정리된 다크모드 스타일 (추출 버전)
+
+body.dark-mode {
+  background-color: #121212;
+  color: #f0f0f0;
+
+  .wrapper {
+    background-color: #1a1a1a;
+  }
+
+  .container {
+    background-color: #1e1e1e;
+    color: #f0f0f0;
+  }
+
+  .label-text {
+    color: white;
+  }
+
+  .toggle-switch .slider {
+    background-color: #666;
+  }
+
+  .headerlogo img,
+  .alert img {
+    filter: invert(1);
+    opacity: 0.85;
+  }
+
+  .wrapperside ul li:hover,
+  .wrapperside ul li:nth-of-type(1) {
+    background-color: #2f2f2f;
+  }
+
+  .sidemenu,
+  .sidemenu * {
+    color: #ffffff !important;
+  }
+
+  aside {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+  }
+
+  .contentArea {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+  }
+
+  .photoPlaceholder {
+    background-color: #444;
+    border-color: #666;
+  }
+
+  .verifyBtn {
+    background-color: #555;
+    color: #eee;
+  }
+
+  .detailList strong {
+    color: #bbb;
+  }
+
+  .currentTime,
+  .statusMessage {
+    color: #8bc34a;
+  }
+
+  .workBtn {
+    background-color: #555;
+    color: #fff;
+  }
+
+  .workBtn:hover {
+    background-color: #777;
+  }
+
+  .visitPageCard {
+    background-color: #3a3a3a;
+    box-shadow: 0 0 0 1px #555;
+
+    p {
+      color: #ccc !important;
+    }
+
+    img {
+      filter: brightness(1.5);
+    }
+
+    &:hover {
+      background-color: #555;
+      box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .projectContent {
+    background-color: #3a3a3a;
+    color: #ccc !important;
+
+    &:hover {
+      background-color: #555;
+      color: #fff;
+      box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+    }
+  }
+
+  .calendarArea,
+  .scheduleInfoBox {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+  }
+
+  // flatpickr 전용 스타일
+  .flatpickr-calendar {
+    background-color: #1e1e1e !important;
+    color: #f0f0f0 !important;
+    border: 1px solid #444 !important;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+  }
+
+  .flatpickr-months,
+  .flatpickr-weekdays {
+    background-color: #1e1e1e;
+    color: #ccc;
+    border-bottom: 1px solid #444;
+  }
+
+  .flatpickr-weekday {
+    color: #bbb !important;
+  }
+
+  .flatpickr-day {
+    background-color: #1e1e1e !important;
+    color: #ddd !important;
+    border: none !important;
+    margin: 0 !important;
+
+    &.today {
+      background-color: #2f80ed !important;
+      color: white !important;
+    }
+
+    &.selected {
+      background-color: #90caf9 !important;
+      color: #000 !important;
+    }
+
+    &:hover {
+      background-color: #333 !important;
+      color: #fff !important;
+    }
+  }
+
+  .flatpickr-prev-month svg,
+  .flatpickr-next-month svg {
+    fill: white !important;
+  }
+}

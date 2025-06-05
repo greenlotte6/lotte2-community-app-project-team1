@@ -45,7 +45,7 @@ const router = createBrowserRouter([
   { path: "/user/logout", element: null },
   /* 유저 라우터 종료 */
 
-  /* 대시보드 라우터 종료 */
+  /* 대시보드 라우터 시작 */
   { path: "/dashboard/main", element: <DashBoardPage /> },
   /* 대시보드 라우터 종료 */
 ]);
