@@ -1,0 +1,350 @@
+#calendar {
+  body {
+    overflow-x: hidden;
+  }
+
+  main .contentArea {
+    width: 1180px;
+    height: 720px;
+    background-color: white;
+    border-radius: 20px;
+    position: relative;
+    left: 20px;
+    margin: 10px 0 15px 0;
+    overflow: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    white-space: nowrap;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    display: flex;
+  }
+
+  .container.dark-mode aside {
+    background-color: #2a2a2a;
+    color: #f0f0f0;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .container.dark-mode .sidemenu,
+  .container.dark-mode .sidemenu * {
+    color: #ffffff !important;
+    transition: color 0.3s ease;
+  }
+
+  main aside {
+    width: 250px;
+    height: 100%;
+    background-color: white;
+    border-radius: 20px;
+    border-top: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    padding: 20px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .sidemenu {
+    text-align: center;
+    margin-top: 15px;
+  }
+  .sideTop {
+    border-bottom: 2px solid #898989;
+    margin-bottom: 20px;
+  }
+  .sidemenu h3 {
+    font-size: 24px;
+    margin-bottom: 25px;
+    color: #898989;
+  }
+  .sidemenu a {
+    color: #898989;
+  }
+  .sidelink {
+    margin-bottom: 20px;
+  }
+  .childArea div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px;
+    border-radius: 30px;
+    background-color: #c7defd;
+    margin-bottom: 15px;
+  }
+  .childArea div img {
+    width: 18px;
+    height: 18px;
+  }
+  .childArea div a {
+    color: #2f80ed;
+    font-size: 14px;
+  }
+  .childArea div img:nth-of-type(2) {
+    width: 15px;
+    height: 15px;
+  }
+  .subMenu {
+    display: none;
+  }
+
+  .subMenu li {
+    margin-bottom: 6px;
+  }
+
+  .subMenu li a {
+    color: #2f80ed;
+    font-size: 13px;
+  }
+  #calendar-container {
+    width: 100%;
+    max-width: 1000px;
+    margin: 10px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    overflow-x: hidden;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .calendar-header button {
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .calendar-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .calendar-table th,
+  .calendar-table td {
+    width: 14.28%;
+    height: 100px;
+    border: 1px solid #ddd;
+    vertical-align: top;
+  }
+
+  .calendar-table th {
+    background: #0a468c;
+    color: white;
+    height: 35px;
+    padding-top: 20px;
+  }
+
+  .calendar-table td {
+    cursor: pointer;
+    position: relative;
+  }
+
+  .calendar-table td:hover {
+    background-color: #f0f0f0;
+  }
+
+  .event {
+    font-size: 13px;
+    padding-left: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .modal {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    text-align: center;
+    transition: opacity 0.2s ease;
+    opacity: 0.7;
+  }
+
+  .simple-modal {
+    position: absolute;
+    width: 200px;
+  }
+
+  .detail-modal {
+    position: fixed;
+    top: 50%;
+    left: 58%;
+    transform: translate(-50%, -50%);
+    min-width: 300px;
+    max-width: 90%;
+  }
+
+  .modal-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 20px;
+    cursor: pointer;
+  }
+
+  .import-note {
+    margin-top: 30px;
+    font-size: 13px;
+    color: #666;
+    text-align: center;
+  }
+  .dim {
+    color: #dbd6d6;
+  }
+
+  .calen {
+    border-radius: 20px;
+    width: 250px;
+    height: 30px;
+    margin: 0 auto;
+    background-color: #a1c4fd;
+  }
+
+  .calen:hover {
+    border-radius: 20px;
+    width: 250px;
+    height: 30px;
+    margin: 0 auto;
+    background-color: #0b5ee2;
+    color: #f0f0f0;
+  }
+
+  .edit-button {
+    border-radius: 20px;
+    width: 250px;
+    height: 30px;
+    margin: 0 auto;
+    background-color: #a1c4fd;
+  }
+  .event-range {
+    background-color: #9cb7e2;
+    color: #fff;
+    padding: 4px 6px;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 12px;
+    height: 20px;
+    white-space: nowrap;
+  }
+
+  #detail-schedule-modal textarea {
+    resize: vertical;
+    padding: 6px;
+    border-radius: 6px;
+    font-family: inherit;
+  }
+
+  #detail-schedule-modal label {
+    text-align: left;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .flatpickr-calendar {
+    max-width: 18% !important;
+  }
+
+  input[type="text"] {
+    background-color: white;
+    z-index: 10000;
+    position: relative;
+  }
+
+  #view-schedule-modal {
+    position: absolute;
+    top: 50%;
+    left: 60%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background-color: white;
+    border: 1px solid #ccc;
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    display: none;
+    border-radius: 8px;
+  }
+
+  #detail-schedule-modal textarea {
+    resize: vertical;
+    padding: 6px;
+    border-radius: 6px;
+    font-family: inherit;
+  }
+
+  #detail-schedule-modal label {
+    text-align: left;
+    font-size: 14px;
+    margin-top: 6px;
+  }
+
+  .flatpickr-calendar {
+    max-width: 16.3% !important;
+  }
+
+  .modal-view {
+    position: absolute;
+    z-index: 1000;
+    display: none;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+    transition: opacity 0.2s ease;
+    opacity: 0.7;
+  }
+
+  .flatpickr-input {
+    display: block;
+  }
+
+  .calendar-table td:hover {
+    background-color: inherit !important;
+    cursor: default !important;
+  }
+
+  /* 달력 전체 너비 강제 설정 */
+
+  /* 날짜 표시하는 영역도 강제 설정 */
+  .flatpickr-weekdays,
+  .dayContainer {
+    width: 82% !important;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .flatpickr-days,
+  .dayContainer {
+    width: 90% !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .s_button {
+    padding-top: 40px;
+    margin-left: 100px;
+  }
+
+  .calendar-table td:hover {
+    background-color: inherit !important;
+    cursor: default !important;
+  }
+}
