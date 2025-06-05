@@ -641,62 +641,62 @@
   /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡFooter/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
   /* wrapper */
   body.dark-mode .wrapper {
-    background-color: #1a1a1a;
+    background-color: #1a1a1a !important;
   }
 
   /* main 배경 */
 
   /* projectContent */
   body.dark-mode .projectContent {
-    background-color: #3a3a3a;
-    color: #ccc;
+    background-color: #3a3a3a !important;
+    color: #ccc !important;
   }
   body.dark-mode .projectContent:hover {
-    background-color: #555;
-    color: #fff;
-    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1);
+    background-color: #555 !important;
+    color: #fff !important;
+    box-shadow: 0 2px 6px rgba(255, 255, 255, 0.1) !important;
   }
 
   /* detailList 텍스트 */
   body.dark-mode .detailList strong {
-    color: #ccc;
+    color: #ccc !important;
   }
 
   /* visitPageCard */
   body.dark-mode .visitPageCard {
-    background-color: #3a3a3a;
-    box-shadow: 0 0 0 1px #555;
+    background-color: #3a3a3a !important;
+    box-shadow: 0 0 0 1px #555 !important;
   }
   body.dark-mode .visitPageCard:hover {
-    background-color: #555;
-    box-shadow: 0 0 4px rgba(255, 255, 255, 0.1);
+    background-color: #555 !important;
+    box-shadow: 0 0 4px rgba(255, 255, 255, 0.1) !important;
   }
   body.dark-mode .visitPageCard p {
-    color: #ccc;
+    color: #ccc !important;
   }
   body.dark-mode .visitPageCard img {
-    filter: brightness(1.5);
+    filter: brightness(1.5) !important;
   }
   /* 달력 전체 배경 */
   body.dark-mode .flatpickr-calendar {
     background-color: #1e1e1e !important;
     color: #f0f0f0 !important;
     border: 1px solid #444 !important;
-    box-shadow: 0 0 6px rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.05) !important;
   }
 
   /* 월/년도 선택 헤더 */
   body.dark-mode .flatpickr-months {
-    background-color: #1e1e1e;
-    color: #f0f0f0;
-    border-bottom: 1px solid #444;
+    background-color: #1e1e1e !important;
+    color: #f0f0f0 !important;
+    border-bottom: 1px solid #444 !important;
   }
 
   /* 요일 헤더 */
   body.dark-mode .flatpickr-weekdays {
-    background-color: #1e1e1e;
-    color: #ccc;
-    border-bottom: 1px solid #444;
+    background-color: #1e1e1e !important;
+    color: #ccc !important;
+    border-bottom: 1px solid #444 !important;
   }
 
   /* 요일 텍스트 */
@@ -748,12 +748,12 @@
   /* ✅ .wrapperside ul li hover 시 배경색 대응 */
   body.dark-mode .wrapperside ul li:hover,
   body.dark-mode .wrapperside ul li:nth-of-type(1) {
-    background-color: #2f2f2f;
+    background-color: #2f2f2f !important;
   }
   /* 다크모드 - 로고/알림 아이콘 반전 */
   body.dark-mode .headerlogo img,
   body.dark-mode .alert img {
-    filter: invert(1);
+    filter: invert(1) !important;
     opacity: 0.85;
   }
 }
