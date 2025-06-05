@@ -5,9 +5,6 @@ import MidArea from "../../components/DashBoard/MidArea";
 import BottomArea from "../../components/DashBoard/BottomArea";
 import "../../styles/DashBoard/dashboardMain.scss";
 import Aside from "../../components/DashBoard/Aside";
-import flatpickr from "flatpickr";
-import "flatpickr/dist/themes/dark.css";
-import { Korean } from "flatpickr/dist/l10n/ko.js";
 
 const DashboardPage = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -40,17 +37,6 @@ const DashboardPage = () => {
     return () => {
       area?.removeEventListener("wheel", onWheel);
     };
-  }, []);
-
-  // 캘린더
-  useEffect(() => {
-    if (calendarRef.current) {
-      flatpickr(calendarRef.current, {
-        inline: true,
-        locale: Korean,
-        dateFormat: "Y-m-d",
-      });
-    }
   }, []);
 
   // 다크모드 토글
