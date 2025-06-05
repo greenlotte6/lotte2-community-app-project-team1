@@ -583,3 +583,14 @@ body.dark-mode .storage-bar .used {
   color: #eee;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
 }
+body.dark-mode .childArea div {
+  background-color: #3a3a3a;
+}
+
+body.dark-mode .childArea div a {
+  color: #90caf9;
+}
+
+body.dark-mode .childArea div img {
+  filter: brightness(0.8);
+}

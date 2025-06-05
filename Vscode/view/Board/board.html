@@ -2,13 +2,14 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Dashboard</title>
+    <title>B board</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
     <link rel="stylesheet" href="/css/main/Board/board.css" />
     <script src="/scripts/dashboardMain.js"></script>
+
   </head>
   <body>
     <div class="wrapper">
@@ -108,9 +109,11 @@
                   <li><a href="#">더미더미더미</a></li>
                   <li><a href="#">더미더미더미</a></li>
                 </ul>
-                 <div class="menuItem">
-                  <img src="/images/File text.svg" alt="users" /><a href="#">익명게시판</a><img src="/images/Vector.svg" alt="vector" />
-                </div>
+              <div class="menuItem" draggable="true" data-board="익명게시판">
+                <img src="/images/File text.svg" alt="users" />
+                <a href="#">익명게시판</a>
+                <img src="/images/Vector.svg" alt="vector" />
+              </div>
                 <ul class="subMenu">
                   <li><a href="#">더미더미더미</a></li>
                   <li><a href="#">더미더미더미</a></li>
@@ -261,7 +264,9 @@
         </div>
       </div>
     </div>
+    <div class="contentArea drop-zone" id="dropZone"></div>
 
     <script src="/scripts/board.js"></script>
+
   </body>
 </html>

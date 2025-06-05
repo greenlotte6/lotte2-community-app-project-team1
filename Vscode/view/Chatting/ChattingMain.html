@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>채팅</title>
+    <title>채팅 카테고리</title>
     <!-- Pretendard 웹 폰트 연결 -->
     <link
       rel="stylesheet"
@@ -10,17 +10,17 @@
       crossorigin
       href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
     />
-    <!-- 기존 Admin 전용 CSS -->
+    <!-- Admin 공용 CSS (사이드바/헤더 등) -->
     <link rel="stylesheet" href="/css/main/Admin/adminEmploy.css" />
-    <!-- Chatting 전용 CSS -->
-    <link rel="stylesheet" href="/css/main/Chatting/Chatting.css" />
-    <!-- 관리자용 스크립트 (예: 다크모드 토글 등) -->
+    <!-- ChattingMain 실용적 버전 전용 CSS -->
+    <link rel="stylesheet" href="/css/main/Chatting/ChattingMain.css" />
+    <!-- 관리자용 스크립트 (다크 모드 토글 등) -->
     <script src="/scripts/adminEmploy.js"></script>
   </head>
   <body>
     <div class="wrapper">
       <!-- ───────────────────────────────────────────────────────────
-           사이드바 영역
+           사이드바 영역 (기존과 동일)
            ─────────────────────────────────────────────────────────── -->
       <div class="wrapperside">
         <div class="profileArea">
@@ -43,7 +43,7 @@
             /></a>
           </li>
           <li>
-            <a href="/view/Chatting/Chatting.html"
+            <a href="/view/Chatting/ChattingMain.html"
               ><img src="/images/Message square.svg" alt="message"
             /></a>
           </li>
@@ -100,7 +100,7 @@
              ─────────────────────────────────────────────────────────── -->
         <main>
           <!-- ─────────────────────────────────────────────────────────
-               좌측 사이드바 (Chatting 메뉴 포함)
+               좌측 사이드바 (ChattingMain 메뉴 활성화)
                ───────────────────────────────────────────────────────── -->
           <aside>
             <div class="sidemenu" id="chatting">
@@ -134,63 +134,100 @@
           </aside>
 
           <!-- ─────────────────────────────────────────────────────────
-               우측 콘텐츠 영역 (채팅 화면)
+               우측 콘텐츠 영역 (실용적 채팅 카테고리)
                ───────────────────────────────────────────────────────── -->
           <div class="contentArea">
             <div class="topArea">
               <div class="Title">
-                <h3>채팅</h3>
+                <h3>채팅 카테고리</h3>
+              </div>
+              <!-- 검색바 + 새 채팅방 버튼 -->
+              <div class="controlBar">
+                <input
+                  type="text"
+                  id="searchCategory"
+                  placeholder="채팅방 검색..."
+                  class="searchInput"
+                />
+                <button id="createRoomBtn" class="createBtn">
+                  + 새 채팅방 만들기
+                </button>
               </div>
             </div>
 
-            <!-- ============ 실제 채팅 UI 시작 ============ -->
-            <div class="chatContainer">
-              <!-- 1) 채팅 헤더 -->
-              <header class="chat-header">
-                <div class="chat-title">채팅방: Room-1</div>
-                <div class="chat-welcome">안녕하세요, 홍길동님!</div>
-              </header>
-
-              <!-- 2) 메시지 리스트 -->
-              <div class="chat-messages" id="messages">
-                <!-- 예시: 다른 사람이 보낸 메시지 -->
-                <div class="chat-message other">
-                  <div class="message-meta">
-                    <span class="message-user">민수</span>
-                    <span class="message-time">10:01 AM</span>
-                  </div>
-                  <div class="message-content">안녕! 잘 지냈어?</div>
+            <!-- ============ 채팅 카테고리 목록 시작 ============ -->
+            <div class="categoryContainer">
+              <!-- 개별 카테고리 항목 예시 -->
+              <a href="/view/Chatting/Chatting.html" class="categoryItem">
+                <div class="itemLeft">
+                  <div class="itemTitle">일반 대화</div>
+                  <div class="itemDesc">자유롭게 소통하는 공간</div>
+                  <div class="lastMessage">[민수] 오늘 점심 뭐 드실래요?</div>
                 </div>
-
-                <!-- 예시: 내가 보낸 메시지 -->
-                <div class="chat-message mine">
-                  <div class="message-meta">
-                    <span class="message-user">홍길동</span>
-                    <span class="message-time">10:02 AM</span>
+                <div class="itemRight">
+                  <span class="unreadBadge">5</span>
+                  <div class="participants">
+                    <img src="/images/user.png" alt="member" />
+                    <img src="/images/user.png" alt="member" />
+                    <img src="/images/user.png" alt="member" />
                   </div>
-                  <div class="message-content">응, 잘 지냈어~ 넌?</div>
                 </div>
+              </a>
 
-                <!-- 새로운 메시지가 추가될 때마다 이곳에 append 됩니다 -->
-                <div id="bottom-anchor"></div>
-              </div>
+              <a href="/view/Chatting/Chatting.html" class="categoryItem">
+                <div class="itemLeft">
+                  <div class="itemTitle">공지사항</div>
+                  <div class="itemDesc">회사 전반 공지 및 안내</div>
+                  <div class="lastMessage">
+                    [관리자] 이번 주 금요일 정기점검 안내
+                  </div>
+                </div>
+                <div class="itemRight">
+                  <span class="unreadBadge">0</span>
+                  <div class="participants">
+                    <img src="/images/user.png" alt="member" />
+                  </div>
+                </div>
+              </a>
 
-              <!-- 3) 입력창 영역 -->
-              <div class="chat-input-area">
-                <textarea
-                  class="chat-input"
-                  id="inputMessage"
-                  placeholder="메시지를 입력하세요..."
-                ></textarea>
-                <button class="chat-send-button" id="sendBtn">전송</button>
-              </div>
+              <a href="/view/Chatting/Chatting.html" class="categoryItem">
+                <div class="itemLeft">
+                  <div class="itemTitle">프로젝트 A팀</div>
+                  <div class="itemDesc">A팀 개발 진행 상황 공유</div>
+                  <div class="lastMessage">[지영] 리뷰 요청 드려요.</div>
+                </div>
+                <div class="itemRight">
+                  <span class="unreadBadge">2</span>
+                  <div class="participants">
+                    <img src="/images/user.png" alt="member" />
+                    <img src="/images/user.png" alt="member" />
+                  </div>
+                </div>
+              </a>
+
+              <a href="/view/Chatting/Chatting.html" class="categoryItem">
+                <div class="itemLeft">
+                  <div class="itemTitle">IT 지원</div>
+                  <div class="itemDesc">개발/인프라 기술 지원</div>
+                  <div class="lastMessage">[민준] VPN 연결이 안 돼요.</div>
+                </div>
+                <div class="itemRight">
+                  <span class="unreadBadge">1</span>
+                  <div class="participants">
+                    <img src="/images/user.png" alt="member" />
+                    <img src="/images/user.png" alt="member" />
+                  </div>
+                </div>
+              </a>
+
+              <!-- 실제 환경에서는 서버에서 불러온 데이터를 반복 렌더링 -->
             </div>
-            <!-- ============ 실제 채팅 UI 끝 ============ -->
+            <!-- ============ 채팅 카테고리 목록 끝 ============ -->
           </div>
         </main>
 
         <!-- ───────────────────────────────────────────────────────────
-             모달 오버레이 영역 (사원 초대)
+             모달 오버레이 영역 (사원 초대) – 기존과 동일
              ─────────────────────────────────────────────────────────── -->
         <div class="modalOverlay" id="inviteModal">
           <div class="modalContent">
@@ -210,65 +247,18 @@
     </div>
 
     <!-- =============================================
-         JavaScript 로직: 스크롤 + 전송 버튼 기능
+         JavaScript 로직: 검색 필터링 + 다크 모드 토글
          ============================================= -->
     <script>
-      // 1) 페이지 로드 시, 기존 메시지가 있으면 맨 아래로 자동 스크롤
+      // (1) 페이지 로드 시, 다크 모드 체크박스 동기화
       document.addEventListener("DOMContentLoaded", () => {
-        const messagesDiv = document.getElementById("messages");
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        const darkToggle = document.getElementById("darkModeToggle");
+        if (document.body.classList.contains("dark-mode")) {
+          darkToggle.checked = true;
+        }
       });
 
-      // 2) 전송 버튼 클릭 시 동작
-      document.getElementById("sendBtn").addEventListener("click", () => {
-        const inputEl = document.getElementById("inputMessage");
-        const text = inputEl.value.trim();
-        if (!text) return; // 빈 문자열이면 아무 동작 안함
-
-        // 새로운 메시지 요소 생성
-        const newMsg = document.createElement("div");
-        newMsg.classList.add("chat-message", "mine");
-
-        // 메타 정보: 사용자명 + 시간
-        const meta = document.createElement("div");
-        meta.classList.add("message-meta");
-
-        const userSpan = document.createElement("span");
-        userSpan.classList.add("message-user");
-        userSpan.textContent = "홍길동"; // 실제 로그인된 사용자명으로 변경
-
-        const timeSpan = document.createElement("span");
-        timeSpan.classList.add("message-time");
-        // 현재 시간 구하기 (예: "HH:MM")
-        const now = new Date();
-        const hh = now.getHours().toString().padStart(2, "0");
-        const mm = now.getMinutes().toString().padStart(2, "0");
-        timeSpan.textContent = `${hh}:${mm}`;
-
-        meta.appendChild(userSpan);
-        meta.appendChild(timeSpan);
-
-        // 메시지 내용
-        const content = document.createElement("div");
-        content.classList.add("message-content");
-        content.textContent = text;
-
-        newMsg.appendChild(meta);
-        newMsg.appendChild(content);
-
-        // messages 영역에 삽입 후 스크롤 맨 아래로 내리기
-        const messagesDiv = document.getElementById("messages");
-        messagesDiv.insertBefore(
-          newMsg,
-          document.getElementById("bottom-anchor")
-        );
-        messagesDiv.scrollTop = messagesDiv.scrollHeight;
-
-        // 입력창 초기화
-        inputEl.value = "";
-      });
-
-      // 3) 다크 모드 토글 (input#darkModeToggle 체크박스)
+      // (2) 다크 모드 토글
       const darkToggle = document.getElementById("darkModeToggle");
       darkToggle.addEventListener("change", (e) => {
         if (e.target.checked) {
@@ -276,6 +266,31 @@
         } else {
           document.body.classList.remove("dark-mode");
         }
+      });
+
+      // (3) 채팅방 검색 기능 (간단히 자바스크립트로 필터링)
+      const searchInput = document.getElementById("searchCategory");
+      searchInput.addEventListener("input", (e) => {
+        const filter = e.target.value.trim().toLowerCase();
+        document.querySelectorAll(".categoryItem").forEach((item) => {
+          const title = item
+            .querySelector(".itemTitle")
+            .textContent.toLowerCase();
+          const desc = item
+            .querySelector(".itemDesc")
+            .textContent.toLowerCase();
+          if (title.includes(filter) || desc.includes(filter)) {
+            item.style.display = "flex";
+          } else {
+            item.style.display = "none";
+          }
+        });
+      });
+
+      // (4) 새 채팅방 만들기 버튼 클릭 (예시: 알림창 또는 팝업 띄우기)
+      document.getElementById("createRoomBtn").addEventListener("click", () => {
+        alert("새 채팅방 생성 로직을 구현하세요.");
+        // 실제로는 모달을 띄워서 방 이름/설명을 입력받고 서버에 생성 요청
       });
     </script>
   </body>

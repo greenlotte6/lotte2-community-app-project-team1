@@ -19,6 +19,7 @@ import AdminMainPage from "../pages/admin/AdminMainPage";
 import AdminEmployeePage from "../pages/admin/AdminEmployeePage";
 import AdminMembershipPage from "../pages/admin/AdminMembershipPage";
 import AdminPaymentPage from "../pages/admin/AdminPaymentPage";
+import CalendarPage from "../pages/Calendar/CalendarPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -59,6 +60,9 @@ const router = createBrowserRouter([
   { path: "/admin/membership", element: <AdminMembershipPage /> },
   { path: "/admin/adminpayment", element: <AdminPaymentPage /> },
   /* 어드민 라우터 종료 */
+
+  /* 캘린더 */
+  { path: "/dashboard/calendar", element: <CalendarPage /> },
 ]);
 
 // 라우터 내보내기

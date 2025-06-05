@@ -36,3 +36,6 @@ export const ARTICLE_LIST = `${SERVER_HOST}/article`;
 export const PRODUCT_REGISTER = `${SERVER_HOST}/product`;
 export const PRODUCT_LIST = `${SERVER_HOST}/product`;
 export const PRODUCT_THUMB = `${SERVER_HOST}/product/thumb`;
+
+//문의하기
+export const INQUIRE_REGISTER = `${SERVER_HOST}/qna`;
