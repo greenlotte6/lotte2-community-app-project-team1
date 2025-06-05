@@ -13,15 +13,13 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
     />
-    
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 
     <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
     <link rel="stylesheet" href="/css/main/Calendar/calendar.css" />
 
     <script src="/scripts/dashboardMain.js"></script>
-
-   
   </head>
   <body>
     <div class="wrapper">
@@ -119,38 +117,48 @@
             </div>
           </aside>
           <div class="contentArea">
-             <div id="calendar-container">
-                <div class="calendar-header">
-                  <button onclick="prevMonth()">❮</button>
-                  <span id="calendar-title" style="margin: 0 40px;"></span>
-                  <button onclick="nextMonth()">❯</button>
-                </div>
-
-                <table class="calendar-table">
-                  <thead>
-                    <tr>
-                      <th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th>
-                    </tr>
-                  </thead>
-                  <tbody id="calendar-body"></tbody>
-                </table>
-
-                
+            <div id="calendar-container">
+              <div class="calendar-header">
+                <button onclick="prevMonth()">❮</button>
+                <span id="calendar-title" style="margin: 0 40px"></span>
+                <button onclick="nextMonth()">❯</button>
               </div>
 
-              <!-- 일정 모달 -->
-              <div id="schedule-modal" class="modal">
-                <div class="modal-content" onclick="event.stopPropagation()">
-                  <span class="close" onclick="closeModal()">&times;</span>
-                  <h3>간편 일정 등록</h3>
-                  <input type="hidden" id="modal-date" />
-                  <input type="text" id="modal-title" placeholder="일정 제목 입력" />
-                  <button class="calen" onclick="saveSchedule()">등록하기</button>
-                  <button class="calen" onclick="openDetailModal()">세부일정등록</button>
-                  <button class="calen" onclick="">알람 ON</button>
-                  <button class="calen" onclick="">일정 삭제</button>
-                </div>
+              <table class="calendar-table">
+                <thead>
+                  <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                  </tr>
+                </thead>
+                <tbody id="calendar-body"></tbody>
+              </table>
+            </div>
+
+            <!-- 일정 모달 -->
+            <div id="schedule-modal" class="modal">
+              <div class="modal-content" onclick="event.stopPropagation()">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h3>간편 일정 등록</h3>
+                <input type="hidden" id="modal-date" />
+                <input
+                  type="text"
+                  id="modal-title"
+                  placeholder="일정 제목 입력"
+                />
+                <button class="calen" onclick="saveSchedule()">등록하기</button>
+                <button class="calen" onclick="openDetailModal()">
+                  세부일정등록
+                </button>
+                <button class="calen" onclick="">알람 ON</button>
+                <button class="calen" onclick="">일정 삭제</button>
               </div>
+            </div>
           </div>
         </main>
         <footer></footer>
@@ -158,50 +166,59 @@
     </div>
   </body>
 
-    <div id="detail-schedule-modal" class="modal detail-modal">
-      <div class="modal-content" onclick="event.stopPropagation()">
-        <span class="close" onclick="closeDetailModal()">&times;</span>
-        <h3>세부일정 등록</h3>
+  <div id="detail-schedule-modal" class="modal detail-modal">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close" onclick="closeDetailModal()">&times;</span>
+      <h3>세부일정 등록</h3>
 
-        <label>일정 제목</label>
-        <input type="text" id="detail-title" class="form-input" placeholder="일정 제목" />
+      <label>일정 제목</label>
+      <input
+        type="text"
+        id="detail-title"
+        class="form-input"
+        placeholder="일정 제목"
+      />
 
-        <label>시작 날짜</label>
-    <input type="date" id="start-date" class="form-input" />
+      <label>시작 날짜</label>
+      <input type="date" id="start-date" class="form-input" />
 
-    <label>종료 날짜</label><div id="miniCalendar"></div>
-    <input type="date" id="end-date" class="form-input" />
+      <label>종료 날짜</label>
+      <div id="miniCalendar"></div>
+      <input type="date" id="end-date" class="form-input" />
 
-        <label>장소</label>
-        <input type="text" id="place" class="form-input" placeholder="장소" />
+      <label>장소</label>
+      <input type="text" id="place" class="form-input" placeholder="장소" />
 
-        <label>참석 인원</label>
-        <input type="text" id="member" class="form-input" placeholder="참석 인원" />
+      <label>참석 인원</label>
+      <input
+        type="text"
+        id="member"
+        class="form-input"
+        placeholder="참석 인원"
+      />
 
-        <label>세부 일정</label>
-        <textarea id="detail-note" rows="3" placeholder="추가 메모..."></textarea>
+      <label>세부 일정</label>
+      <textarea id="detail-note" rows="3" placeholder="추가 메모..."></textarea>
 
-        <button class="calen" onclick="submitDetailSchedule()">등록</button>
-      </div>
+      <button class="calen" onclick="submitDetailSchedule()">등록</button>
     </div>
+  </div>
 
-    <div id="view-schedule-modal" class="modal-view" style="display:none;">
-      <div class="modal-content">
-        <span class="close" onclick="closeViewModal()">&times;</span>
-        <h3 style="text-align: center;">일정 상세 보기</h3>
-        <p><strong>날짜:</strong> <span id="view-date"></span></p>
-        <p><strong>제목:</strong> <span id="view-title"></span></p>
-        <p><strong>장소:</strong> <span id="view-place"></span></p>
-        <p><strong>참석자:</strong> <span id="view-member"></span></p>
-        <p><strong>메모:</strong> <span id="view-note"></span></p>
-      </div>
-      <div class="s_button" style="padding: 20px;">
-        <button id="edit-button">수정하기</button>
-      </div>
+  <div id="view-schedule-modal" class="modal-view" style="display: none">
+    <div class="modal-content">
+      <span class="close" onclick="closeViewModal()">&times;</span>
+      <h3 style="text-align: center">일정 상세 보기</h3>
+      <p><strong>날짜:</strong> <span id="view-date"></span></p>
+      <p><strong>제목:</strong> <span id="view-title"></span></p>
+      <p><strong>장소:</strong> <span id="view-place"></span></p>
+      <p><strong>참석자:</strong> <span id="view-member"></span></p>
+      <p><strong>메모:</strong> <span id="view-note"></span></p>
     </div>
+    <div class="s_button" style="padding: 20px">
+      <button id="edit-button">수정하기</button>
+    </div>
+  </div>
 
-<script src="/scripts/calendar.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
+  <script src="/scripts/calendar.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </html>
