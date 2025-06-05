@@ -15,6 +15,10 @@ import FindIdResultPage from "../pages/user/FindIdResultPage";
 import QnaPage from "../pages/lading/QnaPage";
 import QnaViewPage from "../pages/lading/QnaViewPage";
 import DashBoardPage from "../pages/DashBoard/DashBoardPage";
+import AdminMainPage from "../pages/admin/AdminMainPage";
+import AdminEmployeePage from "../pages/admin/AdminEmployeePage";
+import AdminMembershipPage from "../pages/admin/AdminMembershipPage";
+import AdminPaymentPage from "../pages/admin/AdminPaymentPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -48,6 +52,13 @@ const router = createBrowserRouter([
   /* 대시보드 라우터 시작 */
   { path: "/dashboard/main", element: <DashBoardPage /> },
   /* 대시보드 라우터 종료 */
+
+  /* 어드민 라우터 시작 */
+  { path: "/admin/main", element: <AdminMainPage /> },
+  { path: "/admin/employee", element: <AdminEmployeePage /> },
+  { path: "/admin/membership", element: <AdminMembershipPage /> },
+  { path: "/admin/adminpayment", element: <AdminPaymentPage /> },
+  /* 어드민 라우터 종료 */
 ]);
 
 // 라우터 내보내기
