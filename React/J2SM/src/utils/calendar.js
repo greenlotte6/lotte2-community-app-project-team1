@@ -53,13 +53,13 @@ export function initCalendar(containerId) {
         i === today.getDate() &&
         month === today.getMonth() &&
         year === today.getFullYear();
+      // 날짜 클릭하면, openScheduleModalWithDate(...) 라는 함수 호출하도록 변경
       days.push(
         `<td class="${
           isToday ? "today" : ""
-        }" onclick="alert('선택한 날짜: ${year}-${String(month + 1).padStart(
-          2,
-          "0"
-        )}-${String(i).padStart(2, "0")}')">${i}</td>`
+        }" onclick="openScheduleModalWithDate('${year}-${String(
+          month + 1
+        ).padStart(2, "0")}-${String(i).padStart(2, "0")}')">${i}</td>`
       );
     }
 
@@ -111,20 +111,26 @@ export function initCalendar(containerId) {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 5) 간편 일정 등록 모달 열기/닫기
+// 5) "날짜 문자열"을 받아서 간편 일정 모달을 열어주는 헬퍼 함수 추가
+//    React 쪽에서는 렌더된 <td onclick="openScheduleModalWithDate('2025-06-15')"> 형태로 호출됨
 // ─────────────────────────────────────────────────────────────────────────────
-export function openScheduleModal() {
+export function openScheduleModalWithDate(dateStr) {
+  // hidden input#modal-date 에 날짜를 세팅
+  const hiddenDate = document.getElementById("modal-date");
+  if (hiddenDate) hiddenDate.value = dateStr;
+
+  // 열린다
   const modal = document.getElementById("schedule-modal");
-  if (modal) modal.style.display = "flex"; // flex로 보이게
+  if (modal) modal.style.display = "flex";
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 6) 간편 일정 등록 모달 닫기 / 저장
+// ─────────────────────────────────────────────────────────────────────────────
 export function closeScheduleModal() {
   const modal = document.getElementById("schedule-modal");
   if (modal) modal.style.display = "none";
 }
-
-// ─────────────────────────────────────────────────────────────────────────────
-// 6) 간편 일정 저장 (예시로 alert만 보여주고 모달 닫음)
-// ─────────────────────────────────────────────────────────────────────────────
 export function saveSchedule() {
   const titleInput = document.getElementById("modal-title");
   const dateInput = document.getElementById("modal-date");
@@ -135,7 +141,7 @@ export function saveSchedule() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 7) 세부일정 등록 모달 열기/닫기
+// 7) 세부 일정 모달 열기/닫기
 // ─────────────────────────────────────────────────────────────────────────────
 export function openDetailModal() {
   const modal = document.getElementById("detail-schedule-modal");
@@ -147,7 +153,7 @@ export function closeDetailModal() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 8) 세부일정 저장 (예시: alert만 보여주고 모달 닫음)
+// 8) 세부 일정 저장
 // ─────────────────────────────────────────────────────────────────────────────
 export function submitDetailSchedule() {
   const title = document.getElementById("detail-title")?.value || "제목 없음";
@@ -163,7 +169,7 @@ export function submitDetailSchedule() {
 }
 
 // ─────────────────────────────────────────────────────────────────────────────
-// 9) 일정 상세 보기 모달 열기/닫기
+// 9) 일정 보기 모달 열기/닫기
 // ─────────────────────────────────────────────────────────────────────────────
 export function openViewModal() {
   const modal = document.getElementById("view-schedule-modal");
@@ -173,3 +179,15 @@ export function closeViewModal() {
   const modal = document.getElementById("view-schedule-modal");
   if (modal) modal.style.display = "none";
 }
+
+// ─────────────────────────────────────────────────────────────────────────────
+// 아래에 export한 함수들을 window 객체에도 바인딩해서 “전역 함수”로 노출
+// ─────────────────────────────────────────────────────────────────────────────
+window.openScheduleModalWithDate = openScheduleModalWithDate;
+window.closeScheduleModal = closeScheduleModal;
+window.saveSchedule = saveSchedule;
+window.openDetailModal = openDetailModal;
+window.closeDetailModal = closeDetailModal;
+window.submitDetailSchedule = submitDetailSchedule;
+window.openViewModal = openViewModal;
+window.closeViewModal = closeViewModal;
