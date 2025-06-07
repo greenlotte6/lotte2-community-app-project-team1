@@ -20,6 +20,9 @@ import AdminEmployeePage from "../pages/admin/AdminEmployeePage";
 import AdminMembershipPage from "../pages/admin/AdminMembershipPage";
 import AdminPaymentPage from "../pages/admin/AdminPaymentPage";
 import CalendarPage from "../pages/Calendar/CalendarPage";
+import ChattingMainPage from "../pages/chatting/ChattingMainPage";
+import ChattingRoom from "../components/chatting/ChattingRoom";
+import ChattingRoomPage from "../pages/chatting/ChattingRoomPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -63,6 +66,10 @@ const router = createBrowserRouter([
 
   /* 캘린더 */
   { path: "/dashboard/calendar", element: <CalendarPage /> },
+
+  /* 채팅 */
+  { path: "/dashboard/chatting/main", element: <ChattingMainPage /> },
+  { path: "/dashboard/chatting/room", element: <ChattingRoomPage /> },
 ]);
 
 // 라우터 내보내기
