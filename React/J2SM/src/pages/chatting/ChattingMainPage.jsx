@@ -7,6 +7,7 @@ import "../../styles/DashBoard/dashboardMain.scss";
 import "flatpickr/dist/themes/dark.css";
 import ChattingMain from "../../components/chatting/ChattingMain";
 import "../../styles/Chatting/chatting.scss";
+import "../../styles/Chatting/ChatRoomCreateModal.scss";
 
 const ChattingMainPage = () => {
   return (

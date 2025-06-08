@@ -40,5 +40,14 @@ export const PRODUCT_THUMB = `${SERVER_HOST}/product/thumb`;
 //문의하기
 export const INQUIRE_REGISTER = `${SERVER_HOST}/qna`;
 
-// 소켓
+// 소켓 엔드포인트
 export const SOCKET_URL = `${SERVER_HOST}/ws-chat`;
+
+// 채팅 REST 엔드포인트 모음
+export const API = {
+  CHAT: {
+    ROOM_LIST: `${SERVER_HOST}/api/chat/rooms`, // GET
+    CREATE_ROOM: `${SERVER_HOST}/api/chat/rooms`, // POST
+    DELETE_ROOM: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}`, // DELETE
+  },
+};

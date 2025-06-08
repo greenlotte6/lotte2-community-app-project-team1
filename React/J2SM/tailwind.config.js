@@ -7,6 +7,7 @@ export default {
     "./src/components/lading/Main.jsx",
     "./src/components/main/FeatureIntro.jsx",
     "./src/components/main/ImageList.jsx",
+    "./src/components/chatting/modal/ChatRoomCreateModal.jsx",
     "./public/index.html", // public 폴더의 index.html도 포함 (필요 시)
   ],
   theme: {

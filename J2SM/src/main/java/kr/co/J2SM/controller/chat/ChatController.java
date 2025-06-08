@@ -1,4 +1,4 @@
-package kr.co.J2SM.controller;
+package kr.co.J2SM.controller.chat;
 
 
 import kr.co.J2SM.document.chat.Message;

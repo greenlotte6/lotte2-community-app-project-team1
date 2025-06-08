@@ -1,88 +1,110 @@
-import React from "react";
+// src/components/chat/ChattingMain.jsx
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { API } from "../../api/_http";
 
-const ChattingMain = () => {
+import ChatRoomCreateModal from "./modal/ChatRoomCreateModal";
+import useAuth from "../../hooks/useAuth";
+
+export default function ChattingMain({ onSelectRoom, currentUserId }) {
+  const { username } = useAuth();
+  const [rooms, setRooms] = useState([]);
+  const [searchText, setSearchText] = useState("");
+
+  // 모달 열림 상태
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // 1) 채팅방 전체 로드
+  useEffect(() => {
+    axios
+      .get(API.CHAT.ROOM_LIST)
+      .then((res) => setRooms(res.data))
+      .catch(console.error);
+  }, []);
+
+  // 모달 열기/닫기
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  // 모달에서 새 방 생성 완료 시 호출
+  const handleCreated = (newRoom) => {
+    setRooms((prev) => [...prev, newRoom]);
+    closeModal();
+    onSelectRoom(newRoom.id); // 바로 생성된 방으로 진입
+  };
+
+  // 2) 검색 필터링
+  const filtered = rooms.filter((r) =>
+    r.name.toLowerCase().includes(searchText.toLowerCase())
+  );
+
   return (
     <>
-      <div class="topArea">
-        <div class="Title">
-          <h3>채팅 카테고리</h3>
+      <div className="topArea">
+        <div className="Title">
+          <h3>안녕하세요, {username}님!</h3>
         </div>
-        <div class="controlBar">
+        <div className="controlBar">
+          {/* 검색창 */}
           <input
             type="text"
-            id="searchCategory"
             placeholder="채팅방 검색..."
-            class="searchInput"
+            className="searchInput"
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
           />
-          <button id="createRoomBtn" class="createBtn">
+
+          {/* 모달 열기 버튼 */}
+          <button id="createRoomBtn" className="createBtn" onClick={openModal}>
             + 새 채팅방 만들기
           </button>
         </div>
       </div>
 
-      <div class="categoryContainer">
-        <a href="/view/Chatting/Chatting.html" class="categoryItem">
-          <div class="itemLeft">
-            <div class="itemTitle">일반 대화</div>
-            <div class="itemDesc">자유롭게 소통하는 공간</div>
-            <div class="lastMessage">[민수] 오늘 점심 뭐 드실래요?</div>
-          </div>
-          <div class="itemRight">
-            <span class="unreadBadge">5</span>
-            <div class="participants">
-              <img src="/images/user.png" alt="member" />
-              <img src="/images/user.png" alt="member" />
-              <img src="/images/user.png" alt="member" />
+      <div className="categoryContainer">
+        {filtered.map((room) => {
+          const { id, name, participants, lastMessage, unreadCount } = room;
+          return (
+            <div
+              key={id}
+              className="categoryItem"
+              onClick={() => onSelectRoom(id)}
+            >
+              <div className="itemLeft">
+                <div className="itemTitle">{name}</div>
+                <div className="itemDesc">
+                  {room.description || "설명 없음"}
+                </div>
+                <div className="lastMessage">
+                  {lastMessage
+                    ? `[${lastMessage.senderId}] ${lastMessage.text}`
+                    : "대화 시작하기"}
+                </div>
+              </div>
+              <div className="itemRight">
+                <span className="unreadBadge">{unreadCount ?? 0}</span>
+                <div className="participants">
+                  {participants.map((uid, i) => (
+                    <img key={i} src={`/images/${uid}.png`} alt={uid} />
+                  ))}
+                </div>
+              </div>
             </div>
-          </div>
-        </a>
+          );
+        })}
 
-        <a href="/view/Chatting/Chatting.html" class="categoryItem">
-          <div class="itemLeft">
-            <div class="itemTitle">공지사항</div>
-            <div class="itemDesc">회사 전반 공지 및 안내</div>
-            <div class="lastMessage">[관리자] 이번 주 금요일 정기점검 안내</div>
-          </div>
-          <div class="itemRight">
-            <span class="unreadBadge">0</span>
-            <div class="participants">
-              <img src="/images/user.png" alt="member" />
-            </div>
-          </div>
-        </a>
-
-        <a href="/view/Chatting/Chatting.html" class="categoryItem">
-          <div class="itemLeft">
-            <div class="itemTitle">프로젝트 A팀</div>
-            <div class="itemDesc">A팀 개발 진행 상황 공유</div>
-            <div class="lastMessage">[지영] 리뷰 요청 드려요.</div>
-          </div>
-          <div class="itemRight">
-            <span class="unreadBadge">2</span>
-            <div class="participants">
-              <img src="/images/user.png" alt="member" />
-              <img src="/images/user.png" alt="member" />
-            </div>
-          </div>
-        </a>
-
-        <a href="/view/Chatting/Chatting.html" class="categoryItem">
-          <div class="itemLeft">
-            <div class="itemTitle">IT 지원</div>
-            <div class="itemDesc">개발/인프라 기술 지원</div>
-            <div class="lastMessage">[민준] VPN 연결이 안 돼요.</div>
-          </div>
-          <div class="itemRight">
-            <span class="unreadBadge">1</span>
-            <div class="participants">
-              <img src="/images/user.png" alt="member" />
-              <img src="/images/user.png" alt="member" />
-            </div>
-          </div>
-        </a>
+        {filtered.length === 0 && (
+          <div className="no-rooms">검색된 채팅방이 없습니다.</div>
+        )}
       </div>
+
+      {/* ➋ 모달 렌더링 */}
+      <ChatRoomCreateModal
+        isOpen={isModalOpen}
+        onClose={closeModal}
+        onCreated={handleCreated}
+        currentUserId={currentUserId}
+      />
     </>
   );
-};
-
-export default ChattingMain;
+}
