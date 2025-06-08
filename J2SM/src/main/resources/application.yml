@@ -9,6 +9,23 @@ spring:
       location: uploads
       max-file-size: 10MB
 
+  cache:
+    type: redis
+
+  data:
+    mongodb:
+      uri: mongodb://root:1234@3.34.124.218:27017/mydb?authSource=admin
+
+    redis:
+      host: 43.201.101.104
+      port: 6379
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 0
+          max-wait: -1ms
+
   mail:
     host: smtp.gmail.com
     port: 587
@@ -74,3 +91,5 @@ logging:
     kr.co.lotteOn: debug
     org.hibernate.SQL: info
     org.hibernate.type.descriptor.sql.BasicBinder: off
+    org.springframework.data.redis.connection: DEBUG
+    io.lettuce.core: DEBUG

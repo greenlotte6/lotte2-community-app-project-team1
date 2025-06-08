@@ -22,6 +22,7 @@ import AdminPaymentPage from "../pages/admin/AdminPaymentPage";
 import CalendarPage from "../pages/Calendar/CalendarPage";
 import ChattingMainPage from "../pages/chatting/ChattingMainPage";
 import ChattingRoomPage from "../pages/chatting/ChattingRoomPage";
+import ChatTestPage from "../pages/chatting/ChatTestPage";
 import MyPage from "../pages/MyPage/MyPage";
 
 // 라우터 생성
@@ -70,11 +71,14 @@ const router = createBrowserRouter([
   /* 채팅 */
   { path: "/dashboard/chatting/main", element: <ChattingMainPage /> },
   { path: "/dashboard/chatting/room", element: <ChattingRoomPage /> },
+  { path: "/dashboard/chatting/test", element: <ChatTestPage /> },
+  /*채팅 끝*/
   /* 채팅 라우터 종료 */
 
   /* 마이 페이지 라우터 시작 */
   { path: "/dashboard/mypage/mypage", element: <MyPage /> },
   /* 마이 페이지 라우터 종료 */
+
 ]);
 
 // 라우터 내보내기
