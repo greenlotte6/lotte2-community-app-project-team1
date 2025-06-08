@@ -11,7 +11,7 @@ const ChattingRoomPage = () => {
     <div className="dashboardMainContent" id="chattingroom">
       <DashboardLayout>
         <Aside />
-        <div className="contentArea">
+        <div className="contentArea" id="chat">
           <ChattingRoom />
         </div>
       </DashboardLayout>
