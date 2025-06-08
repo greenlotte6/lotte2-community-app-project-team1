@@ -23,6 +23,7 @@ import CalendarPage from "../pages/Calendar/CalendarPage";
 import ChattingMainPage from "../pages/chatting/ChattingMainPage";
 import ChattingRoom from "../components/chatting/ChattingRoom";
 import ChattingRoomPage from "../pages/chatting/ChattingRoomPage";
+import ChatTestPage from "../pages/chatting/ChatTestPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -70,6 +71,8 @@ const router = createBrowserRouter([
   /* 채팅 */
   { path: "/dashboard/chatting/main", element: <ChattingMainPage /> },
   { path: "/dashboard/chatting/room", element: <ChattingRoomPage /> },
+  { path: "/dashboard/chatting/test", element: <ChatTestPage /> },
+  /*채팅 끝*/
 ]);
 
 // 라우터 내보내기

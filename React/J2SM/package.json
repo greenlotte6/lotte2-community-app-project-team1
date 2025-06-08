@@ -11,10 +11,16 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.8.2",
+    "@stomp/stompjs": "^7.1.1",
     "axios": "^1.9.0",
     "chart.js": "^4.4.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
     "flatpickr": "^4.6.13",
+    "http": "^0.0.1-security",
     "js-cookie": "^3.0.5",
+    "mongoose": "^8.15.1",
     "react": "^19.1.0",
     "react-cookie": "^8.0.1",
     "react-dom": "^19.1.0",
@@ -23,7 +29,10 @@
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.6.2",
     "react-scroll": "^1.9.3",
-    "sass": "^1.89.1"
+    "sass": "^1.89.1",
+    "socket.io": "^4.8.1",
+    "socket.io-client": "^4.8.1",
+    "sockjs-client": "^1.6.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

@@ -1,0 +1,33 @@
+1. 메시지 저장 및 퍼블리시 (Producer)
+클라이언트 요청
+
+React 앱에서 STOMP SEND 프레임으로 /app/chat.sendMessage[/roomId] 엔드포인트 호출
+
+페이로드엔 { roomId, senderId, text } 가 담겨 전송됨
+
+---------------------------------------------------------------------------------------------------------
+
+2. 컨트롤러 → 서비스
+
+ChatController 의 @MessageMapping("/chat.sendMessage") (또는 "/chat.sendMessage/{roomId}") 핸들러가 호출
+
+내부에서 chatService.sendMessage(...) 실행
+
+---------------------------------------------------------------------------------------------------------
+
+3. MongoDB 저장
+
+ChatService.sendMessage 가 MessageRepository.save(...) 로 메시지를 messages 컬렉션에 영속화
+
+이때 저장된 문서는 ID, roomId, senderId, text, timestamp, readBy 정보까지 모두 포함
+
+---------------------------------------------------------------------------------------------------------
+
+4. Redis 퍼블리시
+
+같은 sendMessage 메서드 안에서 ChatRedisPublisher.publish(savedMsg) 호출
+
+StringRedisTemplate.convertAndSend("chat:room:" + roomId, json)
+→ Redis 서버의 chat:room:123 같은 채널에 JSON 문자열로 메시지 발행
+
+---------------------------------------------------------------------------------------------------------

@@ -39,3 +39,6 @@ export const PRODUCT_THUMB = `${SERVER_HOST}/product/thumb`;
 
 //문의하기
 export const INQUIRE_REGISTER = `${SERVER_HOST}/qna`;
+
+// 소켓
+export const SOCKET_URL = `${SERVER_HOST}/ws-chat`;
