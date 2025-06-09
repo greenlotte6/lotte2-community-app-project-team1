@@ -1,6 +1,12 @@
 import { NavLink } from "react-router-dom";
 
 const menuItems = [
+  { path: "/dashboard", icon: "Grid.svg", alt: "dashboard" },
+  { path: "/mypage", icon: "File text.svg", alt: "document" },
+  { path: "/calendar", icon: "Calendar.svg", alt: "calendar" },
+  { path: "/chat", icon: "Message square.svg", alt: "chat" },
+  { path: "/dashboard/board/main", icon: "Clipboard.svg", alt: "board" },
+  { path: "/project", icon: "gmail_groups.svg", alt: "project" },
   { path: "/dashboard/main", icon: "Grid.svg", alt: "dashboard" },
   { path: "/dashboard/mypage/mypage", icon: "File text.svg", alt: "document" },
   { path: "/dashboard/calendar", icon: "Calendar.svg", alt: "calendar" },

@@ -48,6 +48,78 @@ const Aside = () => {
     );
   }
 
+  // '/dashboard/calendar' 경로일 때 렌더링할 사이드바 내용
+  if (pathname.includes("/dashboard/board")) {
+    return (
+      <aside>
+        <div className="sidemenu">
+          <div className="sideTop">
+            <h3>B board</h3>
+          </div>
+          <div className="childArea">
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/board/main">HOME</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+            <ul className="subMenu">
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+            </ul>
+            <div className="side-icon">
+              <button className="side-click" id="openModalBtn">
+                + New BOARD
+              </button>
+            </div>
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/board/list">🔒공지사항</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+            <ul className="subMenu">
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+            </ul>
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/board/list">사내게시판</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+            <ul className="subMenu">
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+            </ul>
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/board/list">익명게시판</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+            <ul className="subMenu">
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+              <li>
+                <Link to="#">더미더미더미</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
   // 드라이브 관련 페이지일 때
   if (pathname.includes("/dashboard/drive")) {
     return (

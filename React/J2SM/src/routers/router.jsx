@@ -24,6 +24,9 @@ import ChattingMainPage from "../pages/chatting/ChattingMainPage";
 import ChattingRoomPage from "../pages/chatting/ChattingRoomPage";
 import ChatTestPage from "../pages/chatting/ChatTestPage";
 import MyPage from "../pages/MyPage/MyPage";
+import BoardMainPage from "../pages/Board/BoardMainPage";
+import BoardListPage from "../pages/Board/BoardListPage";
+import BoardViewPage from "../pages/Board/BoardViewPage";
 import ProjectPage from "../pages/Project/ProjectPage";
 import ProjectRegisterPage from "../pages/Project/ProjectRegisterPage";
 import SettingPage from "../pages/Setting/SettingPage";
@@ -70,6 +73,11 @@ const router = createBrowserRouter([
   { path: "/admin/membership", element: <AdminMembershipPage /> },
   { path: "/admin/adminpayment", element: <AdminPaymentPage /> },
   /* 어드민 라우터 종료 */
+
+  /* 게시판 시작 */
+  { path: "/dashboard/board/main", element: <BoardMainPage /> },
+  { path: "/dashboard/board/list", element: <BoardListPage /> },
+  { path: "/dashboard/board/view", element: <BoardViewPage /> },
 
   /* 캘린더 */
   { path: "/dashboard/calendar", element: <CalendarPage /> },
