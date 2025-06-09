@@ -114,6 +114,12 @@ const Aside = () => {
                 <Link to="#">더미더미더미</Link>
               </li>
             </ul>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
   // 드라이브 관련 페이지일 때
   if (pathname.includes("/dashboard/drive")) {
     return (
