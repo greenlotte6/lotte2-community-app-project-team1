@@ -53,3 +53,11 @@ export const API = {
       `${SERVER_HOST}/api/chat/users/by-company/${company}`, // ← 여기에 사용자 리스트 GET 추가
   },
 };
+
+// MyPage API
+export const MYPAGE_SAVE = `${SERVER_HOST}/api/mypage/save`;
+export const MYPAGE_GET_BY_ID = (id) => `${SERVER_HOST}/api/mypage/${id}`;
+export const MYPAGE_LIST_BY_USER = (userId) =>
+  `${SERVER_HOST}/api/mypage/list?userId=${userId}`;
+export const MYPAGE_UPDATE = (id) => `${SERVER_HOST}/api/mypage/update/${id}`;
+export const MYPAGE_DELETE = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;

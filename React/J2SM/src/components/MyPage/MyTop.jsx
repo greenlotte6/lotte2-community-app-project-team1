@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MYPAGE_SAVE } from "@/api/mypageapi";
+import { saveMyPage } from "@/api/mypageapi"; // fetch 대신 axios 함수 import
 
 export const MyTop = ({ editorRef }) => {
   const [isFavorite, setIsFavorite] = useState(false);
@@ -12,27 +12,19 @@ export const MyTop = ({ editorRef }) => {
     if (!editorRef.current) return;
 
     try {
-      const outputData = await editorRef.current.save(); // Editor.js 내용 추출
+      const outputData = await editorRef.current.save();
 
-      const response = await fetch(MYPAGE_SAVE, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: 1, // 나중에 로그인 사용자 ID로 교체 예정
-          content: outputData,
-          isFavorite,
-          shared: false,
-        }),
-      });
+      const data = {
+        userId: 1, // 로그인 사용자 ID로 대체 예정
+        content: outputData,
+        isFavorite,
+        shared: false,
+      };
 
-      if (response.ok) {
-        alert("저장 완료!");
-      } else {
-        const errText = await response.text();
-        alert("저장 실패: " + errText);
-      }
+      await saveMyPage(data); // axios로 POST 요청 보내기
+      alert("저장 완료!");
     } catch (e) {
-      console.error("저장 중 오류:", e);
+      console.error("저장 실패", e);
       alert("저장 중 오류 발생");
     }
   };
