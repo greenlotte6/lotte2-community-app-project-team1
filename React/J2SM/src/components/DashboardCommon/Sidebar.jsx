@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const menuItems = [
   { path: "/dashboard", icon: "Grid.svg", alt: "dashboard" },
   { path: "/mypage", icon: "File text.svg", alt: "document" },
@@ -5,8 +7,18 @@ const menuItems = [
   { path: "/chat", icon: "Message square.svg", alt: "chat" },
   { path: "/dashboard/board/main", icon: "Clipboard.svg", alt: "board" },
   { path: "/project", icon: "gmail_groups.svg", alt: "project" },
+  { path: "/dashboard/main", icon: "Grid.svg", alt: "dashboard" },
+  { path: "/dashboard/mypage/mypage", icon: "File text.svg", alt: "document" },
+  { path: "/dashboard/calendar", icon: "Calendar.svg", alt: "calendar" },
+  { path: "/dashboard/chatting/main", icon: "Message square.svg", alt: "chat" },
+  { path: "/board", icon: "Clipboard.svg", alt: "board" },
+  {
+    path: "/dashboard/project/project",
+    icon: "gmail_groups.svg",
+    alt: "project",
+  },
   { path: "/cloud", icon: "Cloud.svg", alt: "cloud" },
-  { path: "/setting", icon: "Settings.svg", alt: "setting" },
+  { path: "/dashboard/setting", icon: "Settings.svg", alt: "setting" },
 ];
 
 const Sidebar = () => (
@@ -17,9 +29,12 @@ const Sidebar = () => (
     <ul>
       {menuItems.map((item, i) => (
         <li key={i}>
-          <a href={item.path}>
+          <NavLink
+            to={item.path}
+            className={({ isActive }) => (isActive ? "activeMenu" : "")}
+          >
             <img src={`/images/${item.icon}`} alt={item.alt} />
-          </a>
+          </NavLink>
         </li>
       ))}
     </ul>
