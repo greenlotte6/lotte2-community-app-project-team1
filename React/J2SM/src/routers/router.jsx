@@ -104,7 +104,7 @@ const router = createBrowserRouter([
 
   /* 세팅 라우터 시작 */
   { path: "/dashboard/setting", element: <SettingPage /> },
-  /* 세팅팅 라우터 종료 */
+  /* 세팅 라우터 종료 */
 
   /* 드라이브 라우터 */
   { path: "/dashboard/drive", element: <DriveMainPage /> },

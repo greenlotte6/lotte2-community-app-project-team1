@@ -39,7 +39,15 @@ public class MyPageController {
 
     @PostMapping("/save")
     public ResponseEntity<?> saveMyPage(@RequestBody MyPageDTO myPageDTO) {
-        myPageService.save(myPageDTO);
-        return ResponseEntity.ok().build();
+        log.info(">>> /api/mypage/save 요청 받음");
+        log.info(">>> 전달된 DTO: {}", myPageDTO);
+
+        try {
+            myPageService.save(myPageDTO);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            log.error(">>> 저장 중 오류 발생", e); // 🔥 오류 내용 전체 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류: " + e.getMessage());
+        }
     }
 }
