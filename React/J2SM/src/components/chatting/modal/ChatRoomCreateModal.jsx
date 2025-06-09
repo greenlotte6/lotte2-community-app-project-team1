@@ -166,7 +166,7 @@ export default function ChatRoomCreateModal({
                 ? "개인 채널 - 상대 선택"
                 : "단체 채널 - 사용자 초대"}
             </h2>
-            <div className="user-selectors">
+            <div className="user-selectors" id="userSelectors">
               <div className="available">
                 <h3>초대 가능한 사용자</h3>
                 {userGroups.map(
@@ -195,7 +195,9 @@ export default function ChatRoomCreateModal({
                           <ul className="user-list">
                             {grp.users.map((u) => (
                               <li key={u.uid} className="user-item">
-                                <span>{u.name}</span>
+                                <span onClick={() => handleSelectUser(u)}>
+                                  {u.name}
+                                </span>
                                 <button onClick={() => handleSelectUser(u)}>
                                   +
                                 </button>

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,10 @@ public class ChatRoomService {
     // (옵션) 방 삭제
     public void deleteRoom(String roomId) {
         roomRepo.deleteById(roomId);
+    }
+
+    public ChatRoom getRoom(String roomId) {
+        Optional<ChatRoom> room = roomRepo.findById(roomId);
+        return room.orElse(null);
     }
 }

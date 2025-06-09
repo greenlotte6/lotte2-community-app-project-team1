@@ -15,7 +15,6 @@
     "@editorjs/header": "^2.8.8",
     "@editorjs/list": "^2.0.8",
     "@editorjs/paragraph": "^2.11.7",
-    "@editorjs/editorjs": "^2.30.8",
     "@reduxjs/toolkit": "^2.8.2",
     "@stomp/stompjs": "^7.1.1",
     "@tiptap/react": "^2.14.0",

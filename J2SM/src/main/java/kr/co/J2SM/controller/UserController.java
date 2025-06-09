@@ -100,6 +100,7 @@ public class UserController {
             
             // 회원 정보
             map.put("username", user.getUid());
+            map.put("nick", user.getName());
             map.put("department", department);
             map.put("company", company);
 

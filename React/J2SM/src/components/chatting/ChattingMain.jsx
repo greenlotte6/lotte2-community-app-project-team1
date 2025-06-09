@@ -14,13 +14,25 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
   // 모달 열림 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // 1) 채팅방 전체 로드
+  // 채팅방 전체 로드
   useEffect(() => {
     axios
       .get(API.CHAT.ROOM_LIST)
       .then((res) => setRooms(res.data))
       .catch(console.error);
   }, []);
+
+  // 내가 속한 채팅방만 필터링
+  const myRooms = rooms.filter((room) =>
+    Array.isArray(room.participants)
+      ? room.participants.includes(currentUserId)
+      : false
+  );
+
+  // 검색 필터링
+  const filtered = myRooms.filter((r) =>
+    r.name.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   // 모달 열기/닫기
   const openModal = () => setIsModalOpen(true);
@@ -32,11 +44,6 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
     closeModal();
     onSelectRoom(newRoom.id); // 바로 생성된 방으로 진입
   };
-
-  // 2) 검색 필터링
-  const filtered = rooms.filter((r) =>
-    r.name.toLowerCase().includes(searchText.toLowerCase())
-  );
 
   return (
     <>
@@ -63,7 +70,14 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
 
       <div className="categoryContainer">
         {filtered.map((room) => {
-          const { id, name, participants, lastMessage, unreadCount } = room;
+          const {
+            id,
+            name,
+            description,
+            lastMessage,
+            unreadCount,
+            participants,
+          } = room;
           return (
             <div
               key={id}
@@ -72,9 +86,7 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
             >
               <div className="itemLeft">
                 <div className="itemTitle">{name}</div>
-                <div className="itemDesc">
-                  {room.description || "설명 없음"}
-                </div>
+                <div className="itemDesc">{description || "설명 없음"}</div>
                 <div className="lastMessage">
                   {lastMessage
                     ? `[${lastMessage.senderId}] ${lastMessage.text}`
@@ -98,7 +110,7 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
         )}
       </div>
 
-      {/* ➋ 모달 렌더링 */}
+      {/* 모달 렌더링 */}
       <ChatRoomCreateModal
         isOpen={isModalOpen}
         onClose={closeModal}

@@ -35,7 +35,8 @@ const Login = () => {
           login(
             data.username,
             decodeURIComponent(data.department),
-            decodeURIComponent(data.company)
+            decodeURIComponent(data.company),
+            data.nick
           );
 
           // 메인 이동(컴포넌트 라우팅)
