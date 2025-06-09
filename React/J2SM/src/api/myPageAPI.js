@@ -1,17 +1,71 @@
-import { SERVER_HOST } from "./base";
+// 📁 mypageApi.js
+import axios from "axios";
+import {
+  MYPAGE_SAVE,
+  MYPAGE_GET_BY_ID,
+  MYPAGE_LIST_BY_USER,
+  MYPAGE_UPDATE,
+  MYPAGE_DELETE,
+} from "./_http";
 
-// 마이페이지 저장 (POST)
-export const MYPAGE_SAVE = `${SERVER_HOST}/api/mypage/save`;
+// 저장
+export const saveMyPage = async (data) => {
+  try {
+    const response = await axios.post(MYPAGE_SAVE, data, {
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-// 마이페이지 단일 조회 (GET)
-export const getMyPageById = (id) => `${SERVER_HOST}/api/mypage/${id}`;
+// 단건 조회
+export const fetchMyPage = async (id) => {
+  try {
+    const response = await axios.get(MYPAGE_GET_BY_ID(id), {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-// 마이페이지 목록 조회 (GET)
-export const getMyPagesByUser = (userId) =>
-  `${SERVER_HOST}/api/mypage/list?userId=${userId}`;
+// 사용자 전체 페이지 조회
+export const fetchMyPagesByUser = async (userId) => {
+  try {
+    const response = await axios.get(MYPAGE_LIST_BY_USER(userId), {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-// 마이페이지 수정 (PUT)
-export const updateMyPage = (id) => `${SERVER_HOST}/api/mypage/update/${id}`;
+// 수정
+export const updateMyPage = async (id, data) => {
+  try {
+    const response = await axios.put(MYPAGE_UPDATE(id), data, {
+      withCredentials: true,
+      headers: { "Content-Type": "application/json" },
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
 
-// 마이페이지 삭제 (DELETE)
-export const deleteMyPage = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;
+// 삭제
+export const deleteMyPage = async (id) => {
+  try {
+    const response = await axios.delete(MYPAGE_DELETE(id), {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
