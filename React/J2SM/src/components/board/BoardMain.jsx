@@ -8,6 +8,7 @@ const BoardMain = () => {
     <>
       <div class="line"></div>
       <BoardMainTable />
+
       <div class="board-sub">
         <BoardLeftTable />
         <BoardRightTable />
