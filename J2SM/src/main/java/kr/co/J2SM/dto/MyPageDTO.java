@@ -14,4 +14,6 @@ public class MyPageDTO {
     private String content; // Editor.js의 JSON 데이터 (Stringified)
     private boolean isFavorite;
     private boolean shared;
+    private String title;
+
 }

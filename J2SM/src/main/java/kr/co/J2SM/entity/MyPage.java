@@ -26,8 +26,14 @@ public class MyPage {
     @Lob // 긴 JSON 문자열
     private String content;
 
-    private boolean isFavorite;
-    private boolean shared;
+    @Builder.Default
+    private boolean isFavorite = false;
+
+    @Builder.Default
+    private boolean shared = false;
 
     private LocalDateTime createdAt;
+
+    @Column(nullable = false)
+    private String title;
 }

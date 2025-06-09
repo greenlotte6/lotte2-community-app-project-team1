@@ -19,10 +19,19 @@ public class MyPageService {
     private final MyPageRepository myPageRepository;
 
     public void save(MyPageDTO myPageDTO) {
-        MyPage myPage = modelMapper.map(myPageDTO, MyPage.class);
-        myPage.setCreatedAt(LocalDateTime.now());
 
-        myPageRepository.save(myPage);
+        log.info("==> 저장 요청 들어옴: {}", myPageDTO);  // 추가
+
+        MyPage entity = MyPage.builder()
+                .userId(myPageDTO.getUserId())
+                .content(myPageDTO.getContent())
+                .isFavorite(myPageDTO.isFavorite())
+                .shared(myPageDTO.isShared())
+                .createdAt(LocalDateTime.now())
+                .title(myPageDTO.getTitle())
+                .build();
+
+        myPageRepository.save(entity);
     }
 
 }
