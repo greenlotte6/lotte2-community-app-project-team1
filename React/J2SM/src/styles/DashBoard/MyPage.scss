@@ -346,11 +346,15 @@
   }
   .topArea {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
   }
   .favoriteshare {
     position: relative;
-    bottom: 29px;
+  }
+  .favoriteshare .savebtn {
+    position: relative;
+    top: 1px;
+    font-size: 14px;
   }
   .favoriteshare img {
     width: 20px;
@@ -373,6 +377,34 @@
   .midArea {
     width: 100%;
     height: auto;
+  }
+  .midArea {
+    padding: 30px;
+  }
+  /* 기본 Header 스타일 */
+  .ce-header {
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  /* Header 레벨 별 커스텀 */
+  .cdx-block h1 {
+    font-size: 28px !important;
+    color: #333;
+  }
+  .cdx-block h2 {
+    font-size: 22px !important;
+    color: #444;
+  }
+  .cdx-block h3 {
+    font-size: 18px !important;
+    color: #666;
+  }
+  .ce-header {
+    font-size: 24px;
+  }
+  .menuItem:hover a {
+    color: #000 !important;
   }
   .bottomArea {
     width: 100%;
