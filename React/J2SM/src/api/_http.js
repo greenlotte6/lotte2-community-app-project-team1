@@ -49,5 +49,7 @@ export const API = {
     ROOM_LIST: `${SERVER_HOST}/api/chat/rooms`, // GET
     CREATE_ROOM: `${SERVER_HOST}/api/chat/rooms`, // POST
     DELETE_ROOM: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}`, // DELETE
+    USER_LIST: (company) =>
+      `${SERVER_HOST}/api/chat/users/by-company/${company}`, // ← 여기에 사용자 리스트 GET 추가
   },
 };
