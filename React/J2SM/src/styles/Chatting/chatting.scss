@@ -532,7 +532,8 @@
     background-color: #3a3a3a;
     color: #f0f0f0;
     border: 1px solid #666;
-  }np
+  }
+  np
 
   /* ===================================================
    사이드바 “Chatting” 메뉴 강조
@@ -1533,4 +1534,6 @@
   body.dark-mode .chat-send-button:hover {
     background-color: #256cc1;
   }
+
+  /* 각 부서 그룹 사이에 16px 간격을 추가 */
 }

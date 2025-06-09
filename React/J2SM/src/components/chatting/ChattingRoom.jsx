@@ -2,13 +2,29 @@ import React, { useEffect, useState, useRef } from "react";
 import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 import { SOCKET_URL } from "../../api/_http";
+import axios from "axios";
+import { API } from "../../api/_http";
 
-const ChattingRoom = ({ roomId = "Room-1", userId = "홍길동" }) => {
+const ChattingRoom = ({
+  roomId = "비로그인",
+  userId = "홍길동",
+  nick = "회원",
+}) => {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [connected, setConnected] = useState(false);
+  const [roomName, setRoomName] = useState("");
   const clientRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  // 방 이름 조회
+  useEffect(() => {
+    console.log("방이름 조회");
+    axios
+      .get(`${API.CHAT.ROOM_DETAIL}/${roomId}`)
+      .then((res) => setRoomName(res.data.name))
+      .catch(() => setRoomName(roomId)); // 실패 시 ID로 폴백
+  }, [roomId]);
 
   // 스크롤 맨 아래로
   const scrollToBottom = () => {
@@ -72,8 +88,8 @@ const ChattingRoom = ({ roomId = "Room-1", userId = "홍길동" }) => {
 
       <div className="chatContainer">
         <header className="chat-header">
-          <div className="chat-title">채팅방: {roomId}</div>
-          <div className="chat-welcome">안녕하세요, {userId}님!</div>
+          <div className="chat-title">채팅방: {roomName || roomId}</div>
+          <div className="chat-welcome">안녕하세요, {nick}님!</div>
         </header>
 
         <div className="chat-messages" id="messages">
@@ -85,7 +101,10 @@ const ChattingRoom = ({ roomId = "Room-1", userId = "홍길동" }) => {
                 className={`chat-message ${isMine ? "mine" : "other"}`}
               >
                 <div className="message-meta">
-                  <span className="message-user">{m.senderId}</span>
+                  {/* senderName이 있으면 보여주고, 없으면 ID로 폴백 */}
+                  <span className="message-user">
+                    {m.senderName ?? m.senderId}
+                  </span>
                   <span className="message-time">
                     {new Date(m.timestamp).toLocaleTimeString()}
                   </span>

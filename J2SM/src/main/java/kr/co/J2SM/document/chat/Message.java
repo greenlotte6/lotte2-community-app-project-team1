@@ -25,6 +25,8 @@ public class Message {
     private String senderId;    // 보낸 사람 userId
     private String text;        // 메시지 본문
     private Instant timestamp;  // 보낸 시각
+    private String roomName;
+    private String senderName;
 
     private List<String> readBy;  // 읽음 처리된 사용자 ID 리스트
 }

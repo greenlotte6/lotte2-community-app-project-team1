@@ -3,8 +3,10 @@ package kr.co.J2SM.service.chat;
 
 import kr.co.J2SM.document.chat.ChatRoom;
 import kr.co.J2SM.document.chat.Message;
+import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.repository.chat.ChatRoomRepository;
 import kr.co.J2SM.repository.chat.MessageRepository;
+import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,7 @@ public class ChatService {
     private final ChatRoomRepository    roomRepo;
     private final MessageRepository     msgRepo;
     private final ChatRedisPublisher    redisPublisher;
+    private final UserRepository userRepo;
 
     /** 1) 채팅방 생성 */
     public ChatRoom createRoom(String name, List<String> participants) {
@@ -32,13 +35,28 @@ public class ChatService {
 
     /** 2) 메시지 전송 → Mongo 저장 + Redis 퍼블리시 */
     public Message sendMessage(String roomId, String senderId, String text) {
+
+        // 방 정보 가져오기
+        ChatRoom room = roomRepo.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("방 없음: " + roomId));
+
+        // 유저 정보 가져오기
+        User sender = userRepo.findById(senderId)
+                .orElseThrow(() -> new IllegalArgumentException("유저 없음: " + senderId));
+
+
+
         Message msg = Message.builder()
                 .roomId(roomId)
                 .senderId(senderId)
                 .text(text)
                 .timestamp(Instant.now())
+                .roomName(room.getName())
+                .senderName(sender.getName())
                 .readBy(Collections.singletonList(senderId))  // 발신자는 자동 읽음
                 .build();
+
+        // 메시지 저장
         Message saved = msgRepo.save(msg);
         redisPublisher.publish(saved);
         return saved;

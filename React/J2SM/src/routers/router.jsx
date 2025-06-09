@@ -84,7 +84,8 @@ const router = createBrowserRouter([
 
   /* 채팅 */
   { path: "/dashboard/chatting/main", element: <ChattingMainPage /> },
-  { path: "/dashboard/chatting/room", element: <ChattingRoomPage /> },
+  { path: "/dashboard/chatting/room/:roomId", element: <ChattingRoomPage /> },
+
   { path: "/dashboard/chatting/test", element: <ChatTestPage /> },
   /*채팅 끝*/
   /* 채팅 라우터 종료 */

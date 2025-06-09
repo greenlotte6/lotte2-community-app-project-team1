@@ -3,11 +3,13 @@ package kr.co.J2SM.controller.chat;
 import kr.co.J2SM.document.chat.ChatRoom;
 import kr.co.J2SM.service.chat.ChatRoomService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/chat/rooms")
 @RequiredArgsConstructor
@@ -23,6 +25,8 @@ public class ChatRoomController {
     // 2) 새 방 생성
     @PostMapping
     public ResponseEntity<ChatRoom> createRoom(@RequestBody CreateRoomRequest req) {
+
+        System.out.println(req);
         ChatRoom created = roomService.createRoom(
                 req.name(),
                 req.participants()
@@ -36,6 +40,15 @@ public class ChatRoomController {
         roomService.deleteRoom(roomId);
         return ResponseEntity.noContent().build();
     }
+    
+    // 4) 개인 룸 조회
+    @GetMapping("/select/{roomId}")
+    public ResponseEntity<ChatRoom> getRoom(@PathVariable String roomId) {
+        log.info("roomId 조회 : " + roomId);
+        ChatRoom room = roomService.getRoom(roomId);
+        return ResponseEntity.ok(room);
+    }
+    
 
     // 요청 DTO
     public static record CreateRoomRequest(String name, List<String> participants) {}

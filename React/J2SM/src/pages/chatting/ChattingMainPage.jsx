@@ -19,8 +19,7 @@ const ChattingMainPage = () => {
 
   // 리스트에서 방 클릭 시 호출될 함수
   const handleSelectRoom = (roomId) => {
-    // 예: /chat/123 으로 라우팅
-    navigate(`/chat/${roomId}`);
+    navigate(`/dashboard/chatting/room/${roomId}`);
   };
 
   return (
