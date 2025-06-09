@@ -27,6 +27,9 @@ import MyPage from "../pages/MyPage/MyPage";
 import ProjectPage from "../pages/Project/ProjectPage";
 import ProjectRegisterPage from "../pages/Project/ProjectRegisterPage";
 import SettingPage from "../pages/Setting/SettingPage";
+import DriveMainPage from "../pages/drive/DriveMainPage";
+import RecentDrivePage from "../pages/drive/RecentDrivePage";
+import DriveDeletePage from "../pages/drive/DriveDeletePage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -93,6 +96,11 @@ const router = createBrowserRouter([
   /* 세팅 라우터 시작 */
   { path: "/dashboard/setting", element: <SettingPage /> },
   /* 세팅팅 라우터 종료 */
+
+  /* 드라이브 라우터 */
+  { path: "/dashboard/drive", element: <DriveMainPage /> },
+  { path: "/dashboard/drive/recent", element: <RecentDrivePage /> },
+  { path: "/dashboard/drive/delete", element: <DriveDeletePage /> },
 ]);
 
 // 라우터 내보내기
