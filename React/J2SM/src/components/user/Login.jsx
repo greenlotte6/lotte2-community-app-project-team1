@@ -40,7 +40,7 @@ const Login = () => {
           );
 
           // 메인 이동(컴포넌트 라우팅)
-          navigate("/");
+          navigate("/dashboard/main");
         }
       } catch (err) {
         console.error(err);

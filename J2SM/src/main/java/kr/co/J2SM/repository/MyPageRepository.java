@@ -19,10 +19,10 @@ public interface MyPageRepository extends JpaRepository<MyPage, Long> {
     @Modifying
     @Transactional
     @Query("UPDATE MyPage p SET p.isDeleted = true WHERE p.id = :id")
-    void softDelete(@Param("id") String id);
+    void softDelete(@Param("id") Long id);
 
     @Modifying
     @Transactional
     @Query("UPDATE MyPage p SET p.isDeleted = false WHERE p.id = :id")
-    void restore(@Param("id") String id);
+    void restore(@Param("id") Long id);
 }

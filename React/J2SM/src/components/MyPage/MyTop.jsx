@@ -1,70 +1,74 @@
-import React, { useState, useEffect } from "react";
-import { saveMyPage } from "@/api/mypageapi";
+import React, { useEffect, useState } from "react";
+import { saveMyPage, softDeleteMyPage, fetchAllPages } from "@/api/mypageapi";
+import useAuth from "../../hooks/useAuth";
 
 export const MyTop = ({
   editorRef,
-  setMyPageList,
   selectedPage,
   setSelectedPage,
+  setMyPageList,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
+  const { username } = useAuth(); // ✅ 여기서 userId를 가져옴
+  const userId = username;
 
   useEffect(() => {
-    if (selectedPage) {
-      setIsFavorite(selectedPage.isFavorite || false);
-    } else {
-      setIsFavorite(false);
-    }
+    setIsFavorite(selectedPage?.isFavorite || false);
   }, [selectedPage]);
-
-  const toggleFavorite = () => {
-    setIsFavorite((prev) => !prev);
-  };
 
   const handleSave = async () => {
     if (!editorRef.current) return;
 
     try {
-      const outputData = await editorRef.current.save();
-      const firstHeader = outputData.blocks.find(
-        (block) => block.type === "header"
-      );
+      const output = await editorRef.current.save();
+      const firstHeader = output.blocks.find((b) => b.type === "header");
       const title = firstHeader?.data?.text || "제목 없음";
 
-      const newPage = {
-        id: selectedPage?.id || crypto.randomUUID(),
-        userId: 1,
+      const payload = {
+        userId, // ✅ 추후 로그인 연동 시 교체
         title,
-        content: JSON.stringify(outputData),
+        content: JSON.stringify(output),
         isFavorite,
         shared: false,
       };
 
-      // 백엔드 저장
-      await saveMyPage(newPage);
+      await saveMyPage(payload);
 
-      // 로컬스토리지 업데이트
-      const prev = JSON.parse(localStorage.getItem("myPages") || "[]");
-      const updated = selectedPage
-        ? prev.map((p) => (p.id === newPage.id ? newPage : p))
-        : [...prev, newPage];
+      const pages = await fetchAllPages();
+      setMyPageList(pages);
+      const saved = pages.find((p) => p.title === title);
+      if (saved) setSelectedPage(saved);
 
-      localStorage.setItem("myPages", JSON.stringify(updated));
-      setMyPageList(updated);
-      alert(selectedPage ? "수정 완료!" : "저장 완료!");
-
-      // ✅ 저장한 페이지를 다시 선택해서 보여주기
-      setSelectedPage(newPage); // ⭐ 이거만 있으면 render() 따로 안 해도 됨
-    } catch (e) {
-      console.error("저장 실패", e);
+      alert("저장 완료!");
+    } catch (err) {
+      console.error("저장 실패", err);
       alert("저장 중 오류 발생");
+    }
+  };
+
+  const handleTrash = async () => {
+    if (!selectedPage?.id) return;
+
+    if (!window.confirm("휴지통으로 이동할까요?")) return;
+
+    try {
+      await softDeleteMyPage(selectedPage.id);
+      const pages = await fetchAllPages();
+      setMyPageList(pages);
+      setSelectedPage(null);
+      alert("휴지통으로 이동 완료");
+    } catch (err) {
+      console.error("삭제 실패", err);
     }
   };
 
   return (
     <div className="topArea">
       <div className="favoriteshare">
-        <button onClick={toggleFavorite}>
+        <button onClick={handleTrash}>
+          <img src="/images/Trash 3 (1).svg" alt="trash" />
+        </button>
+        <button onClick={() => setIsFavorite((prev) => !prev)}>
           <img
             src={isFavorite ? "/images/star_filled.svg" : "/images/star.png"}
             alt="fav"

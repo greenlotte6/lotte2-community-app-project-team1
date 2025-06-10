@@ -2,6 +2,7 @@ package kr.co.J2SM.entity;
 
 import jakarta.persistence.*;
 import kr.co.J2SM.entity.company.Company;
+import kr.co.J2SM.entity.user.User;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,9 @@ public class MyPage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userId", nullable = false)
+    private User user;
 
     @Lob // 긴 JSON 문자열
     private String content;
@@ -38,4 +41,5 @@ public class MyPage {
     private String title;
 
     private boolean isDeleted = false;
+
 }

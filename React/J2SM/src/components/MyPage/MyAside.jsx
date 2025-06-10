@@ -1,24 +1,26 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 export const MyAside = ({ myPageList = [], onSelectPage }) => {
+  const [normalList, setNormalList] = useState([]);
+  const [trashList, setTrashList] = useState([]);
+  const [isNormalOpen, setIsNormalOpen] = useState(true);
+  const [isTrashOpen, setIsTrashOpen] = useState(true);
+
   useEffect(() => {
-    const menuItems = document.querySelectorAll(".childArea .menuItem");
+    console.log("📦 받은 myPageList:", myPageList);
+    myPageList.forEach((p) =>
+      console.log(
+        `🧪 ${p.title}: isDeleted=${p.isDeleted} (${typeof p.isDeleted})`
+      )
+    );
 
-    menuItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        const subMenu = item.nextElementSibling;
-        if (subMenu && subMenu.classList.contains("subMenu")) {
-          subMenu.classList.toggle("open");
-        }
-      });
-    });
+    // ✅ 문자열 boolean도 포함해서 필터링
+    const active = myPageList.filter((p) => !p.isDeleted); // ← 이걸로 충분
+    const trash = myPageList.filter((p) => p.isDeleted);
 
-    return () => {
-      menuItems.forEach((item) => {
-        item.replaceWith(item.cloneNode(true));
-      });
-    };
-  }, []);
+    setNormalList(active);
+    setTrashList(trash);
+  }, [myPageList]);
 
   return (
     <aside>
@@ -27,21 +29,28 @@ export const MyAside = ({ myPageList = [], onSelectPage }) => {
           <h3>MyPage</h3>
         </div>
         <div className="childArea">
-          {/* MyPage 메뉴 */}
-          <React.Fragment>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <a href="#">MyPage</a>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              {myPageList.map((page) => (
+          {/* ✅ MyPage 메뉴 */}
+          <div
+            className="menuItem"
+            onClick={() => {
+              setIsNormalOpen((prev) => !prev);
+              console.log("📂 MyPage 메뉴 열림/닫힘 토글됨");
+            }}
+          >
+            <img src="/images/File text.svg" alt="users" />
+            <span>MyPage</span> {/* ✅ <a> 말고 <span>으로 바꿈 */}
+            <img src="/images/Vector.svg" alt="vector" />
+          </div>
+
+          {isNormalOpen && (
+            <ul className={`subMenu ${isNormalOpen ? "open" : ""}`}>
+              {normalList.map((page) => (
                 <li key={page.id}>
                   <a
                     href="#"
                     onClick={(e) => {
-                      e.preventDefault(); // 💥 페이지 이동 막기
-                      onSelectPage?.(page);
+                      e.preventDefault();
+                      onSelectPage(page);
                     }}
                   >
                     {page.title}
@@ -49,58 +58,34 @@ export const MyAside = ({ myPageList = [], onSelectPage }) => {
                 </li>
               ))}
             </ul>
-          </React.Fragment>
+          )}
 
-          {/* Share 메뉴 (더미) */}
-          <React.Fragment>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <a href="#">Share</a>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
+          {/* ✅ Trash 메뉴 */}
+          <div
+            className="menuItem"
+            onClick={() => setIsTrashOpen(!isTrashOpen)}
+          >
+            <img src="/images/Trash 3.svg" alt="trash" />
+            <a href="#">Trash</a>
+            <img src="/images/Vector.svg" alt="vector" />
+          </div>
+          {isTrashOpen && (
             <ul className="subMenu">
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
+              {trashList.map((page) => (
+                <li key={page.id}>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onSelectPage(page);
+                    }}
+                  >
+                    {page.title}
+                  </a>
+                </li>
+              ))}
             </ul>
-          </React.Fragment>
-
-          {/* Favorites 메뉴 (더미) */}
-          <React.Fragment>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <a href="#">Favorites</a>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-            </ul>
-          </React.Fragment>
-
-          {/* 휴지통 메뉴 (더미) */}
-          <React.Fragment>
-            <div className="menuItem">
-              <img src="/images/Trash 3.svg" alt="users" />
-              <a href="#">Trash</a>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-            </ul>
-          </React.Fragment>
+          )}
         </div>
       </div>
     </aside>
