@@ -53,6 +53,8 @@ export const API = {
     USER_LIST: (company) =>
       `${SERVER_HOST}/api/chat/users/by-company/${company}`, // ← 여기에 사용자 리스트 GET 추가
     MARK_READ: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}/read`, // 안읽은 메시지 숫자 0으로 초기화
+    UPDATE_ROOM_NAME: (roomId) =>
+      `${SERVER_HOST}/api/chat/rooms/${roomId}/name`, // PUT (채팅방 이름 변경)
   },
 };
 

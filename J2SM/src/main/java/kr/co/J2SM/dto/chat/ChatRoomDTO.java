@@ -22,4 +22,5 @@ public class ChatRoomDTO {
     private LastMessageDTO lastMessage;
     private long unreadCount;
     private LocalDateTime createdAt;
+    private List<String> admins;      // 채팅방 관리자
 }

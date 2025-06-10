@@ -26,6 +26,8 @@ public class ChatRoom {
     private List<String> participants;  // 참여자 userId 리스트
     private String description; // 방 설명 (개인채팅, 단체채팅, 사용자 설정)
 
+    /** 관리자로 지정된 유저 ID 리스트 */
+    private List<String> admins;
     @CreatedDate
     private Instant createdAt;
 

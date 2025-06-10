@@ -7,6 +7,7 @@ import kr.co.J2SM.dto.chat.LastMessageDTO;
 import kr.co.J2SM.repository.chat.ChatRoomRepository;
 import kr.co.J2SM.repository.chat.MessageRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.ZoneId;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ChatRoomService {
@@ -75,7 +77,10 @@ public class ChatRoomService {
                 .name(name)
                 .participants(participants)
                 .description(description)
+                .admins(List.of(participants.get(0)))
                 .build();
+
+        log.info("새로운 채팅방 : {}", room);
         return roomRepo.save(room);
     }
 

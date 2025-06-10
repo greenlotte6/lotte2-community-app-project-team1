@@ -116,7 +116,7 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
                 <span className="unreadBadge">{unreadCount ?? 0}</span>
                 <div className="participants">
                   {participants.map((uid, i) => (
-                    <img key={i} src={`/images/${uid}.png`} alt={uid} />
+                    <img key={i} src={`/images/profile2.png`} alt={uid} />
                   ))}
                 </div>
               </div>

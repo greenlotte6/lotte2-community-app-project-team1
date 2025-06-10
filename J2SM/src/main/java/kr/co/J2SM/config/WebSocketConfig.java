@@ -24,10 +24,11 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry
                 .addEndpoint("/ws-chat")
                 .setAllowedOriginPatterns(
-                        "http://127.0.0.1:5173",
-                        "http://localhost:5173",
-                        "http://localhost:5174",
-                        "https://j2sm-g4rr2iziz-greenlotte6s-projects.vercel.app"
+                        "*"
+                        //"http://127.0.0.1:5173",
+                        //"http://localhost:5173",
+                        //"http://localhost:5174",
+                        //"https://j2sm-g4rr2iziz-greenlotte6s-projects.vercel.app"
                 )
                 .withSockJS();
     }
