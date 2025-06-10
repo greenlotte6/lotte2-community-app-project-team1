@@ -1,13 +1,23 @@
 // src/components/Aside.jsx
 
-import React from "react";
+import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
+import BoardModal from "../board/BoardModal"; // 모달 컴포넌트 임포트
 
 const Aside = () => {
   const location = useLocation();
   const { pathname } = location;
 
-  // '/dashboard/calendar' 경로일 때 렌더링할 사이드바 내용
+  const [isBoardModalOpen, setBoardModalOpen] = useState(false);
+
+  const handleBoardModalOpen = () => setBoardModalOpen(true);
+  const handleBoardModalClose = () => setBoardModalOpen(false);
+  const handleBoardCreate = () => {
+    alert("게시판 생성 로직이 여기에 들어갑니다.");
+    setBoardModalOpen(false);
+  };
+
+  // '/dashboard/calendar' 경로일 때
   if (pathname === "/dashboard/calendar") {
     return (
       <aside>
@@ -48,79 +58,87 @@ const Aside = () => {
     );
   }
 
-  // '/dashboard/calendar' 경로일 때 렌더링할 사이드바 내용
+  // '/dashboard/board' 경로일 때
   if (pathname.includes("/dashboard/board")) {
     return (
-      <aside>
-        <div className="sidemenu">
-          <div className="sideTop">
-            <h3>B board</h3>
+      <>
+        <aside>
+          <div className="sidemenu">
+            <div className="sideTop">
+              <h3>B board</h3>
+            </div>
+            <div className="childArea">
+              <div className="menuItem">
+                <img src="/images/File text.svg" alt="users" />
+                <Link to="/dashboard/board/main">HOME</Link>
+                <img src="/images/Vector.svg" alt="vector" />
+              </div>
+              <ul className="subMenu">
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+              </ul>
+              <div className="side-icon">
+                <button className="side-click" onClick={handleBoardModalOpen}>
+                  + New BOARD
+                </button>
+              </div>
+              <div className="menuItem">
+                <img src="/images/File text.svg" alt="users" />
+                <Link to="/dashboard/board/list">🔒공지사항</Link>
+                <img src="/images/Vector.svg" alt="vector" />
+              </div>
+              <ul className="subMenu">
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+              </ul>
+              <div className="menuItem">
+                <img src="/images/File text.svg" alt="users" />
+                <Link to="/dashboard/board/list">사내게시판</Link>
+                <img src="/images/Vector.svg" alt="vector" />
+              </div>
+              <ul className="subMenu">
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+              </ul>
+              <div className="menuItem">
+                <img src="/images/File text.svg" alt="users" />
+                <Link to="/dashboard/board/list">익명게시판</Link>
+                <img src="/images/Vector.svg" alt="vector" />
+              </div>
+              <ul className="subMenu">
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+                <li>
+                  <Link to="#">더미더미더미</Link>
+                </li>
+              </ul>
+            </div>
           </div>
-          <div className="childArea">
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/board/main">HOME</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-            </ul>
-            <div className="side-icon">
-              <button className="side-click" id="openModalBtn">
-                + New BOARD
-              </button>
-            </div>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/board/list">🔒공지사항</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-            </ul>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/board/list">사내게시판</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-            </ul>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/board/list">익명게시판</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="#">더미더미더미</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </aside>
+        </aside>
+
+        <BoardModal
+          isOpen={isBoardModalOpen}
+          onClose={handleBoardModalClose}
+          onCreate={handleBoardCreate}
+        />
+      </>
     );
   }
 
-  // 드라이브 관련 페이지일 때
+  // '/dashboard/drive' 경로일 때
   if (pathname.includes("/dashboard/drive")) {
     return (
       <aside>
@@ -136,31 +154,26 @@ const Aside = () => {
               <Link to="/dashboard/drive">홈</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-
             <div>
               <img src="/images/Mydrive.png" alt="내 드라이브" />
               <Link to="/dashboard/drive">내 드라이브</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-
             <div>
               <img src="/images/Sharedrive.png" alt="공유 드라이브" />
               <Link to="/dashboard/drive">공유 드라이브</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-
             <div>
               <img src="/images/Recent Drive.png" alt="최근 드라이브" />
               <Link to="/dashboard/drive/recent">최근 드라이브</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-
             <div>
               <img src="/images/Critical drive.png" alt="중요 드라이브" />
               <Link to="/dashboard/drive">중요 드라이브</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-
             <div>
               <img src="/images/Wastebasket.png" alt="휴지통" />
               <Link to="/dashboard/drive/delete">휴지통</Link>
@@ -189,6 +202,8 @@ const Aside = () => {
     );
   }
 
+
+  // 기본 사이드바
   // '/dashboard/chatting' 경로일 때 렌더링할 사이드바 내용
   if (pathname.includes("/dashboard/chat")) {
     return (
