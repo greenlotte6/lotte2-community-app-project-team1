@@ -45,24 +45,16 @@ export const MyTop = ({
 
       // 로컬스토리지 업데이트
       const prev = JSON.parse(localStorage.getItem("myPages") || "[]");
-
-      let updated;
-      if (selectedPage) {
-        // ✅ 수정인 경우: 기존 항목 덮어쓰기
-        updated = prev.map((p) => (p.id === newPage.id ? newPage : p));
-      } else {
-        // ✅ 새로 저장
-        updated = [...prev, newPage];
-      }
+      const updated = selectedPage
+        ? prev.map((p) => (p.id === newPage.id ? newPage : p))
+        : [...prev, newPage];
 
       localStorage.setItem("myPages", JSON.stringify(updated));
       setMyPageList(updated);
       alert(selectedPage ? "수정 완료!" : "저장 완료!");
 
-      // ✅ 초기화
-      await editorRef.current.render({ blocks: [] });
-      setIsFavorite(false);
-      setSelectedPage(null); // 선택된 페이지 초기화
+      // ✅ 저장한 페이지를 다시 선택해서 보여주기
+      setSelectedPage(newPage); // ⭐ 이거만 있으면 render() 따로 안 해도 됨
     } catch (e) {
       console.error("저장 실패", e);
       alert("저장 중 오류 발생");

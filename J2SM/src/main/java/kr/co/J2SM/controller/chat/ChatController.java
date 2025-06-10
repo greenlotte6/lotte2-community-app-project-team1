@@ -5,9 +5,13 @@ import kr.co.J2SM.document.chat.Message;
 
 import kr.co.J2SM.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.handler.annotation.*;
 import org.springframework.messaging.simp.annotation.SendToUser;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 @Controller
@@ -40,5 +44,20 @@ public class ChatController {
     @SendToUser("/queue/history")
     public List<Message> history(@DestinationVariable String roomId) {
         return chatService.getMessages(roomId);
+    }
+
+    /*
+    * 채팅방 안 읽은 메시지 초기화 로직:
+    * 채팅방 진입 시
+    * 안읽은 메시지량 0으로 초기화
+    * */
+    @PostMapping("/chat/rooms/{roomId}/read")
+    public ResponseEntity<Void> markRoomRead(
+            @PathVariable String roomId,
+            @RequestParam String userId
+    ) {
+        System.out.println("들어옴");
+        chatService.markAsReadUser(roomId, userId);
+        return ResponseEntity.ok().build();
     }
 }

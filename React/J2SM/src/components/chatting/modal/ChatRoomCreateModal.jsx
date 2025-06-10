@@ -93,6 +93,7 @@ export default function ChatRoomCreateModal({
         : "단체 채널";
     const payload = {
       name,
+      description: channelType,
       participants: [currentUserId, ...selected.map((u) => u.uid)],
     };
     axios

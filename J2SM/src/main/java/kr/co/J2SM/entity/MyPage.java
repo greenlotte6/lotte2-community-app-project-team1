@@ -36,4 +36,6 @@ public class MyPage {
 
     @Column(nullable = false)
     private String title;
+
+    private boolean isDeleted = false;
 }

@@ -15,5 +15,6 @@ public class MyPageDTO {
     private boolean isFavorite;
     private boolean shared;
     private String title;
+    private boolean isDeleted;
 
 }

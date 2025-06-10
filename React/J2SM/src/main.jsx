@@ -8,9 +8,7 @@ import { UserValidProvider } from "./contexts/UserValidContext.jsx";
 createRoot(document.getElementById("root")).render(
   <AuthProvider>
     <UserValidProvider>
-      <StrictMode>
-        <App />
-      </StrictMode>
+      <App />
     </UserValidProvider>
   </AuthProvider>
 );
