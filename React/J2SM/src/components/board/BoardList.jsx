@@ -20,7 +20,7 @@ const BoardList = () => {
             <input
               type="text"
               placeholder="검색어를 입력하세요"
-              style={{ width: "180px", height: "20px" }}
+              style={{ width: "180px", margin: "0 5px" }}
             />
             <button>검색</button>
           </div>

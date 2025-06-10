@@ -3,13 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <title>B board</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+    />
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <link rel="stylesheet" href="/css/main/dashboard/dashboardMain.css" />
     <link rel="stylesheet" href="/css/main/Board/board.css" />
     <script src="/scripts/dashboardMain.js"></script>
-
   </head>
   <body>
     <div class="wrapper">
@@ -86,34 +91,43 @@
               </div>
               <div class="childArea">
                 <div class="menuItem">
-                  <img src="/images/File text.svg" alt="users" /><a href="#">HOME</a><img src="/images/Vector.svg" alt="vector" />
+                  <img src="/images/File text.svg" alt="users" /><a href="#"
+                    >HOME</a
+                  ><img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <ul class="subMenu">
                   <li><a href="#">더미더미더미</a></li>
                   <li><a href="#">더미더미더미</a></li>
                 </ul>
                 <div class="side-icon">
-                    <button class="side-click" id="openModalBtn">+ New BOARD</button>
+                  <button class="side-click" id="openModalBtn">
+                    + New BOARD
+                  </button>
                 </div>
                 <div class="menuItem">
-                  <img src="/images/File text.svg" alt="users" /><a href="/view/Board/socialboard.html">🔒공지사항</a><img src="/images/Vector.svg" alt="vector" />
+                  <img src="/images/File text.svg" alt="users" /><a
+                    href="/view/Board/socialboard.html"
+                    >🔒공지사항</a
+                  ><img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <ul class="subMenu">
                   <li><a href="#">더미더미더미</a></li>
                   <li><a href="#">더미더미더미</a></li>
                 </ul>
                 <div class="menuItem">
-                  <img src="/images/File text.svg" alt="users" /><a href="#">사내게시판</a><img src="/images/Vector.svg" alt="vector" />
+                  <img src="/images/File text.svg" alt="users" /><a href="#"
+                    >사내게시판</a
+                  ><img src="/images/Vector.svg" alt="vector" />
                 </div>
                 <ul class="subMenu">
                   <li><a href="#">더미더미더미</a></li>
                   <li><a href="#">더미더미더미</a></li>
                 </ul>
-              <div class="menuItem" draggable="true" data-board="익명게시판">
-                <img src="/images/File text.svg" alt="users" />
-                <a href="#">익명게시판</a>
-                <img src="/images/Vector.svg" alt="vector" />
-              </div>
+                <div class="menuItem" draggable="true" data-board="익명게시판">
+                  <img src="/images/File text.svg" alt="users" />
+                  <a href="#">익명게시판</a>
+                  <img src="/images/Vector.svg" alt="vector" />
+                </div>
                 <ul class="subMenu">
                   <li><a href="#">더미더미더미</a></li>
                   <li><a href="#">더미더미더미</a></li>
@@ -244,14 +258,16 @@
       <div class="modal-content">
         <!-- 복제된 게시판 뷰 -->
         <div class="modal">
-          <div><button id="closeModalBtn" class="close-btn">&times;</button></div>
+          <div>
+            <button id="closeModalBtn" class="close-btn">&times;</button>
+          </div>
           <div class="modal-header">새 게시판 만들기</div>
           <div class="modal-title">게시판 정보 입력</div>
 
           <div class="icon-circle">👩</div>
 
           <div class="form-group">
-            <input id="newBoardName" type="text" placeholder="게시판 이름">
+            <input id="newBoardName" type="text" placeholder="게시판 이름" />
           </div>
 
           <div class="form-group">
@@ -267,6 +283,5 @@
     <div class="contentArea drop-zone" id="dropZone"></div>
 
     <script src="/scripts/board.js"></script>
-
   </body>
 </html>
