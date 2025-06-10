@@ -94,6 +94,11 @@
     color: #2f80ed;
     font-size: 13px;
   }
+
+  .numbers {
+    padding: 0 30px;
+  }
+
   #calendar-container {
     width: 100%;
     max-width: 1000px;
@@ -120,6 +125,10 @@
     cursor: pointer;
   }
 
+  .calendar-wrappers {
+    width: 100%;
+  }
+
   .calendar-table {
     width: 100%;
     border-collapse: collapse;
@@ -137,7 +146,7 @@
     background: #0a468c;
     color: white;
     height: 35px;
-    padding-top: 20px;
+    padding-top: 5px;
   }
 
   .calendar-table td {
@@ -166,8 +175,10 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     padding: 20px;
     text-align: center;
-    transition: opacity 0.2s ease;
-    opacity: 0.7;
+  }
+
+  .modal.active {
+    display: flex;
   }
 
   .simple-modal {
@@ -177,25 +188,78 @@
 
   .detail-modal {
     position: fixed;
-    top: 50%;
-    left: 58%;
-    transform: translate(-50%, -50%);
-    min-width: 300px;
-    max-width: 90%;
-  }
-
-  .modal-content {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
   }
 
-  .close {
+  .modal-contents {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px 24px;
+    width: 360px;
+    max-width: 90%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+
+  .modal-contents h3 {
+    font-size: 20px;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .modal-contents label {
+    display: block;
+    margin-top: 12px;
+    font-weight: bold;
+    font-size: 14px;
+  }
+
+  .modal-contents input.form-input,
+  .modal-contents textarea {
+    width: 100%;
+    padding: 8px 10px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  .modal-contents textarea {
+    resize: vertical;
+  }
+
+  .modal-contents .calen {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #a3c4f3;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+
+  .modal-contents .calen:hover {
+    background-color: #85aef2;
+  }
+
+  .closes {
     position: absolute;
     top: 10px;
-    right: 15px;
-    font-size: 20px;
+    right: 16px;
+    font-size: 24px;
     cursor: pointer;
+    color: #888;
   }
 
   .import-note {
@@ -241,19 +305,6 @@
     font-size: 12px;
     height: 20px;
     white-space: nowrap;
-  }
-
-  #detail-schedule-modal textarea {
-    resize: vertical;
-    padding: 6px;
-    border-radius: 6px;
-    font-family: inherit;
-  }
-
-  #detail-schedule-modal label {
-    text-align: left;
-    font-size: 14px;
-    margin-top: 6px;
   }
 
   .flatpickr-calendar {

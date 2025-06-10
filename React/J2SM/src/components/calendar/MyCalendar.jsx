@@ -1,232 +1,332 @@
-// src/pages/CalendarPage.jsx
-
-import React, { useState, useRef, useEffect } from "react";
-import {
-  initCalendar,
-  openScheduleModalWithDate,
-  closeScheduleModal,
-  saveSchedule,
-  openDetailModal,
-  closeDetailModal,
-  submitDetailSchedule,
-  openViewModal,
-  closeViewModal,
-} from "../../utils/calendar";
-
-// flatpickr & locale import
+import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/dark.css";
-import { Korean } from "flatpickr/dist/l10n/ko.js";
 
-const MyCalendar = () => {
-  // [선택적] 실시간 시계와 출퇴근 상태를 state로 관리
-  const [currentTime, setCurrentTime] = useState("");
-  const [statusMessage, setStatusMessage] = useState("");
-
-  // flatpickr 인라인 달력을 붙일 ref (세부 모달 내부)
-  const detailCalendarRef = useRef(null);
+const Calendar = () => {
+  const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
+  const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
+  const [schedules, setSchedules] = useState([]);
+  const [selectedSchedule, setSelectedSchedule] = useState(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
+  const calendarRef = useRef(null);
 
   useEffect(() => {
-    // 1) 컴포넌트가 마운트되면 달력 초기화
-    initCalendar("calendar-container");
+    renderCalendar(currentYear, currentMonth);
+  }, [schedules, currentYear, currentMonth]);
 
-    // 2) 세부 모달 안 inline flatpickr 붙이기
-    if (detailCalendarRef.current) {
-      flatpickr(detailCalendarRef.current, {
-        inline: true,
-        locale: Korean,
-        dateFormat: "Y-m-d",
-      });
+  const renderCalendar = (year, month) => {
+    if (!calendarRef.current) return;
+    const calendarBody = calendarRef.current;
+    const firstDay = new Date(year, month - 1, 1).getDay();
+    const lastDate = new Date(year, month, 0).getDate();
+    const prevLastDate = new Date(year, month - 1, 0).getDate();
+    const dateCellMap = {};
+    const eventCountMap = {};
+
+    calendarBody.innerHTML = "";
+    let nextMonthDate = 1;
+
+    for (let i = 0; i < 6; i++) {
+      const row = document.createElement("tr");
+
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement("td");
+        const cellIndex = i * 7 + j;
+        const dayOffset = cellIndex - firstDay;
+
+        if (dayOffset < 0) {
+          cell.innerText = prevLastDate + dayOffset + 1;
+          cell.classList.add("dim");
+        } else if (dayOffset >= lastDate) {
+          cell.innerText = nextMonthDate++;
+          cell.classList.add("dim");
+        } else {
+          const currentDate = dayOffset + 1;
+          const dateStr = `${year}-${String(month).padStart(2, "0")}-${String(
+            currentDate
+          ).padStart(2, "0")}`;
+          cell.innerText = currentDate;
+          dateCellMap[dateStr] = cell;
+          eventCountMap[dateStr] = 0;
+          cell.onclick = (e) => openModal(dateStr, e);
+        }
+
+        row.appendChild(cell);
+      }
+      calendarBody.appendChild(row);
     }
 
-    // 3) (선택) 실시간 시계 업데이트
-    const intervalId = setInterval(() => {
-      const now = new Date();
-      setCurrentTime(now.toLocaleTimeString());
-    }, 1000);
+    schedules.forEach((event) => {
+      const start = new Date(event.start);
+      const end = new Date(event.end);
+      const duration = Math.floor((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, []);
+      for (let i = 0; i < duration; i++) {
+        const currentDate = new Date(start);
+        currentDate.setDate(start.getDate() + i);
 
-  // 다크모드 토글 예시 (버튼 등을 추가하여 호출 가능)
-  const handleToggleDarkMode = () => {
-    document.body.classList.toggle("dark-mode");
-    document.querySelector(".container")?.classList.toggle("dark-mode");
+        const dateStr = currentDate.toISOString().split("T")[0];
+        const cell = dateCellMap[dateStr];
+        if (!cell) continue;
+
+        const eventIndex = eventCountMap[dateStr]++;
+        const div = document.createElement("div");
+        div.className = "event";
+        div.textContent = i === 0 ? event.title : "";
+        div.style.backgroundColor = event.color;
+        if (event.note) div.title = event.note;
+
+        Object.assign(div.style, {
+          position: "absolute",
+          left: "0",
+          top: `${20 + eventIndex * 24}px`,
+          height: "20px",
+          borderRadius: "1px",
+          paddingLeft: "1px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          fontSize: "14px",
+          textAlign: "center",
+          width: "100%",
+          zIndex: 1,
+        });
+
+        cell.style.position = "relative";
+        div.onclick = (e) => {
+          e.stopPropagation();
+          openViewModal(event);
+        };
+        cell.appendChild(div);
+      }
+    });
   };
 
+  const openModal = (dateStr, e) => {
+    const modal = document.getElementById("schedule-modal");
+    document.getElementById("modal-date").value = dateStr;
+    document.getElementById("modal-title").value = "";
+
+    const rect = e.target.getBoundingClientRect();
+    modal.style.left = `${rect.left + window.scrollX}px`;
+    modal.style.top = `${rect.top + window.scrollY}px`;
+    modal.style.display = "block";
+
+    setTimeout(() => document.getElementById("modal-title").focus(), 100);
+  };
+
+  const saveSchedule = () => {
+    const date = document.getElementById("modal-date").value;
+    const title = document.getElementById("modal-title").value;
+    if (!title) return alert("일정 제목을 입력하세요.");
+
+    const color = getRandomColor();
+    setSchedules([...schedules, { start: date, end: date, title, color }]);
+    closeModal();
+  };
+
+  const saveDetailSchedule = () => {
+    const title = document.getElementById("detail-title").value;
+    const start = document.getElementById("start-date").value;
+    const end = document.getElementById("end-date").value;
+    const place = document.getElementById("place").value;
+    const member = document.getElementById("member").value;
+    const note = document.getElementById("detail-note").value;
+
+    if (!title || !start || !end) return alert("모든 항목을 입력하세요.");
+    const color = getRandomColor();
+
+    setSchedules([
+      ...schedules,
+      { title, start, end, place, member, note, color },
+    ]);
+    setShowDetailModal(false);
+  };
+
+  const getRandomColor = () => {
+    const colors = [
+      "#f6b3dc",
+      "#a1c4fd",
+      "#ffd59e",
+      "#c3f584",
+      "#c0aaff",
+      "#ffaaa5",
+      "#ffda77",
+    ];
+    return colors[Math.floor(Math.random() * colors.length)];
+  };
+
+  const openViewModal = (event) => {
+    setSelectedSchedule(event);
+    document.getElementById(
+      "view-date"
+    ).textContent = `${event.start} ~ ${event.end}`;
+    document.getElementById("view-title").textContent = event.title;
+    document.getElementById("view-place").textContent = event.place || "-";
+    document.getElementById("view-member").textContent = event.member || "-";
+    document.getElementById("view-note").textContent =
+      event.note || "(메모 없음)";
+    document.getElementById("view-schedule-modal").style.display = "block";
+  };
+
+  const closeModal = () => {
+    document.getElementById("schedule-modal").style.display = "none";
+  };
+
+  const closeViewModal = () => {
+    document.getElementById("view-schedule-modal").style.display = "none";
+  };
+
+  const prevMonth = () => {
+    if (currentMonth === 1) {
+      setCurrentMonth(12);
+      setCurrentYear((prev) => prev - 1);
+    } else {
+      setCurrentMonth((prev) => prev - 1);
+    }
+  };
+
+  const nextMonth = () => {
+    if (currentMonth === 12) {
+      setCurrentMonth(1);
+      setCurrentYear((prev) => prev + 1);
+    } else {
+      setCurrentMonth((prev) => prev + 1);
+    }
+  };
+
+  useEffect(() => {
+    flatpickr("#start-date", { dateFormat: "Y-m-d" });
+    flatpickr("#end-date", { dateFormat: "Y-m-d" });
+  }, [showDetailModal]);
+
   return (
-    <>
-      {/* ===== 달력 영역 ===== */}
-      <div id="calendar-container">
-        <div className="calendar-header">
-          {/* prevMonth/nextMonth는 initCalendar 내부에서 window에 바인딩됩니다 */}
-          <button onClick={() => window.prevMonth()}>❮</button>
-          <span id="calendar-title" style={{ margin: "0 40px" }} />
-          <button onClick={() => window.nextMonth()}>❯</button>
-        </div>
-
-        <table className="calendar-table">
-          <thead>
-            <tr>
-              <th>Sun</th>
-              <th>Mon</th>
-              <th>Tue</th>
-              <th>Wed</th>
-              <th>Thu</th>
-              <th>Fri</th>
-              <th>Sat</th>
-            </tr>
-          </thead>
-          <tbody id="calendar-body">
-            {/* initCalendar()이 내부적으로 <tbody>를 채워 줍니다 */}
-          </tbody>
-        </table>
+    <div className="calendar-wrappers" style={{ width: "100%" }}>
+      <div className="calendar-header">
+        <button onClick={prevMonth}>❮</button>
+        <span style={{ padding: "0 50px" }}>{`${currentYear}.${String(
+          currentMonth
+        ).padStart(2, "0")}`}</span>
+        <button onClick={nextMonth}>❯</button>
       </div>
+      <table className="calendar-table">
+        <thead>
+          <tr>
+            <th>Sun</th>
+            <th>Mon</th>
+            <th>Tue</th>
+            <th>Wed</th>
+            <th>Thu</th>
+            <th>Fri</th>
+            <th>Sat</th>
+          </tr>
+        </thead>
+        <tbody ref={calendarRef}></tbody>
+      </table>
 
-      {/* ===== 간편 일정 등록 모달 ===== */}
-      <div
-        id="schedule-modal"
-        className="modal"
-        onClick={() => closeScheduleModal()}
-      >
-        <div
-          className="modal-content"
-          onClick={(e) => e.stopPropagation()} /* 내부 클릭 시 버블링 방지 */
-        >
-          <span className="close" onClick={() => closeScheduleModal()}>
+      {/* Schedule Modal */}
+      <div id="schedule-modal" className="modal" onClick={closeModal}>
+        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+          <span className="close" onClick={closeModal}>
             &times;
           </span>
-
           <h3>간편 일정 등록</h3>
-          {/* hidden input#modal-date ← openScheduleModalWithDate()에서 세팅 */}
           <input type="hidden" id="modal-date" />
-
           <input type="text" id="modal-title" placeholder="일정 제목 입력" />
-
-          <button className="calen" onClick={() => saveSchedule()}>
+          <button className="calen" onClick={saveSchedule}>
             등록하기
           </button>
-
-          <button className="calen" onClick={() => openDetailModal()}>
+          <button className="calen" onClick={() => setShowDetailModal(true)}>
             세부일정등록
           </button>
-
-          <button
-            className="calen"
-            onClick={() => {
-              /* 알람 로직 */
-            }}
-          >
-            알람 ON
-          </button>
-
-          <button
-            className="calen"
-            onClick={() => {
-              /* 삭제 로직 */
-            }}
-          >
-            일정 삭제
-          </button>
         </div>
       </div>
-      {/* ===== 간편 일정 등록 모달 끝 ===== */}
 
-      {/* ===== 세부일정 등록 모달 (DetailModal) ===== */}
-      <div
-        id="detail-schedule-modal"
-        className="modal"
-        onClick={() => closeDetailModal()}
-      >
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <span className="close" onClick={() => closeDetailModal()}>
-            &times;
-          </span>
-          <h3>세부 일정 등록/수정</h3>
-          <div className="detail-inputs">
-            <label>
-              제목:&nbsp;
-              <input type="text" id="detail-title" />
-            </label>
-          </div>
-          <div className="detail-inputs">
-            <label>
-              시작일:&nbsp;
-              <input type="text" id="start-date" />
-            </label>
-          </div>
-          <div className="detail-inputs">
-            <label>
-              종료일:&nbsp;
-              <input type="text" id="end-date" />
-            </label>
-          </div>
-          <div className="detail-inputs">
-            <label>
-              장소:&nbsp;
-              <input type="text" id="place" />
-            </label>
-          </div>
-          <div className="detail-inputs">
-            <label>
-              구성원:&nbsp;
-              <input type="text" id="member" />
-            </label>
-          </div>
-          <div className="detail-inputs">
-            <label>
-              메모:&nbsp;
-              <textarea id="detail-note" rows={3}></textarea>
-            </label>
-          </div>
-          <button className="calen" onClick={() => submitDetailSchedule()}>
-            저장하기
-          </button>
-
-          {/* inline flatpickr이 붙을 div */}
-          <div ref={detailCalendarRef} className="inline-calendar"></div>
-        </div>
-      </div>
-      {/* ===== 세부일정 등록 모달 끝 ===== */}
-
-      {/* ===== 일정 보기 모달 (ViewModal) ===== */}
+      {/* View Modal */}
       <div
         id="view-schedule-modal"
-        className="modal"
-        onClick={() => closeViewModal()}
+        className="modal-view"
+        style={{ display: "none" }}
       >
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-          <span className="close" onClick={() => closeViewModal()}>
+        <div className="modal-content">
+          <span className="close" onClick={closeViewModal}>
             &times;
           </span>
-
-          <h3>일정 보기</h3>
+          <h3 style={{ textAlign: "center" }}>일정 상세 보기</h3>
           <p>
-            <strong>기간:</strong>{" "}
-            <span id="view-date">2025-06-01 ~ 2025-06-01</span>
+            <strong>날짜:</strong> <span id="view-date"></span>
           </p>
           <p>
-            <strong>제목:</strong> <span id="view-title">예시 일정 제목</span>
+            <strong>제목:</strong> <span id="view-title"></span>
           </p>
           <p>
-            <strong>장소:</strong> <span id="view-place">-</span>
+            <strong>장소:</strong> <span id="view-place"></span>
           </p>
           <p>
-            <strong>구성원:</strong> <span id="view-member">-</span>
+            <strong>참석자:</strong> <span id="view-member"></span>
           </p>
           <p>
-            <strong>메모:</strong> <span id="view-note">(메모 없음)</span>
+            <strong>메모:</strong> <span id="view-note"></span>
           </p>
-          <button className="calen" onClick={() => openDetailModal()}>
-            수정
+        </div>
+        <div className="s_button" style={{ padding: "20px" }}>
+          <button id="edit-button" onClick={() => setShowDetailModal(true)}>
+            수정하기
           </button>
         </div>
       </div>
-      {/* ===== 일정 보기 모달 끝 ===== */}
-    </>
+
+      {/*  */}
+      {showDetailModal && (
+        <div className="detail-modal" onClick={() => setShowDetailModal(false)}>
+          <div
+            className="modal-contents"
+            onClick={(e) => e.stopPropagation()}
+            style={{ width: "100%", display: "grid", backgroundColor: "aqua" }}
+          >
+            <span className="closes" onClick={() => setShowDetailModal(false)}>
+              &times;
+            </span>
+            <h3>세부일정 등록</h3>
+            <label>일정 제목</label>
+            <input
+              type="text"
+              id="detail-title"
+              className="form-input"
+              placeholder="일정 제목"
+            />
+            <label>시작 날짜</label>
+            <input type="text" id="start-date" className="form-input" />
+            <label>종료 날짜</label>
+            <input type="text" id="end-date" className="form-input" />
+            <label>장소</label>
+            <input
+              type="text"
+              id="place"
+              className="form-input"
+              placeholder="장소"
+            />
+            <label>참석 인원</label>
+            <input
+              type="text"
+              id="member"
+              className="form-input"
+              placeholder="참석 인원"
+            />
+            <label>세부 일정</label>
+            <textarea
+              id="detail-note"
+              rows="3"
+              placeholder="추가 메모..."
+            ></textarea>
+            <button className="calen" onClick={saveDetailSchedule}>
+              등록
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
   );
 };
 
-export default MyCalendar;
+export default Calendar;

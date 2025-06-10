@@ -202,7 +202,6 @@ const Aside = () => {
     );
   }
 
-
   // 기본 사이드바
   // '/dashboard/chatting' 경로일 때 렌더링할 사이드바 내용
   if (pathname.includes("/dashboard/chat")) {

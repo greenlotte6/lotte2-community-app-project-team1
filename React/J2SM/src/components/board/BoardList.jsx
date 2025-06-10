@@ -1,11 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
+import WriteModal from "./WriteModal"; // 모달 컴포넌트 import
+import { Link } from "react-router-dom";
 
 const BoardList = () => {
+  const [showWriteModal, setShowWriteModal] = useState(false);
+
   return (
     <>
-      <div class="line"></div>
-      <div class="board-main">
-        <div class="board-top">
+      <div className="line"></div>
+      <div className="board-main">
+        <div className="board-top">
           <select>
             <option>공지사항</option>
             <option>사내게시판</option>
@@ -25,9 +29,11 @@ const BoardList = () => {
             <button>검색</button>
           </div>
         </div>
-        <div class="board-click">
-          <button id="openWriteModalBtn">글쓰기</button>
+
+        <div className="board-click">
+          <button onClick={() => setShowWriteModal(true)}>글쓰기</button>
         </div>
+
         <table>
           <thead>
             <tr>
@@ -41,194 +47,30 @@ const BoardList = () => {
             </tr>
           </thead>
           <tbody>
+            {/* 게시글 rows - 생략된 부분은 필요시 loop 처리 가능 */}
             <tr>
               <td>
-                <input type="checkbox" class="rowCheckbox" />
+                <input type="checkbox" className="rowCheckbox" />
               </td>
-              <td class="title">
-                <a href="/view/Board/textboard.html">
+              <td className="title">
+                <Link to="/dashboard/board/view">
                   [공지사항] 사내 워크숍 일정 안내
-                </a>
+                </Link>
               </td>
               <td>홍길동</td>
               <td>2025.06.04</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 회식 일정(자율)</td>
-              <td>홍길동</td>
-              <td>2025.06.04</td>
-              <td>1924</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 건강검진 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">5월 행사 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">[중요]사내 일정 공유드립니다.</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 회식 일정(자율)</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>1924</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 건강검진 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">5월 행사 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">[중요]사내 일정 공유드립니다.</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 회식 일정(자율)</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>1924</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 건강검진 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">5월 행사 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">[중요]사내 일정 공유드립니다.</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 회식 일정(자율)</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>1924</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 건강검진 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">5월 행사 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">[중요]사내 일정 공유드립니다.</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 회식 일정(자율)</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>1924</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">사내 건강검진 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
-              <td>17</td>
-            </tr>
-            <tr>
-              <td>
-                <input type="checkbox" class="rowCheckbox" />
-              </td>
-              <td class="title">5월 행사 일정 공유</td>
-              <td>홍길동</td>
-              <td>2025.05.24</td>
               <td>17</td>
             </tr>
           </tbody>
         </table>
-        <div id="pagination" class="pagination"></div>
+
+        <div id="pagination" className="pagination"></div>
       </div>
+
+      {/* 모달 컴포넌트 조건부 렌더링 */}
+      {showWriteModal && (
+        <WriteModal onClose={() => setShowWriteModal(false)} />
+      )}
     </>
   );
 };
