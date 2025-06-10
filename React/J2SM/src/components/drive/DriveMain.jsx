@@ -2,48 +2,104 @@ import React, { useEffect, useRef, useState } from "react";
 import "../../styles/drive/drive.scss";
 
 const DriveMain = () => {
-  const [files, setFiles] = useState([
-    {
-      id: 1,
-      user: "minhyeok",
-      name: "000보고서",
-      type: "문서",
-      location: "내 드라이브",
-      date: "2020.00.00",
-      favorite: false,
-    },
-    {
-      id: 2,
-      user: "minhyeok",
-      name: "보고서B",
-      type: "PDF",
-      location: "공유 드라이브",
-      date: "2021.00.00",
-      favorite: true,
-    },
-  ]);
-
+  const [files, setFiles] = useState([]);
   const [activeMenuId, setActiveMenuId] = useState(null);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [renamingId, setRenamingId] = useState(null);
   const [newName, setNewName] = useState("");
   const dropdownRef = useRef();
-
-  const toggleMenu = (id) => {
-    setActiveMenuId((prev) => (prev === id ? null : id));
+  const toggleShowFavorites = () => {
+    setShowFavoritesOnly((prev) => !prev);
   };
 
-  const toggleFavorite = (id) => {
+  useEffect(() => {
+    loadFiles();
+  }, []);
+
+  const loadFiles = async () => {
+    try {
+      const res = await fetch("/api/drive");
+      const data = await res.json();
+      setFiles(data);
+    } catch (err) {
+      console.error("파일 로드 실패", err);
+    }
+  };
+
+  useEffect(() => {
+    const btn = document.getElementById("sidebar-new-button");
+    const handleClick = () => {
+      document.getElementById("hidden-file-input")?.click();
+    };
+    btn?.addEventListener("click", handleClick);
+    return () => btn?.removeEventListener("click", handleClick);
+  }, []);
+
+  const handleFileSelect = (e) => {
+    const file = e.target.files[0];
+    if (file) uploadFile(file);
+  };
+
+  const uploadFile = async (file) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    try {
+      const res = await fetch("/api/drive/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (!res.ok) throw new Error("업로드 실패");
+      await loadFiles();
+    } catch (error) {
+      console.error("업로드 에러:", error);
+    }
+  };
+
+  const handleDownload = async (id) => {
+    try {
+      const res = await fetch(`/api/drive/${id}/download`);
+      const blob = await res.blob();
+      const disposition = res.headers.get("Content-Disposition");
+      const filename = disposition?.match(/filename="?(.+?)"?/)?.[1] || "file";
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = decodeURIComponent(filename);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("다운로드 실패", err);
+    }
+  };
+
+  const toggleFavorite = async (id) => {
+    await fetch(`/api/drive/${id}/favorite`, { method: "PATCH" });
     setFiles((prev) =>
-      prev.map((file) =>
-        file.id === id ? { ...file, favorite: !file.favorite } : file
-      )
+      prev.map((f) => (f.id === id ? { ...f, favorite: !f.favorite } : f))
     );
     setActiveMenuId(null);
   };
 
-  const toggleShowFavorites = () => {
-    setShowFavoritesOnly((prev) => !prev);
+  const moveToTrash = async (id) => {
+    await fetch(`/api/drive/${id}`, { method: "DELETE" });
+    await loadFiles();
+    setActiveMenuId(null);
+  };
+
+  const moveToSharedDrive = async (id) => {
+    await fetch(`/api/drive/${id}/move-to-shared`, { method: "PATCH" });
+    await loadFiles();
+    setActiveMenuId(null);
+  };
+
+  const renameFile = async (id, name) => {
+    await fetch(`/api/drive/${id}/rename`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    });
   };
 
   const handleRenameClick = (file) => {
@@ -53,20 +109,19 @@ const DriveMain = () => {
   };
 
   const handleRenameConfirm = (id) => {
+    renameFile(id, newName);
     setFiles((prev) =>
-      prev.map((file) => (file.id === id ? { ...file, name: newName } : file))
+      prev.map((f) => (f.id === id ? { ...f, name: newName } : f))
     );
     setRenamingId(null);
   };
 
   const handleKeyDown = (e, id) => {
-    if (e.key === "Enter") {
-      handleRenameConfirm(id);
-    }
+    if (e.key === "Enter") handleRenameConfirm(id);
   };
 
   const filteredFiles = showFavoritesOnly
-    ? files.filter((file) => file.favorite)
+    ? files.filter((f) => f.favorite)
     : files;
 
   useEffect(() => {
@@ -81,6 +136,13 @@ const DriveMain = () => {
 
   return (
     <>
+      <input
+        type="file"
+        id="hidden-file-input"
+        style={{ display: "none" }}
+        onChange={handleFileSelect}
+      />
+
       <div className="topArea">
         <div className="Title">
           <img src="/images/Cloud.svg" alt="클라우드" />
@@ -94,8 +156,6 @@ const DriveMain = () => {
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
-            id="query"
-            name="query"
             placeholder="Cloud 검색"
             style={{
               width: "100%",
@@ -114,7 +174,6 @@ const DriveMain = () => {
 
         <div className="search-type">
           <button
-            type="button"
             onClick={toggleShowFavorites}
             className="new-drive"
             style={{
@@ -138,17 +197,14 @@ const DriveMain = () => {
                 <th>파일명</th>
                 <th>유형</th>
                 <th>위치</th>
-                <th>업로드 날짜(수정날짜)</th>
+                <th>업로드 날짜</th>
               </tr>
             </thead>
             <tbody>
               {filteredFiles.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan="5"
-                    style={{ textAlign: "center", padding: "20px" }}
-                  >
-                    즐겨찾기가 없습니다.
+                  <td colSpan="5" style={{ textAlign: "center" }}>
+                    표시할 파일이 없습니다.
                   </td>
                 </tr>
               ) : (
@@ -159,7 +215,6 @@ const DriveMain = () => {
                       {renamingId === file.id ? (
                         <>
                           <input
-                            className="rename-input active"
                             value={newName}
                             onChange={(e) => setNewName(e.target.value)}
                             onKeyDown={(e) => handleKeyDown(e, file.id)}
@@ -188,9 +243,12 @@ const DriveMain = () => {
                       <span>{file.date}</span>
                       <img
                         src="/images/Seemore.png"
-                        alt="더보기"
                         className="tableimg"
-                        onClick={() => toggleMenu(file.id)}
+                        onClick={() =>
+                          setActiveMenuId((prev) =>
+                            prev === file.id ? null : file.id
+                          )
+                        }
                       />
                       {activeMenuId === file.id && (
                         <div className="dropdown-menu" ref={dropdownRef}>
@@ -201,7 +259,9 @@ const DriveMain = () => {
                               </button>
                             </li>
                             <li>
-                              <button>다운로드</button>
+                              <button onClick={() => handleDownload(file.id)}>
+                                다운로드
+                              </button>
                             </li>
                             <li>
                               <button onClick={() => handleRenameClick(file)}>
@@ -209,7 +269,16 @@ const DriveMain = () => {
                               </button>
                             </li>
                             <li>
-                              <button>휴지통</button>
+                              <button
+                                onClick={() => moveToSharedDrive(file.id)}
+                              >
+                                공유 드라이브로 이동
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => moveToTrash(file.id)}>
+                                휴지통
+                              </button>
                             </li>
                           </ul>
                         </div>

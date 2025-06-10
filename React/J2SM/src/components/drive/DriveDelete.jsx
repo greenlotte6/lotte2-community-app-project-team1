@@ -1,6 +1,46 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 const DriveDelete = () => {
+  const [trashedFiles, setTrashedFiles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/drive/trash")
+      .then((res) => res.json())
+      .then((data) => {
+        setTrashedFiles(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("휴지통 데이터 로딩 실패", err);
+        setLoading(false);
+      });
+  }, []);
+
+  const handleRestore = async (fileId) => {
+    try {
+      const res = await fetch(`/api/drive/${fileId}/restore`, {
+        method: "PUT",
+      });
+      if (!res.ok) throw new Error("복원 실패");
+      setTrashedFiles((prev) => prev.filter((file) => file.id !== fileId));
+    } catch (error) {
+      console.error("복원 에러:", error);
+    }
+  };
+
+  const handlePermanentDelete = async (fileId) => {
+    try {
+      const res = await fetch(`/api/drive/${fileId}/delete`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("완전 삭제 실패");
+      setTrashedFiles((prev) => prev.filter((file) => file.id !== fileId));
+    } catch (error) {
+      console.error("완전 삭제 에러:", error);
+    }
+  };
+
   return (
     <>
       <div className="topArea">
@@ -13,12 +53,10 @@ const DriveDelete = () => {
       <div className="cloud-main">
         <h3>휴지통</h3>
 
-        {/* ✅ 수정된 검색 입력 form */}
-        <form className="search-bar" action="/cloud/search" method="get">
+        {/* 검색 영역 */}
+        <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
-            id="query"
-            name="query"
             placeholder="Cloud 검색"
             style={{
               width: "100%",
@@ -29,80 +67,109 @@ const DriveDelete = () => {
           />
           <button
             type="submit"
-            style={{
-              background: "none",
-              border: "none",
-              padding: 0,
-            }}
+            style={{ background: "none", border: "none", padding: 0 }}
           >
             <img src="/images/search.png" alt="검색" className="search-icon" />
           </button>
         </form>
 
+        {/* 필터 영역 */}
         <div className="search-type">
           <select>
-            <option value="유형">유형▼</option>
-            <option value="문서">문서</option>
-            <option value="PDF">PDF</option>
-            <option value="폴더">폴더</option>
-            <option value="이미지">이미지</option>
+            <option>유형▼</option>
           </select>
           <select>
-            <option value="사람">사람▼</option>
+            <option>사람▼</option>
           </select>
           <select>
-            <option value="수정날짜">수정날짜▼</option>
-            <option value="오늘">오늘</option>
-            <option value="지난 7일">지난 7일</option>
-            <option value="지난 30일">지난 30일</option>
-            <option value="올해(2025)">올해(2025)</option>
-            <option value="지난해(2024)">지난해(2024)</option>
+            <option>수정날짜▼</option>
           </select>
           <select>
-            <option value="위치">위치▼</option>
-            <option value="내 드라이브">내 드라이브</option>
-            <option value="공유 드라이브">공유 드라이브</option>
-            <option value="최근 드라이브">최근 드라이브</option>
-            <option value="중요 드라이브">중요 드라이브</option>
-            <option value="휴지통">휴지통</option>
+            <option>위치▼</option>
           </select>
         </div>
 
-        <div>
-          <img
-            src="/images/delete_360.png"
-            alt="휴지통"
-            style={{
-              width: "300px",
-              height: "250px",
-              display: "block",
-              margin: "0 auto",
-            }}
-          />
-        </div>
+        {/* 파일이 없을 때 */}
+        {!loading && trashedFiles.length === 0 && (
+          <>
+            <div>
+              <img
+                src="/images/delete_360.png"
+                alt="휴지통"
+                style={{
+                  width: "300px",
+                  height: "250px",
+                  display: "block",
+                  margin: "0 auto",
+                }}
+              />
+            </div>
+            <span
+              className="deleteclean"
+              style={{
+                textAlign: "center",
+                fontSize: "25px",
+                display: "block",
+              }}
+            >
+              휴지통 비어있음.
+            </span>
+            <span
+              style={{
+                textAlign: "center",
+                fontSize: "15px",
+                display: "block",
+              }}
+            >
+              휴지통으로 이동된 항목은 30일 후 완전히 삭제됩니다.
+            </span>
+          </>
+        )}
 
-        <span
-          className="deleteclean"
-          style={{
-            display: "block",
-            textAlign: "center",
-            fontSize: "25px",
-            fontWeight: 400,
-          }}
-        >
-          휴지통 비어있음.
-        </span>
-
-        <span
-          style={{
-            display: "block",
-            textAlign: "center",
-            fontSize: "15px",
-            fontWeight: 300,
-          }}
-        >
-          휴지통으로 이동된 항목은 30일 후 완전히 삭제됩니다.
-        </span>
+        {/* 파일이 있을 때 */}
+        {!loading && trashedFiles.length > 0 && (
+          <div className="drivetable">
+            <table className="drivetables">
+              <thead>
+                <tr>
+                  <th>사용자</th>
+                  <th>파일명</th>
+                  <th>유형</th>
+                  <th>위치</th>
+                  <th>삭제일</th>
+                  <th>액션</th>
+                </tr>
+              </thead>
+              <tbody>
+                {trashedFiles.map((file) => (
+                  <tr key={file.id}>
+                    <td>{file.user}</td>
+                    <td>{file.name}</td>
+                    <td>{file.type}</td>
+                    <td>{file.location}</td>
+                    <td>{file.date}</td>
+                    <td>
+                      {/* 복원/완전삭제 버튼 */}
+                      <button onClick={() => handleRestore(file.id)}>
+                        복원
+                      </button>
+                      <button
+                        style={{ color: "red" }}
+                        onClick={() => {
+                          if (window.confirm("정말로 완전 삭제하시겠습니까?")) {
+                            handlePermanentDelete(file.id);
+                          }
+                        }}
+                      >
+                        완전 삭제
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
     </>
   );
