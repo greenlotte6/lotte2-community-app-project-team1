@@ -2,10 +2,11 @@
 import axios from "axios";
 import {
   MYPAGE_SAVE,
-  MYPAGE_GET_BY_ID,
-  MYPAGE_LIST_BY_USER,
-  MYPAGE_UPDATE,
+  MYPAGE_LIST,
   MYPAGE_DELETE,
+  MYPAGE_TRASH_LIST,
+  MYPAGE_SOFT_DELETE,
+  MYPAGE_RESTORE,
 } from "./_http";
 
 // 저장
@@ -21,10 +22,10 @@ export const saveMyPage = async (data) => {
   }
 };
 
-// 단건 조회
-export const fetchMyPage = async (id) => {
+// 전체 페이지 목록 조회
+export const fetchAllPages = async () => {
   try {
-    const response = await axios.get(MYPAGE_GET_BY_ID(id), {
+    const response = await axios.get(MYPAGE_LIST, {
       withCredentials: true,
     });
     return response.data;
@@ -33,35 +34,46 @@ export const fetchMyPage = async (id) => {
   }
 };
 
-// 사용자 전체 페이지 조회
-export const fetchMyPagesByUser = async (userId) => {
-  try {
-    const response = await axios.get(MYPAGE_LIST_BY_USER(userId), {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// 수정
-export const updateMyPage = async (id, data) => {
-  try {
-    const response = await axios.put(MYPAGE_UPDATE(id), data, {
-      withCredentials: true,
-      headers: { "Content-Type": "application/json" },
-    });
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// 삭제
+// 삭제 (영구 삭제)
 export const deleteMyPage = async (id) => {
   try {
     const response = await axios.delete(MYPAGE_DELETE(id), {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 휴지통 목록 조회
+export const fetchTrashPages = async () => {
+  try {
+    const response = await axios.get(MYPAGE_TRASH_LIST, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 휴지통으로 이동 (soft delete)
+export const softDeleteMyPage = async (id) => {
+  try {
+    const response = await axios.put(MYPAGE_SOFT_DELETE(id), null, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
+  }
+};
+
+// 휴지통에서 복원
+export const restoreMyPage = async (id) => {
+  try {
+    const response = await axios.put(MYPAGE_RESTORE(id), null, {
       withCredentials: true,
     });
     return response.data;

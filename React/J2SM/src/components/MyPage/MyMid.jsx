@@ -60,6 +60,7 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
   }, []);
 
   // 🔥 선택된 페이지가 바뀌면 렌더링
+  // 🔥 선택된 페이지가 바뀌면 렌더링
   useEffect(() => {
     if (!editor || !selectedPage) return;
 
@@ -78,13 +79,16 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
           blocks: [
             {
               type: "header",
-              data: { text: "", level: 1 }, // ✅ placeholder 유도 조건
+              data: { text: "", level: 1 },
             },
           ],
         };
       }
 
-      editor.render(content);
+      editor.isReady.then(() => {
+        editor.clear(); // 🧼 기존 block 제거
+        editor.render(content); // 🆕 새로운 block 삽입 (placeholder 포함)
+      });
     } catch (e) {
       console.error("selectedPage 렌더링 실패", e);
     }
