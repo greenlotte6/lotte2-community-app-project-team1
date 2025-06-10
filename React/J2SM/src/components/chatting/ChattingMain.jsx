@@ -7,20 +7,25 @@ import ChatRoomCreateModal from "./modal/ChatRoomCreateModal";
 import useAuth from "../../hooks/useAuth";
 
 export default function ChattingMain({ onSelectRoom, currentUserId }) {
-  const { username } = useAuth();
+  const { username, nick } = useAuth();
   const [rooms, setRooms] = useState([]);
   const [searchText, setSearchText] = useState("");
+
+  console.log("username 1" + username);
 
   // 모달 열림 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 채팅방 전체 로드
   useEffect(() => {
+    console.log("이펙트");
+    if (!username) return;
+    console.log("userId UseEffect : " + username);
     axios
-      .get(API.CHAT.ROOM_LIST)
+      .get(API.CHAT.ROOM_LIST(username))
       .then((res) => setRooms(res.data))
       .catch(console.error);
-  }, []);
+  }, [username]);
 
   // 내가 속한 채팅방만 필터링
   const myRooms = rooms.filter((room) =>
@@ -33,6 +38,19 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
   const filtered = myRooms.filter((r) =>
     r.name.toLowerCase().includes(searchText.toLowerCase())
   );
+
+  // 정렬 기준 시각 계산
+  const getRoomTime = (room) => {
+    if (room.lastMessage?.sentAt) {
+      return new Date(room.lastMessage.sentAt);
+    }
+    return new Date(room.createdAt);
+  };
+
+  // 정렬: 최근 활동(메시지 or 생성) 순
+  const sortedRooms = filtered.slice().sort((a, b) => {
+    return getRoomTime(b) - getRoomTime(a);
+  });
 
   // 모달 열기/닫기
   const openModal = () => setIsModalOpen(true);
@@ -49,7 +67,7 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
     <>
       <div className="topArea">
         <div className="Title">
-          <h3>안녕하세요, {username}님!</h3>
+          <h3>안녕하세요, {nick}님!</h3>
         </div>
         <div className="controlBar">
           {/* 검색창 */}
@@ -69,7 +87,8 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
       </div>
 
       <div className="categoryContainer">
-        {filtered.map((room) => {
+        {sortedRooms.map((room) => {
+          console.log(room);
           const {
             id,
             name,
@@ -89,7 +108,7 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
                 <div className="itemDesc">{description || "설명 없음"}</div>
                 <div className="lastMessage">
                   {lastMessage
-                    ? `[${lastMessage.senderId}] ${lastMessage.text}`
+                    ? `[${lastMessage.senderName}] ${lastMessage.text}`
                     : "대화 시작하기"}
                 </div>
               </div>
@@ -105,7 +124,7 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
           );
         })}
 
-        {filtered.length === 0 && (
+        {sortedRooms.length === 0 && (
           <div className="no-rooms">검색된 채팅방이 없습니다.</div>
         )}
       </div>

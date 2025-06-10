@@ -21,7 +21,7 @@ const ChattingRoom = ({
   useEffect(() => {
     console.log("방이름 조회");
     axios
-      .get(`${API.CHAT.ROOM_DETAIL}/${roomId}`)
+      .get(API.CHAT.ROOM_DETAIL(roomId))
       .then((res) => setRoomName(res.data.name))
       .catch(() => setRoomName(roomId)); // 실패 시 ID로 폴백
   }, [roomId]);
@@ -45,6 +45,15 @@ const ChattingRoom = ({
       client.subscribe("/user/queue/history", (frame) => {
         const history = JSON.parse(frame.body);
         setMessages(history);
+
+        // → 히스토리 불러온 직후 읽음 처리 REST 호출
+        console.log("읽음 처리");
+        console.log("roomId는 과연 " + roomId);
+        axios
+          .post(API.CHAT.MARK_READ(roomId), null, {
+            params: { userId },
+          })
+          .catch(console.error);
       });
 
       // 2) 히스토리 요청
