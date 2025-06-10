@@ -3,6 +3,7 @@ package kr.co.J2SM.service.chat;
 
 import kr.co.J2SM.document.chat.ChatRoom;
 import kr.co.J2SM.document.chat.Message;
+import kr.co.J2SM.dto.chat.ChatRoomDTO;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.repository.chat.ChatRoomRepository;
 import kr.co.J2SM.repository.chat.MessageRepository;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.time.Instant;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -91,4 +93,11 @@ public class ChatService {
     }
 
 
+    public ChatRoom updateRoomName(String roomId, String newName) {
+        ChatRoom room = roomRepo.findById(roomId)
+                .orElseThrow(() -> new NoSuchElementException("채팅방이 없습니다: " + roomId));
+        room.setName(newName);
+        room = roomRepo.save(room);
+        return room;
+    }
 }
