@@ -50,4 +50,33 @@ public class MyPageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류: " + e.getMessage());
         }
     }
+
+    @PutMapping("/trash/{id}")
+    public ResponseEntity<?> moveToTrash(@PathVariable Long id) {
+        myPageService.softDelete(id);
+        return ResponseEntity.ok("휴지통으로 이동 완료");
+    }
+
+    @PutMapping("/restore/{id}")
+    public ResponseEntity<?> restoreFromTrash(@PathVariable Long id) {
+        myPageService.restore(id);
+        return ResponseEntity.ok("복원 완료");
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deletePermanently(@PathVariable Long id) {
+        myPageService.deletePermanently(id);
+        return ResponseEntity.ok("영구 삭제 완료");
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<List<MyPageDTO>> getAllActivePages() {
+        return ResponseEntity.ok(myPageService.getAllActivePages());
+    }
+
+    @GetMapping("/trash")
+    public ResponseEntity<List<MyPageDTO>> getTrashedPages() {
+        return ResponseEntity.ok(myPageService.getTrashedPages());
+    }
+
 }

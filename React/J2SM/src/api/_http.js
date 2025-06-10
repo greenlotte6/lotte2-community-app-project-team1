@@ -56,9 +56,22 @@ export const API = {
 };
 
 // MyPage API
+
+// 저장 (POST /api/mypage/save)
 export const MYPAGE_SAVE = `${SERVER_HOST}/api/mypage/save`;
-export const MYPAGE_GET_BY_ID = (id) => `${SERVER_HOST}/api/mypage/${id}`;
-export const MYPAGE_LIST_BY_USER = (userId) =>
-  `${SERVER_HOST}/api/mypage/list?userId=${userId}`;
-export const MYPAGE_UPDATE = (id) => `${SERVER_HOST}/api/mypage/update/${id}`;
+
+// 전체 목록 (GET /api/mypage/list)
+export const MYPAGE_LIST = `${SERVER_HOST}/api/mypage/list`;
+
+// 🗑 휴지통으로 이동 (PUT /api/mypage/trash/{id})
+export const MYPAGE_SOFT_DELETE = (id) =>
+  `${SERVER_HOST}/api/mypage/trash/${id}`;
+
+// ♻️ 복원 (PUT /api/mypage/restore/{id})
+export const MYPAGE_RESTORE = (id) => `${SERVER_HOST}/api/mypage/restore/${id}`;
+
+// ❌ 영구 삭제 (DELETE /api/mypage/delete/{id})
 export const MYPAGE_DELETE = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;
+
+// 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
+export const MYPAGE_TRASH_LIST = `${SERVER_HOST}/api/mypage/trash`;

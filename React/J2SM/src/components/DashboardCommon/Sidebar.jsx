@@ -1,9 +1,9 @@
 import { NavLink } from "react-router-dom";
 
 const menuItems = [
-  { path: "/dashboard/board/main", icon: "Clipboard.svg", alt: "board" },
   { path: "/dashboard/main", icon: "Grid.svg", alt: "dashboard" },
   { path: "/dashboard/mypage/mypage", icon: "File text.svg", alt: "document" },
+  { path: "/dashboard/board/main", icon: "Clipboard.svg", alt: "board" },
   { path: "/dashboard/calendar", icon: "Calendar.svg", alt: "calendar" },
   { path: "/dashboard/chatting/main", icon: "Message square.svg", alt: "chat" },
   {
