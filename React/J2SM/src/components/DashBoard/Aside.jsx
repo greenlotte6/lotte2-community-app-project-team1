@@ -145,7 +145,7 @@ const Aside = () => {
         <div className="sidemenu">
           <div className="sideTop">Cloud</div>
           <div>
-            <button className="new-drive">+ 신규</button>
+            <button id="sidebar-new-button">+ 신규</button>
           </div>
 
           <div className="childArea">
