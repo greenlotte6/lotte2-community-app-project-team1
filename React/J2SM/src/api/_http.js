@@ -46,12 +46,13 @@ export const SOCKET_URL = `${SERVER_HOST}/ws-chat`;
 // 채팅 REST 엔드포인트 모음
 export const API = {
   CHAT: {
-    ROOM_LIST: `${SERVER_HOST}/api/chat/rooms`, // GET
+    ROOM_LIST: (userId) => `${SERVER_HOST}/api/chat/rooms/${userId}`, // GET
     CREATE_ROOM: `${SERVER_HOST}/api/chat/rooms`, // POST
     DELETE_ROOM: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}`, // DELETE
     ROOM_DETAIL: (roomId) => `${SERVER_HOST}/api/chat/rooms/select/${roomId}`, // GET
     USER_LIST: (company) =>
       `${SERVER_HOST}/api/chat/users/by-company/${company}`, // ← 여기에 사용자 리스트 GET 추가
+    MARK_READ: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}/read`, // 안읽은 메시지 숫자 0으로 초기화
   },
 };
 

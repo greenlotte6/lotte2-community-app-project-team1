@@ -81,4 +81,14 @@ public class ChatService {
     public long getUnreadCount(String roomId, String userId) {
         return msgRepo.countByRoomIdAndReadByNotContaining(roomId, userId);
     }
+
+    // 안읽은 메시지 초기화
+    public void markAsReadUser(String roomId, String userId) {
+        // 해당 방에서 아직 userId가 readBy에 포함되지 않은 메시지만 골라서
+        List<Message> unread = msgRepo.findByRoomIdAndReadByNotContaining(roomId, userId);
+        unread.forEach(m -> m.getReadBy().add(userId));
+        msgRepo.saveAll(unread);
+    }
+
+
 }

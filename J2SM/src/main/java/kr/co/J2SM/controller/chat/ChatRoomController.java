@@ -1,6 +1,7 @@
 package kr.co.J2SM.controller.chat;
 
 import kr.co.J2SM.document.chat.ChatRoom;
+import kr.co.J2SM.dto.chat.ChatRoomDTO;
 import kr.co.J2SM.service.chat.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,9 +18,11 @@ public class ChatRoomController {
     private final ChatRoomService roomService;
 
     // 1) 전체 방 목록 조회
-    @GetMapping
-    public List<ChatRoom> listRooms() {
-        return roomService.getAllRooms();
+    @GetMapping("/{userId}")
+    public List<ChatRoomDTO> listRooms(@PathVariable String userId) {
+
+        return roomService.getRoomsForUser(userId);
+        // return null;
     }
 
     // 2) 새 방 생성
@@ -29,7 +32,8 @@ public class ChatRoomController {
         System.out.println(req);
         ChatRoom created = roomService.createRoom(
                 req.name(),
-                req.participants()
+                req.participants(),
+                req.description()
         );
         return ResponseEntity.ok(created);
     }
@@ -51,5 +55,5 @@ public class ChatRoomController {
     
 
     // 요청 DTO
-    public static record CreateRoomRequest(String name, List<String> participants) {}
+    public static record CreateRoomRequest(String name, List<String> participants, String description) {}
 }

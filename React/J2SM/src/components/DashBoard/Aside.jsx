@@ -189,6 +189,53 @@ const Aside = () => {
     );
   }
 
+  // '/dashboard/chatting' 경로일 때 렌더링할 사이드바 내용
+  if (pathname.includes("/dashboard/chat")) {
+    return (
+      <aside>
+        <div className="sidemenu">
+          <div className="sideTop">
+            <h3>Chatting</h3>
+          </div>
+          <div className="childArea">
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/chatting/main">Main</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/calendar/my">My Calendar</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+            <ul className="subMenu">
+              <li>
+                <Link to="/dashboard/calendar/my/dummy1">더미더미더미</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/calendar/my/dummy2">더미더미더미</Link>
+              </li>
+            </ul>
+            <div className="menuItem">
+              <img src="/images/File text.svg" alt="users" />
+              <Link to="/dashboard/calendar/social">Social Calendar</Link>
+              <img src="/images/Vector.svg" alt="vector" />
+            </div>
+            <ul className="subMenu">
+              <li>
+                <Link to="/dashboard/calendar/social/dummy1">더미더미더미</Link>
+              </li>
+              <li>
+                <Link to="/dashboard/calendar/social/dummy2">더미더미더미</Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </aside>
+    );
+  }
+
   // 그 외 경로일 때 기본 사이드바 내용
   return (
     <aside>
