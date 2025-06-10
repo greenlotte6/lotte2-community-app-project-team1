@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import EditorJS from "@editorjs/editorjs"; // 🔥 꼭 필요
-import InlineColorTool from "../../plugins/InlineColorTool"; // 🔥 꼭 필요
+import EditorJS from "@editorjs/editorjs";
+import InlineColorTool from "../../plugins/InlineColorTool";
 
 export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
   const [editor, setEditor] = useState(null);
@@ -20,7 +20,7 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
             class: Header,
             inlineToolbar: true,
             config: {
-              placeholder: "제목을 입력하세요", // ✅ 요거 반드시
+              placeholder: "제목을 입력하세요", // 👈 이거 꼭 넣어야 함
               levels: [1, 2, 3],
               defaultLevel: 1,
             },
@@ -30,14 +30,7 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
           checklist: Checklist,
           color: { class: InlineColorTool },
         },
-        data: {
-          blocks: [
-            {
-              type: "header",
-              data: { text: "", level: 1 },
-            },
-          ],
-        },
+        data: { blocks: [{ type: "header", data: { text: "", level: 1 } }] },
         onReady: () => {
           editorRef.current = _editor;
           setEditor(_editor);
@@ -59,38 +52,18 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
     };
   }, []);
 
-  // 🔥 선택된 페이지가 바뀌면 렌더링
-  // 🔥 선택된 페이지가 바뀌면 렌더링
+  // 선택된 페이지 변경 시 렌더
   useEffect(() => {
     if (!editor || !selectedPage) return;
 
     try {
-      let content = JSON.parse(selectedPage.content);
-
-      // ✅ 첫 번째 블록이 header가 아니거나 text가 없으면 placeholder 유도
-      const firstBlock = content.blocks?.[0];
-      const isHeaderEmpty =
-        !firstBlock ||
-        firstBlock.type !== "header" ||
-        !firstBlock.data?.text?.trim();
-
-      if (!content.blocks || content.blocks.length === 0 || isHeaderEmpty) {
-        content = {
-          blocks: [
-            {
-              type: "header",
-              data: { text: "", level: 1 },
-            },
-          ],
-        };
-      }
-
+      const content = JSON.parse(selectedPage.content || '{"blocks": []}');
       editor.isReady.then(() => {
-        editor.clear(); // 🧼 기존 block 제거
-        editor.render(content); // 🆕 새로운 block 삽입 (placeholder 포함)
+        editor.clear();
+        editor.render(content);
       });
-    } catch (e) {
-      console.error("selectedPage 렌더링 실패", e);
+    } catch (err) {
+      console.error("페이지 렌더 실패", err);
     }
   }, [selectedPage, editor]);
 

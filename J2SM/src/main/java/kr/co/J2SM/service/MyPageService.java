@@ -2,7 +2,9 @@ package kr.co.J2SM.service;
 
 import kr.co.J2SM.dto.MyPageDTO;
 import kr.co.J2SM.entity.MyPage;
+import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.repository.MyPageRepository;
+import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -20,14 +22,19 @@ import java.util.stream.Collectors;
 public class MyPageService {
 
     private final ModelMapper modelMapper;
+    private final UserRepository userRepository;
     private final MyPageRepository myPageRepository;
 
     public void save(MyPageDTO myPageDTO) {
+        log.info("==> 저장 요청 들어옴: {}", myPageDTO);
 
-        log.info("==> 저장 요청 들어옴: {}", myPageDTO);  // 추가
+        // ✅ userId로 User 엔티티 가져오기
+        User user = userRepository.findById(String.valueOf(myPageDTO.getUserId()))
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
+        // ✅ MyPage 엔티티 생성
         MyPage entity = MyPage.builder()
-                .userId(myPageDTO.getUserId())
+                .user(user)  // 👈 user 직접 주입
                 .content(myPageDTO.getContent())
                 .isFavorite(myPageDTO.isFavorite())
                 .shared(myPageDTO.isShared())
@@ -41,19 +48,13 @@ public class MyPageService {
     // ✅ 휴지통 이동 (soft delete)
     @Transactional
     public void softDelete(Long  id) {
-        myPageRepository.findById(id).ifPresent(page -> {
-            page.setDeleted(true);
-            myPageRepository.save(page);
-        });
+        myPageRepository.softDelete(id);
     }
 
     // 🔁 휴지통에서 복원
     @Transactional
     public void restore(Long  id) {
-        myPageRepository.findById(id).ifPresent(page -> {
-            page.setDeleted(false);
-            myPageRepository.save(page);
-        });
+        myPageRepository.restore(id);
     }
 
     // ❌ 완전 삭제
@@ -62,19 +63,15 @@ public class MyPageService {
         myPageRepository.deleteById(id);
     }
 
-    // 📋 전체 목록 (삭제 안 된 것만)
     public List<MyPageDTO> getAllActivePages() {
-        return myPageRepository.findAll().stream()
-                .filter(p -> !p.isDeleted())
-                .map(p -> modelMapper.map(p, MyPageDTO.class))
+        return myPageRepository.findAllActive().stream()
+                .map(MyPageDTO::fromEntity) // ✅ 직접 매핑
                 .collect(Collectors.toList());
     }
 
-    // 🗑 휴지통 목록
     public List<MyPageDTO> getTrashedPages() {
-        return myPageRepository.findAll().stream()
-                .filter(MyPage::isDeleted)
-                .map(p -> modelMapper.map(p, MyPageDTO.class))
+        return myPageRepository.findAllTrashed().stream()
+                .map(MyPageDTO::fromEntity) // ✅ 동일하게 수정
                 .collect(Collectors.toList());
     }
 

@@ -291,6 +291,7 @@
   }
   .subMenu {
     display: none;
+    transition: all 0.3s ease;
   }
   .subMenu.open {
     display: block;
