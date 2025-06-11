@@ -4,17 +4,15 @@
 const isLocalhost = window.location.hostname.includes("localhost");
 const isHttps = window.location.protocol === "https:";
 
-const SERVER_HOST = isLocalhost
-  ? "http://localhost:8080" // 로컬 개발 서버
-  : ""; // 운영 서버
+// 배포 환경 서버 호스트 지정
+const SERVER_HOST = isLocalhost ? "http://localhost:8080" : ""; // 운영(프론트/백 분리면 경로 맞춰줘야 함)
 
-// 🚨 도메인+포트만 남기고, ws/wss 프로토콜 분기
-const WS_HOST = isLocalhost ? "localhost:8080" : "3.34.124.218:8080"; // 운영 서버 주소:포트
-
+const WS_HOST = isLocalhost ? "localhost:8080" : "3.34.124.218:8080";
+const HTTP_PROTOCOL = isHttps ? "https" : "http";
 const WS_PROTOCOL = isHttps ? "wss" : "ws";
 
-// ⭐️ ws(s)://도메인/ws-chat
-export const SOCKET_URL = `${WS_PROTOCOL}://${WS_HOST}/ws-chat`;
+// WebSocket 연결용
+export const SOCKET_URL = `${HTTP_PROTOCOL}://${WS_HOST}/ws-chat`;
 // 버전 정보
 export const VERSION = `${SERVER_HOST}/version`;
 
