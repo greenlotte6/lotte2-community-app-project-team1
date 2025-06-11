@@ -220,7 +220,7 @@ const Aside = () => {
 
             <div className="menuItem">
               <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/calendar/my">My Calendar</Link>
+              <Link to="/dashboard/calendar/my">개인 채널</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
             <ul className="subMenu">
@@ -233,7 +233,7 @@ const Aside = () => {
             </ul>
             <div className="menuItem">
               <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/calendar/social">Social Calendar</Link>
+              <Link to="/dashboard/calendar/social">단체 채널</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
             <ul className="subMenu">
