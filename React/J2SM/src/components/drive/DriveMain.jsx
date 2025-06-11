@@ -1,5 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../../styles/drive/drive.scss";
+import { DRIVE_API } from "../../api/_http";
+import useAuth from "../../hooks/useAuth";
 
 const DriveMain = () => {
   const [files, setFiles] = useState([]);
@@ -7,10 +9,10 @@ const DriveMain = () => {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [renamingId, setRenamingId] = useState(null);
   const [newName, setNewName] = useState("");
+  const [dragOver, setDragOver] = useState(false);
   const dropdownRef = useRef();
-  const toggleShowFavorites = () => {
-    setShowFavoritesOnly((prev) => !prev);
-  };
+  const dropRef = useRef();
+  const { username } = useAuth();
 
   useEffect(() => {
     loadFiles();
@@ -18,7 +20,7 @@ const DriveMain = () => {
 
   const loadFiles = async () => {
     try {
-      const res = await fetch("/api/drive");
+      const res = await fetch(DRIVE_API.LIST);
       const data = await res.json();
       setFiles(data);
     } catch (err) {
@@ -43,8 +45,9 @@ const DriveMain = () => {
   const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("user", username);
     try {
-      const res = await fetch("/api/drive/upload", {
+      const res = await fetch(DRIVE_API.UPLOAD, {
         method: "POST",
         body: formData,
       });
@@ -55,27 +58,15 @@ const DriveMain = () => {
     }
   };
 
-  const handleDownload = async (id) => {
-    try {
-      const res = await fetch(`/api/drive/${id}/download`);
-      const blob = await res.blob();
-      const disposition = res.headers.get("Content-Disposition");
-      const filename = disposition?.match(/filename="?(.+?)"?/)?.[1] || "file";
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = decodeURIComponent(filename);
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("다운로드 실패", err);
-    }
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const file = e.dataTransfer.files[0];
+    if (file) uploadFile(file);
   };
 
   const toggleFavorite = async (id) => {
-    await fetch(`/api/drive/${id}/favorite`, { method: "PATCH" });
+    await fetch(DRIVE_API.FAVORITE(id), { method: "PATCH" });
     setFiles((prev) =>
       prev.map((f) => (f.id === id ? { ...f, favorite: !f.favorite } : f))
     );
@@ -83,19 +74,19 @@ const DriveMain = () => {
   };
 
   const moveToTrash = async (id) => {
-    await fetch(`/api/drive/${id}`, { method: "DELETE" });
+    await fetch(DRIVE_API.DELETE(id), { method: "DELETE" });
     await loadFiles();
     setActiveMenuId(null);
   };
 
   const moveToSharedDrive = async (id) => {
-    await fetch(`/api/drive/${id}/move-to-shared`, { method: "PATCH" });
+    await fetch(DRIVE_API.MOVE_TO_SHARED(id), { method: "PATCH" });
     await loadFiles();
     setActiveMenuId(null);
   };
 
   const renameFile = async (id, name) => {
-    await fetch(`/api/drive/${id}/rename`, {
+    await fetch(DRIVE_API.RENAME(id), {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name }),
@@ -120,6 +111,25 @@ const DriveMain = () => {
     if (e.key === "Enter") handleRenameConfirm(id);
   };
 
+  const handleDownload = async (id) => {
+    try {
+      const res = await fetch(DRIVE_API.DOWNLOAD(id));
+      const blob = await res.blob();
+      const disposition = res.headers.get("Content-Disposition");
+      const filename = disposition?.match(/filename="?(.+?)"?/)?.[1] || "file";
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = decodeURIComponent(filename);
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("다운로드 실패", err);
+    }
+  };
+
   const filteredFiles = showFavoritesOnly
     ? files.filter((f) => f.favorite)
     : files;
@@ -133,6 +143,10 @@ const DriveMain = () => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
+
+  const toggleShowFavorites = () => {
+    setShowFavoritesOnly((prev) => !prev);
+  };
 
   return (
     <>
@@ -150,8 +164,17 @@ const DriveMain = () => {
         </div>
       </div>
 
-      <div className="cloud-main">
-        <h3>Cloud 저장소 입니다.</h3>
+      <div
+        className={`cloud-main ${dragOver ? "drag-over" : ""}`}
+        ref={dropRef}
+        onDragOver={(e) => {
+          e.preventDefault();
+          setDragOver(true);
+        }}
+        onDragLeave={() => setDragOver(false)}
+        onDrop={handleDrop}
+      >
+        <h3>{username}님의 Cloud 저장소입니다.</h3>
 
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input
@@ -210,7 +233,7 @@ const DriveMain = () => {
               ) : (
                 filteredFiles.map((file) => (
                   <tr key={file.id}>
-                    <td>{file.user}</td>
+                    <td>{file.user || username}</td>
                     <td>
                       {renamingId === file.id ? (
                         <>

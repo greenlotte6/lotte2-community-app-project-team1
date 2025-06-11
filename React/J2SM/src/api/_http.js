@@ -78,3 +78,14 @@ export const MYPAGE_DELETE = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;
 
 // 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
 export const MYPAGE_TRASH_LIST = `${SERVER_HOST}/api/mypage/trash`;
+
+// 드라이브
+export const DRIVE_API = {
+  LIST: `${SERVER_HOST}/api/drive`, // 전체 파일 목록
+  UPLOAD: `${SERVER_HOST}/api/drive/upload`, // 파일 업로드
+  DOWNLOAD: (id) => `${SERVER_HOST}/api/drive/${id}/download`, // 파일 다운로드
+  FAVORITE: (id) => `${SERVER_HOST}/api/drive/${id}/favorite`, // 즐겨찾기 토글
+  RENAME: (id) => `${SERVER_HOST}/api/drive/${id}/rename`, // 파일 이름 변경
+  DELETE: (id) => `${SERVER_HOST}/api/drive/${id}`, // 휴지통으로 이동
+  MOVE_TO_SHARED: (id) => `${SERVER_HOST}/api/drive/${id}/move-to-shared`, // 공유드라이브 이동
+};

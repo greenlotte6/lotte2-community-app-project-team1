@@ -111,37 +111,44 @@ public class DriveController {
 
     // 파일 업로드
     @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+                                        @RequestParam("user") String user)  {
         try {
-            // 파일 저장 경로 (예시: /uploads/uuid-원본이름)
+            System.out.println("업로드 시도: " + file.getOriginalFilename());
+
             String uuid = UUID.randomUUID().toString();
             String originalName = file.getOriginalFilename();
             String saveName = uuid + "-" + originalName;
-            String uploadDir = "/home/ec2-user/uploads/";
+            String uploadDir = "uploads";
+
             Path savePath = Paths.get(uploadDir + saveName);
             file.transferTo(savePath.toFile());
 
-            // 파일 타입 추출
             String fileType = getFileExtension(originalName);
 
-            // DB에 저장
             Drive drive = new Drive();
             drive.setDeleted(false);
             drive.setFavorite(false);
             drive.setFilePath(savePath.toString());
             drive.setLocation("내 드라이브");
-            drive.setName(originalName); // 사용자 지정 이름도 가능
+            drive.setName(originalName);
             drive.setOriginalFilename(originalName);
-            drive.setType(fileType); // 수정된 부분
+            drive.setType(fileType);
             drive.setUploadedAt(LocalDateTime.now());
-            drive.setUser("minhyeok"); // 로그인 사용자로 대체
+            drive.setUser(user);
+
+
 
             driveRepository.save(drive);
+
+            System.out.println("파일 업로드 및 저장 완료: " + originalName);
             return ResponseEntity.ok().build();
         } catch (IOException e) {
+            e.printStackTrace(); // 👈 실제 예외 메시지 확인 가능
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
         }
     }
+
 
     // 확장자 추출 유틸 메서드
     private String getFileExtension(String filename) {
