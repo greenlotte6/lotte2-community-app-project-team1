@@ -115,16 +115,29 @@ const DriveMain = () => {
     try {
       const res = await fetch(DRIVE_API.DOWNLOAD(id));
       const blob = await res.blob();
+
       const disposition = res.headers.get("Content-Disposition");
-      const filename = disposition?.match(/filename="?(.+?)"?/)?.[1] || "file";
-      const url = URL.createObjectURL(blob);
+      let filename = "file";
+
+      if (disposition) {
+        const utf8Match = disposition.match(/filename\*=UTF-8''(.+?)(?:;|$)/);
+        const asciiMatch = disposition.match(/filename="(.+?)"/);
+
+        if (utf8Match) {
+          filename = decodeURIComponent(utf8Match[1]);
+        } else if (asciiMatch) {
+          filename = asciiMatch[1];
+        }
+      }
+
+      const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = decodeURIComponent(filename);
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
-      URL.revokeObjectURL(url);
+      window.URL.revokeObjectURL(url);
     } catch (err) {
       console.error("다운로드 실패", err);
     }
