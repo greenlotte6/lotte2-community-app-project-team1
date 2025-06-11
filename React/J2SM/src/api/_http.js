@@ -2,16 +2,19 @@
 
 // 베포 테스트
 const isLocalhost = window.location.hostname.includes("localhost");
+const isHttps = window.location.protocol === "https:";
 
 const SERVER_HOST = isLocalhost
   ? "http://localhost:8080" // 로컬 개발 서버
   : ""; // 운영 서버
 
-// 소켓통신
-const SERVER_SOCKET = isLocalhost
-  ? "http://localhost:8080" // 로컬 개발 서버
-  : "http://3.34.124.218:8080"; // 운영 서버
+// 🚨 도메인+포트만 남기고, ws/wss 프로토콜 분기
+const WS_HOST = isLocalhost ? "localhost:8080" : "3.34.124.218:8080"; // 운영 서버 주소:포트
 
+const WS_PROTOCOL = isHttps ? "wss" : "ws";
+
+// ⭐️ ws(s)://도메인/ws-chat
+export const SOCKET_URL = `${WS_PROTOCOL}://${WS_HOST}/ws-chat`;
 // 버전 정보
 export const VERSION = `${SERVER_HOST}/version`;
 
@@ -46,7 +49,7 @@ export const PRODUCT_THUMB = `${SERVER_HOST}/product/thumb`;
 export const INQUIRE_REGISTER = `${SERVER_HOST}/qna`;
 
 // 소켓 엔드포인트
-export const SOCKET_URL = `${SERVER_SOCKET}/ws-chat`;
+//export const SOCKET_URL = `${SERVER_SOCKET}/wss-chat`;
 
 // 채팅 REST 엔드포인트 모음
 export const API = {
