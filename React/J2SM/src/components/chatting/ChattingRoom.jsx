@@ -276,7 +276,12 @@ const ChattingRoom = ({
             placeholder={connected ? "메시지를 입력하세요..." : "연결 중..."}
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && !e.shiftKey) {
+                e.preventDefault(); // 줄바꿈 방지
+                sendMessage();
+              }
+            }}
             disabled={!connected}
           />
           <button

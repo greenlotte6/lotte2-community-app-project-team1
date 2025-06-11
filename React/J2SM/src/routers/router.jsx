@@ -22,7 +22,6 @@ import AdminPaymentPage from "../pages/admin/AdminPaymentPage";
 import CalendarPage from "../pages/Calendar/CalendarPage";
 import ChattingMainPage from "../pages/chatting/ChattingMainPage";
 import ChattingRoomPage from "../pages/chatting/ChattingRoomPage";
-import ChatTestPage from "../pages/chatting/ChatTestPage";
 import MyPage from "../pages/MyPage/MyPage";
 import BoardMainPage from "../pages/Board/BoardMainPage";
 import BoardListPage from "../pages/Board/BoardListPage";
@@ -86,7 +85,6 @@ const router = createBrowserRouter([
   { path: "/dashboard/chatting/main", element: <ChattingMainPage /> },
   { path: "/dashboard/chatting/room/:roomId", element: <ChattingRoomPage /> },
 
-  { path: "/dashboard/chatting/test", element: <ChatTestPage /> },
   /*채팅 끝*/
   /* 채팅 라우터 종료 */
 
