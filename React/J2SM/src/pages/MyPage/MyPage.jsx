@@ -4,7 +4,7 @@ import "../../styles/DashBoard/MyPage.scss";
 import { MyAside } from "../../components/MyPage/MyAside";
 import { MyTop } from "../../components/MyPage/MyTop";
 import { MyMid } from "../../components/MyPage/MyMid";
-import { fetchAllPages } from "@/api/mypageAPI";
+import { fetchAllPages } from "@/api/myPageAPI";
 
 const MyPage = () => {
   const editorRef = useRef(null);
