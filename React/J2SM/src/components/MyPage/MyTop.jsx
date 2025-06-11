@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { saveMyPage, softDeleteMyPage, fetchAllPages } from "@/api/mypageapi";
+import { saveMyPage, softDeleteMyPage, fetchAllPages } from "@/api/myPageAPI";
 import useAuth from "../../hooks/useAuth";
 
 export const MyTop = ({
