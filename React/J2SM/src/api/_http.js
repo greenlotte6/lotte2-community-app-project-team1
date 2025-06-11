@@ -5,7 +5,7 @@ const isLocalhost = window.location.hostname.includes("localhost");
 
 const SERVER_HOST = isLocalhost
   ? "http://localhost:8080" // 로컬 개발 서버
-  : "https://lotte2-community-app-project-team1-sandy.vercel.app"; // 운영 서버
+  : ""; // 운영 서버
 
 // 소켓통신
 const SERVER_SOCKET = isLocalhost
