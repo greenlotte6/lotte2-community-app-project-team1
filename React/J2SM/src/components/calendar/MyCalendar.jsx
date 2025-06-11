@@ -1,6 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/themes/dark.css";
+import "../../styles/DashBoard/calendar.scss";
+import {
+  getCalendar,
+  postCalendar,
+  deleteCalendar,
+  putCalendar,
+} from "../../api/calendar";
 
 const Calendar = () => {
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
@@ -14,6 +21,20 @@ const Calendar = () => {
     renderCalendar(currentYear, currentMonth);
   }, [schedules, currentYear, currentMonth]);
 
+  useEffect(() => {
+    const loadSchedules = async () => {
+      try {
+        const data = await getCalendar();
+        setSchedules(data);
+
+        console.log(data);
+      } catch (err) {
+        console.error("일정 불러오기 실패", err);
+      }
+    };
+
+    loadSchedules();
+  }, []);
   const renderCalendar = (year, month) => {
     if (!calendarRef.current) return;
     const calendarBody = calendarRef.current;
@@ -104,28 +125,74 @@ const Calendar = () => {
 
   const openModal = (dateStr, e) => {
     const modal = document.getElementById("schedule-modal");
-    document.getElementById("modal-date").value = dateStr;
-    document.getElementById("modal-title").value = "";
+    const titleInput = document.getElementById("modal-title");
+    const dateInput = document.getElementById("modal-date");
 
-    const rect = e.target.getBoundingClientRect();
-    modal.style.left = `${rect.left + window.scrollX}px`;
-    modal.style.top = `${rect.top + window.scrollY}px`;
+    if (!modal || !titleInput || !dateInput) return;
+
+    dateInput.value = dateStr;
+    titleInput.value = "";
+
+    // 모달 위치 계산
+    if (e) {
+      const modalWidth = 300;
+      const modalHeight = 220;
+      const rect = e.target.getBoundingClientRect();
+
+      let x = rect.left + window.scrollX - 480;
+      let y = rect.top + window.scrollY - modalHeight + 140;
+
+      if (x + modalWidth > window.innerWidth + window.scrollX) {
+        x = window.innerWidth + window.scrollX - modalWidth - 10;
+      }
+      if (y < window.scrollY + 10) {
+        y = rect.bottom + window.scrollY + 10;
+      }
+
+      x = Math.max(1, Math.min(x, window.innerWidth - modalWidth - 10));
+      y = Math.max(10, Math.min(y, window.innerHeight - modalHeight - 10));
+
+      modal.style.left = `${x}px`;
+      modal.style.top = `${y}px`;
+    } else {
+      // 기본 중앙 배치 fallback
+      modal.style.left = `calc(50% - 150px)`; // modalWidth / 2
+      modal.style.top = `calc(50% - 110px)`; // modalHeight / 2
+    }
+
     modal.style.display = "block";
 
-    setTimeout(() => document.getElementById("modal-title").focus(), 100);
+    setTimeout(() => {
+      titleInput.focus();
+    }, 100);
   };
 
-  const saveSchedule = () => {
+  const saveSchedule = async () => {
     const date = document.getElementById("modal-date").value;
     const title = document.getElementById("modal-title").value;
     if (!title) return alert("일정 제목을 입력하세요.");
 
     const color = getRandomColor();
-    setSchedules([...schedules, { start: date, end: date, title, color }]);
-    closeModal();
+    const newSchedule = {
+      start: date,
+      end: date,
+      title,
+      color,
+      place: "",
+      member: "",
+      note: "",
+    };
+
+    try {
+      const savedEvent = await postCalendar(newSchedule);
+      setSchedules((prev) => [...prev, savedEvent]);
+      closeModal(); // 모달 닫기 호출 OK
+    } catch (error) {
+      alert("일정 저장에 실패했습니다.");
+    }
   };
 
-  const saveDetailSchedule = () => {
+  const saveDetailSchedule = async () => {
     const title = document.getElementById("detail-title").value;
     const start = document.getElementById("start-date").value;
     const end = document.getElementById("end-date").value;
@@ -134,13 +201,62 @@ const Calendar = () => {
     const note = document.getElementById("detail-note").value;
 
     if (!title || !start || !end) return alert("모든 항목을 입력하세요.");
-    const color = getRandomColor();
 
-    setSchedules([
-      ...schedules,
-      { title, start, end, place, member, note, color },
-    ]);
-    setShowDetailModal(false);
+    const color = selectedSchedule?.color || getRandomColor(); // 기존 색 유지
+    const updatedSchedule = { title, start, end, place, member, note, color };
+
+    try {
+      if (editMode && selectedSchedule?.id) {
+        const updated = await putCalendar(selectedSchedule.id, updatedSchedule);
+        setSchedules((prev) =>
+          prev.map((sch) => (sch.id === selectedSchedule.id ? updated : sch))
+        );
+      } else {
+        const savedEvent = await postCalendar(updatedSchedule);
+        setSchedules([...schedules, savedEvent]);
+      }
+
+      setShowDetailModal(false);
+      setEditMode(false);
+      setSelectedSchedule(null);
+    } catch (error) {
+      alert("일정 저장에 실패했습니다.");
+      console.error(error);
+    }
+  };
+
+  const [editMode, setEditMode] = useState(false);
+  const onClickEdit = () => {
+    if (!selectedSchedule) return;
+    setShowDetailModal(true);
+    setEditMode(true);
+
+    setTimeout(() => {
+      document.getElementById("detail-title").value = selectedSchedule.title;
+      document.getElementById("start-date").value = selectedSchedule.start;
+      document.getElementById("end-date").value = selectedSchedule.end;
+      document.getElementById("place").value = selectedSchedule.place || "";
+      document.getElementById("member").value = selectedSchedule.member || "";
+      document.getElementById("detail-note").value =
+        selectedSchedule.note || "";
+    }, 0);
+  };
+
+  const deleteSchedule = async () => {
+    if (!selectedSchedule || !selectedSchedule.id) return;
+
+    const confirmDelete = window.confirm("이 일정을 삭제하시겠습니까?");
+    if (!confirmDelete) return;
+
+    try {
+      await deleteCalendar(selectedSchedule.id);
+      setSchedules((prev) =>
+        prev.filter((schedule) => schedule.id !== selectedSchedule.id)
+      );
+      closeViewModal(); // 상세보기 모달 닫기
+    } catch (error) {
+      alert("일정 삭제에 실패했습니다.");
+    }
   };
 
   const getRandomColor = () => {
@@ -170,7 +286,17 @@ const Calendar = () => {
   };
 
   const closeModal = () => {
-    document.getElementById("schedule-modal").style.display = "none";
+    const modal = document.getElementById("schedule-modal");
+    if (modal) {
+      modal.style.display = "none";
+    }
+
+    // 입력 초기화
+    const titleInput = document.getElementById("modal-title");
+    if (titleInput) titleInput.value = "";
+
+    const dateInput = document.getElementById("modal-date");
+    if (dateInput) dateInput.value = "";
   };
 
   const closeViewModal = () => {
@@ -194,10 +320,20 @@ const Calendar = () => {
       setCurrentMonth((prev) => prev + 1);
     }
   };
+  const closeDetailModal = () => {
+    setShowDetailModal(false);
+    setEditMode(false);
+    setSelectedSchedule(null);
+  };
+
+  const startDateRef = useRef(null);
+  const endDateRef = useRef(null);
 
   useEffect(() => {
-    flatpickr("#start-date", { dateFormat: "Y-m-d" });
-    flatpickr("#end-date", { dateFormat: "Y-m-d" });
+    if (showDetailModal && startDateRef.current && endDateRef.current) {
+      flatpickr(startDateRef.current, { dateFormat: "Y-m-d" });
+      flatpickr(endDateRef.current, { dateFormat: "Y-m-d" });
+    }
   }, [showDetailModal]);
 
   return (
@@ -270,8 +406,11 @@ const Calendar = () => {
           </p>
         </div>
         <div className="s_button" style={{ padding: "20px" }}>
-          <button id="edit-button" onClick={() => setShowDetailModal(true)}>
+          <button id="edit-button" onClick={onClickEdit}>
             수정하기
+          </button>
+          <button id="delete-button" onClick={deleteSchedule}>
+            삭제하기
           </button>
         </div>
       </div>
@@ -279,11 +418,7 @@ const Calendar = () => {
       {/*  */}
       {showDetailModal && (
         <div className="detail-modal" onClick={() => setShowDetailModal(false)}>
-          <div
-            className="modal-contents"
-            onClick={(e) => e.stopPropagation()}
-            style={{ width: "100%", display: "grid", backgroundColor: "aqua" }}
-          >
+          <div className="modal-contents" onClick={(e) => e.stopPropagation()}>
             <span className="closes" onClick={() => setShowDetailModal(false)}>
               &times;
             </span>
@@ -296,9 +431,19 @@ const Calendar = () => {
               placeholder="일정 제목"
             />
             <label>시작 날짜</label>
-            <input type="text" id="start-date" className="form-input" />
+            <input
+              type="text"
+              id="start-date"
+              className="form-input"
+              ref={startDateRef}
+            />
             <label>종료 날짜</label>
-            <input type="text" id="end-date" className="form-input" />
+            <input
+              type="text"
+              id="end-date"
+              className="form-input"
+              ref={endDateRef}
+            />
             <label>장소</label>
             <input
               type="text"
