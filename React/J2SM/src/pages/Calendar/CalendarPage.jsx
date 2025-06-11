@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { DashboardLayout } from "../../layouts/DashboardLayout";
 import Aside from "../../components/DashBoard/Aside";
 import "../../styles/DashBoard/dashboardMain.scss";
+import "../../styles/DashBoard/board.scss";
 import "flatpickr/dist/themes/dark.css";
 import MyCalendar from "../../components/calendar/MyCalendar";
 

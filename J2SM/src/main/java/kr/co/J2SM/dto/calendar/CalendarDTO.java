@@ -1,0 +1,19 @@
+package kr.co.J2SM.dto.calendar;
+
+import lombok.*;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
+public class CalendarDTO {
+
+    private String title;
+    private String start;
+    private String end;
+    private String place;
+    private String member;
+    private String note;
+    private String color;
+}

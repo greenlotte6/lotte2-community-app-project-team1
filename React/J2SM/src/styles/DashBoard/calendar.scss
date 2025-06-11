@@ -188,11 +188,8 @@
 
   .detail-modal {
     position: fixed;
-    top: 0;
-    left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -207,6 +204,7 @@
     max-width: 90%;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
     position: relative;
+    display: grid;
   }
 
   .modal-contents h3 {
@@ -278,15 +276,6 @@
     height: 30px;
     margin: 0 auto;
     background-color: #a1c4fd;
-  }
-
-  .calen:hover {
-    border-radius: 20px;
-    width: 250px;
-    height: 30px;
-    margin: 0 auto;
-    background-color: #0b5ee2;
-    color: #f0f0f0;
   }
 
   .edit-button {
