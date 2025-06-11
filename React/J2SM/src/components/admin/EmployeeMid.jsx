@@ -113,8 +113,10 @@ export const EmployeeMid = () => {
             <input type="text" placeholder="성명 입력" />
             <input type="text" placeholder="이메일 입력" />
             <div className="modalButtons">
-              <button id="inviteConfirmBtn">초대</button>
-              <button id="inviteCancelBtn" onClick={closeModal}>
+              <button type="button" id="inviteConfirmBtn">
+                초대
+              </button>
+              <button type="button" id="inviteCancelBtn" onClick={closeModal}>
                 취소
               </button>
             </div>
