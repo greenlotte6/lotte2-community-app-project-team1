@@ -168,4 +168,9 @@ public class DriveController {
     private String getAsciiSafeFilename(String filename) {
         return filename.replaceAll("[^\\x20-\\x7E]", "_");
     }
+    @PatchMapping("/{id}/move-to-shared")
+    public ResponseEntity<Void> moveToSharedDrive(@PathVariable Long id) {
+        driveService.moveToSharedDrive(id);
+        return ResponseEntity.ok().build();
+    }
 }

@@ -14,6 +14,7 @@ public interface DriveRepository extends JpaRepository<Drive, Long> {
     List<Drive> findByDeletedFalse();
 
     // 삭제(휴지통)된 파일 목록
-    List<Drive> findByDeletedTrue();
+    List<Drive> findByDeletedTrueOrderByUploadedAtDesc();
 
+    Collection<Object> findByDeletedTrueOrderByUploadedAtDesc(boolean deleted);
 }

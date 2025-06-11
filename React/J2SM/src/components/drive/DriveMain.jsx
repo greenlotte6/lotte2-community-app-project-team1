@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import "../../styles/drive/drive.scss";
 import { DRIVE_API } from "../../api/_http";
 import useAuth from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 const DriveMain = () => {
   const [files, setFiles] = useState([]);
@@ -10,9 +11,11 @@ const DriveMain = () => {
   const [renamingId, setRenamingId] = useState(null);
   const [newName, setNewName] = useState("");
   const [dragOver, setDragOver] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef();
   const dropRef = useRef();
   const { username } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     loadFiles();
@@ -38,8 +41,8 @@ const DriveMain = () => {
   }, []);
 
   const handleFileSelect = (e) => {
-    const file = e.target.files[0];
-    if (file) uploadFile(file);
+    const selectedFiles = Array.from(e.target.files);
+    selectedFiles.forEach((file) => uploadFile(file));
   };
 
   const uploadFile = async (file) => {
@@ -61,8 +64,8 @@ const DriveMain = () => {
   const handleDrop = (e) => {
     e.preventDefault();
     setDragOver(false);
-    const file = e.dataTransfer.files[0];
-    if (file) uploadFile(file);
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    droppedFiles.forEach((file) => uploadFile(file));
   };
 
   const toggleFavorite = async (id) => {
@@ -122,7 +125,6 @@ const DriveMain = () => {
       if (disposition) {
         const utf8Match = disposition.match(/filename\*=UTF-8''(.+?)(?:;|$)/);
         const asciiMatch = disposition.match(/filename="(.+?)"/);
-
         if (utf8Match) {
           filename = decodeURIComponent(utf8Match[1]);
         } else if (asciiMatch) {
@@ -143,9 +145,17 @@ const DriveMain = () => {
     }
   };
 
-  const filteredFiles = showFavoritesOnly
-    ? files.filter((f) => f.favorite)
-    : files;
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredFiles = files.filter((f) => {
+    const matchesFavorite = showFavoritesOnly ? f.favorite : true;
+    const matchesSearch = f.name
+      .toLowerCase()
+      .includes(searchTerm.toLowerCase());
+    return matchesFavorite && matchesSearch;
+  });
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -161,11 +171,16 @@ const DriveMain = () => {
     setShowFavoritesOnly((prev) => !prev);
   };
 
+  const goToTrash = () => {
+    navigate("/dashboard/drive/delete");
+  };
+
   return (
     <>
       <input
         type="file"
         id="hidden-file-input"
+        multiple
         style={{ display: "none" }}
         onChange={handleFileSelect}
       />
@@ -175,6 +190,7 @@ const DriveMain = () => {
           <img src="/images/Cloud.svg" alt="클라우드" />
           <h3>Cloud</h3>
         </div>
+        <button onClick={goToTrash}>🗑 휴지통</button>
       </div>
 
       <div
@@ -193,6 +209,8 @@ const DriveMain = () => {
           <input
             type="text"
             placeholder="Cloud 검색"
+            value={searchTerm}
+            onChange={handleSearchChange}
             style={{
               width: "100%",
               padding: "6px 10px",
@@ -200,28 +218,14 @@ const DriveMain = () => {
               backgroundColor: "#f0eaf7",
             }}
           />
-          <button
-            type="submit"
-            style={{ background: "none", border: "none", padding: 0 }}
-          >
-            <img src="/images/search.png" alt="검색" className="search-icon" />
-          </button>
         </form>
 
         <div className="search-type">
           <button
             onClick={toggleShowFavorites}
-            className="new-drive"
-            style={{
-              marginTop: "10px",
-              fontSize: "14px",
-              padding: "6px 12px",
-              border: "1px solid #ccc",
-              borderRadius: "20px",
-              cursor: "pointer",
-            }}
+            className={`new-drive ${showFavoritesOnly ? "active" : ""}`}
           >
-            {showFavoritesOnly ? "전체 보기" : "즐겨찾기만 보기"}
+            {showFavoritesOnly ? "⭐ 전체 보기" : "⭐ 즐겨찾기만"}
           </button>
         </div>
 
@@ -266,6 +270,8 @@ const DriveMain = () => {
                             className={`star-icon ${
                               file.favorite ? "active" : ""
                             }`}
+                            onClick={() => toggleFavorite(file.id)}
+                            style={{ cursor: "pointer", marginRight: "5px" }}
                           >
                             ★
                           </span>

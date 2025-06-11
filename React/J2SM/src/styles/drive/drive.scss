@@ -1285,4 +1285,14 @@
     border: 2px dashed #888;
     background-color: #f9f9f9;
   }
+  .star-icon {
+    color: #ccc;
+    &.active {
+      color: gold;
+    }
+  }
+  .new-drive.active {
+    color: black;
+    font-weight: bold;
+  }
 }
