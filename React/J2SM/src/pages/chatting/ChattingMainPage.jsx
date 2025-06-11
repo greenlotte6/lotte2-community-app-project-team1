@@ -12,7 +12,7 @@ import useAuth from "../../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 
 const ChattingMainPage = () => {
-  //  username = uid
+  // username = uid
   const { username } = useAuth();
   const currentUserId = username;
   const navigate = useNavigate();
