@@ -289,6 +289,11 @@
     width: 15px;
     height: 15px;
   }
+  .menuItem span {
+    color: #2f80ed;
+    font-size: 14px;
+    cursor: pointer;
+  }
   .subMenu {
     display: none;
     transition: all 0.3s ease;

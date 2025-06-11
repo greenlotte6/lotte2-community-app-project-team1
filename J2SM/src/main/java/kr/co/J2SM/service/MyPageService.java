@@ -25,25 +25,37 @@ public class MyPageService {
     private final UserRepository userRepository;
     private final MyPageRepository myPageRepository;
 
+    @Transactional
     public void save(MyPageDTO myPageDTO) {
-        log.info("==> 저장 요청 들어옴: {}", myPageDTO);
-
-        // ✅ userId로 User 엔티티 가져오기
         User user = userRepository.findById(String.valueOf(myPageDTO.getUserId()))
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 유저입니다."));
 
-        // ✅ MyPage 엔티티 생성
-        MyPage entity = MyPage.builder()
-                .user(user)  // 👈 user 직접 주입
-                .content(myPageDTO.getContent())
-                .isFavorite(myPageDTO.isFavorite())
-                .shared(myPageDTO.isShared())
-                .createdAt(LocalDateTime.now())
-                .title(myPageDTO.getTitle())
-                .isDeleted(false)
-                .build();
-
-        myPageRepository.save(entity);
+        MyPage entity;
+        if (myPageDTO.getId() != null) {
+            // 기존 데이터 수정
+            entity = myPageRepository.findById(myPageDTO.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 페이지입니다."));
+            entity.setUser(user);
+            entity.setContent(myPageDTO.getContent());
+            entity.setTitle(myPageDTO.getTitle());
+            entity.setFavorite(myPageDTO.isFavorite());
+            entity.setShared(myPageDTO.isShared());
+            // entity.setCreatedAt(LocalDateTime.now()); // createdAt은 최초 1회만 세팅
+            entity.setDeleted(false); // 저장시에는 무조건 복원상태
+            // 변경감지(dirty checking)로 자동 update
+        } else {
+            // 새로 생성
+            entity = MyPage.builder()
+                    .user(user)
+                    .content(myPageDTO.getContent())
+                    .isFavorite(myPageDTO.isFavorite())
+                    .shared(myPageDTO.isShared())
+                    .createdAt(LocalDateTime.now())
+                    .title(myPageDTO.getTitle())
+                    .isDeleted(false)
+                    .build();
+            myPageRepository.save(entity);
+        }
     }
     // ✅ 휴지통 이동 (soft delete)
     @Transactional
