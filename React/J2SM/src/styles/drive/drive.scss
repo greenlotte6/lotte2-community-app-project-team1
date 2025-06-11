@@ -1281,4 +1281,8 @@
   body.dark-mode .star-icon.active {
     color: #f5b301 !important;
   }
+  .cloud-main.drag-over {
+    border: 2px dashed #888;
+    background-color: #f9f9f9;
+  }
 }

@@ -24,7 +24,7 @@ public class Drive {
     private String location;
     private LocalDateTime uploadedAt;
     private boolean favorite;
-    private String FileType;
+    private String fileType;
     private String filePath;
     private String originalFilename;
 
