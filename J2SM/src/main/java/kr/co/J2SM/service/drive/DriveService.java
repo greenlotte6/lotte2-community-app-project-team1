@@ -55,13 +55,7 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // (선택) 휴지통 파일 목록 조회
-    public List<DriveDTO> getTrashedFiles() {
-        return driveRepository.findByDeletedTrue()
-                .stream()
-                .map(DriveMapper::toDTO)
-                .collect(Collectors.toList());
-    }
+    
 
     // (선택) 휴지통 복원
     public void restoreFile(Long id) {
@@ -75,4 +69,17 @@ public class DriveService {
     public void hardDeleteFile(Long id) {
         driveRepository.deleteById(id);
     }
+    public void moveToSharedDrive(Long id) {
+        Drive file = driveRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
+        file.setLocation("공유 드라이브");
+        driveRepository.save(file);
+    }
+    public List<DriveDTO> getTrashedFiles() {
+        return driveRepository.findByDeletedTrueOrderByUploadedAtDesc()
+                .stream()
+                .map(DriveMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 }
