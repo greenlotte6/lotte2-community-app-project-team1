@@ -7,6 +7,11 @@ const SERVER_HOST = isLocalhost
   ? "http://localhost:8080" // 로컬 개발 서버
   : "https://lotte2-community-app-project-team1-sandy.vercel.app"; // 운영 서버
 
+// 소켓통신
+const SERVER_SOCKET = isLocalhost
+  ? "http://localhost:8080" // 로컬 개발 서버
+  : "http://3.34.124.218:8080"; // 운영 서버
+
 // 버전 정보
 export const VERSION = `${SERVER_HOST}/version`;
 
@@ -41,7 +46,7 @@ export const PRODUCT_THUMB = `${SERVER_HOST}/product/thumb`;
 export const INQUIRE_REGISTER = `${SERVER_HOST}/qna`;
 
 // 소켓 엔드포인트
-export const SOCKET_URL = `${SERVER_HOST}/ws-chat`;
+export const SOCKET_URL = `${SERVER_SOCKET}/ws-chat`;
 
 // 채팅 REST 엔드포인트 모음
 export const API = {
