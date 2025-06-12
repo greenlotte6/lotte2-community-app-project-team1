@@ -7,6 +7,7 @@ import kr.co.J2SM.repository.drive.DriveRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,7 +17,6 @@ public class DriveService {
 
     private final DriveRepository driveRepository;
 
-    // 전체 파일 목록 조회 (휴지통 제외)
     public List<DriveDTO> getAllDriveFiles() {
         return driveRepository.findByDeletedFalse()
                 .stream()
@@ -24,14 +24,12 @@ public class DriveService {
                 .collect(Collectors.toList());
     }
 
-    // 개별 파일 정보 조회 (다운로드 포함)
     public DriveDTO getDriveFile(Long id) {
         Drive entity = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
         return DriveMapper.toDTO(entity);
     }
 
-    // 즐겨찾기 토글
     public void toggleFavorite(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -39,7 +37,6 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // 파일 이름 변경
     public void renameFile(Long id, String newName) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -47,7 +44,6 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // 파일 휴지통으로 이동 (soft delete)
     public void deleteFile(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -55,9 +51,6 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    
-
-    // (선택) 휴지통 복원
     public void restoreFile(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -65,16 +58,17 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // (선택) 휴지통에서 완전 삭제
     public void hardDeleteFile(Long id) {
         driveRepository.deleteById(id);
     }
+
     public void moveToSharedDrive(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
         file.setLocation("공유 드라이브");
         driveRepository.save(file);
     }
+
     public List<DriveDTO> getTrashedFiles() {
         return driveRepository.findByDeletedTrueOrderByUploadedAtDesc()
                 .stream()
@@ -82,4 +76,29 @@ public class DriveService {
                 .collect(Collectors.toList());
     }
 
+    // ✅ 업로드 후 DB 저장 로직
+    public void saveDrive(String user, String originalName, String saveName, String relativePath) {
+        Drive drive = Drive.builder()
+                .user(user)
+                .name(originalName)
+                .originalFilename(originalName)
+                .fileType(getFileExtension(originalName))
+                .type(getFileExtension(originalName))
+                .filePath(relativePath)
+                .location("내 드라이브")
+                .uploadedAt(LocalDateTime.now())
+                .favorite(false)
+                .deleted(false)
+                .build();
+
+        driveRepository.save(drive);
+    }
+
+    private String getFileExtension(String filename) {
+        if (filename == null) return "unknown";
+        int dotIndex = filename.lastIndexOf('.');
+        return (dotIndex != -1 && dotIndex < filename.length() - 1)
+                ? filename.substring(dotIndex + 1).toLowerCase()
+                : "unknown";
+    }
 }
