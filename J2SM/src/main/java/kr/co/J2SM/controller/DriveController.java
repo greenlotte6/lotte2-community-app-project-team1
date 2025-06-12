@@ -1,7 +1,6 @@
 package kr.co.J2SM.controller;
 
 import kr.co.J2SM.dto.drive.DriveDTO;
-import kr.co.J2SM.entity.drive.Drive;
 import kr.co.J2SM.repository.drive.DriveRepository;
 import kr.co.J2SM.service.drive.DriveService;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +14,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -35,14 +32,19 @@ public class DriveController {
         return driveService.getAllDriveFiles();
     }
 
-    // ✅ 한글 파일명 문제 해결
-
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) throws IOException {
         DriveDTO dto = driveService.getDriveFile(id);
 
-        // ✅ 서버 실행 경로 + 상대경로로 실제 경로 구성
-        Path filePath = Paths.get(System.getProperty("user.dir")).resolve(dto.getFilePath()).normalize();
+        // 🔥 경로 재조합
+        Path rawPath = Paths.get(dto.getFilePath());
+        Path filePath = rawPath.isAbsolute()
+                ? rawPath
+                : Paths.get(System.getProperty("user.dir")).resolve(rawPath).normalize();
+
+        System.out.println("🚨 최종 filePath: " + filePath);
+        System.out.println("🚨 exists: " + Files.exists(filePath));
+        System.out.println("🚨 readable: " + Files.isReadable(filePath));
 
         if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
             throw new FileNotFoundException("파일을 찾을 수 없습니다. (" + filePath + ")");
@@ -53,13 +55,43 @@ public class DriveController {
         String contentType = Files.probeContentType(filePath);
         if (contentType == null) contentType = "application/octet-stream";
 
-        String encodedFilename = URLEncoder.encode(dto.getOriginalFilename(), StandardCharsets.UTF_8).replace("+", "%20");
+        String encodedFilename = URLEncoder.encode(dto.getOriginalFilename(), StandardCharsets.UTF_8)
+                .replace("+", "%20");
 
         HttpHeaders headers = new HttpHeaders();
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFilename);
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 
-        return ResponseEntity.ok().headers(headers).body(resource);
+        return ResponseEntity.ok()
+                .headers(headers)
+                .body(resource);
+    }
+
+    @PostMapping("/upload")
+    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
+                                        @RequestParam("user") String user) {
+        try {
+            String uuid = UUID.randomUUID().toString();
+            String originalName = file.getOriginalFilename();
+            String saveName = uuid + "-" + originalName;
+
+            // 🔥 실제 서버 저장 경로
+            String uploadDir = System.getProperty("user.dir") + "/uploads";
+            Path uploadPath = Paths.get(uploadDir);
+            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
+
+            Path savePath = uploadPath.resolve(saveName);
+            file.transferTo(savePath.toFile());
+
+            // ✅ DB에는 상대경로만 저장
+            String relativePath = "uploads/" + saveName;
+            driveService.saveDrive(user, originalName, saveName, relativePath);
+
+            return ResponseEntity.ok().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
+        }
     }
 
     @PatchMapping("/{id}/favorite")
@@ -96,38 +128,6 @@ public class DriveController {
         driveService.hardDeleteFile(id);
         return ResponseEntity.ok().build();
     }
-
-    @PostMapping("/upload")
-    public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
-                                        @RequestParam("user") String user) {
-        try {
-            String uuid = UUID.randomUUID().toString();
-            String originalName = file.getOriginalFilename();
-            String saveName = uuid + "-" + originalName;
-
-            // ✅ uploads 디렉토리 경로 설정 (서버 실행 위치 기준)
-            String uploadDir = System.getProperty("user.dir") + "/uploads";
-            Path uploadPath = Paths.get(uploadDir);
-            if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
-
-            // ✅ 실제 저장 경로
-            Path savePath = uploadPath.resolve(saveName);
-            file.transferTo(savePath.toFile());
-
-            // ✅ 여기서 저장되는 경로는 DB에 상대경로만 저장해야 함
-            String relativePath = "uploads/" + saveName;
-
-            // 👉 DB에 저장 (서비스 메서드 작성 필요)
-            driveService.saveDrive(user, originalName, saveName, relativePath);
-
-            return ResponseEntity.ok().build();
-        } catch (IOException e) {
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
-        }
-    }
-
-
 
     @PatchMapping("/{id}/move-to-shared")
     public ResponseEntity<Void> moveToSharedDrive(@PathVariable Long id) {
