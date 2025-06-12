@@ -41,6 +41,12 @@
     padding: 20px;
     transition: background-color 0.3s ease, color 0.3s ease;
   }
+  .hil {
+    position: absolute;
+    left: 0;
+    margin-left: 20px;
+    font-size: x-large;
+  }
 
   .sidemenu {
     text-align: center;
@@ -238,7 +244,6 @@
   .modal-contents .calen {
     width: 100%;
     margin-top: 20px;
-    padding: 10px;
     background-color: #a3c4f3;
     border: none;
     border-radius: 8px;
@@ -309,7 +314,7 @@
   #view-schedule-modal {
     position: absolute;
     top: 50%;
-    left: 60%;
+    left: 50%;
     transform: translate(-50%, -50%);
     z-index: 9999;
     background-color: white;
