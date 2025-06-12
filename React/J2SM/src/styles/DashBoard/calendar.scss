@@ -30,6 +30,14 @@
     color: #ffffff !important;
     transition: color 0.3s ease;
   }
+  .wrapperside ul li:nth-of-type(1) {
+    background-color: #f5f5f5;
+  }
+  .wrapperside ul li:nth-of-type(4) {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
 
   main aside {
     width: 250px;

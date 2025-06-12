@@ -20,6 +20,14 @@
     border-radius: 20px;
     margin: 0 10px;
   }
+  .wrapperside ul li:nth-of-type(1) {
+    background-color: #f5f5f5;
+  }
+  .wrapperside ul li:nth-of-type(3) {
+    background-color: white;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+  }
 
   .container.dark-mode aside {
     background-color: #2a2a2a;
@@ -80,7 +88,7 @@
     color: #2f80ed;
     font-size: 14px;
   }
-  .childArea div img:nth-of-type(2) {
+  .childArea div img:nth-of-type(3) {
     width: 15px;
     height: 15px;
   }
