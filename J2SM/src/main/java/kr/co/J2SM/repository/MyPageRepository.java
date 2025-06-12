@@ -32,4 +32,7 @@ public interface MyPageRepository extends JpaRepository<MyPage, Long> {
 
     @Query("SELECT p FROM MyPage p WHERE p.isDeleted = true AND p.user.uid = :userId")
     List<MyPage> findAllTrashedByUser(@Param("userId") String userId);
+
+    @Query("SELECT m FROM MyPage m WHERE m.user.uid = :userId AND m.isFavorite = true AND m.isDeleted = false")
+    List<MyPage> findAllFavoriteByUser(String userId);
 }

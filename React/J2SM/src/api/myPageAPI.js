@@ -7,6 +7,7 @@ import {
   MYPAGE_TRASH_LIST,
   MYPAGE_SOFT_DELETE,
   MYPAGE_RESTORE,
+  MYPAGE_FAVORITES_LIST,
 } from "./_http";
 
 // 저장
@@ -65,6 +66,12 @@ export const fetchAllPagesByUser = async (userId) => {
 };
 export const fetchTrashPagesByUser = async (userId) => {
   const res = await axios.get(MYPAGE_TRASH_LIST(userId), {
+    withCredentials: true,
+  });
+  return res.data;
+};
+export const fetchFavoritesPagesByUser = async (userId) => {
+  const res = await axios.get(MYPAGE_FAVORITES_LIST(userId), {
     withCredentials: true,
   });
   return res.data;

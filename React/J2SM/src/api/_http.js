@@ -90,6 +90,10 @@ export const MYPAGE_DELETE = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;
 export const MYPAGE_TRASH_LIST = (userId) =>
   `${SERVER_HOST}/api/mypage/trash/${userId}`;
 
+// 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
+export const MYPAGE_FAVORITES_LIST = (userId) =>
+  `${SERVER_HOST}/api/mypage/favorites/${userId}`;
+
 // 드라이브
 export const DRIVE_API = {
   LIST: `${SERVER_HOST}/api/drive`, // 전체 파일 목록
