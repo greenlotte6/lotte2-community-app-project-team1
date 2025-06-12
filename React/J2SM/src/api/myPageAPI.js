@@ -22,34 +22,10 @@ export const saveMyPage = async (data) => {
   }
 };
 
-// 전체 페이지 목록 조회
-export const fetchAllPages = async () => {
-  try {
-    const response = await axios.get(MYPAGE_LIST, {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 // 삭제 (영구 삭제)
 export const deleteMyPage = async (id) => {
   try {
     const response = await axios.delete(MYPAGE_DELETE(id), {
-      withCredentials: true,
-    });
-    return response.data;
-  } catch (err) {
-    console.error(err);
-  }
-};
-
-// 휴지통 목록 조회
-export const fetchTrashPages = async () => {
-  try {
-    const response = await axios.get(MYPAGE_TRASH_LIST, {
       withCredentials: true,
     });
     return response.data;
@@ -80,4 +56,16 @@ export const restoreMyPage = async (id) => {
   } catch (err) {
     console.error(err);
   }
+};
+
+// myPageAPI.js
+export const fetchAllPagesByUser = async (userId) => {
+  const res = await axios.get(MYPAGE_LIST(userId), { withCredentials: true });
+  return res.data;
+};
+export const fetchTrashPagesByUser = async (userId) => {
+  const res = await axios.get(MYPAGE_TRASH_LIST(userId), {
+    withCredentials: true,
+  });
+  return res.data;
 };

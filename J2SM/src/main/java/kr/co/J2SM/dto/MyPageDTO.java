@@ -22,6 +22,10 @@ public class MyPageDTO {
     @JsonProperty("isDeleted")
     private boolean isDeleted;
 
+    public void setIsFavorite(boolean isFavorite) {
+        this.isFavorite = isFavorite;
+    }
+
     public static MyPageDTO fromEntity(MyPage entity) {
         return MyPageDTO.builder()
                 .id(entity.getId())

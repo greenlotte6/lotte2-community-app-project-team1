@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { saveMyPage, softDeleteMyPage } from "@/api/myPageAPI"; // fetchAllPages는 이제 필요 없음
 import useAuth from "../../hooks/useAuth";
+import { deleteMyPage } from "../../api/myPageAPI";
 
 export const MyTop = ({
   editorRef,
@@ -8,6 +9,7 @@ export const MyTop = ({
   setSelectedPage,
   reloadLists, // ✅ 이거 받기!
 }) => {
+  const isTrashed = selectedPage?.isDeleted;
   const [isFavorite, setIsFavorite] = useState(false);
   const { username } = useAuth();
   const userId = username;
@@ -16,21 +18,34 @@ export const MyTop = ({
     setIsFavorite(selectedPage?.isFavorite || false);
   }, [selectedPage]);
 
+  const handlePermanentDelete = async () => {
+    if (!window.confirm("정말 영구 삭제하시겠습니까? 복구 불가합니다.")) return;
+    await deleteMyPage(selectedPage.id);
+    setSelectedPage(null); // 삭제 후 선택 해제
+    if (reloadLists) reloadLists(); // 목록 갱신
+    window.location.reload();
+  };
+
   const handleSave = async () => {
     if (!editorRef.current) return;
     try {
       const output = await editorRef.current.save();
       const firstHeader = output.blocks.find((b) => b.type === "header");
       const title = firstHeader?.data?.text || "제목 없음";
-
+      // isFavorite만 남기고 favorite 날림!
+      const { favorite, ...rest } = selectedPage || {};
       const payload = {
-        ...(selectedPage?.id && { id: selectedPage.id }),
+        ...rest,
         userId,
         title,
         content: JSON.stringify(output),
-        isFavorite,
+        isFavorite: selectedPage?.isFavorite || false,
         shared: false,
       };
+      console.log("⭐️ 최종 saveMyPage payload", payload);
+      console.log("⭐️ 최종 saveMyPage payload", payload);
+      console.log("⭐️ 최종 saveMyPage payload", payload);
+      console.log("⭐️ 최종 saveMyPage payload", payload);
 
       await saveMyPage(payload);
       await reloadLists();
@@ -59,17 +74,43 @@ export const MyTop = ({
     }
   };
 
+  const handleFavorite = async () => {
+    if (!selectedPage) return;
+    try {
+      const updated = {
+        ...selectedPage,
+        isFavorite: !selectedPage.isFavorite,
+      };
+      await saveMyPage(updated);
+      // 저장 후 리스트와 선택된 페이지를 모두 새로고침
+      await reloadLists();
+      setSelectedPage({ ...updated, isFavorite: !!updated.isFavorite });
+    } catch (e) {
+      alert("즐겨찾기 변경 실패");
+    }
+  };
+
   return (
     <div className="topArea">
       <div className="favoriteshare">
-        <button onClick={handleTrash}>
-          <img src="/images/Trash 3 (1).svg" alt="trash" />
-        </button>
-        <button onClick={() => setIsFavorite((prev) => !prev)}>
+        {isTrashed ? (
+          <button className="deletebtn" onClick={handlePermanentDelete}>
+            <img src="/images/remove.png" alt="remove" />
+          </button>
+        ) : (
+          <button onClick={handleTrash}>
+            <img src="/images/Trash 3 (1).svg" alt="trash" />
+          </button>
+        )}
+        <button onClick={handleFavorite}>
           <img
-            src={isFavorite ? "/images/star_filled.svg" : "/images/star.png"}
-            alt="fav"
-            style={{ width: "20px", height: "20px" }}
+            src={
+              selectedPage?.isFavorite === true ||
+              selectedPage?.isFavorite === 1 ||
+              selectedPage?.isFavorite === "1"
+                ? "/images/star_filled.svg"
+                : "/images/star.png"
+            }
           />
         </button>
         <button className="savebtn" onClick={handleSave}>

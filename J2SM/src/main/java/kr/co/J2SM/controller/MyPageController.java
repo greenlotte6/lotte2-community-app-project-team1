@@ -39,9 +39,7 @@ public class MyPageController {
 
     @PostMapping("/save")
     public ResponseEntity<?> saveMyPage(@RequestBody MyPageDTO myPageDTO) {
-        log.info(">>> /api/mypage/save 요청 받음");
-        log.info(">>> 전달된 DTO: {}", myPageDTO);
-
+        log.info("⭐️ 받은 isFavorite: {}", myPageDTO.isFavorite());
         try {
             myPageService.save(myPageDTO);
             return ResponseEntity.ok().build();
@@ -77,6 +75,16 @@ public class MyPageController {
     @GetMapping("/trash")
     public ResponseEntity<List<MyPageDTO>> getTrashedPages() {
         return ResponseEntity.ok(myPageService.getTrashedPages());
+    }
+
+    @GetMapping("/list/{userId}")
+    public ResponseEntity<List<MyPageDTO>> getAllActivePagesByUser(@PathVariable String userId) {
+        return ResponseEntity.ok(myPageService.getAllActivePagesByUser(userId));
+    }
+
+    @GetMapping("/trash/{userId}")
+    public ResponseEntity<List<MyPageDTO>> getTrashedPagesByUser(@PathVariable String userId) {
+        return ResponseEntity.ok(myPageService.getTrashedPagesByUser(userId));
     }
 
 }

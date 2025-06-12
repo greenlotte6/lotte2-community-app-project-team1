@@ -275,7 +275,7 @@
     padding: 8px;
     border-radius: 30px;
     background-color: #c7defd;
-    margin-bottom: 15px;
+    margin-bottom: 6px;
   }
   .childArea div img {
     width: 18px;
@@ -309,6 +309,12 @@
   .subMenu li a {
     color: #2f80ed;
     font-size: 13px;
+  }
+
+  .sidemenu .subMenu {
+    max-height: 240px; /* 원하는 높이(px)로 조절 */
+    overflow-y: auto;
+    /* 필요시 padding, background 등도 추가 */
   }
 
   /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡAside/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
