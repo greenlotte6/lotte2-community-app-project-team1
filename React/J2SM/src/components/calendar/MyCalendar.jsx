@@ -29,7 +29,7 @@ const Calendar = () => {
 
         console.log(data);
       } catch (err) {
-        console.error("일정 불러오기 실패", err);
+        console.error("일정 불러오기 실패.", err);
       }
     };
 
