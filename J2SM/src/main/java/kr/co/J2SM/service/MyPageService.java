@@ -113,4 +113,11 @@ public class MyPageService {
                 .collect(Collectors.toList());
     }
 
+    public List<MyPageDTO> getFavoritePagesByUser(String userId) {
+        return myPageRepository.findAllFavoriteByUser(userId)
+                .stream()
+                .map(MyPageDTO::fromEntity)
+                .collect(Collectors.toList());
+    }
+
 }

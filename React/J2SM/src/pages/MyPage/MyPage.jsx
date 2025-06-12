@@ -6,6 +6,7 @@ import { MyTop } from "../../components/MyPage/MyTop";
 import { MyMid } from "../../components/MyPage/MyMid";
 import {
   fetchAllPagesByUser,
+  fetchFavoritesPagesByUser,
   fetchTrashPagesByUser,
 } from "../../api/myPageAPI";
 import useAuth from "../../hooks/useAuth";
@@ -15,9 +16,9 @@ const MyPage = () => {
   const [normalList, setNormalList] = useState([]);
   const [trashList, setTrashList] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
+  const [favoriteList, setFavoriteList] = useState([]);
   const { username } = useAuth();
   const userId = username;
-  const favoriteList = normalList.filter((page) => page.isFavorite);
   const fixBoolean = (v) => v === true || v === 1 || v === "1";
 
   // ✅ DB에서 불러오기
@@ -25,6 +26,7 @@ const MyPage = () => {
     try {
       const normalRaw = await fetchAllPagesByUser(userId); // 정상 페이지
       const trashRaw = await fetchTrashPagesByUser(userId); // 휴지통 페이지
+      const favoritesRaw = await fetchFavoritesPagesByUser(userId); // 휴지통 페이지
 
       // ⭐️ 여기서 isFavorite을 boolean으로 통일해서 저장!
       const normal = (normalRaw || []).map((p) => ({
@@ -35,9 +37,14 @@ const MyPage = () => {
         ...p,
         isFavorite: fixBoolean(p.isFavorite),
       }));
+      const favorites = (favoritesRaw || []).map((p) => ({
+        ...p,
+        isFavorite: true, // 어차피 즐겨찾기만 모아서 줌
+      }));
 
       setNormalList(normal);
       setTrashList(trash);
+      setFavoriteList(favorites);
     } catch (err) {
       console.error("페이지 로딩 실패", err);
     }

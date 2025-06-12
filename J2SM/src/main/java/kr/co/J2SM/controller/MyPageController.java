@@ -87,4 +87,9 @@ public class MyPageController {
         return ResponseEntity.ok(myPageService.getTrashedPagesByUser(userId));
     }
 
+    @GetMapping("/favorites/{userId}")
+    public List<MyPageDTO> getFavoritePages(@PathVariable String userId) {
+        return myPageService.getFavoritePagesByUser(userId);
+    }
+
 }

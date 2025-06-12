@@ -105,12 +105,12 @@ export const MyTop = ({
         <button onClick={handleFavorite}>
           <img
             src={
-              selectedPage?.isFavorite === true ||
-              selectedPage?.isFavorite === 1 ||
-              selectedPage?.isFavorite === "1"
+              selectedPage?.isFavorite
                 ? "/images/star_filled.svg"
                 : "/images/star.png"
             }
+            alt="fav"
+            style={{ width: "20px", height: "20px" }}
           />
         </button>
         <button className="savebtn" onClick={handleSave}>
