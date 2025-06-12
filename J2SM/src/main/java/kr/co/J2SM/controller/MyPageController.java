@@ -39,12 +39,10 @@ public class MyPageController {
 
     @PostMapping("/save")
     public ResponseEntity<?> saveMyPage(@RequestBody MyPageDTO myPageDTO) {
-        log.info("⭐️ 받은 isFavorite: {}", myPageDTO.isFavorite());
         try {
             myPageService.save(myPageDTO);
             return ResponseEntity.ok().build();
         } catch (Exception e) {
-            log.error(">>> 저장 중 오류 발생", e); // 🔥 오류 내용 전체 출력
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("서버 오류: " + e.getMessage());
         }
     }
@@ -89,7 +87,8 @@ public class MyPageController {
 
     @GetMapping("/favorites/{userId}")
     public List<MyPageDTO> getFavoritePages(@PathVariable String userId) {
-        return myPageService.getFavoritePagesByUser(userId);
+        List<MyPageDTO> list = myPageService.getFavoritePagesByUser(userId);
+        return list;
     }
 
 }

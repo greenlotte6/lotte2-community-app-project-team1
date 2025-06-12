@@ -39,14 +39,10 @@ public class MyPageService {
             entity.setContent(myPageDTO.getContent());
             entity.setTitle(myPageDTO.getTitle());
             entity.setFavorite(myPageDTO.isFavorite());
-            log.info("⭐️ Entity isFavorite={}", entity.isFavorite());
             entity.setShared(myPageDTO.isShared());
             // entity.setCreatedAt(LocalDateTime.now()); // createdAt은 최초 1회만 세팅
             entity.setDeleted(false); // 저장시에는 무조건 복원상태
             // 변경감지(dirty checking)로 자동 update
-            log.info("⭐️ MyPageService.save() 받은 isFavorite: {}", myPageDTO.isFavorite());
-            log.info("⭐️ MyPageService.save() 받은 isFavorite: {}", myPageDTO.isFavorite());log.info("⭐️ MyPageService.save() 받은 isFavorite: {}", myPageDTO.isFavorite());log.info("⭐️ MyPageService.save() 받은 isFavorite: {}", myPageDTO.isFavorite());
-            log.info("⭐️ MyPageService.save() 받은 isFavorite: {}", myPageDTO.isFavorite());
 
 
         } else {
