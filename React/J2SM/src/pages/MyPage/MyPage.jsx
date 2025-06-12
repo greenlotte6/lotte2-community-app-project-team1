@@ -27,7 +27,14 @@ const MyPage = () => {
       const normalRaw = await fetchAllPagesByUser(userId); // 정상 페이지
       const trashRaw = await fetchTrashPagesByUser(userId); // 휴지통 페이지
       const favoritesRaw = await fetchFavoritesPagesByUser(userId); // 휴지통 페이지
-
+      console.log("⭐️ normalRaw", normalRaw);
+      console.log("⭐️ favoritesRaw", favoritesRaw);
+      console.log("⭐️ normalRaw", normalRaw);
+      console.log("⭐️ favoritesRaw", favoritesRaw);
+      console.log("⭐️ normalRaw", normalRaw);
+      console.log("⭐️ favoritesRaw", favoritesRaw);
+      console.log("⭐️ normalRaw", normalRaw);
+      console.log("⭐️ favoritesRaw", favoritesRaw);
       // ⭐️ 여기서 isFavorite을 boolean으로 통일해서 저장!
       const normal = (normalRaw || []).map((p) => ({
         ...p,
@@ -55,16 +62,29 @@ const MyPage = () => {
     loadPagesFromServer();
   }, [userId]);
 
+  useEffect(() => {
+    if (!selectedPage) return;
+    const allPages = [...normalList, ...favoriteList, ...trashList];
+    const latest = allPages.find((p) => p.id === selectedPage.id);
+    if (latest && latest.isFavorite !== selectedPage.isFavorite) {
+      setSelectedPage(latest);
+    }
+  }, [normalList, favoriteList, trashList]);
+
   // ✅ 선택된 페이지를 Editor에 렌더
   const handleSelectPage = async (page) => {
     if (!editorRef.current || !page) return;
 
+    // 🟢 모든 리스트를 합쳐서 최신 객체를 찾아서 사용!
+    const allPages = [...normalList, ...favoriteList, ...trashList];
+    const latest = allPages.find((p) => p.id === page.id) || page;
+
     try {
       await editorRef.current.isReady;
-      const content = JSON.parse(page.content || '{"blocks": []}');
+      const content = JSON.parse(latest.content || '{"blocks": []}');
       if (!content.blocks) content.blocks = [];
       await editorRef.current.render(content);
-      setSelectedPage(page);
+      setSelectedPage(latest);
     } catch (err) {
       console.error("Editor 렌더 실패", err);
     }
@@ -96,7 +116,11 @@ const MyPage = () => {
             selectedPage={selectedPage}
             setSelectedPage={setSelectedPage}
             reloadLists={loadPagesFromServer}
+            normalList={normalList}
+            favoriteList={favoriteList}
+            trashList={trashList}
           />
+
           <MyMid
             editorRef={editorRef}
             selectedPage={selectedPage}

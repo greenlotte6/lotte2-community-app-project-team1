@@ -20,7 +20,7 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
             class: Header,
             inlineToolbar: true,
             config: {
-              placeholder: "제목을 입력하세요", // 👈 이거 꼭 넣어야 함
+              placeholder: "제목을 입력하세요",
               levels: [1, 2, 3],
               defaultLevel: 1,
             },
@@ -52,19 +52,20 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
     };
   }, []);
 
-  // 선택된 페이지 변경 시 렌더
+  // ✅ 에디터와 페이지가 모두 준비된 뒤 렌더!
   useEffect(() => {
     if (!editor || !selectedPage) return;
-
-    try {
-      const content = JSON.parse(selectedPage.content || '{"blocks": []}');
-      editor.isReady.then(() => {
-        editor.clear();
-        editor.render(content);
-      });
-    } catch (err) {
-      console.error("페이지 렌더 실패", err);
-    }
+    const renderContent = async () => {
+      try {
+        const content = JSON.parse(selectedPage.content || '{"blocks": []}');
+        await editor.isReady; // 반드시 준비됐을 때만
+        await editor.clear(); // 꼭 await!
+        await editor.render(content); // 꼭 await!
+      } catch (err) {
+        console.error("페이지 렌더 실패", err);
+      }
+    };
+    renderContent();
   }, [selectedPage, editor]);
 
   return <div className="midArea" id="editorjs"></div>;

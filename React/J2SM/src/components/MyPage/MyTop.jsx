@@ -7,7 +7,10 @@ export const MyTop = ({
   editorRef,
   selectedPage,
   setSelectedPage,
-  reloadLists, // ✅ 이거 받기!
+  reloadLists,
+  normalList = [],
+  favoriteList = [],
+  trashList = [],
 }) => {
   const isTrashed = selectedPage?.isDeleted;
   const [isFavorite, setIsFavorite] = useState(false);
@@ -42,10 +45,6 @@ export const MyTop = ({
         isFavorite: selectedPage?.isFavorite || false,
         shared: false,
       };
-      console.log("⭐️ 최종 saveMyPage payload", payload);
-      console.log("⭐️ 최종 saveMyPage payload", payload);
-      console.log("⭐️ 최종 saveMyPage payload", payload);
-      console.log("⭐️ 최종 saveMyPage payload", payload);
 
       await saveMyPage(payload);
       await reloadLists();
@@ -81,10 +80,13 @@ export const MyTop = ({
         ...selectedPage,
         isFavorite: !selectedPage.isFavorite,
       };
-      await saveMyPage(updated);
-      // 저장 후 리스트와 선택된 페이지를 모두 새로고침
-      await reloadLists();
-      setSelectedPage({ ...updated, isFavorite: !!updated.isFavorite });
+      console.log("⭐️ handleFavorite updated", updated);
+      console.log("⭐️ handleFavorite updated", updated);
+      console.log("⭐️ handleFavorite updated", updated);
+      console.log("⭐️ handleFavorite updated", updated);
+      await saveMyPage(updated); // 1. DB에 저장
+      await reloadLists(); // 2. 리스트 재조회 (중복해도 됨)
+      //setSelectedPage(updated); // 3. ★★★ 여기서 즉시 반영! ★★★
     } catch (e) {
       alert("즐겨찾기 변경 실패");
     }
