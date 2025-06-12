@@ -4,29 +4,49 @@ import "../../styles/DashBoard/MyPage.scss";
 import { MyAside } from "../../components/MyPage/MyAside";
 import { MyTop } from "../../components/MyPage/MyTop";
 import { MyMid } from "../../components/MyPage/MyMid";
-import { fetchAllPages, fetchTrashPages } from "@/api/myPageAPI";
+import {
+  fetchAllPagesByUser,
+  fetchTrashPagesByUser,
+} from "../../api/myPageAPI";
+import useAuth from "../../hooks/useAuth";
 
 const MyPage = () => {
   const editorRef = useRef(null);
   const [normalList, setNormalList] = useState([]);
   const [trashList, setTrashList] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
+  const { username } = useAuth();
+  const userId = username;
+  const favoriteList = normalList.filter((page) => page.isFavorite);
+  const fixBoolean = (v) => v === true || v === 1 || v === "1";
 
   // ✅ DB에서 불러오기
   const loadPagesFromServer = async () => {
     try {
-      const normal = await fetchAllPages(); // 정상 페이지
-      const trash = await fetchTrashPages(); // 휴지통 페이지
-      setNormalList(normal || []);
-      setTrashList(trash || []);
+      const normalRaw = await fetchAllPagesByUser(userId); // 정상 페이지
+      const trashRaw = await fetchTrashPagesByUser(userId); // 휴지통 페이지
+
+      // ⭐️ 여기서 isFavorite을 boolean으로 통일해서 저장!
+      const normal = (normalRaw || []).map((p) => ({
+        ...p,
+        isFavorite: fixBoolean(p.isFavorite),
+      }));
+      const trash = (trashRaw || []).map((p) => ({
+        ...p,
+        isFavorite: fixBoolean(p.isFavorite),
+      }));
+
+      setNormalList(normal);
+      setTrashList(trash);
     } catch (err) {
       console.error("페이지 로딩 실패", err);
     }
   };
 
   useEffect(() => {
+    if (!userId) return;
     loadPagesFromServer();
-  }, []);
+  }, [userId]);
 
   // ✅ 선택된 페이지를 Editor에 렌더
   const handleSelectPage = async (page) => {
@@ -54,13 +74,13 @@ const MyPage = () => {
     setSelectedPage(updatedPage);
     setNormalList(updatedList);
   };
-
   return (
     <div id="MyPage">
       <DashboardLayout>
         <MyAside
           normalList={normalList}
           trashList={trashList}
+          favoriteList={favoriteList}
           onSelectPage={handleSelectPage}
         />
         <div className="contentArea">

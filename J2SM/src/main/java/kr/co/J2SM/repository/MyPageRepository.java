@@ -25,4 +25,11 @@ public interface MyPageRepository extends JpaRepository<MyPage, Long> {
     @Transactional
     @Query("UPDATE MyPage p SET p.isDeleted = false WHERE p.id = :id")
     void restore(@Param("id") Long id);
+
+    // MyPageRepository.java
+    @Query("SELECT p FROM MyPage p WHERE p.isDeleted = false AND p.user.uid = :userId")
+    List<MyPage> findAllActiveByUser(@Param("userId") String userId);
+
+    @Query("SELECT p FROM MyPage p WHERE p.isDeleted = true AND p.user.uid = :userId")
+    List<MyPage> findAllTrashedByUser(@Param("userId") String userId);
 }

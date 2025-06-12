@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 
-export const MyAside = ({ normalList = [], trashList = [], onSelectPage }) => {
+export const MyAside = ({
+  normalList = [],
+  trashList = [],
+  favoriteList = [],
+  onSelectPage,
+}) => {
   const [isNormalOpen, setIsNormalOpen] = useState(true);
-  const [isTrashOpen, setIsTrashOpen] = useState(true);
+  const [isTrashOpen, setIsTrashOpen] = useState(false);
+  const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);
 
   return (
     <aside>
@@ -37,19 +43,18 @@ export const MyAside = ({ normalList = [], trashList = [], onSelectPage }) => {
               ))}
             </ul>
           )}
-
-          {/* Trash 메뉴 */}
+          {/* Favorite 메뉴 */}
           <div
             className="menuItem"
-            onClick={() => setIsTrashOpen(!isTrashOpen)}
+            onClick={() => setIsFavoriteOpen((prev) => !prev)}
           >
-            <img src="/images/Trash 3.svg" alt="trash" />
-            <span>Trash</span>
+            <img src="/images/File text.svg" alt="favorite" />
+            <span>Favorites</span>
             <img src="/images/Vector.svg" alt="vector" />
           </div>
-          {isTrashOpen && trashList.length > 0 && (
-            <ul className="subMenu">
-              {trashList.map((page) => (
+          {isFavoriteOpen && favoriteList.length > 0 && (
+            <ul className={`subMenu ${isFavoriteOpen ? "open" : ""}`}>
+              {favoriteList.map((page) => (
                 <li key={page.id}>
                   <a
                     href="#"
@@ -64,8 +69,31 @@ export const MyAside = ({ normalList = [], trashList = [], onSelectPage }) => {
               ))}
             </ul>
           )}
-          {isTrashOpen && trashList.length === 0 && (
-            <div className="empty-trash">No pages in Trash.</div>
+          {/* Trash 메뉴 */}
+          <div
+            className="menuItem"
+            onClick={() => setIsTrashOpen(!isTrashOpen)}
+          >
+            <img src="/images/Trash 3.svg" alt="trash" />
+            <span>Trash</span>
+            <img src="/images/Vector.svg" alt="vector" />
+          </div>
+          {isTrashOpen && trashList.length > 0 && (
+            <ul className={`subMenu ${isTrashOpen ? "open" : ""}`}>
+              {trashList.map((page) => (
+                <li key={page.id}>
+                  <a
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      onSelectPage(page);
+                    }}
+                  >
+                    {page.title}
+                  </a>
+                </li>
+              ))}
+            </ul>
           )}
         </div>
       </div>

@@ -29,10 +29,9 @@ public class MyPage {
     @Lob // 긴 JSON 문자열
     private String content;
 
-    @Builder.Default
+    @Column(name = "isFavorite")
     private boolean isFavorite = false;
 
-    @Builder.Default
     private boolean shared = false;
 
     private LocalDateTime createdAt;

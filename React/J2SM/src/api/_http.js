@@ -73,7 +73,8 @@ export const CALENDAR_LIST = `${SERVER_HOST}/api/calendar`;
 export const MYPAGE_SAVE = `${SERVER_HOST}/api/mypage/save`;
 
 // 전체 목록 (GET /api/mypage/list)
-export const MYPAGE_LIST = `${SERVER_HOST}/api/mypage/list`;
+export const MYPAGE_LIST = (userId) =>
+  `${SERVER_HOST}/api/mypage/list/${userId}`;
 
 // 🗑 휴지통으로 이동 (PUT /api/mypage/trash/{id})
 export const MYPAGE_SOFT_DELETE = (id) =>
@@ -86,7 +87,8 @@ export const MYPAGE_RESTORE = (id) => `${SERVER_HOST}/api/mypage/restore/${id}`;
 export const MYPAGE_DELETE = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;
 
 // 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
-export const MYPAGE_TRASH_LIST = `${SERVER_HOST}/api/mypage/trash`;
+export const MYPAGE_TRASH_LIST = (userId) =>
+  `${SERVER_HOST}/api/mypage/trash/${userId}`;
 
 // 드라이브
 export const DRIVE_API = {
