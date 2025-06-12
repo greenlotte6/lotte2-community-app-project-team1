@@ -11,9 +11,13 @@ public class WebConfig implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:5173")
-
-                .allowedMethods("GET", "POST", "PATCH", "DELETE")
+                .allowedMethods("*")
                 .allowedHeaders("*")
-                .exposedHeaders("Content-Disposition"); // 👈 이게 있어야 다운로드시 filename 노출됨
+                .exposedHeaders(
+                        "Content-Disposition",   // 대문자 정확히!
+                        "content-disposition",   // 혹시 몰라서 추가
+                        "Content-Type"
+                )
+                .allowCredentials(true);
     }
 }

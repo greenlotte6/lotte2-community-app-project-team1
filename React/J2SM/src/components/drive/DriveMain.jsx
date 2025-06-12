@@ -116,22 +116,22 @@ const DriveMain = () => {
 
   const handleDownload = async (id) => {
     try {
-      const res = await fetch(DRIVE_API.DOWNLOAD(id));
-      const blob = await res.blob();
+      const res = await fetch(DRIVE_API.DOWNLOAD(id), {
+        method: "GET",
+        credentials: "include",
+      });
 
-      const disposition = res.headers.get("Content-Disposition");
-      let filename = "file";
+      const disposition = res.headers.get("content-disposition");
+      let filename = "downloaded-file";
 
       if (disposition) {
-        const utf8Match = disposition.match(/filename\*=UTF-8''(.+?)(?:;|$)/);
-        const asciiMatch = disposition.match(/filename="(.+?)"/);
+        const utf8Match = disposition.match(/filename\*=UTF-8''(.+)/i);
         if (utf8Match) {
           filename = decodeURIComponent(utf8Match[1]);
-        } else if (asciiMatch) {
-          filename = asciiMatch[1];
         }
       }
 
+      const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
