@@ -7,13 +7,21 @@ import BoardModal from "../board/BoardModal"; // 모달 컴포넌트 임포트
 const Aside = () => {
   const location = useLocation();
   const { pathname } = location;
-
+  const [customBoards, setCustomBoards] = useState([]);
   const [isBoardModalOpen, setBoardModalOpen] = useState(false);
 
   const handleBoardModalOpen = () => setBoardModalOpen(true);
   const handleBoardModalClose = () => setBoardModalOpen(false);
-  const handleBoardCreate = () => {
-    alert("게시판 생성 로직이 여기에 들어갑니다.");
+  const handleBoardCreate = (boardName) => {
+    if (!boardName) return;
+    const newBoard = {
+      id: Date.now(), // 추후 DB 연동 시 백엔드 ID로 대체
+      name: boardName,
+    };
+
+    console.log("새 게시판 생성:", newBoard); // ✅ 콘솔 확인
+
+    setCustomBoards((prev) => [...prev, newBoard]);
     setBoardModalOpen(false);
   };
 
@@ -81,50 +89,39 @@ const Aside = () => {
                   <Link to="#">더미더미더미</Link>
                 </li>
               </ul>
+
               <div className="side-icon">
                 <button className="side-click" onClick={handleBoardModalOpen}>
                   + New BOARD
                 </button>
               </div>
+
               <div className="menuItem">
                 <img src="/images/File text.svg" alt="users" />
                 <Link to="/dashboard/board/list">🔒공지사항</Link>
                 <img src="/images/Vector.svg" alt="vector" />
               </div>
-              <ul className="subMenu">
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-              </ul>
               <div className="menuItem">
                 <img src="/images/File text.svg" alt="users" />
                 <Link to="/dashboard/board/list">사내게시판</Link>
                 <img src="/images/Vector.svg" alt="vector" />
               </div>
-              <ul className="subMenu">
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-              </ul>
               <div className="menuItem">
                 <img src="/images/File text.svg" alt="users" />
                 <Link to="/dashboard/board/list">익명게시판</Link>
                 <img src="/images/Vector.svg" alt="vector" />
               </div>
-              <ul className="subMenu">
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-              </ul>
+
+              {/* ✅ 새로 생성된 게시판 */}
+              {customBoards.map((board) => (
+                <div className="menuItem" key={board.id}>
+                  <img src="/images/File text.svg" alt="users" />
+                  <Link to={`/dashboard/board/custom/${board.id}`}>
+                    {board.name}
+                  </Link>
+                  <img src="/images/Vector.svg" alt="vector" />
+                </div>
+              ))}
             </div>
           </div>
         </aside>

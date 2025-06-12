@@ -22,6 +22,34 @@ const Calendar = () => {
   }, [schedules, currentYear, currentMonth]);
 
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+        setShowDetailModal(false);
+        setSelectedSchedule(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") {
+        closeViewModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => {
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, []);
+
+  useEffect(() => {
     const loadSchedules = async () => {
       try {
         const data = await getCalendar();
@@ -228,6 +256,7 @@ const Calendar = () => {
   const [editMode, setEditMode] = useState(false);
   const onClickEdit = () => {
     if (!selectedSchedule) return;
+    closeViewModal();
     setShowDetailModal(true);
     setEditMode(true);
 
@@ -289,6 +318,7 @@ const Calendar = () => {
     const modal = document.getElementById("schedule-modal");
     if (modal) {
       modal.style.display = "none";
+      console.log("🔒 closeModal called");
     }
 
     // 입력 초기화
@@ -339,10 +369,11 @@ const Calendar = () => {
   return (
     <div className="calendar-wrappers" style={{ width: "100%" }}>
       <div className="calendar-header">
+        <div className="hil">My calendar</div>
         <button onClick={prevMonth}>❮</button>
-        <span style={{ padding: "0 50px" }}>{`${currentYear}.${String(
-          currentMonth
-        ).padStart(2, "0")}`}</span>
+        <span
+          style={{ padding: "0 50px", fontSize: "20px" }}
+        >{`${currentYear}.${String(currentMonth).padStart(2, "0")}`}</span>
         <button onClick={nextMonth}>❯</button>
       </div>
       <table className="calendar-table">
@@ -372,7 +403,13 @@ const Calendar = () => {
           <button className="calen" onClick={saveSchedule}>
             등록하기
           </button>
-          <button className="calen" onClick={() => setShowDetailModal(true)}>
+          <button
+            className="calen"
+            onClick={() => {
+              closeModal(); // 간편등록 모달 닫기
+              setShowDetailModal(true); // 세부등록 모달 열기
+            }}
+          >
             세부일정등록
           </button>
         </div>
@@ -405,11 +442,14 @@ const Calendar = () => {
             <strong>메모:</strong> <span id="view-note"></span>
           </p>
         </div>
-        <div className="s_button" style={{ padding: "20px" }}>
-          <button id="edit-button" onClick={onClickEdit}>
+        <div
+          className="s_button"
+          style={{ padding: "20px", display: "flex", margin: "0 auto" }}
+        >
+          <button className="calen" id="edit-button" onClick={onClickEdit}>
             수정하기
           </button>
-          <button id="delete-button" onClick={deleteSchedule}>
+          <button className="calen" id="delete-button" onClick={deleteSchedule}>
             삭제하기
           </button>
         </div>
