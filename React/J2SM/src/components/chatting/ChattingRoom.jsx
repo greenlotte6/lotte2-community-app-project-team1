@@ -11,7 +11,6 @@ const ChattingRoom = ({
   userId = "홍길동",
   nick = "회원",
 }) => {
-  
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [connected, setConnected] = useState(false);
@@ -124,58 +123,11 @@ const ChattingRoom = ({
       });
   };
 
-  // 채팅방 나가기
-  const handleLeave = async () => {
-    // 본인 제외 참가자 목록을 구합니다.
-    const others = participants.filter((p) => {
-      const id = typeof p === "string" ? p : p.id;
-      return id !== userId;
-    });
-
-    // 본인이 관리자이고, 다른 참가자가 있을 때만 권한 이양
-    if (admins.includes(userId) && others.length > 0) {
-      // 이름 혹은 ID 표시용 리스트 생성
-      const displayList = others
-        .map((p) => (typeof p === "string" ? p : p.name || p.id))
-        .join("\n");
-
-      const chosen = window
-        .prompt(
-          `관리자 권한을 넘길 사용자를 아래에서 선택하세요:\n${displayList}`
-        )
-        ?.trim();
-
-      // 선택 유효성 검사
-      const target = others.find((p) => {
-        const name = typeof p === "string" ? p : p.name || p.id;
-        return name === chosen;
-      });
-      if (!target) {
-        alert("유효한 사용자 이름을 입력해주세요.");
-        return;
-      }
-
-      const targetId = typeof target === "string" ? target : target.id;
-
-      // 권한 이양 API 호출
-      try {
-        await axios.post(API.CHAT.GRANT_ADMIN(roomId), null, {
-          params: { userId: targetId },
-        });
-        alert(`${chosen}님에게 관리자 권한을 이양했습니다.`);
-      } catch (err) {
-        console.error(err);
-        alert("권한 이양에 실패했습니다. 떠나기를 취소합니다.");
-        return;
-      }
-    }
-
-    // 나가기 최종 확인
-    if (!window.confirm("채팅방을 나가시겠습니까?")) return;
-
-    // 나가기 API 호출
+  // 채팅방 나가기 (관리자는 백엔드에서 처리)
+  const handleLeave = () => {
+    if (!window.confirm("채팅을 나가겠습니까?")) return;
     axios
-      .delete(API.CHAT.DELETE_ROOM(roomId), { params: { userId } })
+      .delete(API.CHAT.DELETE_ROOM(roomId), { withCredentials: true })
       .then(() => navigate("/dashboard/chatting/main"))
       .catch(console.error);
   };

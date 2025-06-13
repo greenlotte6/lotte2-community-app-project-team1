@@ -52,15 +52,24 @@ export const INQUIRE_REGISTER = `${SERVER_HOST}/qna`;
 // 채팅 REST 엔드포인트 모음
 export const API = {
   CHAT: {
-    ROOM_LIST: (userId) => `${SERVER_HOST}/api/chat/rooms/${userId}`, // GET
-    CREATE_ROOM: `${SERVER_HOST}/api/chat/rooms`, // POST
-    DELETE_ROOM: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}`, // DELETE
-    ROOM_DETAIL: (roomId) => `${SERVER_HOST}/api/chat/rooms/select/${roomId}`, // GET
+    // 채팅방 리스트(GET)
+    ROOM_LIST: (userId) => `${SERVER_HOST}/api/chat/rooms/${userId}`,
+    // 채팅방 생성(POST)
+    CREATE_ROOM: `${SERVER_HOST}/api/chat/rooms`,
+    // 채팅방 삭제(DELETE)
+    DELETE_ROOM: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}`,
+    // 채팅방 채팅 정보(GET)
+    ROOM_DETAIL: (roomId) => `${SERVER_HOST}/api/chat/rooms/select/${roomId}`,
+    // 회사별 유저 리스트(GET)
     USER_LIST: (company) =>
-      `${SERVER_HOST}/api/chat/users/by-company/${company}`, // ← 여기에 사용자 리스트 GET 추가
-    MARK_READ: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}/read`, // 안읽은 메시지 숫자 0으로 초기화
+      `${SERVER_HOST}/api/chat/users/by-company/${company}`,
+    // 읽지 않은 채팅 수 초기화(POST)
+    MARK_READ: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}/read`,
+    // 채팅방 이름 변경(PUT)
     UPDATE_ROOM_NAME: (roomId) =>
-      `${SERVER_HOST}/api/chat/rooms/${roomId}/name`, // PUT (채팅방 이름 변경)
+      `${SERVER_HOST}/api/chat/rooms/${roomId}/name`,
+    // 채팅방 권한 이동
+    GRANT_ADMIN: (roomId) => `${SERVER_HOST}/api/chat/rooms/${roomId}/admin`,
   },
 };
 
