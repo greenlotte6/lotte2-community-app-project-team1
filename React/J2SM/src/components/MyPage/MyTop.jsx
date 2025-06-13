@@ -49,7 +49,7 @@ export const MyTop = ({
       await saveMyPage(payload);
       await reloadLists();
       alert("저장 완료!");
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       console.error("저장 실패", err);
       alert("저장 중 오류 발생");
@@ -67,7 +67,7 @@ export const MyTop = ({
       await reloadLists(); // ✅ 리스트 갱신만 호출!
       alert("휴지통으로 이동 완료!");
 
-      window.location.reload();
+      //window.location.reload();
     } catch (err) {
       console.error("삭제 실패", err);
     }
