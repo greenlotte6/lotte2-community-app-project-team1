@@ -26,7 +26,7 @@ export const MyTop = ({
     await deleteMyPage(selectedPage.id);
     setSelectedPage(null); // 삭제 후 선택 해제
     if (reloadLists) reloadLists(); // 목록 갱신
-    window.location.reload();
+    //window.location.reload();
   };
 
   const handleSave = async () => {
