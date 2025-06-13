@@ -36,7 +36,6 @@ public class DriveController {
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) throws IOException {
         DriveDTO dto = driveService.getDriveFile(id);
 
-        // 🔥 경로 재조합
         Path rawPath = Paths.get(dto.getFilePath());
         Path filePath = rawPath.isAbsolute()
                 ? rawPath
@@ -47,7 +46,8 @@ public class DriveController {
         System.out.println("🚨 readable: " + Files.isReadable(filePath));
 
         if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
-            throw new FileNotFoundException("파일을 찾을 수 없습니다. (" + filePath + ")");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(null); // 404 반환
         }
 
         Resource resource = new UrlResource(filePath.toUri());
@@ -66,6 +66,7 @@ public class DriveController {
                 .headers(headers)
                 .body(resource);
     }
+
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
