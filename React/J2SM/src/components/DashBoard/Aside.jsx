@@ -26,7 +26,7 @@ const Aside = () => {
   };
 
   // '/dashboard/calendar' 경로일 때
-  if (pathname === "/dashboard/calendar") {
+  if (pathname.includes("/dashboard/calendar")) {
     return (
       <aside>
         <div className="sidemenu">
@@ -36,30 +36,14 @@ const Aside = () => {
           <div className="childArea">
             <div className="menuItem">
               <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/calendar/my">My Calendar</Link>
+              <Link to="/dashboard/calendar">My Calendar</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="/dashboard/calendar/my/dummy1">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/calendar/my/dummy2">더미더미더미</Link>
-              </li>
-            </ul>
             <div className="menuItem">
               <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/calendar/social">Social Calendar</Link>
+              <Link to="/dashboard/calendar/public">Public Calendar</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="/dashboard/calendar/social/dummy1">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/calendar/social/dummy2">더미더미더미</Link>
-              </li>
-            </ul>
           </div>
         </div>
       </aside>

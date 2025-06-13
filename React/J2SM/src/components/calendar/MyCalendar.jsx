@@ -1,15 +1,29 @@
 import React, { useState, useEffect, useRef } from "react";
 import flatpickr from "flatpickr";
+import axios from "axios";
 import "flatpickr/dist/themes/dark.css";
 import "../../styles/DashBoard/calendar.scss";
+import useAuth from "../../hooks/useAuth";
 import {
   getCalendar,
   postCalendar,
   deleteCalendar,
   putCalendar,
 } from "../../api/calendar";
+import useCalendar from "../../hooks/useCalendar";
+
+const API_BASE = "/api/calendar";
 
 const Calendar = () => {
+  // username : 아이디
+  // nick : 이름
+  const { username, nick, company } = useAuth();
+  const [cate] = useCalendar();
+
+  console.log(cate);
+  console.log("유저 아이디 : " + username);
+  console.log("유저 이름 : " + nick);
+  console.log("회사 이름 : " + company);
   const [currentYear, setCurrentYear] = useState(new Date().getFullYear());
   const [currentMonth, setCurrentMonth] = useState(new Date().getMonth() + 1);
   const [schedules, setSchedules] = useState([]);
@@ -49,10 +63,11 @@ const Calendar = () => {
     };
   }, []);
 
+  // 일정 불러오기
   useEffect(() => {
     const loadSchedules = async () => {
       try {
-        const data = await getCalendar();
+        const data = await getCalendar(cate);
         setSchedules(data);
 
         console.log(data);
@@ -62,7 +77,7 @@ const Calendar = () => {
     };
 
     loadSchedules();
-  }, []);
+  }, [cate]);
   const renderCalendar = (year, month) => {
     if (!calendarRef.current) return;
     const calendarBody = calendarRef.current;
@@ -193,6 +208,11 @@ const Calendar = () => {
     setTimeout(() => {
       titleInput.focus();
     }, 100);
+
+    const openViewModal = (event) => {
+      setSelectedSchedule(event);
+      console.log("선택된 일정 정보:", event); // 👈 여기에 찍어보면 `id`가 있는지 확인 가능
+    };
   };
 
   const saveSchedule = async () => {
@@ -236,10 +256,12 @@ const Calendar = () => {
     try {
       if (editMode && selectedSchedule?.id) {
         const updated = await putCalendar(selectedSchedule.id, updatedSchedule);
+
         setSchedules((prev) =>
           prev.map((sch) => (sch.id === selectedSchedule.id ? updated : sch))
         );
       } else {
+        console.log(updatedSchedule + ": 업데이터 캘린더");
         const savedEvent = await postCalendar(updatedSchedule);
         setSchedules([...schedules, savedEvent]);
       }
@@ -272,6 +294,9 @@ const Calendar = () => {
   };
 
   const deleteSchedule = async () => {
+    console.log(selectedSchedule + "스케줄");
+    console.log(selectedSchedule.id + "아이디");
+
     if (!selectedSchedule || !selectedSchedule.id) return;
 
     const confirmDelete = window.confirm("이 일정을 삭제하시겠습니까?");
