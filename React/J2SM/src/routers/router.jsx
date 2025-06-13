@@ -20,6 +20,7 @@ import AdminEmployeePage from "../pages/admin/AdminEmployeePage";
 import AdminMembershipPage from "../pages/admin/AdminMembershipPage";
 import AdminPaymentPage from "../pages/admin/AdminPaymentPage";
 import CalendarPage from "../pages/Calendar/CalendarPage";
+import PublicCalendarPage from "../pages/Calendar/PublicCalendarPage";
 import ChattingMainPage from "../pages/chatting/ChattingMainPage";
 import ChattingRoomPage from "../pages/chatting/ChattingRoomPage";
 import MyPage from "../pages/MyPage/MyPage";
@@ -80,6 +81,7 @@ const router = createBrowserRouter([
 
   /* 캘린더 */
   { path: "/dashboard/calendar", element: <CalendarPage /> },
+  { path: "/dashboard/calendar/public", element: <CalendarPage /> },
 
   /* 채팅 */
   { path: "/dashboard/chatting/main", element: <ChattingMainPage /> },

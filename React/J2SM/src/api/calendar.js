@@ -1,9 +1,9 @@
 import axios from "axios";
 import { CALENDAR_LIST, CALENDAR_SAVE } from "./_http";
 
-export const getCalendar = async () => {
+export const getCalendar = async (cate) => {
   try {
-    const response = await axios.get(`${CALENDAR_LIST}`, {
+    const response = await axios.get(`${CALENDAR_LIST}/${cate}`, {
       withCredentials: true,
     });
     return response.data;
@@ -59,5 +59,16 @@ export const putCalendar = async (id, updatedSchedule) => {
   } catch (error) {
     console.error("일정 수정 실패", error);
     throw error;
+  }
+};
+
+export const getPublicCalendar = async () => {
+  try {
+    const response = await axios.get(`/api/publiccalendar`, {
+      withCredentials: true,
+    });
+    return response.data;
+  } catch (err) {
+    console.error(err);
   }
 };

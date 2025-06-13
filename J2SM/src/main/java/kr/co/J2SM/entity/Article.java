@@ -28,6 +28,11 @@ public class Article {
     private int comment = 0;
 
     private String cate;
+    // 공지사항, 사내게시판, 익명게시판, 12게시판
+
+    // 회사이름
+
+    // 회사이름 공지사항
 
     private String title;
     private String content;

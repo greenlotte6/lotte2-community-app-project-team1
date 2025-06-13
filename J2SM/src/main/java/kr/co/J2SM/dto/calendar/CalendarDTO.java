@@ -8,7 +8,7 @@ import lombok.*;
 @AllArgsConstructor
 @ToString
 public class CalendarDTO {
-
+    private Long id;
     private String title;
     private String start;
     private String end;
@@ -16,4 +16,5 @@ public class CalendarDTO {
     private String member;
     private String note;
     private String color;
+    private int company;
 }

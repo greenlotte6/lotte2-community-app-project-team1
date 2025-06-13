@@ -2,6 +2,7 @@ package kr.co.J2SM.entity.calendar;
 
 
 import jakarta.persistence.*;
+import kr.co.J2SM.entity.user.User;
 import lombok.*;
 
 @ToString
@@ -30,4 +31,11 @@ public class Calendar {
     private String member;
     private String note;
     private String color;
+
+    private int company;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user") // 외래키
+    private User user;
 }

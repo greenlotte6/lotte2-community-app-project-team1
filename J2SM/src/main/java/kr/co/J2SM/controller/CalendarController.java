@@ -2,9 +2,12 @@ package kr.co.J2SM.controller;
 
 import kr.co.J2SM.dto.calendar.CalendarDTO;
 import kr.co.J2SM.entity.calendar.Calendar;
+import kr.co.J2SM.entity.user.User;
+import kr.co.J2SM.security.MyUserDetails;
 import kr.co.J2SM.service.calendar.CalendarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,18 +20,26 @@ public class CalendarController {
 
     private final CalendarService calendarService;
 
-    @GetMapping
-    public List<Calendar> getSchedules() {
-        log.info("캘린더 호출");
-        return calendarService.getAllSchedules();
+    @GetMapping("/{cate}")
+    public List<CalendarDTO> getSchedules(@AuthenticationPrincipal User user, @PathVariable String cate) {
+        log.info("기본 스케줄 가져오기");
+
+        String uid = user.getUid();
+        List<CalendarDTO> list = calendarService.getAllSchedulesByUser(uid, cate);
+
+        System.out.println(list);
+        return list;
     }
 
     @PostMapping
-    public Calendar createSchedule(@RequestBody CalendarDTO dto) {
+    public Calendar createSchedule(@RequestBody CalendarDTO dto, @AuthenticationPrincipal User user
+                                   ) {
 
-        log.info("일정 생성: {}", dto);
+        // JWT 추출
 
+        System.out.println(dto);
         Calendar schedule = Calendar.builder()
+                .id(dto.getId())
                 .title(dto.getTitle())
                 .start(dto.getStart())
                 .end(dto.getEnd())
@@ -36,25 +47,30 @@ public class CalendarController {
                 .member(dto.getMember())
                 .note(dto.getNote())
                 .color(dto.getColor())
+                .user(user)
                 .build();
-
-
-
-        System.out.println(schedule);
-
 
         return calendarService.saveSchedule(schedule);
     }
 
     @PutMapping("/{id}")
-    public Calendar updateSchedule(@PathVariable Long id, @RequestBody CalendarDTO dto) {
+    public Calendar updateSchedule(@PathVariable Long id,
+                                   @RequestBody CalendarDTO dto,
+                                   @AuthenticationPrincipal User user) {
+
+        log.info("캘린더 수정");
+
         return calendarService.updateSchedule(id, dto);
+
+
     }
 
     @DeleteMapping("/{id}")
     public void deleteSchedule(@PathVariable Long id) {
         calendarService.deleteSchedule(id);
     }
+
+
 }
 
 
