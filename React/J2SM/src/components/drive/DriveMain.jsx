@@ -121,6 +121,11 @@ const DriveMain = () => {
         credentials: "include",
       });
 
+      if (!res.ok) {
+        alert("다운로드 실패: 파일이 존재하지 않거나 서버 오류입니다.");
+        return;
+      }
+
       const disposition = res.headers.get("content-disposition");
       let filename = "downloaded-file";
 
