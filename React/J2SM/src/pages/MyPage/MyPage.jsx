@@ -27,14 +27,6 @@ const MyPage = () => {
       const normalRaw = await fetchAllPagesByUser(userId); // 정상 페이지
       const trashRaw = await fetchTrashPagesByUser(userId); // 휴지통 페이지
       const favoritesRaw = await fetchFavoritesPagesByUser(userId); // 휴지통 페이지
-      console.log("⭐️ normalRaw", normalRaw);
-      console.log("⭐️ favoritesRaw", favoritesRaw);
-      console.log("⭐️ normalRaw", normalRaw);
-      console.log("⭐️ favoritesRaw", favoritesRaw);
-      console.log("⭐️ normalRaw", normalRaw);
-      console.log("⭐️ favoritesRaw", favoritesRaw);
-      console.log("⭐️ normalRaw", normalRaw);
-      console.log("⭐️ favoritesRaw", favoritesRaw);
       // ⭐️ 여기서 isFavorite을 boolean으로 통일해서 저장!
       const normal = (normalRaw || []).map((p) => ({
         ...p,
