@@ -1,5 +1,6 @@
 package kr.co.J2SM.controller;
 
+import jakarta.servlet.http.HttpServletResponse;
 import kr.co.J2SM.dto.drive.DriveDTO;
 import kr.co.J2SM.repository.drive.DriveRepository;
 import kr.co.J2SM.service.drive.DriveService;
@@ -10,12 +11,11 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
-import java.time.LocalDateTime;
+import java.text.Normalizer;
 import java.util.List;
 import java.util.UUID;
 
@@ -41,13 +41,8 @@ public class DriveController {
                 ? rawPath
                 : Paths.get(System.getProperty("user.dir")).resolve(rawPath).normalize();
 
-        System.out.println("🚨 최종 filePath: " + filePath);
-        System.out.println("🚨 exists: " + Files.exists(filePath));
-        System.out.println("🚨 readable: " + Files.isReadable(filePath));
-
         if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(null); // 404 반환
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
         Resource resource = new UrlResource(filePath.toUri());
@@ -55,11 +50,23 @@ public class DriveController {
         String contentType = Files.probeContentType(filePath);
         if (contentType == null) contentType = "application/octet-stream";
 
-        String encodedFilename = URLEncoder.encode(dto.getOriginalFilename(), StandardCharsets.UTF_8)
-                .replace("+", "%20");
+        String originalFilename = dto.getOriginalFilename();
+        String encodedFilename = encodeFilenameRFC5987(originalFilename);
+
+        // fallback 생성 (ASCII-safe)
+        String fallback = Normalizer.normalize(originalFilename, Normalizer.Form.NFD)
+                .replaceAll("[^\\p{ASCII}]", "")           // 한글 등 제거
+                .replaceAll("[^a-zA-Z0-9._-]", "_");        // 특수문자 대체
+
+        // fallback 이름이 비었거나 확장자만 남았을 경우 기본값 보완
+        if (fallback == null || fallback.trim().isEmpty() || fallback.startsWith(".")) {
+            String ext = getFileExtension(originalFilename);
+            fallback = "download-" + UUID.randomUUID().toString().substring(0, 8) + ext;
+        }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedFilename);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION,
+                "attachment; filename=\"" + fallback + "\"; filename*=UTF-8''" + encodedFilename);
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 
         return ResponseEntity.ok()
@@ -67,16 +74,32 @@ public class DriveController {
                 .body(resource);
     }
 
+    private String encodeFilenameRFC5987(String filename) {
+        return URLEncoder.encode(filename, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20")
+                .replaceAll("%21", "!")
+                .replaceAll("%27", "'")
+                .replaceAll("%28", "(")
+                .replaceAll("%29", ")")
+                .replaceAll("%7E", "~");
+    }
+
+    private String getFileExtension(String filename) {
+        if (filename == null) return "";
+        int dotIndex = filename.lastIndexOf('.');
+        return (dotIndex != -1 && dotIndex < filename.length() - 1)
+                ? filename.substring(dotIndex)
+                : "";
+    }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
-                                        @RequestParam("user") String user) {
+                                        @RequestParam("user") String user,
+                                        @RequestParam("originalName") String originalName) {
         try {
             String uuid = UUID.randomUUID().toString();
-            String originalName = file.getOriginalFilename();
             String saveName = uuid + "-" + originalName;
 
-            // 🔥 실제 서버 저장 경로
             String uploadDir = System.getProperty("user.dir") + "/uploads";
             Path uploadPath = Paths.get(uploadDir);
             if (!Files.exists(uploadPath)) Files.createDirectories(uploadPath);
@@ -84,7 +107,6 @@ public class DriveController {
             Path savePath = uploadPath.resolve(saveName);
             file.transferTo(savePath.toFile());
 
-            // ✅ DB에는 상대경로만 저장
             String relativePath = "uploads/" + saveName;
             driveService.saveDrive(user, originalName, saveName, relativePath);
 
@@ -140,13 +162,5 @@ public class DriveController {
         private String name;
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
-    }
-
-    private String getFileExtension(String filename) {
-        if (filename == null) return "unknown";
-        int dotIndex = filename.lastIndexOf('.');
-        return (dotIndex != -1 && dotIndex < filename.length() - 1)
-                ? filename.substring(dotIndex + 1).toLowerCase()
-                : "unknown";
     }
 }

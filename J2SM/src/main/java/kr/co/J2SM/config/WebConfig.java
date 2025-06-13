@@ -6,18 +6,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**")
-                .allowedOrigins("http://localhost:5173")
-                .allowedMethods("*")
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:5173") // 개발 주소 or 배포 도메인
+                .allowedMethods("GET", "POST", "PATCH", "DELETE")
                 .allowedHeaders("*")
-                .exposedHeaders(
-                        "Content-Disposition",   // 대문자 정확히!
-                        "content-disposition",   // 혹시 몰라서 추가
-                        "Content-Type"
-                )
-                .allowCredentials(true);
+                .allowCredentials(true)
+                .exposedHeaders("Content-Disposition");
     }
 }

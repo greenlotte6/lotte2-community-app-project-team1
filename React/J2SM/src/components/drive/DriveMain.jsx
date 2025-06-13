@@ -49,6 +49,7 @@ const DriveMain = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("user", username);
+    formData.append("originalName", file.name); // 파일명 직접 전달
     try {
       const res = await fetch(DRIVE_API.UPLOAD, {
         method: "POST",
@@ -60,12 +61,48 @@ const DriveMain = () => {
       console.error("업로드 에러:", error);
     }
   };
+  const handleDownload = async (id) => {
+    window.location.href = DRIVE_API.DOWNLOAD(id);
+    try {
+      const res = await fetch(DRIVE_API.DOWNLOAD(id), {
+        method: "GET",
+        credentials: "include",
+      });
 
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    droppedFiles.forEach((file) => uploadFile(file));
+      if (!res.ok) {
+        alert("다운로드 실패");
+        return;
+      }
+
+      const disposition = res.headers.get("content-disposition");
+      let filename = "downloaded-file";
+
+      if (disposition) {
+        const utf8Match = disposition.match(/filename\*=UTF-8''([^;]+)/i);
+        if (utf8Match && utf8Match[1]) {
+          filename = decodeURIComponent(utf8Match[1]);
+        } else {
+          const fallbackMatch = disposition.match(/filename="([^"]+)"/i);
+          if (fallbackMatch && fallbackMatch[1]) {
+            filename = fallbackMatch[1];
+          }
+        }
+      }
+
+      console.log("✅ 최종 다운로드 파일명:", filename);
+
+      const blob = await res.blob();
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("다운로드 실패", err);
+    }
   };
 
   const toggleFavorite = async (id) => {
@@ -114,42 +151,6 @@ const DriveMain = () => {
     if (e.key === "Enter") handleRenameConfirm(id);
   };
 
-  const handleDownload = async (id) => {
-    try {
-      const res = await fetch(DRIVE_API.DOWNLOAD(id), {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        alert("다운로드 실패: 파일이 존재하지 않거나 서버 오류입니다.");
-        return;
-      }
-
-      const disposition = res.headers.get("content-disposition");
-      let filename = "downloaded-file";
-
-      if (disposition) {
-        const utf8Match = disposition.match(/filename\*=UTF-8''(.+)/i);
-        if (utf8Match) {
-          filename = decodeURIComponent(utf8Match[1]);
-        }
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
-    } catch (err) {
-      console.error("다운로드 실패", err);
-    }
-  };
-
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
@@ -174,6 +175,13 @@ const DriveMain = () => {
 
   const toggleShowFavorites = () => {
     setShowFavoritesOnly((prev) => !prev);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setDragOver(false);
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    droppedFiles.forEach((file) => uploadFile(file));
   };
 
   const goToTrash = () => {
