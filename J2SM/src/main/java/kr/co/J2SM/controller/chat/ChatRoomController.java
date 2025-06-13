@@ -2,11 +2,13 @@ package kr.co.J2SM.controller.chat;
 
 import kr.co.J2SM.document.chat.ChatRoom;
 import kr.co.J2SM.dto.chat.ChatRoomDTO;
+import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.service.chat.ChatRoomService;
 import kr.co.J2SM.service.chat.ChatService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,16 +24,13 @@ public class ChatRoomController {
     // 1) 전체 방 목록 조회
     @GetMapping("/{userId}")
     public List<ChatRoomDTO> listRooms(@PathVariable String userId) {
-
         return roomService.getRoomsForUser(userId);
-        // return null;
     }
 
     // 2) 새 방 생성
     @PostMapping
     public ResponseEntity<ChatRoom> createRoom(@RequestBody CreateRoomRequest req) {
 
-        System.out.println(req);
         ChatRoom created = roomService.createRoom(
                 req.name(),
                 req.participants(),
@@ -42,8 +41,12 @@ public class ChatRoomController {
 
     // 3) (옵션) 방 삭제
     @DeleteMapping("/{roomId}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable String roomId) {
-        roomService.deleteRoom(roomId);
+    public ResponseEntity<Void> deleteRoom(@PathVariable String roomId, @AuthenticationPrincipal User user) {
+
+        /*
+         * 방을 나가면서 관리자라면 관리 권한을 다른 사람에게 이동시키고 나간다.
+         */
+        roomService.deleteRoom(roomId, user);
         return ResponseEntity.noContent().build();
     }
     
@@ -79,6 +82,17 @@ public class ChatRoomController {
         log.info("채팅방 이름 변경 : " + roomId + ", " + name);
         ChatRoom chatRoom =  chatService.updateRoomName(roomId, name);
         return ResponseEntity.ok(chatRoom);
+    }
+
+    /*
+     * 채팅방 권한 이동
+     * */
+    @PostMapping("/{roomId}/admin")
+    public ResponseEntity<String> transferRoomOwner(@RequestParam("userId") String userId, @PathVariable String roomId ) {
+
+        System.out.println(userId);
+        System.out.println(roomId);
+        return ResponseEntity.ok("ok");
     }
     
 

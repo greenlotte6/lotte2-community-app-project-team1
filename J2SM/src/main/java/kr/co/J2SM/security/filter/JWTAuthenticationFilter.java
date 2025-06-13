@@ -19,6 +19,8 @@ import java.io.IOException;
 @Log4j2
 @RequiredArgsConstructor
 @Component
+
+// OncePerRequestFilter (요청 한번 당 필터링 시도)
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private final JWTProvider jwtProvider;
@@ -45,7 +47,7 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
             for(Cookie cookie : cookies) {
                 if (cookie.getName().equals("access_token")) {
                     token = cookie.getValue();
-                }
+                 }
             }
         }
 
@@ -70,6 +72,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
                 log.info("doFilterInternal...5");
                 // 시큐리티 인증 처리
                 Authentication authentication = jwtProvider.getAuthentication(token);
+
+                // 스프링 컨텍스트에 사용자 인증 정보 저장
                 SecurityContextHolder.getContext().setAuthentication(authentication);
 
             }catch (Exception e) {
