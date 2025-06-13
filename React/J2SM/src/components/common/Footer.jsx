@@ -61,7 +61,7 @@ export const Footer = () => {
         <div className="footer-bottom">
           <p>CompanyName © 2025. All rights reserved.</p>
           <div className="footer-links">
-            <a href="#"> 0.0.5-SNAPSHOT </a>
+            <a href="#"> 0.0.6-SNAPSHOT </a>
           </div>
         </div>
       </footer>
