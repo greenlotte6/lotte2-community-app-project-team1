@@ -11,6 +11,7 @@ const ChattingRoom = ({
   userId = "홍길동",
   nick = "회원",
 }) => {
+  
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState("");
   const [connected, setConnected] = useState(false);
@@ -18,11 +19,22 @@ const ChattingRoom = ({
   const [participants, setParticipants] = useState([]);
   const [admins, setAdmins] = useState([]); // 관리자
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isGrantListOpen, setIsGrantListOpen] = useState(false);
 
   const navigate = useNavigate();
 
   const clientRef = useRef(null);
   const messagesEndRef = useRef(null);
+
+  const itemStyles = {
+    display: "block",
+    width: "100%",
+    padding: "8px 12px",
+    background: "none",
+    border: "none",
+    textAlign: "left",
+    cursor: "pointer",
+  };
 
   // 방 정보(이름, 참여자, 관리자) 조회
   useEffect(() => {
@@ -113,25 +125,74 @@ const ChattingRoom = ({
   };
 
   // 채팅방 나가기
-  const handleLeave = () => {
-    // 한 번 더 사용자에게 확인
-    const ok = window.confirm("채팅방을 나가시겠습니까?");
-    if (!ok) return;
+  const handleLeave = async () => {
+    // 본인 제외 참가자 목록을 구합니다.
+    const others = participants.filter((p) => {
+      const id = typeof p === "string" ? p : p.id;
+      return id !== userId;
+    });
 
+    // 본인이 관리자이고, 다른 참가자가 있을 때만 권한 이양
+    if (admins.includes(userId) && others.length > 0) {
+      // 이름 혹은 ID 표시용 리스트 생성
+      const displayList = others
+        .map((p) => (typeof p === "string" ? p : p.name || p.id))
+        .join("\n");
+
+      const chosen = window
+        .prompt(
+          `관리자 권한을 넘길 사용자를 아래에서 선택하세요:\n${displayList}`
+        )
+        ?.trim();
+
+      // 선택 유효성 검사
+      const target = others.find((p) => {
+        const name = typeof p === "string" ? p : p.name || p.id;
+        return name === chosen;
+      });
+      if (!target) {
+        alert("유효한 사용자 이름을 입력해주세요.");
+        return;
+      }
+
+      const targetId = typeof target === "string" ? target : target.id;
+
+      // 권한 이양 API 호출
+      try {
+        await axios.post(API.CHAT.GRANT_ADMIN(roomId), null, {
+          params: { userId: targetId },
+        });
+        alert(`${chosen}님에게 관리자 권한을 이양했습니다.`);
+      } catch (err) {
+        console.error(err);
+        alert("권한 이양에 실패했습니다. 떠나기를 취소합니다.");
+        return;
+      }
+    }
+
+    // 나가기 최종 확인
+    if (!window.confirm("채팅방을 나가시겠습니까?")) return;
+
+    // 나가기 API 호출
     axios
       .delete(API.CHAT.DELETE_ROOM(roomId), { params: { userId } })
-      .then(() => {
-        navigate("/dashboard/chatting/main");
-      })
+      .then(() => navigate("/dashboard/chatting/main"))
       .catch(console.error);
   };
 
-  // 관리자 권한 부여
-  const handleGrant = () => {
+  // 특정 사용자에게 권한 부여
+  const handleGrantTo = (targetId) => {
     axios
-      .post(API.CHAT.GRANT_ADMIN(roomId), null, { params: { userId } })
-      .then(() => alert("관리자 권한을 부여했습니다."))
-      .catch(console.error);
+      .post(API.CHAT.GRANT_ADMIN(roomId), null, {
+        params: { userId: targetId },
+      })
+      .then(() => {
+        alert(`${targetId}님에게 관리자 권한을 부여했습니다.`);
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("권한 부여에 실패했습니다.");
+      });
   };
 
   return (
@@ -191,22 +252,28 @@ const ChattingRoom = ({
                 </button>
                 {admins.includes(userId) && (
                   <>
+                    {/* 권한 부여 메뉴 토글 */}
                     <button
                       className="chat-more-item"
-                      onClick={handleGrant}
-                      style={{
-                        display: "block",
-                        width: "100%",
-                        padding: "8px 12px",
-                        background: "none",
-                        border: "none",
-                        textAlign: "left",
-                        cursor: "pointer",
-                      }}
+                      onClick={() => setIsGrantListOpen((o) => !o)}
+                      style={itemStyles}
                     >
-                      권한 부여
+                      권한 부여 ▾
                     </button>
-
+                    {/* 토글된 경우에만 참가자 리스트 노출 */}
+                    {isGrantListOpen &&
+                      participants
+                        .filter((pid) => pid !== userId)
+                        .map((pid) => (
+                          <button
+                            key={pid}
+                            className="chat-more-item"
+                            onClick={() => handleGrantTo(pid)}
+                            style={itemStyles}
+                          >
+                            {pid}
+                          </button>
+                        ))}
                     <button
                       className="chat-more-item"
                       onClick={handleRename}
