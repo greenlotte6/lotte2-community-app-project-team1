@@ -1,9 +1,9 @@
 import axios from "axios";
-import { CALENDAR_LIST, CALENDAR_SAVE } from "./_http";
+import { CALENDAR } from "./_http";
 
 export const getCalendar = async (cate) => {
   try {
-    const response = await axios.get(`${CALENDAR_LIST}/${cate}`, {
+    const response = await axios.get(`${CALENDAR}/${cate}`, {
       withCredentials: true,
     });
     return response.data;
@@ -14,7 +14,7 @@ export const getCalendar = async (cate) => {
 
 export const postCalendar = async (newSchedule) => {
   try {
-    const response = await axios.post(`${CALENDAR_SAVE}`, newSchedule, {
+    const response = await axios.post(`${CALENDAR}`, newSchedule, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -30,12 +30,9 @@ export const postCalendar = async (newSchedule) => {
 
 export const deleteCalendar = async (id) => {
   try {
-    const response = await axios.delete(
-      `http://localhost:8080/api/calendar/${id}`,
-      {
-        withCredentials: true, // 필요 시 쿠키 포함
-      }
-    );
+    const response = await axios.delete(`${CALENDAR}/${id}`, {
+      withCredentials: true, // 필요 시 쿠키 포함
+    });
     return response.data; // 서버에서 메시지나 상태 반환 시
   } catch (error) {
     console.error("일정 삭제 실패", error);
@@ -45,16 +42,12 @@ export const deleteCalendar = async (id) => {
 
 export const putCalendar = async (id, updatedSchedule) => {
   try {
-    const response = await axios.put(
-      `http://localhost:8080/api/calendar/${id}`,
-      updatedSchedule,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        withCredentials: true,
-      }
-    );
+    const response = await axios.put(`${CALENDAR}/${id}`, updatedSchedule, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      withCredentials: true,
+    });
     return response.data;
   } catch (error) {
     console.error("일정 수정 실패", error);
