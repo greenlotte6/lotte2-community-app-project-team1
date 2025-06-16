@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { DRIVE_API } from "../../api/_http";
 
 const DriveDelete = () => {
   const [trashedFiles, setTrashedFiles] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/drive/trash")
+    fetch(DRIVE_API.DELETE_LIST)
       .then((res) => res.json())
       .then((data) => {
         setTrashedFiles(data);
