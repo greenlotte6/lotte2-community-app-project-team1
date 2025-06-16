@@ -2,18 +2,18 @@ import React from "react";
 
 export const ProjectRegisterMid = () => {
   return (
-    <div class="midArea">
-      <div class="itemArea">
-        <div class="itemtop">
+    <div className="midArea">
+      <div className="itemArea">
+        <div className="itemtop">
           <input type="text" value="Ready" />
           <button type="button">
             <img src="/images/Pen tool.svg" alt="pen" />
           </button>
         </div>
-        <div class="itemmid">
+        <div className="itemmid">
           <button type="button">덤덤더미덤덤더미</button>
         </div>
-        <div class="itembot">
+        <div className="itembot">
           <button type="button">
             <img src="/images/Plusblack.svg" alt="Plus" />
             <span>Add Item</span>

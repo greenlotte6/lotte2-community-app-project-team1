@@ -69,14 +69,14 @@ const FindId = () => {
       <div id="login_form">
         <Logo />
         <div>
-          <p class="txt_title">아이디찾기</p>
+          <p className="txt_title">아이디찾기</p>
           <form onSubmit={submitHandler} id="login">
-            <div class="signUp">
+            <div className="signUp">
               <label for="hp">휴대폰</label>
               <input
                 type="text"
                 name="hp"
-                class="m-10"
+                className="m-10"
                 placeholder="휴대폰 번호를 입력해주세요."
                 onChange={changeHandler}
                 required
@@ -93,12 +93,12 @@ const FindId = () => {
                 <input
                   type="text"
                   name="hpCheck"
-                  class="m-10"
+                  className="m-10"
                   placeholder="코드번호 입력해주세요."
                 />
               </div>
             </div>
-            <button type="submit" class="login_btn">
+            <button type="submit" className="login_btn">
               {btnText}
             </button>
           </form>

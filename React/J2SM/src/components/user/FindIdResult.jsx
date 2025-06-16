@@ -39,28 +39,28 @@ const FindIdResult = () => {
       <div id="login_form">
         <Logo />
         <div>
-          <p class="txt_title">아이디찾기</p>
-          <p class="txt_subtitle">아이디 찾기 결과</p>
-          <p class="txt_sub">아이디 찾기 결과를 확인해주세요.</p>
+          <p className="txt_title">아이디찾기</p>
+          <p className="txt_subtitle">아이디 찾기 결과</p>
+          <p className="txt_sub">아이디 찾기 결과를 확인해주세요.</p>
 
-          <div class="find">
+          <div className="find">
             <label for="email">아이디 : </label>
 
             <input
               type="text"
               name="email"
-              class="m-10"
+              className="m-10"
               value={uid || ""}
               disabled
               readonly
             />
           </div>
 
-          <button class="login_btn" onClick={loginHandler}>
+          <button className="login_btn" onClick={loginHandler}>
             로그인
           </button>
 
-          <button class="login_btn" onClick={findPassHandler}>
+          <button className="login_btn" onClick={findPassHandler}>
             비밀번호 찾기
           </button>
         </div>

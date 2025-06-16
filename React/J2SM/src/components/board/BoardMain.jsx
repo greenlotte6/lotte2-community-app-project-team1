@@ -6,10 +6,10 @@ import BoardRightTable from "./main/BoardRightTable";
 const BoardMain = () => {
   return (
     <>
-      <div class="line"></div>
+      <div className="line"></div>
       <BoardMainTable />
 
-      <div class="board-sub">
+      <div className="board-sub">
         <BoardLeftTable />
         <BoardRightTable />
       </div>
