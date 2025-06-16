@@ -3,6 +3,10 @@ server:
   servlet:
     context-path: /
 
+jasypt:
+  encryptor:
+    bean: jasyptStringEncryptor
+
 spring:
   servlet:
     multipart:
@@ -93,3 +97,7 @@ logging:
     org.hibernate.type.descriptor.sql.BasicBinder: off
     org.springframework.data.redis.connection: DEBUG
     io.lettuce.core: DEBUG
+
+# 카카오 페이
+kakao:
+  ADMIN_KEY: ENC("5k9pl/My89+oJP1TFdbe+o9Y9IzMUEm4ekh1rIp3NunENyFXdCrlS3RnCfdyQVIv")
