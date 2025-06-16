@@ -81,31 +81,29 @@ export const CALENDAR = `${SERVER_HOST}/api/calendar`;
 
 // 저장 (POST /api/mypage/save)
 export const MYPAGE_SAVE = `${SERVER_HOST}/api/mypage/save`;
-
 // 전체 목록 (GET /api/mypage/list)
 export const MYPAGE_LIST = (userId) =>
   `${SERVER_HOST}/api/mypage/list/${userId}`;
-
 // 🗑 휴지통으로 이동 (PUT /api/mypage/trash/{id})
 export const MYPAGE_SOFT_DELETE = (id) =>
   `${SERVER_HOST}/api/mypage/trash/${id}`;
-
 // ♻️ 복원 (PUT /api/mypage/restore/{id})
 export const MYPAGE_RESTORE = (id) => `${SERVER_HOST}/api/mypage/restore/${id}`;
-
 // ❌ 영구 삭제 (DELETE /api/mypage/delete/{id})
 export const MYPAGE_DELETE = (id) => `${SERVER_HOST}/api/mypage/delete/${id}`;
-
 // 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
 export const MYPAGE_TRASH_LIST = (userId) =>
   `${SERVER_HOST}/api/mypage/trash/${userId}`;
-
 // 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
 export const MYPAGE_FAVORITES_LIST = (userId) =>
   `${SERVER_HOST}/api/mypage/favorites/${userId}`;
-
 // 공유하기
 export const MYPAGE_SHARE = `${SERVER_HOST}/api/mypage/share`;
+// 유저그룹
+export const MYPAGE_GROUP = `${SERVER_HOST}/api/user/department-groups`;
+// 공유페이지
+export const MYPAGE_SHARED_PAGE = (userId) =>
+  `${SERVER_HOST}/api/mypage/share/received/${userId}`;
 
 // 드라이브
 export const DRIVE_API = {

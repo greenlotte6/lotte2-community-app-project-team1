@@ -8,6 +8,8 @@ import {
   fetchAllPagesByUser,
   fetchFavoritesPagesByUser,
   fetchTrashPagesByUser,
+  fetchUserGroups,
+  fetchSharedPagesByUser,
 } from "../../api/myPageAPI";
 import useAuth from "../../hooks/useAuth";
 
@@ -17,9 +19,11 @@ const MyPage = () => {
   const [trashList, setTrashList] = useState([]);
   const [selectedPage, setSelectedPage] = useState(null);
   const [favoriteList, setFavoriteList] = useState([]);
-  const { username } = useAuth();
+  const [userGroups, setUserGroups] = useState([]); // ⭐️ 추가!
+  const { username, company } = useAuth();
   const userId = username;
   const fixBoolean = (v) => v === true || v === 1 || v === "1";
+  const [sharedList, setSharedList] = useState([]);
 
   // ✅ DB에서 불러오기
   const loadPagesFromServer = async () => {
@@ -48,6 +52,17 @@ const MyPage = () => {
       console.error("페이지 로딩 실패", err);
     }
   };
+  const getPureCompanyName = (raw) =>
+    raw && raw.includes(":") ? raw.split(":")[1] : raw;
+  useEffect(() => {
+    if (!company) return;
+    const companyName = getPureCompanyName(company);
+    console.log("회사명(companyName):", companyName);
+    fetchUserGroups(companyName).then((groups) => {
+      console.log("⭐️ 받아온 userGroups:", groups);
+      setUserGroups(groups);
+    });
+  }, [company]);
 
   useEffect(() => {
     if (!userId) return;
@@ -93,6 +108,21 @@ const MyPage = () => {
     setSelectedPage(updatedPage);
     setNormalList(updatedList);
   };
+  useEffect(() => {
+    if (!userId) return;
+    loadSharedPages();
+  }, [userId]);
+
+  const loadSharedPages = async () => {
+    try {
+      if (!userId) return;
+      const sharedRaw = await fetchSharedPagesByUser(userId);
+      // 페이지 객체 가공 필요시 여기서
+      setSharedList(sharedRaw || []);
+    } catch (err) {
+      console.error("공유받은 페이지 로딩 실패", err);
+    }
+  };
   return (
     <div id="MyPage">
       <DashboardLayout>
@@ -100,6 +130,7 @@ const MyPage = () => {
           normalList={normalList}
           trashList={trashList}
           favoriteList={favoriteList}
+          sharedList={sharedList}
           onSelectPage={handleSelectPage}
         />
         <div className="contentArea">
@@ -111,6 +142,7 @@ const MyPage = () => {
             normalList={normalList}
             favoriteList={favoriteList}
             trashList={trashList}
+            userGroups={userGroups}
           />
 
           <MyMid

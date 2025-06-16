@@ -140,7 +140,15 @@ export const MyTop = ({
 
   // 실제 공유 처리 함수(공유하기 버튼에서 실행)
   const handleShare = async () => {
+    if (!selectedPage) {
+      alert("공유할 페이지가 선택되지 않았습니다.");
+      return;
+    }
     try {
+      console.log("🔵 공유하기 요청 시도", selectedPage, selectedUsers, userId);
+      console.log("🔵 공유하기 요청 시도", selectedPage, selectedUsers, userId);
+      console.log("🔵 공유하기 요청 시도", selectedPage, selectedUsers, userId);
+      console.log("🔵 공유하기 요청 시도", selectedPage, selectedUsers, userId);
       await shareMyPage({
         mypageId: selectedPage.id,
         targetUserIds: selectedUsers.map((u) => u.uid),
@@ -237,7 +245,7 @@ export const MyTop = ({
               </button>
               <button
                 className="btn-primary"
-                disabled={selectedUsers.length < 1}
+                disabled={selectedUsers.length < 1 || !selectedPage}
                 onClick={handleShare}
               >
                 공유하기
