@@ -100,4 +100,25 @@ public class ChatService {
         room = roomRepo.save(room);
         return room;
     }
+
+    // 채팅방 관리자 변경하기
+    public void updateRoomAdmin(String roomId, String userId) {
+
+        // 채팅방 조회
+        ChatRoom room = roomRepo.findById(roomId)
+                .orElseThrow(() -> new IllegalArgumentException("채팅방이 존재하지 않습니다."));
+
+        // 2. 참여자에 포함되어 있는지 확인
+        if (!room.getParticipants().contains(userId)) {
+            throw new IllegalArgumentException("해당 유저는 채팅방의 참여자가 아닙니다.");
+        }
+
+        // 새로운 목록 갱신
+        room.setAdmins(List.of(userId));
+
+        // 저장
+        roomRepo.save(room);
+
+
+    }
 }

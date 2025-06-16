@@ -7,11 +7,15 @@ import ChatRoomCreateModal from "./modal/ChatRoomCreateModal";
 import useAuth from "../../hooks/useAuth";
 
 export default function ChattingMain({ onSelectRoom, currentUserId }) {
-  const { username, nick } = useAuth();
+  const { username, nick, membership } = useAuth();
   const [rooms, setRooms] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const [personalCount, setPersonalCount] = useState(0); // 개인 채널 갯수
+  const [groupCount, setGroupCount] = useState(0); // 단체 채널 갯수
 
-  console.log("username 1" + username);
+  console.log("유저 정보 : " + username);
+  console.log("이름 : " + nick);
+  console.log("등급 : " + membership);
 
   // 모달 열림 상태
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -23,7 +27,22 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
     console.log("userId UseEffect : " + username);
     axios
       .get(API.CHAT.ROOM_LIST(username))
-      .then((res) => setRooms(res.data))
+      .then((res) => {
+        const allRooms = res.data;
+        setRooms(allRooms);
+
+        // 개인 채널과 단체 채널 카운트
+        const personal = allRooms.filter(
+          (r) => r.description === "개인 채널"
+        ).length;
+        const group = allRooms.filter(
+          (r) => r.description === "단체 채널"
+        ).length;
+
+        // 개인 채널, 단체 채널 갯수
+        setPersonalCount(personal);
+        setGroupCount(group);
+      })
       .catch(console.error);
   }, [username]);
 
@@ -135,6 +154,8 @@ export default function ChattingMain({ onSelectRoom, currentUserId }) {
         onClose={closeModal}
         onCreated={handleCreated}
         currentUserId={currentUserId}
+        personalCount={personalCount}
+        groupCount={groupCount}
       />
     </>
   );
