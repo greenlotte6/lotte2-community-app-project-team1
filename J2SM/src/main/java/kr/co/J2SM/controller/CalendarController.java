@@ -28,7 +28,6 @@ public class CalendarController {
         String uid = user.getUid();
         List<CalendarDTO> list = calendarService.getAllSchedulesByUser(uid, cate);
 
-        System.out.println(list);
         return list;
     }
 
@@ -36,22 +35,14 @@ public class CalendarController {
     public Calendar createSchedule(@RequestBody CalendarDTO dto, @AuthenticationPrincipal User user
                                    ) {
 
-        // JWT 추출
+        log.info("스케줄 등록하기");
+        log.info("스케줄 DTO: {}", dto);
 
-        System.out.println(dto);
-        Calendar schedule = Calendar.builder()
-                .id(dto.getId())
-                .title(dto.getTitle())
-                .start(dto.getStart())
-                .end(dto.getEnd())
-                .place(dto.getPlace())
-                .member(dto.getMember())
-                .note(dto.getNote())
-                .color(dto.getColor())
-                .user(user)
-                .build();
+        // 개인, 공용인지
 
-        return calendarService.saveSchedule(schedule);
+        Calendar calendar = calendarService.saveScheduleByCate(dto, user);
+
+        return calendar;
     }
 
     private final ModelMapper modelMapper;

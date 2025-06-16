@@ -79,8 +79,22 @@ public class CalendarService {
     }
 
 
+    public Calendar saveScheduleByCate(CalendarDTO dto, User user) {
 
+        Calendar schedule = modelMapper.map(dto, Calendar.class);
+        schedule.setUser(user);
 
+        String cate = dto.getCate();
+
+        // 개인
+        if(cate.equals("my")){
+            schedule.setCompany(0);
+        }else{
+            schedule.setIs_public(1);
+        }
+
+        return calendarRepository.save(schedule);
+    }
 }
 
 
