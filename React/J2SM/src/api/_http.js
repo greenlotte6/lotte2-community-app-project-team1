@@ -74,8 +74,7 @@ export const API = {
 };
 
 // 캘린더
-export const CALENDAR_SAVE = `${SERVER_HOST}/api/calendar`;
-export const CALENDAR_LIST = `${SERVER_HOST}/api/calendar`;
+export const CALENDAR = `${SERVER_HOST}/api/calendar`;
 
 // MyPage API
 
