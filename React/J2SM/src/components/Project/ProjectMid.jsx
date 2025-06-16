@@ -2,10 +2,10 @@ import React from "react";
 
 export const ProjectMid = () => {
   return (
-    <div class="midArea">
-      <div class="projectcontent">
+    <div className="midArea">
+      <div className="projectcontent">
         <img src="/images/Layers.svg" alt="layericon" />
-        <div class="contenttext">
+        <div className="contenttext">
           <span>롯데 사내 프로그램 프로젝트</span>
           <br />
           <p>in progress</p>

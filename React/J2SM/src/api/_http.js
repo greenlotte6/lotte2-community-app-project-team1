@@ -37,7 +37,8 @@ export const USER_PASS_MODIFY = `${SERVER_HOST}/user/modify`;
 // article
 export const ARTICLE_WRITE = `${SERVER_HOST}/article`;
 export const ARTICLE_LIST = `${SERVER_HOST}/article`;
-
+export const CATEGORY_LIST = (cno) =>
+  `${SERVER_HOST}/api/category/company/${cno}`;
 // product
 export const PRODUCT_REGISTER = `${SERVER_HOST}/product`;
 export const PRODUCT_LIST = `${SERVER_HOST}/product`;

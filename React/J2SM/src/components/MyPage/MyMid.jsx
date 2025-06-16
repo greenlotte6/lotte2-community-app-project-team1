@@ -17,7 +17,7 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
         autofocus: true,
         tools: {
           header: {
-            class: Header,
+            className: Header,
             inlineToolbar: true,
             config: {
               placeholder: "제목을 입력하세요",
@@ -28,7 +28,7 @@ export const MyMid = ({ editorRef, onEditorChange, selectedPage }) => {
           list: List,
           paragraph: Paragraph,
           checklist: Checklist,
-          color: { class: InlineColorTool },
+          color: { className: InlineColorTool },
         },
         data: { blocks: [{ type: "header", data: { text: "", level: 1 } }] },
         onReady: () => {

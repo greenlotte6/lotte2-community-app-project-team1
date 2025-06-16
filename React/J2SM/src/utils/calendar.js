@@ -43,7 +43,7 @@ export function initCalendar(containerId) {
 
     // (1) 지난달 뒤쪽 날짜
     for (let i = firstDayIndex - 1; i >= 0; i--) {
-      days.push(`<td class="inactive">${prevLastDate - i}</td>`);
+      days.push(`<td className="inactive">${prevLastDate - i}</td>`);
     }
 
     // (2) 이번달 날짜
@@ -55,7 +55,7 @@ export function initCalendar(containerId) {
         year === today.getFullYear();
       // 날짜 클릭하면, openScheduleModalWithDate(...) 라는 함수 호출하도록 변경
       days.push(
-        `<td class="${
+        `<td className="${
           isToday ? "today" : ""
         }" onclick="openScheduleModalWithDate('${year}-${String(
           month + 1
@@ -66,7 +66,7 @@ export function initCalendar(containerId) {
     // (3) 다음달 앞쪽 날짜
     const nextDaysCount = 42 - days.length; // 6행×7열 = 총 42칸
     for (let i = 1; i <= nextDaysCount; i++) {
-      days.push(`<td class="inactive">${i}</td>`);
+      days.push(`<td className="inactive">${i}</td>`);
     }
 
     // ④ <tbody id="calendar-body">를 비우고, 새로 6개의 <tr>에 7개씩 <td>를 채움

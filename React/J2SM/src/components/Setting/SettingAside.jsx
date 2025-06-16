@@ -3,11 +3,11 @@ import React from "react";
 export const SettingAside = () => {
   return (
     <aside>
-      <div class="sidemenu">
-        <div class="sideTop">
+      <div className="sidemenu">
+        <div className="sideTop">
           <h3>Setting</h3>
         </div>
-        <div class="childArea">
+        <div className="childArea">
           <a href="#">Home</a>
         </div>
       </div>
