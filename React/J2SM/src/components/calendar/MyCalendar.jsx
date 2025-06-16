@@ -221,6 +221,7 @@ const Calendar = () => {
     if (!title) return alert("일정 제목을 입력하세요.");
 
     const color = getRandomColor();
+    const cno = company.split(":")[0];
     const newSchedule = {
       start: date,
       end: date,
@@ -229,6 +230,8 @@ const Calendar = () => {
       place: "",
       member: "",
       note: "",
+      company: cno,
+      cate: cate,
     };
 
     try {
@@ -251,7 +254,16 @@ const Calendar = () => {
     if (!title || !start || !end) return alert("모든 항목을 입력하세요.");
 
     const color = selectedSchedule?.color || getRandomColor(); // 기존 색 유지
-    const updatedSchedule = { title, start, end, place, member, note, color };
+    const updatedSchedule = {
+      title,
+      start,
+      end,
+      place,
+      member,
+      note,
+      color,
+      cate,
+    };
 
     try {
       if (editMode && selectedSchedule?.id) {
@@ -394,7 +406,7 @@ const Calendar = () => {
   return (
     <div className="calendar-wrappers" style={{ width: "100%" }}>
       <div className="calendar-header">
-        <div className="hil">My calendar</div>
+        <div className="hil">※ 일정을 클릭해서 등록하세요</div>
         <button onClick={prevMonth}>❮</button>
         <span
           style={{ padding: "0 50px", fontSize: "20px" }}

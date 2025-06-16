@@ -34,6 +34,7 @@ public class Calendar {
 
     private int company;
 
+    private int is_public;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user") // 외래키

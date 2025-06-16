@@ -17,4 +17,7 @@ public class CalendarDTO {
     private String note;
     private String color;
     private int company;
+    private int is_public;
+
+    private String cate; // 개인, 공용 구분
 }

@@ -28,6 +28,7 @@ const Aside = () => {
 
   // '/dashboard/calendar' 경로일 때
   if (pathname.includes("/dashboard/calendar")) {
+    // 이 안에 로직 설정
     return (
       <aside>
         <div className="sidemenu">
