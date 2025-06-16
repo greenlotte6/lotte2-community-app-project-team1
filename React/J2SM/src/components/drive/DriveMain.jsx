@@ -49,7 +49,7 @@ const DriveMain = () => {
     const formData = new FormData();
     formData.append("file", file);
     formData.append("user", username);
-    formData.append("originalName", file.name); // 파일명 직접 전달
+    formData.append("originalName", file.name);
     try {
       const res = await fetch(DRIVE_API.UPLOAD, {
         method: "POST",
@@ -61,8 +61,20 @@ const DriveMain = () => {
       console.error("업로드 에러:", error);
     }
   };
+
   const handleDownload = async (id) => {
+    // ✅ 최근 열람 기록 저장
+    try {
+      await fetch(DRIVE_API.RECENT_VIEW(id), {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (err) {
+      console.error("최근 열람 기록 실패", err);
+    }
+
     window.location.href = DRIVE_API.DOWNLOAD(id);
+
     try {
       const res = await fetch(DRIVE_API.DOWNLOAD(id), {
         method: "GET",
@@ -88,8 +100,6 @@ const DriveMain = () => {
           }
         }
       }
-
-      console.log("✅ 최종 다운로드 파일명:", filename);
 
       const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);

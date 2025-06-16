@@ -116,4 +116,7 @@ export const DRIVE_API = {
   DELETE: (id) => `${SERVER_HOST}/api/drive/${id}`, // 휴지통으로 이동
   DELETE_LIST: `${SERVER_HOST}/api/drive/trash`, // 휴지통 리스트 출력
   MOVE_TO_SHARED: (id) => `${SERVER_HOST}/api/drive/${id}/move-to-shared`, // 공유드라이브 이동
+  // ✅ 최근 드라이브 관련
+  RECENT_LIST: `${SERVER_HOST}/api/drive/recent`,
+  RECENT_VIEW: (id) => `${SERVER_HOST}/api/drive/view/${id}`,
 };

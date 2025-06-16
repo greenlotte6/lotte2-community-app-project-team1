@@ -2,14 +2,17 @@ package kr.co.J2SM.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.J2SM.dto.drive.DriveDTO;
+import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.repository.drive.DriveRepository;
 import kr.co.J2SM.service.drive.DriveService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -139,6 +142,22 @@ public class DriveController {
     public List<DriveDTO> trashFiles() {
         return driveService.getTrashedFiles();
     }
+    
+    /*
+    @GetMapping("/trash")
+    public List<DriveDTO> trashFiles(@AuthenticationPrincipal User user) {
+
+        System.out.println("trash---1");
+
+        if (user == null) {
+            System.out.println("trash---2");
+            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED, "로그인 필요");
+        }
+
+        System.out.println("trash---3");
+        return driveService.getTrashedFilesByUser(user.getUid());
+    }
+*/
 
     @PutMapping("/{id}/restore")
     public ResponseEntity<Void> restoreFile(@PathVariable Long id) {
@@ -162,5 +181,19 @@ public class DriveController {
         private String name;
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
+    }
+
+    // 최근 드라이브
+
+    @GetMapping("/recent")
+    public List<DriveDTO> getRecentViews(@AuthenticationPrincipal User user) {
+        return driveService.getRecentDriveFiles(user.getUid());
+    }
+
+    // 최근 본 드라이브 기록 저장
+    @PostMapping("/view/{id}")
+    public ResponseEntity<?> recordView(@PathVariable Long id, @AuthenticationPrincipal User user) {
+        driveService.recordRecentView(user.getUid(), id);
+        return ResponseEntity.ok().build();
     }
 }
