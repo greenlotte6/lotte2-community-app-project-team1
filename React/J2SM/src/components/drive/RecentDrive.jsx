@@ -1,8 +1,112 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { DRIVE_API } from "../../api/_http";
+import "../../styles/drive/drive.scss";
 
 const RecentDrive = () => {
-  const rows = Array.from({ length: 6 });
-  const yesterdayRows = Array.from({ length: 3 });
+  const [recentFiles, setRecentFiles] = useState([]);
+  const [activeMenuId, setActiveMenuId] = useState(null);
+  const [renamingId, setRenamingId] = useState(null);
+  const [newName, setNewName] = useState("");
+  const dropdownRef = useRef();
+
+  useEffect(() => {
+    const fetchRecentFiles = async () => {
+      try {
+        const res = await fetch(DRIVE_API.RECENT_LIST, {
+          credentials: "include",
+        });
+        const data = await res.json();
+        setRecentFiles(data);
+      } catch (err) {
+        console.error("최근 드라이브 불러오기 실패", err);
+      }
+    };
+    fetchRecentFiles();
+  }, []);
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setActiveMenuId(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const isSameDate = (d1, d2) =>
+    d1.getFullYear() === d2.getFullYear() &&
+    d1.getMonth() === d2.getMonth() &&
+    d1.getDate() === d2.getDate();
+
+  const groupByDateLabel = (files) => {
+    const today = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(today.getDate() - 1);
+    const formatDate = (str) => new Date(str.replaceAll(".", "-"));
+
+    const result = {};
+    files.forEach((file) => {
+      const date = formatDate(file.date);
+      const label = isSameDate(date, today)
+        ? "오늘"
+        : isSameDate(date, yesterday)
+        ? "어제"
+        : file.date;
+      if (!result[label]) result[label] = [];
+      result[label].push(file);
+    });
+    return result;
+  };
+
+  const grouped = groupByDateLabel(recentFiles);
+
+  const toggleFavorite = async (id) => {
+    await fetch(DRIVE_API.FAVORITE(id), { method: "PATCH" });
+    setRecentFiles((prev) =>
+      prev.map((f) => (f.id === id ? { ...f, favorite: !f.favorite } : f))
+    );
+    setActiveMenuId(null);
+  };
+
+  const handleDownload = (id) => {
+    window.location.href = DRIVE_API.DOWNLOAD(id);
+    setActiveMenuId(null);
+  };
+
+  const handleDelete = async (id) => {
+    const ok = window.confirm("정말로 휴지통으로 이동하시겠습니까?");
+    if (!ok) return;
+    await fetch(DRIVE_API.DELETE(id), { method: "DELETE" });
+    setRecentFiles((prev) => prev.filter((f) => f.id !== id));
+    setActiveMenuId(null);
+  };
+
+  const renameFile = async (id, name) => {
+    await fetch(DRIVE_API.RENAME(id), {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name }),
+    });
+  };
+
+  const handleRenameClick = (file) => {
+    setRenamingId(file.id);
+    setNewName(file.name);
+    setActiveMenuId(null);
+  };
+
+  const handleRenameConfirm = async (id) => {
+    await renameFile(id, newName);
+    setRecentFiles((prev) =>
+      prev.map((f) => (f.id === id ? { ...f, name: newName } : f))
+    );
+    setRenamingId(null);
+  };
+
+  const handleKeyDown = (e, id) => {
+    if (e.key === "Enter") handleRenameConfirm(id);
+  };
 
   return (
     <>
@@ -16,12 +120,9 @@ const RecentDrive = () => {
       <div className="cloud-main">
         <h3>최근 드라이브</h3>
 
-        {/* ✅ 수정된 검색 입력 form */}
-        <form className="search-bar" action="/cloud/search" method="get">
+        <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
-            id="query"
-            name="query"
             placeholder="Cloud 검색"
             style={{
               width: "100%",
@@ -38,145 +139,105 @@ const RecentDrive = () => {
           </button>
         </form>
 
-        <div className="search-type">
-          <select>
-            <option value="유형">유형▼</option>
-            <option value="문서">문서</option>
-            <option value="PDF">PDF</option>
-            <option value="폴더">폴더</option>
-            <option value="이미지">이미지</option>
-          </select>
-          <select>
-            <option value="사람">사람▼</option>
-          </select>
-          <select>
-            <option value="수정날짜">수정날짜▼</option>
-            <option value="오늘">오늘</option>
-            <option value="지난 7일">지난 7일</option>
-            <option value="지난 30일">지난 30일</option>
-            <option value="올해(2025)">올해(2025)</option>
-            <option value="지난해(2024)">지난해(2024)</option>
-          </select>
-          <select>
-            <option value="위치">위치▼</option>
-            <option value="내 드라이브">내 드라이브</option>
-            <option value="공유 드라이브">공유 드라이브</option>
-            <option value="최근 드라이브">최근 드라이브</option>
-            <option value="중요 드라이브">중요 드라이브</option>
-            <option value="휴지통">휴지통</option>
-          </select>
-        </div>
-
         <div className="drivetable">
-          <table className="drivetables">
-            <thead>
-              <tr>
-                <th>사용자</th>
-                <th>파일명</th>
-                <th>유형</th>
-                <th>위치</th>
-                <th>업로드 날짜(수정날짜)</th>
-              </tr>
-            </thead>
-            <tbody>
-              {rows.map((_, i) => (
-                <tr key={i}>
-                  <td>minhyeok</td>
-                  <td>000보고서</td>
-                  <td>문서</td>
-                  <td>공유 드라이브</td>
-                  <td style={{ position: "relative" }}>
-                    <span>2020.00.00</span>
-                    <img
-                      className="tableimg"
-                      src="/images/Seemore.png"
-                      alt="더보기"
-                    />
-                    <div className="dropdown-menu">
-                      <ul>
-                        <li>
-                          <button type="button" className="favorite-btn">
-                            즐겨찾기
-                          </button>
-                        </li>
-                        <li>
-                          <button type="button" className="download-btn">
-                            다운로드
-                          </button>
-                        </li>
-                        <li>
-                          <button type="button" className="rename-btn">
-                            이름 변경
-                          </button>
-                        </li>
-                        <li>
-                          <button type="button" className="delete-btn">
-                            휴지통
-                          </button>
-                        </li>
-                      </ul>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
-          <div>
-            <table className="drivetables">
+          {Object.entries(grouped).map(([label, files]) => (
+            <table className="drivetables" key={label}>
               <thead>
                 <tr>
-                  <th style={{ textAlign: "left" }}>어제</th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
-                  <th></th>
+                  <th colSpan="5" style={{ textAlign: "left" }}>
+                    {label}
+                  </th>
+                </tr>
+                <tr>
+                  <th>사용자</th>
+                  <th>파일명</th>
+                  <th>유형</th>
+                  <th>위치</th>
+                  <th>업로드 날짜</th>
                 </tr>
               </thead>
               <tbody>
-                {yesterdayRows.map((_, i) => (
-                  <tr key={`yesterday-${i}`}>
-                    <td>minhyeok</td>
-                    <td>000보고서</td>
-                    <td>문서</td>
-                    <td>공유 드라이브</td>
+                {files.map((file) => (
+                  <tr key={file.id}>
+                    <td>{file.user}</td>
+                    <td>
+                      {renamingId === file.id ? (
+                        <>
+                          <input
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
+                            onKeyDown={(e) => handleKeyDown(e, file.id)}
+                            autoFocus
+                          />
+                          <button onClick={() => handleRenameConfirm(file.id)}>
+                            확인
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <span
+                            className={`star-icon ${
+                              file.favorite ? "active" : ""
+                            }`}
+                            onClick={() => toggleFavorite(file.id)}
+                            style={{ cursor: "pointer", marginRight: "5px" }}
+                          >
+                            ★
+                          </span>
+                          {file.name}
+                        </>
+                      )}
+                    </td>
+                    <td>{file.type}</td>
+                    <td>{file.location}</td>
                     <td style={{ position: "relative" }}>
-                      <span>2020.00.00</span>
+                      <span>{file.date}</span>
                       <img
                         className="tableimg"
                         src="/images/Seemore.png"
                         alt="더보기"
+                        onClick={() =>
+                          setActiveMenuId((prev) =>
+                            prev === file.id ? null : file.id
+                          )
+                        }
                       />
-                      <div className="dropdown-menu">
-                        <ul>
-                          <li>
-                            <button type="button" className="favorite-btn">
-                              즐겨찾기
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" className="download-btn">
-                              다운로드
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" className="rename-btn">
-                              이름 변경
-                            </button>
-                          </li>
-                          <li>
-                            <button type="button" className="delete-btn">
-                              휴지통
-                            </button>
-                          </li>
-                        </ul>
-                      </div>
+                      {activeMenuId === file.id && (
+                        <div
+                          className="dropdown-menu"
+                          ref={dropdownRef}
+                          style={{ position: "absolute", zIndex: 100 }}
+                        >
+                          <ul>
+                            <li>
+                              <button onClick={() => toggleFavorite(file.id)}>
+                                즐겨찾기
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => handleDownload(file.id)}>
+                                다운로드
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => handleRenameClick(file)}>
+                                이름 변경
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => handleDelete(file.id)}>
+                                휴지통
+                              </button>
+                            </li>
+                          </ul>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
-          </div>
+          ))}
         </div>
       </div>
     </>
