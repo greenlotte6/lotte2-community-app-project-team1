@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { saveMyPage, softDeleteMyPage } from "@/api/myPageAPI"; // fetchAllPages는 이제 필요 없음
 import useAuth from "../../hooks/useAuth";
-import { deleteMyPage } from "../../api/myPageAPI";
+import { deleteMyPage, shareMyPage } from "../../api/myPageAPI";
+import UserShare from "./UserShare";
 
 export const MyTop = ({
   editorRef,
@@ -11,6 +12,7 @@ export const MyTop = ({
   normalList = [],
   favoriteList = [],
   trashList = [],
+  userGroups = [], // ⭐️ 부서별 사용자 정보(부모에서 내려주거나, 여기서 fetch)
 }) => {
   const isTrashed = selectedPage?.isDeleted;
   const [isFavorite, setIsFavorite] = useState(false);
@@ -91,37 +93,159 @@ export const MyTop = ({
       alert("즐겨찾기 변경 실패");
     }
   };
+  const handleRestore = async () => {
+    if (!selectedPage) return;
+    try {
+      const updated = {
+        ...selectedPage,
+        isDeleted: false,
+      };
+      await saveMyPage(updated); // 복원은 soft delete 해제
+      setSelectedPage(updated);
+      await reloadLists();
+      alert("복원 완료!");
+    } catch (e) {
+      alert("복원 실패");
+    }
+  };
+
+  // 공유 모달 상태
+  const [showShareModal, setShowShareModal] = useState(false);
+
+  // UserShare 관련 상태
+  const [selectedUsers, setSelectedUsers] = useState([]);
+  const [expandedDepartments, setExpandedDepartments] = useState({});
+  const channelType = "group"; // 상황 따라 "private" or "group"
+
+  // 부서 펼치기/닫기
+  const handleToggleDepartment = (dep) =>
+    setExpandedDepartments((prev) => ({
+      ...prev,
+      [dep]: !prev[dep],
+    }));
+
+  // 사용자 선택
+  const handleSelectUser = (user) => {
+    setSelectedUsers((prev) =>
+      prev.some((u) => u.uid === user.uid) ? prev : [...prev, user]
+    );
+    // 필요하면 userGroups에서 해당 유저 제거 로직도 추가
+  };
+
+  // 선택 해제
+  const handleRemoveUser = (user) => {
+    setSelectedUsers((prev) => prev.filter((u) => u.uid !== user.uid));
+    // 필요하면 userGroups에 다시 추가 로직도 추가
+  };
+
+  // 실제 공유 처리 함수(공유하기 버튼에서 실행)
+  const handleShare = async () => {
+    try {
+      await shareMyPage({
+        mypageId: selectedPage.id,
+        targetUserIds: selectedUsers.map((u) => u.uid),
+        sharedBy: userId, // 로그인 유저의 uid
+      });
+      alert("공유 완료!");
+      setShowShareModal(false);
+      setSelectedUsers([]);
+      setExpandedDepartments({});
+    } catch (e) {
+      alert("공유 실패! 관리자에게 문의하세요.");
+    }
+  };
 
   return (
     <div className="topArea">
       <div className="favoriteshare">
         {isTrashed ? (
-          <button className="deletebtn" onClick={handlePermanentDelete}>
-            <img src="/images/remove.png" alt="remove" />
-          </button>
+          <>
+            {/* 복원 버튼 */}
+            <button className="restorebtn" onClick={handleRestore}>
+              <img src="/images/Refresh cw.svg" alt="restore" />
+            </button>
+            {/* 영구 삭제 버튼 */}
+            <button className="deletebtn" onClick={handlePermanentDelete}>
+              <img src="/images/remove.png" alt="remove" />
+            </button>
+          </>
         ) : (
-          <button onClick={handleTrash}>
-            <img src="/images/Trash 3 (1).svg" alt="trash" />
-          </button>
+          <>
+            {/* 휴지통 보내기 */}
+            <button onClick={handleTrash}>
+              <img src="/images/Trash 3 (1).svg" alt="trash" />
+            </button>
+            {/* 즐겨찾기 */}
+            <button onClick={handleFavorite}>
+              <img
+                src={
+                  selectedPage?.isFavorite
+                    ? "/images/star_filled.svg"
+                    : "/images/star.png"
+                }
+                alt="fav"
+                style={{ width: "20px", height: "20px" }}
+              />
+            </button>
+            {/* 저장 */}
+            <button className="savebtn" onClick={handleSave}>
+              저장하기
+            </button>
+            {/* 공유 */}
+            <button
+              className="sharebtn"
+              onClick={() => setShowShareModal(true)}
+            >
+              <p>공유하기</p>
+            </button>
+          </>
         )}
-        <button onClick={handleFavorite}>
-          <img
-            src={
-              selectedPage?.isFavorite
-                ? "/images/star_filled.svg"
-                : "/images/star.png"
-            }
-            alt="fav"
-            style={{ width: "20px", height: "20px" }}
-          />
-        </button>
-        <button className="savebtn" onClick={handleSave}>
-          저장하기
-        </button>
-        <button>
-          <p>공유하기</p>
-        </button>
       </div>
+      {/* 공유하기 모달 */}
+      {showShareModal && (
+        <div
+          className="modal-backdrop"
+          onClick={() => setShowShareModal(false)}
+        >
+          <div
+            className="modal-content"
+            onClick={(e) => e.stopPropagation()}
+            style={{ minWidth: 480 }}
+          >
+            <button
+              className="modal-close"
+              onClick={() => setShowShareModal(false)}
+            >
+              ✕
+            </button>
+            <h2>공유 대상 선택</h2>
+            <UserShare
+              userGroups={userGroups}
+              selected={selectedUsers}
+              expandedDepartments={expandedDepartments}
+              handleToggleDepartment={handleToggleDepartment}
+              handleSelectUser={handleSelectUser}
+              handleRemoveUser={handleRemoveUser}
+              channelType={channelType}
+            />
+            <div className="actions">
+              <button
+                className="btn-secondary"
+                onClick={() => setShowShareModal(false)}
+              >
+                취소
+              </button>
+              <button
+                className="btn-primary"
+                disabled={selectedUsers.length < 1}
+                onClick={handleShare}
+              >
+                공유하기
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

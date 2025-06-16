@@ -543,6 +543,7 @@
   .flatpickr-calendar {
     width: 100% !important;
     max-width: 100% !important;
+    background-color: white;
   }
 
   .flatpickr-innerContainer {
@@ -557,6 +558,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+  }
+  span.flatpickr-weekday {
+    background-color: #ffffff;
+    font-size: 15px;
+  }
+  .flatpickr-day {
+    font-size: 15px;
   }
   body.dark-mode .calendarArea {
     background-color: #2a2a2a;
@@ -580,13 +588,13 @@
   }
 
   .scheduleInfoBox {
-    flex: 1;
     padding: 10px;
     background-color: #f8f8f8;
     border-radius: 10px;
     font-size: 14px;
     color: #333;
-    min-width: 120px;
+    max-width: 120px;
+    word-break: break-all;
   }
 
   .scheduleInfoBox ul {
@@ -679,7 +687,7 @@
   }
   /* 달력 전체 배경 */
   body.dark-mode .flatpickr-calendar {
-    background-color: #1e1e1e !important;
+    background-color: white !important;
     color: #f0f0f0 !important;
     border: 1px solid #444 !important;
     box-shadow: 0 0 6px rgba(255, 255, 255, 0.05) !important;
@@ -687,9 +695,15 @@
 
   /* 월/년도 선택 헤더 */
   body.dark-mode .flatpickr-months {
-    background-color: #1e1e1e !important;
+    background-color: white !important;
     color: #f0f0f0 !important;
     border-bottom: 1px solid #444 !important;
+  }
+  .flatpickr-months .flatpickr-month {
+    background-color: #ffffff;
+  }
+  .flatpickr-current-month .flatpickr-monthDropdown-months {
+    background-color: #ffffff;
   }
 
   /* 요일 헤더 */
@@ -761,6 +775,7 @@
   .flatpickr-next-month svg {
     width: 20px !important;
     height: 20px !important;
+    fill: black !important;
   }
   body.dark-mode .flatpickr-prev-month svg,
   body.dark-mode .flatpickr-next-month svg {

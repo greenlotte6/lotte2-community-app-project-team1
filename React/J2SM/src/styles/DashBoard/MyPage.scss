@@ -461,6 +461,183 @@
   /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡMain/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
   /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModalㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
 
+  /* 전체 화면 어두운 배경 */
+  .modal-backdrop {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.32);
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeInBg 0.22s;
+  }
+
+  /* 모달 본체 */
+  .modal-content {
+    background: #fff;
+    border-radius: 14px;
+    min-width: 380px;
+    max-width: 540px;
+    padding: 36px 38px 28px 38px;
+    position: relative;
+    box-shadow: 0 8px 32px rgba(60, 60, 60, 0.14), 0 2px 8px rgba(0, 0, 0, 0.04);
+    animation: modalPop 0.22s;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  /* 닫기 버튼 */
+  .modal-close {
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    font-size: 1.5rem;
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+  .modal-close:hover {
+    color: #ff334b;
+  }
+
+  /* 타이틀 */
+  .modal-content h2 {
+    font-size: 1.22rem;
+    font-weight: 700;
+    margin: 0 0 8px 0;
+    color: #232323;
+  }
+
+  /* 공유 대상 UserShare 스타일 일부도 같이! */
+  .user-selectors {
+    display: flex;
+    gap: 24px;
+    min-height: 160px;
+  }
+  .available,
+  .selected {
+    flex: 1;
+    background: #f8f9fb;
+    border-radius: 10px;
+    padding: 12px 16px;
+    min-width: 0;
+  }
+  .available h3,
+  .selected h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.02rem;
+  }
+  .department-group h4 {
+    font-size: 0.97rem;
+    margin: 4px 0 4px 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+  }
+  .user-list {
+    margin: 0;
+    padding: 0 0 0 6px;
+    list-style: none;
+  }
+  .user-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    margin-bottom: 4px;
+  }
+  .user-item span {
+    flex: 1;
+    cursor: pointer;
+    font-size: 0.97rem;
+    color: #32353b;
+    border-radius: 4px;
+    padding: 2px 5px;
+    transition: background 0.13s;
+  }
+  .user-item span:hover {
+    background: #e4ecfd;
+  }
+  .user-item button {
+    background: #d0daf8;
+    border: none;
+    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    font-size: 1.05rem;
+    color: #3260db;
+    cursor: pointer;
+    transition: background 0.13s, color 0.13s;
+    padding: 0;
+    margin-left: 2px;
+  }
+  .user-item button:hover {
+    background: #3b55c5;
+    color: #fff;
+  }
+
+  /* 액션 버튼 */
+  .actions {
+    display: flex;
+    gap: 14px;
+    justify-content: flex-end;
+    margin-top: 15px;
+  }
+  .btn-primary,
+  .btn-secondary {
+    padding: 8px 22px;
+    border-radius: 7px;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .btn-primary {
+    background: #2e5af7;
+    color: #fff;
+    transition: background 0.2s;
+  }
+  .btn-primary:disabled {
+    background: #abb7e4;
+    color: #fff;
+    cursor: not-allowed;
+  }
+  .btn-secondary {
+    background: #eee;
+    color: #303040;
+    border: 1px solid #ccc;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover {
+    background: #ddd;
+  }
+
+  /* 애니메이션 */
+  @keyframes fadeInBg {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes modalPop {
+    from {
+      transform: scale(0.93);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
   /*ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡModal/ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ*/
   /* 다크모드 - 로고/알림 아이콘 반전 */
   body.dark-mode .headerlogo img,
