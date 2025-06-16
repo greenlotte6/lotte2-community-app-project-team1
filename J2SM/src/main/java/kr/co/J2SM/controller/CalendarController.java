@@ -7,6 +7,7 @@ import kr.co.J2SM.security.MyUserDetails;
 import kr.co.J2SM.service.calendar.CalendarService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,16 +54,17 @@ public class CalendarController {
         return calendarService.saveSchedule(schedule);
     }
 
+    private final ModelMapper modelMapper;
+
     @PutMapping("/{id}")
-    public Calendar updateSchedule(@PathVariable Long id,
-                                   @RequestBody CalendarDTO dto,
-                                   @AuthenticationPrincipal User user) {
-
+    public CalendarDTO updateSchedule(@PathVariable Long id,
+                                      @RequestBody CalendarDTO dto,
+                                      @AuthenticationPrincipal User user) {
         log.info("캘린더 수정");
+        Calendar entity = calendarService.updateSchedule(id, dto);
 
-        return calendarService.updateSchedule(id, dto);
-
-
+        // 안전한 타입 추론
+        return modelMapper.map((Object) entity, CalendarDTO.class);
     }
 
     @DeleteMapping("/{id}")
