@@ -106,7 +106,7 @@ public class ChatRoomService {
         // 3) 방에 누군가 남아있다면
         //    - 관리자인 경우, 다른 사람에게 관리자 권한 이양
         Set<String> admins = new HashSet<>(room.getAdmins());
-        if (admins.remove(user)) {
+        if (admins.remove(user.getUid())) {
             // 새로운 관리자: 첫 번째 참가자 선택 (비즈니스 로직에 맞게 변경 가능)
             String newAdmin = participants.get(0);
             admins.add(newAdmin);

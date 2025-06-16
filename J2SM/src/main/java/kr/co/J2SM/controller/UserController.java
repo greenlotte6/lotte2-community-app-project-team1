@@ -85,15 +85,11 @@ public class UserController {
             headers.add(HttpHeaders.SET_COOKIE, accessTokenCookie.toString());
             headers.add(HttpHeaders.SET_COOKIE, refreshTokenCookie.toString());
 
-
-
             // 회사 정보
             String department = user.getDepartment().getDno()
                     + ":" + user.getDepartment().getDepartmentName();
             String company = user.getDepartment().getCompany().getCno()
                     + ":" + user.getDepartment().getCompany().getCompanyName() ;
-
-            System.out.println(department + " " + company);
 
             // 액세스 토큰 클라이언트 전송
             Map<String, Object> map = new HashMap<>();
@@ -104,6 +100,7 @@ public class UserController {
             map.put("nick", user.getName());
             map.put("department", department);
             map.put("company", company);
+            map.put("membership", user.getMembership());
 
             return ResponseEntity.ok().headers(headers).body(map);
 

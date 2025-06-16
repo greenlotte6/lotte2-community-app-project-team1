@@ -90,8 +90,8 @@ public class ChatRoomController {
     @PostMapping("/{roomId}/admin")
     public ResponseEntity<String> transferRoomOwner(@RequestParam("userId") String userId, @PathVariable String roomId ) {
 
-        System.out.println(userId);
-        System.out.println(roomId);
+        log.info("채팅방 권한 이동 : " + roomId + ", " + userId);
+        chatService.updateRoomAdmin(roomId, userId);
         return ResponseEntity.ok("ok");
     }
     

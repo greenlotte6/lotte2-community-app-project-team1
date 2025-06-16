@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import BoardModal from "../board/BoardModal"; // 모달 컴포넌트 임포트
+import AsideChat from "./aside/AsideChat";
 
 const Aside = () => {
   const location = useLocation();
@@ -128,7 +129,6 @@ const Aside = () => {
           <div>
             <button id="sidebar-new-button">+ 신규</button>
           </div>
-
           <div className="childArea">
             <div>
               <img src="/images/Cloudhome.png.png" alt="홈" />
@@ -186,49 +186,7 @@ const Aside = () => {
   // 기본 사이드바
   // '/dashboard/chatting' 경로일 때 렌더링할 사이드바 내용
   if (pathname.includes("/dashboard/chat")) {
-    return (
-      <aside>
-        <div className="sidemenu">
-          <div className="sideTop">
-            <h3>Chatting</h3>
-          </div>
-          <div className="childArea">
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/chatting/main">Main</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/calendar/my">개인 채널</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="/dashboard/calendar/my/dummy1">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/calendar/my/dummy2">더미더미더미</Link>
-              </li>
-            </ul>
-            <div className="menuItem">
-              <img src="/images/File text.svg" alt="users" />
-              <Link to="/dashboard/calendar/social">단체 채널</Link>
-              <img src="/images/Vector.svg" alt="vector" />
-            </div>
-            <ul className="subMenu">
-              <li>
-                <Link to="/dashboard/calendar/social/dummy1">더미더미더미</Link>
-              </li>
-              <li>
-                <Link to="/dashboard/calendar/social/dummy2">더미더미더미</Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </aside>
-    );
+    return <AsideChat />;
   }
 
   // 그 외 경로일 때 기본 사이드바 내용

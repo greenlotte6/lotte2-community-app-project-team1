@@ -9,6 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [department, setDepartment] = useState(null);
   const [company, setCompany] = useState(null);
   const [nick, setNick] = useState(null);
+  const [membership, setMembership] = useState(null);
 
   useEffect(() => {
     // 쿠키에서 username 가져오기
@@ -16,6 +17,7 @@ export const AuthProvider = ({ children }) => {
     const department = Cookies.get("department");
     const company = Cookies.get("company");
     const nick = Cookies.get("nick");
+    const membership = Cookies.get("membership");
 
     // 쿠키값이 존재하면 Context username 초기화
     if (username) {
@@ -33,20 +35,26 @@ export const AuthProvider = ({ children }) => {
     if (company) {
       setCompany(company);
     }
+
+    if (membership) {
+      setMembership(membership);
+    }
   }, []);
 
-  const login = (username, department, company, nick) => {
+  const login = (username, department, company, nick, membership) => {
     // Context username 초기화
     setUsername(username);
     setDepartment(department);
     setCompany(company);
     setNick(nick);
+    setMembership(membership);
 
     // 쿠키 저장
     Cookies.set("username", username);
     Cookies.set("department", department);
     Cookies.set("company", company);
     Cookies.set("nick", nick);
+    Cookies.set("membership", membership);
   };
 
   const logout = () => {
@@ -55,11 +63,12 @@ export const AuthProvider = ({ children }) => {
     Cookies.remove("department");
     Cookies.remove("company");
     Cookies.remove("nick");
+    Cookies.remove("membership");
   };
 
   return (
     <AuthContext.Provider
-      value={{ username, company, department, nick, login, logout }}
+      value={{ username, company, department, nick, login, logout, membership }}
     >
       {children}
     </AuthContext.Provider>

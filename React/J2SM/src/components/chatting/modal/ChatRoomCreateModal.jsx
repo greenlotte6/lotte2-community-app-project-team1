@@ -9,8 +9,10 @@ export default function ChatRoomCreateModal({
   onClose,
   onCreated,
   currentUserId,
+  personalCount,
+  groupCount,
 }) {
-  const { username, company } = useAuth();
+  const { username, company, membership } = useAuth();
 
   const [step, setStep] = useState("selectType");
   const [channelType, setChannelType] = useState(null); // 'private' or 'group'
@@ -57,11 +59,31 @@ export default function ChatRoomCreateModal({
   }, [isOpen, step, currentUserId, company]);
 
   const handleTypeSelect = (type) => {
+    if (type === "private" && membership === "free" && personalCount >= 3) {
+      alert("무료 회원은 개인 채널을 3개까지만 생성할 수 있습니다.");
+      return;
+    }
+
+    if (type === "group" && membership === "free" && groupCount >= 3) {
+      alert("무료 회원은 단체 채널을 3개까지만 생성할 수 있습니다.");
+      return;
+    }
+
     setChannelType(type);
     setStep("invite");
   };
 
   const handleSelectUser = (user) => {
+    // 단체 채널 제한: 무료 회원은 최대 3명까지만 초대 가능
+    if (
+      channelType === "group" &&
+      membership === "free" &&
+      selected.length >= 3
+    ) {
+      alert("무료 회원은 단체 채널에 최대 3명까지만 초대할 수 있습니다.");
+      return;
+    }
+
     if (channelType === "private" && selected.length >= 1) return;
     setSelected((prev) => [...prev, user]);
     // 선택된 유저를 부서 그룹에서 제거
@@ -91,6 +113,7 @@ export default function ChatRoomCreateModal({
       channelType === "private"
         ? selected[0]?.name || "개인 채널"
         : "단체 채널";
+
     const payload = {
       name,
       description: channelType,
@@ -177,12 +200,12 @@ export default function ChatRoomCreateModal({
                         key={grp.departmentName}
                         className="department-group"
                       >
-                        {/* Make the department name clickable to toggle */}
+                        {/* 부서 이름 토글 */}
                         <h4
                           onClick={() =>
                             handleToggleDepartment(grp.departmentName)
                           }
-                          style={{ cursor: "pointer" }} // Add a pointer cursor for better UX
+                          style={{ cursor: "pointer" }}
                         >
                           {grp.departmentName}
                           <span style={{ marginLeft: "10px" }}>
