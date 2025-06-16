@@ -76,6 +76,7 @@ export const API = {
 // 캘린더
 export const CALENDAR_SAVE = `${SERVER_HOST}/api/calendar`;
 export const CALENDAR_LIST = `${SERVER_HOST}/api/calendar`;
+
 // MyPage API
 
 // 저장 (POST /api/mypage/save)
@@ -102,6 +103,9 @@ export const MYPAGE_TRASH_LIST = (userId) =>
 // 🗂 휴지통 목록 조회 (GET /api/mypage/trash)
 export const MYPAGE_FAVORITES_LIST = (userId) =>
   `${SERVER_HOST}/api/mypage/favorites/${userId}`;
+
+// 공유하기
+export const MYPAGE_SHARE = `${SERVER_HOST}/api/mypage/share`;
 
 // 드라이브
 export const DRIVE_API = {

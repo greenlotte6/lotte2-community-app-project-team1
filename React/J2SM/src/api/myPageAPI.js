@@ -8,6 +8,7 @@ import {
   MYPAGE_SOFT_DELETE,
   MYPAGE_RESTORE,
   MYPAGE_FAVORITES_LIST,
+  MYPAGE_SHARE,
 } from "./_http";
 
 // 저장
@@ -75,4 +76,22 @@ export const fetchFavoritesPagesByUser = async (userId) => {
     withCredentials: true,
   });
   return res.data;
+};
+
+// 공유하기
+export const shareMyPage = async ({ mypageId, targetUserIds, sharedBy }) => {
+  try {
+    const response = await axios.post(
+      MYPAGE_SHARE,
+      { mypageId, targetUserIds, sharedBy },
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return response.data;
+  } catch (err) {
+    console.error(err);
+    throw err; // 실패시 프론트에서 핸들링할 수 있게
+  }
 };
