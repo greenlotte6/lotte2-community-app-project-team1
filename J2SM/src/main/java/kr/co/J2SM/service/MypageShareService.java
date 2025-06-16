@@ -1,6 +1,7 @@
 package kr.co.J2SM.service;
 
 import kr.co.J2SM.dto.MypageShareRequestDTO;
+import kr.co.J2SM.dto.MypageShareResponseDTO;
 import kr.co.J2SM.entity.MypageShare;
 import kr.co.J2SM.entity.MyPage;
 import kr.co.J2SM.entity.user.User;
@@ -9,8 +10,10 @@ import kr.co.J2SM.repository.MyPageRepository;
 import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,5 +44,13 @@ public class MypageShareService {
         // 플래그도 true로
         myPage.setShared(true);
         myPageRepository.save(myPage);
+    }
+
+    @Transactional(readOnly = true)
+    public List<MypageShareResponseDTO> findAllReceivedShares(String userId) {
+        List<MypageShare> shares = mypageShareRepository.findByTargetUser_Uid(userId);
+        return shares.stream()
+                .map(MypageShareResponseDTO::fromEntity) // 아래 정적 메서드 참고
+                .collect(Collectors.toList());
     }
 }

@@ -9,6 +9,8 @@ import {
   MYPAGE_RESTORE,
   MYPAGE_FAVORITES_LIST,
   MYPAGE_SHARE,
+  MYPAGE_GROUP,
+  MYPAGE_SHARED_PAGE,
 } from "./_http";
 
 // 저장
@@ -93,5 +95,34 @@ export const shareMyPage = async ({ mypageId, targetUserIds, sharedBy }) => {
   } catch (err) {
     console.error(err);
     throw err; // 실패시 프론트에서 핸들링할 수 있게
+  }
+};
+
+// 유저 그룹 불러오기 (회사명 기반)
+export const fetchUserGroups = async (company) => {
+  try {
+    const res = await axios.get(
+      `${MYPAGE_GROUP}?company=${encodeURIComponent(company)}`,
+      {
+        withCredentials: true,
+      }
+    );
+    return res.data; // [{ departmentName, users: [...] }, ...] 형태
+  } catch (err) {
+    console.error(err);
+    return [];
+  }
+};
+
+// 공유받은 페이지(Shared) 목록
+export const fetchSharedPagesByUser = async (userId) => {
+  try {
+    const res = await axios.get(MYPAGE_SHARED_PAGE(userId), {
+      withCredentials: true,
+    });
+    return res.data;
+  } catch (err) {
+    console.error(err);
+    return [];
   }
 };
