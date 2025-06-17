@@ -49,6 +49,7 @@ public class MypageShareService {
     @Transactional(readOnly = true)
     public List<MypageShareResponseDTO> findAllReceivedShares(String userId) {
         List<MypageShare> shares = mypageShareRepository.findByTargetUser_Uid(userId);
+        System.out.println("[서비스] DB 쿼리결과 rows: " + shares.size());
         return shares.stream()
                 .map(MypageShareResponseDTO::fromEntity) // 아래 정적 메서드 참고
                 .collect(Collectors.toList());

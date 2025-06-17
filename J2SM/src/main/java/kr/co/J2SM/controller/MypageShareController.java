@@ -30,6 +30,7 @@ public class MypageShareController {
 
     @GetMapping("/received/{userId}")
     public List<MypageShareResponseDTO> getReceivedShares(@PathVariable String userId) {
+        System.out.println("공유받은 페이지 요청 userId: " + userId); // 여기 추가
         return mypageShareService.findAllReceivedShares(userId);
     }
 }

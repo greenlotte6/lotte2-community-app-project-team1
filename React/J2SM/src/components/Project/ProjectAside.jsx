@@ -1,50 +1,21 @@
-import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-export const ProjectAside = () => {
-  useEffect(() => {
-    const menuItems = document.querySelectorAll(".childArea .menuItem");
-    const inviteModal = document.getElementById("inviteModal");
-    const openModalBtn = document.getElementById("openInviteModalBtn");
-    const closeModalBtn = document.getElementById("inviteCancelBtn");
+export const ProjectAside = ({ onNewProject }) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [projectName, setProjectName] = useState("");
+  const navigate = useNavigate();
 
-    // 서브메뉴 토글
-    menuItems.forEach((item) => {
-      item.addEventListener("click", () => {
-        const subMenu = item.nextElementSibling;
-        if (subMenu && subMenu.classList.contains("subMenu")) {
-          subMenu.style.display =
-            subMenu.style.display === "block" ? "none" : "block";
-        }
-      });
-    });
-
-    // 모달 열기
-    openModalBtn?.addEventListener("click", () => {
-      if (inviteModal) inviteModal.style.display = "flex";
-    });
-
-    // 모달 닫기
-    closeModalBtn?.addEventListener("click", () => {
-      if (inviteModal) inviteModal.style.display = "none";
-    });
-
-    // ESC로 모달 닫기
-    const handleKeyDown = (e) => {
-      if (e.key === "Escape" && inviteModal) {
-        inviteModal.style.display = "none";
-      }
-    };
-    document.addEventListener("keydown", handleKeyDown);
-
-    // 💡 클린업 함수 (메모리 누수 방지)
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      menuItems.forEach((item) => {
-        item.replaceWith(item.cloneNode(true)); // 간단한 remove listener 방식
-      });
-    };
-  }, []);
+  const handleConfirm = () => {
+    if (!projectName.trim()) return;
+    // register로 projectName 같이 넘기기
+    navigate("/dashboard/project/projectRegister", { state: { projectName } });
+    // 프로젝트 목록에 추가 (임시, 나중에 register 페이지에서 관리)
+    if (onNewProject)
+      onNewProject({ name: projectName, status: "in progress" });
+    setIsModalOpen(false);
+    setProjectName("");
+  };
 
   return (
     <>
@@ -53,8 +24,8 @@ export const ProjectAside = () => {
           <div className="sideTop">
             <h3>Project</h3>
             <div className="addcl">
-              <button type="button" id="openInviteModalBtn">
-                <img src="/images/Plus.svg" />
+              <button type="button" onClick={() => setIsModalOpen(true)}>
+                <img src="/images/Plus.svg" alt="plus" />
                 <span>New Project</span>
               </button>
             </div>
@@ -62,49 +33,41 @@ export const ProjectAside = () => {
           <div className="childArea">
             <div className="menuItem">
               <img src="/images/File text.svg" alt="users" />
-              <a href="#">진행중인 프로젝트</a>
+              <span>진행중인 프로젝트</span>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-            <ul className="subMenu">
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-            </ul>
             <div className="menuItem">
               <img src="/images/File text.svg" alt="users" />
-              <a href="#">완료된 프로젝트</a>
+              <span>완료된 프로젝트</span>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
-            <ul className="subMenu">
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-              <li>
-                <a href="#">더미더미더미</a>
-              </li>
-            </ul>
           </div>
         </div>
       </aside>
-      <div
-        className="modalOverlay"
-        id="inviteModal"
-        style={{ display: "none" }}
-      >
-        <div className="modalContent">
-          <h3>새 프로젝트 생성</h3>
-          <input type="text" placeholder="프로젝트 이름 입력" />
-          <div className="modalButtons">
-            <button id="inviteConfirmBtn">
-              <Link to="/dashboard/project/projectRegister">세부 설정</Link>{" "}
-            </button>
-            <button id="inviteCancelBtn">취소</button>
+      {isModalOpen && (
+        <div className="modalOverlay">
+          <div className="modalContent">
+            <h3>새 프로젝트 생성</h3>
+            <input
+              type="text"
+              placeholder="프로젝트 이름 입력"
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+            />
+            <div className="modalButtons">
+              <button className="configbtn" onClick={handleConfirm}>
+                세부 설정
+              </button>
+              <button
+                className="cancelbtn"
+                onClick={() => setIsModalOpen(false)}
+              >
+                취소
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };

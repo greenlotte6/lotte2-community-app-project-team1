@@ -7,6 +7,10 @@ export const MyAside = ({
   sharedList = [],
   onSelectPage,
 }) => {
+  console.log("🟦 [MyAside] sharedList:", sharedList);
+  console.log("🟦 [MyAside] sharedList:", sharedList);
+  console.log("🟦 [MyAside] sharedList:", sharedList);
+  console.log("🟦 [MyAside] sharedList:", sharedList);
   const [isNormalOpen, setIsNormalOpen] = useState(true);
   const [isTrashOpen, setIsTrashOpen] = useState(false);
   const [isFavoriteOpen, setIsFavoriteOpen] = useState(false);
@@ -94,7 +98,7 @@ export const MyAside = ({
                       onSelectPage(page);
                     }}
                   >
-                    {page.title}
+                    {page.pageTitle || "[제목 없음]"}
                   </a>
                 </li>
               ))}

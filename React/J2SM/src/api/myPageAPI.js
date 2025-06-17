@@ -120,6 +120,7 @@ export const fetchSharedPagesByUser = async (userId) => {
     const res = await axios.get(MYPAGE_SHARED_PAGE(userId), {
       withCredentials: true,
     });
+    console.log("🔗 fetchSharedPagesByUser 결과:", res.data);
     return res.data;
   } catch (err) {
     console.error(err);
