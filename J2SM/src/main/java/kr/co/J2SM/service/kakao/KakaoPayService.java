@@ -9,6 +9,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class KakaoPayService {
@@ -18,12 +20,20 @@ public class KakaoPayService {
 
     private static final String CID = "TC0ONETIME"; // 테스트용
 
-    public KakaoPayReadyResponse kakaoPayReady(String itemName, int quantity, int totalAmount) {
+    public KakaoPayReadyResponse kakaoPayReady(String itemName, int quantity, int totalAmount, String host) {
         RestTemplate restTemplate = new RestTemplate();
 
         HttpHeaders headers = new HttpHeaders();
-        headers.set("Authorization", adminKey);
+        headers.set("Authorization", "KakaoAK " + adminKey);
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        // ✅ redirectBaseUrl 동적 결정
+        String redirectBaseUrl;
+        if ("localhost".equals(host) || "127.0.0.1".equals(host)) {
+            redirectBaseUrl = "http://localhost:5173";
+        } else {
+            redirectBaseUrl = "https://lotte2-community-app-project-team1-sandy.vercel.app";
+        }
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("cid", CID);
@@ -34,9 +44,11 @@ public class KakaoPayService {
         params.add("total_amount", String.valueOf(totalAmount));
         params.add("vat_amount", "0");
         params.add("tax_free_amount", "0");
-        params.add("approval_url", "http://localhost:3000/pay/success");
-        params.add("cancel_url", "http://localhost:3000/pay/cancel");
-        params.add("fail_url", "http://localhost:3000/pay/fail");
+
+        // ✅ 올바른 redirect URL 적용
+        params.add("approval_url", redirectBaseUrl + "/pay/success");
+        params.add("cancel_url", redirectBaseUrl + "/pay/cancel");
+        params.add("fail_url", redirectBaseUrl + "/pay/fail");
 
         HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<>(params, headers);
 
@@ -46,8 +58,11 @@ public class KakaoPayService {
         return response.getBody();
     }
 
-    public String kakaoPayApprove(String pgToken) {
-        // 결제 승인 로직은 나중에 작성 가능
-        return "결제 승인 완료 (pg_token = " + pgToken + ")";
+    public Map<String, Object> kakaoPayApprove(String pgToken) {
+        return Map.of(
+                "status", "success",
+                "message", "결제 승인 완료",
+                "pg_token", pgToken
+        );
     }
 }

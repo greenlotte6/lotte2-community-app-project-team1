@@ -1,11 +1,12 @@
 import React from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { postMemberShip } from "../../api/userAPI";
+import { KAKAO_CREDIT } from "../../api/_http";
 
 const Credit = () => {
   const navigate = useNavigate();
 
-  const result = () => {
+  const result = async () => {
     const fetchData = async () => {
       try {
         const data = await postMemberShip(type);
@@ -16,7 +17,32 @@ const Credit = () => {
 
     fetchData();
 
-    navigate("/credit/result");
+    if (type !== "free") {
+      try {
+        const res = await fetch(KAKAO_CREDIT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // ✅ 현재 페이지 도메인을 host로 보냄
+          body: JSON.stringify({
+            itemName: "테스트 상품",
+            quantity: 1,
+            totalAmount: 10000,
+          }),
+        });
+
+        const data = await res.json();
+        console.log("결제 페이지 이동:", data.next_redirect_pc_url);
+
+        // ✅ 카카오페이 결제창으로 이동
+        window.location.href = data.next_redirect_pc_url;
+      } catch (err) {
+        console.error("카카오페이 결제 준비 실패", err);
+      }
+    } else {
+      navigate("/credit/result");
+    }
   };
 
   const [queryParms] = useSearchParams();
