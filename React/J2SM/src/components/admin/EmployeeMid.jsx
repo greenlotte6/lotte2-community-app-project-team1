@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
+import InviteModal from "./modal/InviteModal";
 
 export const EmployeeMid = () => {
   const modalRef = useRef(null);
@@ -105,22 +106,7 @@ export const EmployeeMid = () => {
           ref={modalRef}
           style={{ display: "none" }}
         >
-          <div className="modalContent">
-            <h3>사원 초대</h3>
-            <input type="text" placeholder="회사명 입력" />
-            <input type="text" placeholder="부서 입력" />
-            <input type="text" placeholder="직책 입력" />
-            <input type="text" placeholder="성명 입력" />
-            <input type="text" placeholder="이메일 입력" />
-            <div className="modalButtons">
-              <button type="button" id="inviteConfirmBtn">
-                초대
-              </button>
-              <button type="button" id="inviteCancelBtn" onClick={closeModal}>
-                취소
-              </button>
-            </div>
-          </div>
+          <InviteModal onClose={closeModal} />
         </div>
       </div>
 

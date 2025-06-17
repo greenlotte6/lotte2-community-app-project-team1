@@ -178,4 +178,12 @@ public class UserService{
     }
 
 
+    public UserDTO findByUser(User user) {
+        Optional<User> optUser = userRepository.findById(user.getUid());
+        if(optUser.isPresent()) {
+            User userEntity = optUser.get();
+            return modelMapper.map(userEntity, UserDTO.class);
+        }
+        return null;
+    }
 }

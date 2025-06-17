@@ -11,7 +11,8 @@ import lombok.*;
 @Builder
 public class InviteDTO {
     // 관리자가 사원을 초대할 때 검증하기 위한 객체
-    private int inviteCode; //초대 코드
+    private int no;
+    private String inviteCode; //초대 코드
     private String company; // 회사명
     private String department; // 부서명
     private String position; // 직책

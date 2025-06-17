@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import { USER_INFO } from "../../api/_http";
+import { getInfo } from "../../api/userAPI";
 
 const TopArea = () => {
+  const [user, setUser] = useState(null);
   const [currentTime, setCurrentTime] = useState("--:--:--");
   const [statusMessage, setStatusMessage] = useState("");
+  const { username } = useAuth();
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -11,6 +17,17 @@ const TopArea = () => {
     }, 1000);
     return () => clearInterval(interval);
   }, []);
+
+  // 유저 정보 들고오기
+  useEffect(() => {
+    const fetchUser = async () => {
+      const data = await getInfo(); // ✅ 여기를 직접 호출
+      setUser(data);
+      console.log("📦 유저 데이터:", data);
+    };
+
+    fetchUser();
+  }, [username]);
 
   const handleCheckIn = () => {
     setStatusMessage(`출근 완료 (${new Date().toLocaleTimeString()})`);
@@ -31,10 +48,10 @@ const TopArea = () => {
           </div>
           <ul className="detailList">
             <li>
-              <strong>Name:</strong> 정상수
+              <strong>Name:</strong> {user?.name}
             </li>
             <li>
-              <strong>Position:</strong> Manager
+              <strong>Position:</strong> {user?.position}
             </li>
             <li>
               <div className="attendanceArea">

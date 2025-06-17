@@ -6,6 +6,7 @@ import {
   USER_HP_CHECK,
   USER_ID_CHECK,
   USER_ID_SUCCESS,
+  USER_INFO,
   USER_LOGIN,
   USER_LOGOUT,
   USER_MEMBERSHIP_SAVE,
@@ -167,6 +168,18 @@ export const getUidByHp = async (data) => {
   try {
     const response = await axios.get(`${USER_UID_BY_HP}?hp=${data}`, {
       withCredentials: true, // ★ 세션 유지 위해 꼭 필요
+    });
+    console.log(response);
+    return response.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const getInfo = async () => {
+  try {
+    const response = await axios.get(`${USER_INFO}`, {
+      withCredentials: true,
     });
     console.log(response);
     return response.data;

@@ -9,6 +9,6 @@ import lombok.*;
 @NoArgsConstructor
 @Builder
 public class CompanyDTO {
-    private Long cno;
+    private int cno;
     private String companyName;
 }
