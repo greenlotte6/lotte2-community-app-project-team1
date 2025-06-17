@@ -65,8 +65,10 @@ public class InviteService {
         if ("localhost".equals(host) || "127.0.0.1".equals(host)) {
             inviteUrl = "http://localhost:5173";
         } else {
-            inviteUrl = "https://j2sm-ckoib0mr8-pais-projects-41e5669f.vercel.app";
+            inviteUrl = "https://lotte2-community-app-project-team1-sandy.vercel.app";
         }
+
+        inviteUrl += "/user/temp";
 
         // HTML 본문
         String content = "<div>" +

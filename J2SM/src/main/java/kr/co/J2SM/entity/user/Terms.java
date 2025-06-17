@@ -2,6 +2,7 @@ package kr.co.J2SM.entity.user;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -17,6 +18,10 @@ public class Terms {
 
     @Id
     private int no;
+
+    @Lob
     private String terms;
+
+    @Lob
     private String privacy;
 }

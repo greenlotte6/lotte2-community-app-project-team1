@@ -33,6 +33,7 @@ import SettingPage from "../pages/Setting/SettingPage";
 import DriveMainPage from "../pages/drive/DriveMainPage";
 import RecentDrivePage from "../pages/drive/RecentDrivePage";
 import DriveDeletePage from "../pages/drive/DriveDeletePage";
+import { TempPage } from "../pages/user/TempPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -60,6 +61,7 @@ const router = createBrowserRouter([
   { path: "/user/findid", element: <FindIdPage /> },
   { path: "/user/findid/result", element: <FindIdResultPage /> },
   { path: "/user/register", element: <RegisterPage /> },
+  { path: "/user/temp", element: <TempPage /> },
   { path: "/user/logout", element: null },
   /* 유저 라우터 종료 */
 

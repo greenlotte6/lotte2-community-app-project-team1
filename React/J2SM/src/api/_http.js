@@ -35,8 +35,13 @@ export const USER_UID_BY_HP = `${SERVER_HOST}/user/findHp`;
 export const USER_PASS_MODIFY = `${SERVER_HOST}/user/modify`;
 export const USER_INFO = `${SERVER_HOST}/user/info`;
 
+// 약관
+export const TEMP = `${SERVER_HOST}/user/terms`;
+
 // 사원 초대하기
 export const USER_INVITE = `${SERVER_HOST}/user/invite`;
+export const USER_INVITE_CODE = (code) =>
+  `${SERVER_HOST}/user/invite/check/${code}`;
 
 // 회사 정보 호출
 export const COMPANY = {
