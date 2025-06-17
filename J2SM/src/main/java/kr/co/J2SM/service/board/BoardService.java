@@ -11,8 +11,10 @@ import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,18 +47,25 @@ public class BoardService {
         return boardMapper.toDTO(saved);
     }
 
+    @Transactional(readOnly = true)
+    public List<BoardDTO> getBoardsByCategory(Long categoryId, Long companyId) {
 
+        Optional<Category> categoryopt = categoryRepository.findById(categoryId);
 
-    public List<BoardDTO> getBoardsByCategory(Long categoryId) {
+        // 토큰의 회사값과 카테고리 번호의 회사값이 같으면 출력
+        // 카테고리값으로만 데이터를 출력하는 것을 방지
 
-        Category category = Category.builder()
-                .id(categoryId)
-                .build();
-
-        return boardRepository.findByCategory(category)
-                .stream()
-                .map(boardMapper::toDTO)
-                .collect(Collectors.toList());
+        if(categoryopt.isPresent()) {
+            Category category = categoryopt.get();
+            if(category.getCompany().getCno() == companyId){
+                return boardRepository.findByCategory(category)
+                        .stream()
+                        .map(boardMapper::toDTO)
+                        .collect(Collectors.toList());
+            }
+        }
+        
+        return null;
     }
 
     public BoardDTO getBoardDetail(Long id) {

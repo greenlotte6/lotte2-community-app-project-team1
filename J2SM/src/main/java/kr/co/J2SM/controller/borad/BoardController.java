@@ -27,10 +27,11 @@ public class BoardController {
         return ResponseEntity.ok(saved);
     }
 
-    @GetMapping("/category/{categoryId}")
-    public ResponseEntity<List<BoardDTO>> getBoardsByCategory(@PathVariable Long categoryId) {
+    @GetMapping("/company/{companyId}/category/{categoryId}")
+    public ResponseEntity<List<BoardDTO>> getBoardsByCategory(@PathVariable Long companyId, @PathVariable Long categoryId) {
         log.info("게시물 리스트 불러오기 : cno : " + categoryId);
-        return ResponseEntity.ok(boardService.getBoardsByCategory(categoryId));
+        log.info("게시물 리스트 불러오기 : companyId : " + companyId);
+        return ResponseEntity.ok(boardService.getBoardsByCategory(categoryId, companyId));
     }
 
     @GetMapping("/{id}")

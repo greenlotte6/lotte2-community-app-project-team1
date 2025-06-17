@@ -3,19 +3,21 @@ import WriteModal from "./WriteModal";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ARTICLE_LIST } from "../../api/_http";
+import useAuth from "../../hooks/useAuth";
 
 const BoardList = () => {
   const [showWriteModal, setShowWriteModal] = useState(false);
   const [posts, setPosts] = useState([]);
-
+  const { company } = useAuth();
   const location = useLocation();
-
   const categoryId = location.pathname.split("/")[4];
 
   // 게시글 목록 가져오기
   const fetchPosts = async () => {
+    if (!company) return;
+    const cno = company.split(":")[0];
     try {
-      const res = await axios.get(ARTICLE_LIST(categoryId));
+      const res = await axios.get(ARTICLE_LIST(categoryId, cno));
       setPosts(res.data);
     } catch (err) {
       console.error("게시글 불러오기 실패", err);
@@ -24,7 +26,7 @@ const BoardList = () => {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [categoryId]);
 
   // 등록 완료 후 리스트 추가
   const handlePostCreated = (newPost) => {
