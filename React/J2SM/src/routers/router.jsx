@@ -34,6 +34,7 @@ import DriveMainPage from "../pages/drive/DriveMainPage";
 import RecentDrivePage from "../pages/drive/RecentDrivePage";
 import DriveDeletePage from "../pages/drive/DriveDeletePage";
 import { TempPage } from "../pages/user/TempPage";
+import CreditSuccessPage from "../pages/lading/CreditSuccessPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -43,6 +44,7 @@ const router = createBrowserRouter([
 
   // 결제 페이지
   { path: "/credit/list", element: <CreditListPage /> },
+  { path: "/pay/success", element: <CreditSuccessPage /> },
   { path: "/credit/choice", element: <CreditPage /> },
   { path: "/credit/result", element: <CreditResultPage /> },
   { path: "/credit/register", element: <AdminRegisterPage /> },

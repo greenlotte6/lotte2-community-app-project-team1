@@ -16,8 +16,10 @@ export const SOCKET_URL = `${HTTP_PROTOCOL}://${WS_HOST}/ws-chat`;
 // 버전 정보
 export const VERSION = `${SERVER_HOST}/version`;
 
-// user
+// 카카오 결제
+export const KAKAO_CREDIT = `${SERVER_HOST}/api/pay/ready`;
 
+// user
 export const USER_REGISTER = `${SERVER_HOST}/user`;
 export const USER_LOGIN = `${SERVER_HOST}/user/login`;
 export const USER_LOGOUT = `${SERVER_HOST}/user/logout`;
