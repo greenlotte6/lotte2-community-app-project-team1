@@ -18,4 +18,6 @@ public class InviteDTO {
     private String position; // 직책
     private String name; // 초대하는 사람 이름
     private String email; // 초대하는 사람 이메일
+
+
 }

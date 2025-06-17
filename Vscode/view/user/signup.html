@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>J2SM 회원가입</title>
-    <link rel="stylesheet" href="/css/layer/user/user.css">
+    <link rel="stylesheet" href="/css/layer/user/user.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
       rel="stylesheet"
@@ -12,94 +12,135 @@
 
     <script>
       function togglePassword() {
-      const pw = document.getElementById("password");
-      const toggle = document.querySelector(".toggle-password");
-      if (pw.type === "password") {
-        pw.type = "text";
-        toggle.textContent = "🔓";
-      } else {
-        pw.type = "password";
-        toggle.textContent = "🔒";
+        const pw = document.getElementById("password");
+        const toggle = document.querySelector(".toggle-password");
+        if (pw.type === "password") {
+          pw.type = "text";
+          toggle.textContent = "🔓";
+        } else {
+          pw.type = "password";
+          toggle.textContent = "🔒";
+        }
       }
-    }
     </script>
-   
   </head>
   <body>
     <div class="container">
       <main>
         <div id="user_page">
-          <img src="/images/user/login.jpg" alt="로그인 화면">
+          <img src="/images/user/login.jpg" alt="로그인 화면" />
           <div id="login_form">
-            <img src="/logo.png" alt="로고">
+            <img src="/logo.png" alt="로고" />
             <div>
               <p class="txt_title">회원가입</p>
               <form action="#" id="login">
-               
                 <div class="signUp">
                   <label for="name">이름</label>
-                  <input type="text" name="name" class="m-10" placeholder="이름을 입력해주세요." required >
+                  <input
+                    type="text"
+                    name="name"
+                    class="m-10"
+                    placeholder="이름을 입력해주세요."
+                    required
+                  />
 
                   <label for="email">이메일</label>
-                  <input type="text" name="email" class="m-10" placeholder="이메일을 입력해주세요." required>
+                  <input
+                    type="text"
+                    name="email"
+                    class="m-10"
+                    placeholder="이메일을 입력해주세요."
+                    required
+                  />
 
                   <label for="tempPass">암호 번호</label>
-                  <input type="text" name="tempPass" class="m-10" placeholder="암호 번호를 입력해주세요." required >
+                  <input
+                    type="text"
+                    name="tempPass"
+                    class="m-10"
+                    placeholder="암호 번호를 입력해주세요."
+                    required
+                  />
 
                   <div class="input_wrap">
                     <label for="pass">비밀번호</label>
-                    <input type="password" name="pass" id="password" placeholder="비밀번호를 입력하세요" required>
-                    <span class="toggle-password" onclick="togglePassword()" style="top:70%">🔒</span>
+                    <input
+                      type="password"
+                      name="pass"
+                      id="password"
+                      placeholder="비밀번호를 입력하세요"
+                      required
+                    />
+                    <span
+                      class="toggle-password"
+                      onclick="togglePassword()"
+                      style="top: 70%"
+                      >🔒</span
+                    >
                   </div>
 
-                   <div class="input_wrap">
+                  <div class="input_wrap">
                     <label for="pass2">비밀번호 확인</label>
-                    <input type="password" name="pass2" id="password" placeholder="비밀번호를 입력하세요" required>
-                    <span class="toggle-password" onclick="togglePassword()" style="top:70%">🔒</span>
+                    <input
+                      type="password"
+                      name="pass2"
+                      id="password"
+                      placeholder="비밀번호를 입력하세요"
+                      required
+                    />
+                    <span
+                      class="toggle-password"
+                      onclick="togglePassword()"
+                      style="top: 70%"
+                      >🔒</span
+                    >
                   </div>
 
                   <div class="form-row">
                     <div class="form-group">
                       <label for="company">회사명</label>
-                      <input type="text" name="company" placeholder="회사명." required>
+                      <input
+                        type="text"
+                        name="company"
+                        placeholder="회사명."
+                        required
+                      />
                     </div>
                     <div class="form-group">
                       <label for="department">부서</label>
-                      <input type="text" name="department" placeholder="부서명." required>
+                      <input
+                        type="text"
+                        name="department"
+                        placeholder="부서명."
+                        required
+                      />
                     </div>
                   </div>
 
                   <div class="form-row">
                     <div class="form-group">
-                       <label for="rdate">입사일</label>
-                        <input type="date" name="rdate" placeholder="입사일을 선택해주세요." id="rdate" required>
+                      <label for="rdate">입사일</label>
+                      <input
+                        type="date"
+                        name="rdate"
+                        placeholder="입사일을 선택해주세요."
+                        id="rdate"
+                        required
+                      />
                     </div>
                     <div class="form-group">
                       <label for="profile">프로필 사진</label>
-                      <input type="file" name="profile" id="profile" required>
+                      <input type="file" name="profile" id="profile" required />
                     </div>
                   </div>
-
                 </div>
-                
-                <button type="submit" class="login_btn">
-                      회원가입
-                </button>
 
-
-
- 
+                <button type="submit" class="login_btn">회원가입</button>
               </form>
-              
-
-
             </div>
-            
-
-          
           </div>
-            
         </div>
       </main>
+    </div>
   </body>
 </html>

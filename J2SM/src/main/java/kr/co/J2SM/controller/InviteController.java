@@ -31,7 +31,7 @@ public class InviteController {
         // 사원 초대 메시지 전달하기
         inviteService.sendEmail(inviteCode, inviteDTO, host);
         return "success";
-
-
     }
+    
+    // 코드 체크하기
 }

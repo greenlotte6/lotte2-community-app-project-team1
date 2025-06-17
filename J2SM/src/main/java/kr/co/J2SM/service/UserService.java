@@ -49,11 +49,8 @@ public class UserService{
     }
 
     public TermsDTO terms() {
-
         Optional<Terms> optTerms = termsRepository.findById(1);
-
         if(optTerms.isPresent()) {
-
             Terms terms = optTerms.get();
             TermsDTO termsDTO = modelMapper.map(terms, TermsDTO.class);
             return termsDTO;
