@@ -79,6 +79,7 @@ const router = createBrowserRouter([
   /* 게시판 시작 */
   { path: "/dashboard/board/main", element: <BoardMainPage /> },
   { path: "/dashboard/board/list", element: <BoardListPage /> },
+  { path: `/dashboard/board/list/:categoryId`, element: <BoardListPage /> },
   { path: "/dashboard/board/view", element: <BoardViewPage /> },
 
   /* 캘린더 */
