@@ -33,6 +33,17 @@ export const USER_EMAIL_SEND = `${SERVER_HOST}/user/emailSend`;
 export const USER_EMAIL_VALID = `${SERVER_HOST}/user/emailCodeValid`;
 export const USER_UID_BY_HP = `${SERVER_HOST}/user/findHp`;
 export const USER_PASS_MODIFY = `${SERVER_HOST}/user/modify`;
+export const USER_INFO = `${SERVER_HOST}/user/info`;
+
+// 사원 초대하기
+export const USER_INVITE = `${SERVER_HOST}/user/invite`;
+
+// 회사 정보 호출
+export const COMPANY = {
+  DEPARTMENT: {
+    LIST: (cno) => `${SERVER_HOST}/api/department/info/${cno}`,
+  },
+};
 
 // article
 export const ARTICLE_WRITE = `${SERVER_HOST}/article`;

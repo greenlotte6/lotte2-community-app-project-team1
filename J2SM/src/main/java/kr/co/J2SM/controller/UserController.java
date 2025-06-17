@@ -316,7 +316,14 @@ public class UserController {
     @GetMapping("/me")
     public User getMyInfo(@AuthenticationPrincipal MyUserDetails userDetails) {
         return userDetails.getUser(); // React에서 사용
-
     }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserDTO> userInfo (@AuthenticationPrincipal User user){
+        UserDTO userDTO = userService.findByUser(user);
+        System.out.println(userDTO);
+        return ResponseEntity.ok(userDTO);
+    }
+
 
 }

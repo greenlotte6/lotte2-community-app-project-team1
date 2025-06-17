@@ -16,6 +16,8 @@ import java.time.LocalDateTime;
 @Table(name = "trialRequest")
 public class TrialRequest {
 
+    // 문의 테이블
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
