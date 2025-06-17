@@ -13,5 +13,8 @@ public interface CalendarRepository extends JpaRepository<Calendar, Long> {
     List<Calendar> findByUser(User user);
 
     List<Calendar> findByCompany(int cno);
+
+
+    List<Calendar> findByUserAndIsPublic(User user, int isPublic);
 }
 

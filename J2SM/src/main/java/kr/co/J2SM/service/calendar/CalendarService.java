@@ -34,7 +34,8 @@ public class CalendarService {
                     .uid(uid)
                     .build();
 
-            List<Calendar> list = calendarRepository.findByUser(user);
+            int isPublic = 0;
+            List<Calendar> list = calendarRepository.findByUserAndIsPublic(user, isPublic);
             List<CalendarDTO> calendarDTOList = new ArrayList<>();
             for (Calendar calendar : list) {
                 CalendarDTO calendarDTO = modelMapper.map(calendar, CalendarDTO.class);
@@ -90,7 +91,7 @@ public class CalendarService {
         if(cate.equals("my")){
             schedule.setCompany(0);
         }else{
-            schedule.setIs_public(1);
+            schedule.setIsPublic(1);
         }
 
         return calendarRepository.save(schedule);
