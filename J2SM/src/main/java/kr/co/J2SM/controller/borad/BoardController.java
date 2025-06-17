@@ -29,6 +29,7 @@ public class BoardController {
 
     @GetMapping("/category/{categoryId}")
     public ResponseEntity<List<BoardDTO>> getBoardsByCategory(@PathVariable Long categoryId) {
+        log.info("게시물 리스트 불러오기 : cno : " + categoryId);
         return ResponseEntity.ok(boardService.getBoardsByCategory(categoryId));
     }
 

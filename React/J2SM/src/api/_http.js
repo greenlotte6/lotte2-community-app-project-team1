@@ -47,9 +47,14 @@ export const COMPANY = {
 
 // article
 export const ARTICLE_WRITE = `${SERVER_HOST}/article`;
-export const ARTICLE_LIST = `${SERVER_HOST}/article`;
+export const ARTICLE_LIST = (cno) =>
+  `${SERVER_HOST}/api/boards/category/${cno}`;
 export const CATEGORY_LIST = (cno) =>
   `${SERVER_HOST}/api/category/company/${cno}`;
+
+export const CATEGORY_DELETE = (cno) =>
+  `${SERVER_HOST}/api/category/delete/${cno}`;
+
 // product
 export const PRODUCT_REGISTER = `${SERVER_HOST}/product`;
 export const PRODUCT_LIST = `${SERVER_HOST}/product`;

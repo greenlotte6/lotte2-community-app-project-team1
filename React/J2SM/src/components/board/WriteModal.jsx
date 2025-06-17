@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { BOARD } from "../../api/_http";
+import useAuth from "../../hooks/useAuth";
 
-const WriteModal = ({ onClose, categoryId, writerUid }) => {
+const WriteModal = ({ onClose, categoryId }) => {
   const modalRef = useRef(null);
+  const { username } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
 
@@ -34,10 +36,8 @@ const WriteModal = ({ onClose, categoryId, writerUid }) => {
         {
           title,
           content,
-          createdBy: writerUid,
           fixed: false,
           category: { id: categoryId },
-          writer: { uid: writerUid },
         },
         {
           withCredentials: true, // 필요 시 쿠키 포함

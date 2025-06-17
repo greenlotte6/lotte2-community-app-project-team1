@@ -48,7 +48,12 @@ public class BoardService {
 
 
     public List<BoardDTO> getBoardsByCategory(Long categoryId) {
-        return boardRepository.findByCategory_Id(categoryId)
+
+        Category category = Category.builder()
+                .id(categoryId)
+                .build();
+
+        return boardRepository.findByCategory(category)
                 .stream()
                 .map(boardMapper::toDTO)
                 .collect(Collectors.toList());

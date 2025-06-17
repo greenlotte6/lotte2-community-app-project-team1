@@ -88,6 +88,7 @@ public class UserController {
             // 회사 정보
             String department = user.getDepartment().getDno()
                     + ":" + user.getDepartment().getDepartmentName();
+
             String company = user.getDepartment().getCompany().getCno()
                     + ":" + user.getDepartment().getCompany().getCompanyName() ;
 

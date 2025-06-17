@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import BoardModal from "../board/BoardModal"; // 모달 컴포넌트 임포트
 import AsideChat from "./aside/AsideChat";
+import AsideBoard from "./aside/AsideBoard";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth";
 import { CATEGORY_LIST } from "../../api/_http";
@@ -13,51 +14,6 @@ const Aside = () => {
   const { pathname } = location;
   const { username, company, role } = useAuth(); // 로그인 정보
   const isAdmin = role === "ADMIN";
-
-  const [categories, setCategories] = useState([]);
-  const [isBoardModalOpen, setBoardModalOpen] = useState(false);
-
-  // 모달 열고 닫기
-  const handleBoardModalOpen = () => setBoardModalOpen(true);
-  const handleBoardModalClose = () => setBoardModalOpen(false);
-
-  // ✅ 회사 ID 파싱 (예: "1:그린컴퓨터아카데미" → 1)
-  const cno = company?.split?.(":")?.[0] ?? null;
-  console.log("컴퍼니 : " + cno);
-
-  // ✅ 카테고리 불러오기
-  const fetchCategories = async () => {
-    if (!cno) return;
-    try {
-      const res = await axios.get(CATEGORY_LIST(cno));
-      setCategories(res.data);
-    } catch (err) {
-      console.error("카테고리 목록 불러오기 실패", err);
-    }
-  };
-
-  // ✅ 최초 로딩 시 실행
-  useEffect(() => {
-    if (pathname.includes("/dashboard/board")) {
-      fetchCategories();
-    }
-  }, [pathname, cno]);
-
-  // ✅ 게시판 생성
-  const handleBoardCreate = async (boardName) => {
-    if (!cno) return alert("회사 정보가 없습니다.");
-    try {
-      await axios.post(CATEGORY_LIST(cno), {
-        name: boardName,
-        description: "",
-      });
-      await fetchCategories();
-      setBoardModalOpen(false);
-    } catch (err) {
-      console.error("게시판 생성 실패", err);
-      alert("게시판 생성 실패");
-    }
-  };
 
   // '/dashboard/calendar' 경로일 때
   if (pathname.includes("/dashboard/calendar")) {
@@ -88,59 +44,7 @@ const Aside = () => {
   // '/dashboard/board' 경로일 때
 
   if (pathname.includes("/dashboard/board")) {
-    return (
-      <>
-        <aside>
-          <div className="sidemenu">
-            <div className="sideTop">
-              <h3>B board</h3>
-            </div>
-            <div className="childArea">
-              <div className="menuItem">
-                <img src="/images/File text.svg" alt="users" />
-                <Link to="/dashboard/board/main">HOME</Link>
-                <img src="/images/Vector.svg" alt="vector" />
-              </div>
-              <ul className="subMenu">
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-                <li>
-                  <Link to="#">더미더미더미</Link>
-                </li>
-              </ul>
-
-              <div className="side-icon">
-                <button className="side-click" onClick={handleBoardModalOpen}>
-                  + New BOARD
-                </button>
-              </div>
-
-              <div className="menuItem">
-                <img src="/images/File text.svg" alt="users" />
-                <Link to="/dashboard/board/list">🔒공지사항</Link>
-                <img src="/images/Vector.svg" alt="vector" />
-              </div>
-              {categories.map((cat) => (
-                <div className="menuItem" key={cat.id}>
-                  <img src="/images/File text.svg" alt="board" />
-                  <Link to={`/dashboard/board/category/${cat.id}`}>
-                    {cat.name}
-                  </Link>
-                  <img src="/images/Vector.svg" alt="vector" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </aside>
-
-        <BoardModal
-          isOpen={isBoardModalOpen}
-          onClose={handleBoardModalClose}
-          onCreate={handleBoardCreate}
-        />
-      </>
-    );
+    return <AsideBoard />;
   }
 
   // '/dashboard/drive' 경로일 때
