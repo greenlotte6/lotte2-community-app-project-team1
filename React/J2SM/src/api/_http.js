@@ -52,8 +52,8 @@ export const COMPANY = {
 
 // article
 export const ARTICLE_WRITE = `${SERVER_HOST}/article`;
-export const ARTICLE_LIST = (cno) =>
-  `${SERVER_HOST}/api/boards/category/${cno}`;
+export const ARTICLE_LIST = (categoryId, companyId) =>
+  `${SERVER_HOST}/api/boards/company/${companyId}/category/${categoryId}`;
 export const CATEGORY_LIST = (cno) =>
   `${SERVER_HOST}/api/category/company/${cno}`;
 
