@@ -20,6 +20,8 @@ public class MypageShareResponseDTO {
     private String sharedBy;       // 공유한 사람 uid
     private String sharedByName;   // 공유한 사람 이름 (옵션)
     private LocalDateTime sharedAt;// 공유 시점
+    private String pageTitle;
+    private String content;
 
     public static MypageShareResponseDTO fromEntity(MypageShare entity) {
         return MypageShareResponseDTO.builder()
@@ -30,6 +32,8 @@ public class MypageShareResponseDTO {
                 .sharedBy(entity.getSharedBy() != null ? entity.getSharedBy().getUid() : null)
                 .sharedByName(entity.getSharedBy() != null ? entity.getSharedBy().getName() : null)
                 .sharedAt(entity.getSharedAt())
+                .pageTitle(entity.getMyPage().getTitle())
+                .content(entity.getMyPage().getContent())
                 // 필요시 여기에 myPage 제목 등 추가
                 .build();
     }
