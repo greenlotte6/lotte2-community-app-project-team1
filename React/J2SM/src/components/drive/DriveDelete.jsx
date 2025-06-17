@@ -17,11 +17,11 @@ const DriveDelete = () => {
         setLoading(false);
       });
   }, []);
-
   const handleRestore = async (fileId) => {
     try {
-      const res = await fetch(`/api/drive/${fileId}/restore`, {
+      const res = await fetch(DRIVE_API.RESTORE(fileId), {
         method: "PUT",
+        credentials: "include", // 인증 필요 시
       });
       if (!res.ok) throw new Error("복원 실패");
       setTrashedFiles((prev) => prev.filter((file) => file.id !== fileId));
@@ -32,8 +32,9 @@ const DriveDelete = () => {
 
   const handlePermanentDelete = async (fileId) => {
     try {
-      const res = await fetch(`/api/drive/${fileId}/delete`, {
+      const res = await fetch(DRIVE_API.PERMANENT_DELETE(fileId), {
         method: "DELETE",
+        credentials: "include", // 인증 필요 시
       });
       if (!res.ok) throw new Error("완전 삭제 실패");
       setTrashedFiles((prev) => prev.filter((file) => file.id !== fileId));

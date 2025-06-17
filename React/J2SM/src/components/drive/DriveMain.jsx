@@ -14,8 +14,10 @@ const DriveMain = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const dropdownRef = useRef();
   const dropRef = useRef();
-  const { username } = useAuth();
+  const { username, membership, nick } = useAuth();
   const navigate = useNavigate();
+
+  // membership free일때가 무료 / 나머지는 유료
 
   useEffect(() => {
     loadFiles();
@@ -45,11 +47,19 @@ const DriveMain = () => {
     selectedFiles.forEach((file) => uploadFile(file));
   };
 
+  const MAX_FILE_SIZE_FREE = 5 * 1024 * 1024; // 5MB
+
   const uploadFile = async (file) => {
+    if (membership === "free" && file.size > MAX_FILE_SIZE_FREE) {
+      alert("무료 회원은 5MB 이하의 파일만 업로드할 수 있습니다.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("file", file);
     formData.append("user", username);
     formData.append("originalName", file.name);
+
     try {
       const res = await fetch(DRIVE_API.UPLOAD, {
         method: "POST",
@@ -213,7 +223,6 @@ const DriveMain = () => {
           <img src="/images/Cloud.svg" alt="클라우드" />
           <h3>Cloud</h3>
         </div>
-        <button onClick={goToTrash}>🗑 휴지통</button>
       </div>
 
       <div
@@ -226,7 +235,7 @@ const DriveMain = () => {
         onDragLeave={() => setDragOver(false)}
         onDrop={handleDrop}
       >
-        <h3>{username}님의 Cloud 저장소입니다.</h3>
+        <h3>{nick}님의 Cloud 저장소입니다.</h3>
 
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input

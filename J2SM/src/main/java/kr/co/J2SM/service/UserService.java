@@ -186,4 +186,8 @@ public class UserService{
         }
         return null;
     }
+    public User findByUsername(String username) {
+        return userRepository.findById(username)
+                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + username));
+    }
 }
