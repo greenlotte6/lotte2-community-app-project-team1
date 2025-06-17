@@ -18,9 +18,17 @@ const Calendar = () => {
   // username : 아이디
   // nick : 이름
   const { username, nick, company } = useAuth();
+  const [title, setTitle] = useState("나의 캘린더");
   const [cate] = useCalendar();
 
-  console.log(cate);
+  useEffect(() => {
+    if (cate !== "public") {
+      setTitle("마이 캘린더");
+    } else {
+      setTitle("소셜 캘린더");
+    }
+  }, [cate]);
+
   console.log("유저 아이디 : " + username);
   console.log("유저 이름 : " + nick);
   console.log("회사 이름 : " + company);
@@ -29,6 +37,7 @@ const Calendar = () => {
   const [schedules, setSchedules] = useState([]);
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [showDetailModal, setShowDetailModal] = useState(false);
+
   const calendarRef = useRef(null);
 
   useEffect(() => {
@@ -250,6 +259,7 @@ const Calendar = () => {
     const place = document.getElementById("place").value;
     const member = document.getElementById("member").value;
     const note = document.getElementById("detail-note").value;
+    const cno = company.split(":")[0];
 
     if (!title || !start || !end) return alert("모든 항목을 입력하세요.");
 
@@ -262,6 +272,7 @@ const Calendar = () => {
       member,
       note,
       color,
+      company: cno,
       cate,
     };
 
@@ -406,7 +417,12 @@ const Calendar = () => {
   return (
     <div className="calendar-wrappers" style={{ width: "100%" }}>
       <div className="calendar-header">
-        <div className="hil">※ 일정을 클릭해서 등록하세요</div>
+        <div className="hil">
+          <div classNmae="hil-name" style={{ fontSize: "25px" }}>
+            {title}
+          </div>
+          <div className="hil-day">일정을 클릭해서 등록하세요 🖋 </div>
+        </div>
         <button onClick={prevMonth}>❮</button>
         <span
           style={{ padding: "0 50px", fontSize: "20px" }}

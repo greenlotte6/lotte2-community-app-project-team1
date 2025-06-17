@@ -16,4 +16,9 @@ public class CategoryDTO {
     private String description; // 게시판 설명
     private CompanyDTO company;
 
+    public CategoryDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
 }

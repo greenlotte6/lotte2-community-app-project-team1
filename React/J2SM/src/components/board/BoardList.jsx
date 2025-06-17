@@ -1,9 +1,13 @@
 import React, { useState } from "react";
-import WriteModal from "./WriteModal"; // 모달 컴포넌트 import
+import WriteModal from "./WriteModal";
 import { Link } from "react-router-dom";
 
 const BoardList = () => {
   const [showWriteModal, setShowWriteModal] = useState(false);
+
+  // 예시: 로그인 사용자 uid 및 선택된 카테고리 ID
+  const writerUid = "hong123"; // 실제로는 useAuth() 같은 훅에서 가져올 수 있음
+  const categoryId = 1; // 현재 게시판의 카테고리 ID
 
   return (
     <>
@@ -47,7 +51,7 @@ const BoardList = () => {
             </tr>
           </thead>
           <tbody>
-            {/* 게시글 rows - 생략된 부분은 필요시 loop 처리 가능 */}
+            {/* 게시글 rows - 추후 map으로 렌더링 */}
             <tr>
               <td>
                 <input type="checkbox" className="rowCheckbox" />
@@ -67,9 +71,13 @@ const BoardList = () => {
         <div id="pagination" className="pagination"></div>
       </div>
 
-      {/* 모달 컴포넌트 조건부 렌더링 */}
+      {/* 모달 렌더링 */}
       {showWriteModal && (
-        <WriteModal onClose={() => setShowWriteModal(false)} />
+        <WriteModal
+          onClose={() => setShowWriteModal(false)}
+          categoryId={categoryId}
+          writerUid={writerUid}
+        />
       )}
     </>
   );

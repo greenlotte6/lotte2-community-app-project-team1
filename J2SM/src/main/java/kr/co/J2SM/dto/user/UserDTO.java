@@ -1,6 +1,7 @@
 package kr.co.J2SM.dto.user;
 
 import kr.co.J2SM.dto.company.DepartmentDTO;
+import kr.co.J2SM.entity.user.User;
 import lombok.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -36,6 +37,15 @@ public class UserDTO {
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
 
+    /* board */
+    public static UserDTO from(User user) {
+        if (user == null) return null;
+
+        return UserDTO.builder()
+                .uid(user.getUid())
+                .name(user.getName())
+                .build();
 
 
+    }
 }
