@@ -69,7 +69,7 @@ const Aside = () => {
             </div>
             <div>
               <img src="/images/Sharedrive.png" alt="공유 드라이브" />
-              <Link to="/dashboard/drive">공유 드라이브</Link>
+              <Link to="/dashboard/drive/share">공유 드라이브</Link>
               <img src="/images/Vector.svg" alt="vector" />
             </div>
             <div>

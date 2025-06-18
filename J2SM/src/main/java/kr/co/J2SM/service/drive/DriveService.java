@@ -3,6 +3,7 @@ package kr.co.J2SM.service.drive;
 import kr.co.J2SM.dto.drive.DriveDTO;
 import kr.co.J2SM.entity.drive.Drive;
 import kr.co.J2SM.entity.drive.RecentDrive;
+import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.mapper.drive.DriveMapper;
 import kr.co.J2SM.repository.drive.DriveRepository;
 import kr.co.J2SM.repository.drive.RecentDriveRepository;
@@ -21,8 +22,9 @@ public class DriveService {
     private final RecentDriveRepository recentDriveRepository;
 
     // 전체 드라이브 목록 (휴지통 제외)
-    public List<DriveDTO> getAllDriveFiles() {
-        return driveRepository.findByDeletedFalse()
+    public List<DriveDTO> getAllDriveFiles(User user) {
+
+        return driveRepository.findByDeletedFalseAndUser(user.getUid())
                 .stream()
                 .map(DriveMapper::toDTO)
                 .collect(Collectors.toList());
@@ -147,4 +149,19 @@ public class DriveService {
                 .filter(dto -> dto != null)
                 .collect(Collectors.toList());
     }
+    public DriveDTO createFolder(String name, String uid) {
+        Drive folder = Drive.builder()
+                .name(name)
+                .user(uid)
+                .type("folder") // 구분용
+                .fileType("folder")
+                .location("내 드라이브") // 하드코딩된 문자열 그대로 사용
+                .uploadedAt(LocalDateTime.now())
+                .favorite(false)
+                .deleted(false)
+                .build();
+
+        return DriveMapper.toDTO(driveRepository.save(folder));
+    }
+
 }

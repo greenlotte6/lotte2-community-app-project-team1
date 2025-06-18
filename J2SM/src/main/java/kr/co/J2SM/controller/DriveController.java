@@ -8,9 +8,11 @@ import kr.co.J2SM.service.UserService;
 import kr.co.J2SM.service.drive.DriveService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.http.*;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,8 +22,10 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
 import java.text.Normalizer;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/drive")
 @RequiredArgsConstructor
@@ -34,8 +38,9 @@ public class DriveController {
     private static final long MAX_FREE_FILE_SIZE = 5 * 1024 * 1024; // 5MB
 
     @GetMapping
-    public List<DriveDTO> listFiles() {
-        return driveService.getAllDriveFiles();
+    public List<DriveDTO> listFiles(@AuthenticationPrincipal User user) {
+        log.info("유저 정보 "  + user);
+        return driveService.getAllDriveFiles(user);
     }
 
     @GetMapping("/{id}/download")
@@ -186,5 +191,18 @@ public class DriveController {
         private String name;
         public String getName() { return name; }
         public void setName(String name) { this.name = name; }
+    }
+
+    @PostMapping("/folder")
+    public ResponseEntity<DriveDTO> createFolder(@RequestBody Map<String, String> body,
+                                                 @AuthenticationPrincipal User user) {
+        String folderName = body.get("name");
+
+        if (folderName == null || folderName.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(null);
+        }
+
+        DriveDTO folder = driveService.createFolder(folderName, user.getUid());
+        return ResponseEntity.ok(folder);
     }
 }
