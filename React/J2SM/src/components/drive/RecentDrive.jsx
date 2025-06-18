@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { DRIVE_API } from "../../api/_http";
+import useAuth from "../../hooks/useAuth"; // ✅ uid 사용을 위해 필요
 import "../../styles/drive/drive.scss";
 
 const RecentDrive = () => {
@@ -8,21 +9,23 @@ const RecentDrive = () => {
   const [renamingId, setRenamingId] = useState(null);
   const [newName, setNewName] = useState("");
   const dropdownRef = useRef();
+  const { username: uid } = useAuth(); // ✅ 로그인 유저 ID
 
   useEffect(() => {
     const fetchRecentFiles = async () => {
       try {
-        const res = await fetch(DRIVE_API.RECENT_LIST, {
+        const res = await fetch(`${DRIVE_API.RECENT_LIST}?uid=${uid}`, {
           credentials: "include",
         });
         const data = await res.json();
+        if (!Array.isArray(data)) throw new Error("응답이 배열이 아님");
         setRecentFiles(data);
       } catch (err) {
         console.error("최근 드라이브 불러오기 실패", err);
       }
     };
-    fetchRecentFiles();
-  }, []);
+    if (uid) fetchRecentFiles();
+  }, [uid]);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -69,14 +72,23 @@ const RecentDrive = () => {
     setActiveMenuId(null);
   };
 
-  const handleDownload = (id) => {
+  const handleDownload = async (id) => {
+    try {
+      // ✅ 열람 기록 저장
+      await fetch(`${DRIVE_API.RECENT_VIEW(id)}?uid=${uid}`, {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (e) {
+      console.error("최근 기록 저장 실패", e);
+    }
+
     window.location.href = DRIVE_API.DOWNLOAD(id);
     setActiveMenuId(null);
   };
 
   const handleDelete = async (id) => {
-    const ok = window.confirm("정말로 휴지통으로 이동하시겠습니까?");
-    if (!ok) return;
+    if (!window.confirm("정말로 휴지통으로 이동하시겠습니까?")) return;
     await fetch(DRIVE_API.DELETE(id), { method: "DELETE" });
     setRecentFiles((prev) => prev.filter((f) => f.id !== id));
     setActiveMenuId(null);
@@ -109,138 +121,119 @@ const RecentDrive = () => {
   };
 
   return (
-    <>
-      <div className="topArea">
-        <div className="Title">
-          <img src="/images/Cloud.svg" alt="클라우드" />
-          <h3>Cloud</h3>
-        </div>
-      </div>
+    <div className="cloud-main">
+      <h3>최근 드라이브</h3>
 
-      <div className="cloud-main">
-        <h3>최근 드라이브</h3>
+      <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
+        <input
+          type="text"
+          placeholder="Cloud 검색"
+          style={{
+            width: "100%",
+            padding: "6px 10px",
+            border: "none",
+            backgroundColor: "#f0eaf7",
+          }}
+        />
+      </form>
 
-        <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
-          <input
-            type="text"
-            placeholder="Cloud 검색"
-            style={{
-              width: "100%",
-              padding: "6px 10px",
-              border: "none",
-              backgroundColor: "#f0eaf7",
-            }}
-          />
-          <button
-            type="submit"
-            style={{ background: "none", border: "none", padding: 0 }}
-          >
-            <img src="/images/search.png" alt="검색" className="search-icon" />
-          </button>
-        </form>
-
-        <div className="drivetable">
-          {Object.entries(grouped).map(([label, files]) => (
-            <table className="drivetables" key={label}>
-              <thead>
-                <tr>
-                  <th colSpan="5" style={{ textAlign: "left" }}>
-                    {label}
-                  </th>
-                </tr>
-                <tr>
-                  <th>사용자</th>
-                  <th>파일명</th>
-                  <th>유형</th>
-                  <th>위치</th>
-                  <th>업로드 날짜</th>
-                </tr>
-              </thead>
-              <tbody>
-                {files.map((file) => (
-                  <tr key={file.id}>
-                    <td>{file.user}</td>
-                    <td>
-                      {renamingId === file.id ? (
-                        <>
-                          <input
-                            value={newName}
-                            onChange={(e) => setNewName(e.target.value)}
-                            onKeyDown={(e) => handleKeyDown(e, file.id)}
-                            autoFocus
-                          />
-                          <button onClick={() => handleRenameConfirm(file.id)}>
-                            확인
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <span
-                            className={`star-icon ${
-                              file.favorite ? "active" : ""
-                            }`}
-                            onClick={() => toggleFavorite(file.id)}
-                            style={{ cursor: "pointer", marginRight: "5px" }}
-                          >
-                            ★
-                          </span>
-                          {file.name}
-                        </>
-                      )}
-                    </td>
-                    <td>{file.type}</td>
-                    <td>{file.location}</td>
-                    <td style={{ position: "relative" }}>
-                      <span>{file.date}</span>
-                      <img
-                        className="tableimg"
-                        src="/images/Seemore.png"
-                        alt="더보기"
-                        onClick={() =>
-                          setActiveMenuId((prev) =>
-                            prev === file.id ? null : file.id
-                          )
-                        }
-                      />
-                      {activeMenuId === file.id && (
-                        <div
-                          className="dropdown-menu"
-                          ref={dropdownRef}
-                          style={{ position: "absolute", zIndex: 100 }}
+      <div className="drivetable">
+        {Object.entries(grouped).map(([label, files]) => (
+          <table className="drivetables" key={label}>
+            <thead>
+              <tr>
+                <th colSpan="5" style={{ textAlign: "left" }}>
+                  {label}
+                </th>
+              </tr>
+              <tr>
+                <th>사용자</th>
+                <th>파일명</th>
+                <th>유형</th>
+                <th>위치</th>
+                <th>업로드 날짜</th>
+              </tr>
+            </thead>
+            <tbody>
+              {files.map((file) => (
+                <tr key={file.id}>
+                  <td>{file.user}</td>
+                  <td>
+                    {renamingId === file.id ? (
+                      <>
+                        <input
+                          value={newName}
+                          onChange={(e) => setNewName(e.target.value)}
+                          onKeyDown={(e) => handleKeyDown(e, file.id)}
+                          autoFocus
+                        />
+                        <button onClick={() => handleRenameConfirm(file.id)}>
+                          확인
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <span
+                          className={`star-icon ${
+                            file.favorite ? "active" : ""
+                          }`}
+                          onClick={() => toggleFavorite(file.id)}
+                          style={{ cursor: "pointer", marginRight: "5px" }}
                         >
-                          <ul>
-                            <li>
-                              <button onClick={() => toggleFavorite(file.id)}>
-                                즐겨찾기
-                              </button>
-                            </li>
-                            <li>
-                              <button onClick={() => handleDownload(file.id)}>
-                                다운로드
-                              </button>
-                            </li>
-                            <li>
-                              <button onClick={() => handleRenameClick(file)}>
-                                이름 변경
-                              </button>
-                            </li>
-                            <li>
-                              <button onClick={() => handleDelete(file.id)}>
-                                휴지통
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ))}
-        </div>
+                          ★
+                        </span>
+                        {file.name}
+                      </>
+                    )}
+                  </td>
+                  <td>{file.type}</td>
+                  <td>{file.location}</td>
+                  <td style={{ position: "relative" }}>
+                    <span>{file.date}</span>
+                    <img
+                      className="tableimg"
+                      src="/images/Seemore.png"
+                      alt="더보기"
+                      onClick={() =>
+                        setActiveMenuId((prev) =>
+                          prev === file.id ? null : file.id
+                        )
+                      }
+                    />
+                    {activeMenuId === file.id && (
+                      <div className="dropdown-menu" ref={dropdownRef}>
+                        <ul>
+                          <li>
+                            <button onClick={() => toggleFavorite(file.id)}>
+                              즐겨찾기
+                            </button>
+                          </li>
+                          <li>
+                            <button onClick={() => handleDownload(file.id)}>
+                              다운로드
+                            </button>
+                          </li>
+                          <li>
+                            <button onClick={() => handleRenameClick(file)}>
+                              이름 변경
+                            </button>
+                          </li>
+                          <li>
+                            <button onClick={() => handleDelete(file.id)}>
+                              휴지통
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ))}
       </div>
-    </>
+    </div>
   );
 };
 

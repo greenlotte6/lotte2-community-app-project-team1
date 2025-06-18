@@ -10,14 +10,12 @@ const DriveMain = () => {
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [renamingId, setRenamingId] = useState(null);
   const [newName, setNewName] = useState("");
-  const [dragOver, setDragOver] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
+  const [folderModalOpen, setFolderModalOpen] = useState(false);
+  const [folderName, setFolderName] = useState("");
   const dropdownRef = useRef();
-  const dropRef = useRef();
   const { username, membership, nick } = useAuth();
   const navigate = useNavigate();
-
-  // membership free일때가 무료 / 나머지는 유료
 
   useEffect(() => {
     loadFiles();
@@ -25,7 +23,7 @@ const DriveMain = () => {
 
   const loadFiles = async () => {
     try {
-      const res = await fetch(DRIVE_API.LIST);
+      const res = await fetch(DRIVE_API.LIST, { credentials: "include" });
       const data = await res.json();
       setFiles(data);
     } catch (err) {
@@ -33,93 +31,31 @@ const DriveMain = () => {
     }
   };
 
-  useEffect(() => {
-    const btn = document.getElementById("sidebar-new-button");
-    const handleClick = () => {
-      document.getElementById("hidden-file-input")?.click();
-    };
-    btn?.addEventListener("click", handleClick);
-    return () => btn?.removeEventListener("click", handleClick);
-  }, []);
-
-  const handleFileSelect = (e) => {
-    const selectedFiles = Array.from(e.target.files);
-    selectedFiles.forEach((file) => uploadFile(file));
-  };
-
-  const MAX_FILE_SIZE_FREE = 5 * 1024 * 1024; // 5MB
-
-  const uploadFile = async (file) => {
-    if (membership === "free" && file.size > MAX_FILE_SIZE_FREE) {
-      alert("무료 회원은 5MB 이하의 파일만 업로드할 수 있습니다.");
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("user", username);
-    formData.append("originalName", file.name);
-
+  const createFolder = async () => {
+    if (!folderName.trim()) return alert("폴더명을 입력하세요.");
     try {
-      const res = await fetch(DRIVE_API.UPLOAD, {
+      const res = await fetch(DRIVE_API.CREATE_FOLDER, {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ name: folderName }),
       });
-      if (!res.ok) throw new Error("업로드 실패");
+      if (!res.ok) throw new Error("폴더 생성 실패");
       await loadFiles();
-    } catch (error) {
-      console.error("업로드 에러:", error);
+      setFolderModalOpen(false);
+      setFolderName("");
+    } catch (err) {
+      console.error("폴더 생성 오류", err);
     }
   };
 
   const handleDownload = async (id) => {
-    // ✅ 최근 열람 기록 저장
     try {
       await fetch(DRIVE_API.RECENT_VIEW(id), {
         method: "POST",
         credentials: "include",
       });
-    } catch (err) {
-      console.error("최근 열람 기록 실패", err);
-    }
-
-    window.location.href = DRIVE_API.DOWNLOAD(id);
-
-    try {
-      const res = await fetch(DRIVE_API.DOWNLOAD(id), {
-        method: "GET",
-        credentials: "include",
-      });
-
-      if (!res.ok) {
-        alert("다운로드 실패");
-        return;
-      }
-
-      const disposition = res.headers.get("content-disposition");
-      let filename = "downloaded-file";
-
-      if (disposition) {
-        const utf8Match = disposition.match(/filename\*=UTF-8''([^;]+)/i);
-        if (utf8Match && utf8Match[1]) {
-          filename = decodeURIComponent(utf8Match[1]);
-        } else {
-          const fallbackMatch = disposition.match(/filename="([^"]+)"/i);
-          if (fallbackMatch && fallbackMatch[1]) {
-            filename = fallbackMatch[1];
-          }
-        }
-      }
-
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = filename;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      window.URL.revokeObjectURL(url);
+      window.location.href = DRIVE_API.DOWNLOAD(id);
     } catch (err) {
       console.error("다운로드 실패", err);
     }
@@ -127,9 +63,7 @@ const DriveMain = () => {
 
   const toggleFavorite = async (id) => {
     await fetch(DRIVE_API.FAVORITE(id), { method: "PATCH" });
-    setFiles((prev) =>
-      prev.map((f) => (f.id === id ? { ...f, favorite: !f.favorite } : f))
-    );
+    await loadFiles();
     setActiveMenuId(null);
   };
 
@@ -145,42 +79,30 @@ const DriveMain = () => {
     setActiveMenuId(null);
   };
 
-  const renameFile = async (id, name) => {
-    await fetch(DRIVE_API.RENAME(id), {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name }),
-    });
-  };
-
   const handleRenameClick = (file) => {
     setRenamingId(file.id);
     setNewName(file.name);
     setActiveMenuId(null);
   };
 
-  const handleRenameConfirm = (id) => {
-    renameFile(id, newName);
+  const handleRenameConfirm = async (id) => {
+    await fetch(DRIVE_API.RENAME(id), {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: newName }),
+    });
     setFiles((prev) =>
       prev.map((f) => (f.id === id ? { ...f, name: newName } : f))
     );
     setRenamingId(null);
   };
 
-  const handleKeyDown = (e, id) => {
-    if (e.key === "Enter") handleRenameConfirm(id);
-  };
-
-  const handleSearchChange = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
   const filteredFiles = files.filter((f) => {
-    const matchesFavorite = showFavoritesOnly ? f.favorite : true;
-    const matchesSearch = f.name
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-    return matchesFavorite && matchesSearch;
+    const matchFavorite = showFavoritesOnly
+      ? f.favorite === true || f.favorite === 1 || f.favorite === "1"
+      : true;
+    const matchSearch = f.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return matchFavorite && matchSearch;
   });
 
   useEffect(() => {
@@ -193,30 +115,25 @@ const DriveMain = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const toggleShowFavorites = () => {
-    setShowFavoritesOnly((prev) => !prev);
-  };
-
-  const handleDrop = (e) => {
-    e.preventDefault();
-    setDragOver(false);
-    const droppedFiles = Array.from(e.dataTransfer.files);
-    droppedFiles.forEach((file) => uploadFile(file));
-  };
-
-  const goToTrash = () => {
-    navigate("/dashboard/drive/delete");
-  };
-
   return (
     <>
-      <input
-        type="file"
-        id="hidden-file-input"
-        multiple
-        style={{ display: "none" }}
-        onChange={handleFileSelect}
-      />
+      {folderModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>새 폴더 만들기</h3>
+            <input
+              type="text"
+              value={folderName}
+              onChange={(e) => setFolderName(e.target.value)}
+              placeholder="폴더명 입력"
+            />
+            <div className="modal-actions">
+              <button onClick={createFolder}>생성</button>
+              <button onClick={() => setFolderModalOpen(false)}>취소</button>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="topArea">
         <div className="Title">
@@ -225,41 +142,28 @@ const DriveMain = () => {
         </div>
       </div>
 
-      <div
-        className={`cloud-main ${dragOver ? "drag-over" : ""}`}
-        ref={dropRef}
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
-        }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={handleDrop}
-      >
-        <h3>{nick}님의 Cloud 저장소입니다.</h3>
+      <div className="cloud-main">
+        <div className="toolbar">
+          <button
+            id="sidebar-new-button"
+            className="new-drive"
+            onClick={() => setFolderModalOpen(true)}
+          >
+            + 신규 폴더
+          </button>
+          <button onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}>
+            {showFavoritesOnly ? "⭐ 전체 보기" : "⭐ 즐겨찾기만"}
+          </button>
+        </div>
 
         <form className="search-bar" onSubmit={(e) => e.preventDefault()}>
           <input
             type="text"
             placeholder="Cloud 검색"
             value={searchTerm}
-            onChange={handleSearchChange}
-            style={{
-              width: "100%",
-              padding: "6px 10px",
-              border: "none",
-              backgroundColor: "#f0eaf7",
-            }}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </form>
-
-        <div className="search-type">
-          <button
-            onClick={toggleShowFavorites}
-            className={`new-drive ${showFavoritesOnly ? "active" : ""}`}
-          >
-            {showFavoritesOnly ? "⭐ 전체 보기" : "⭐ 즐겨찾기만"}
-          </button>
-        </div>
 
         <div className="drivetable">
           <table className="drivetables">
@@ -289,8 +193,9 @@ const DriveMain = () => {
                           <input
                             value={newName}
                             onChange={(e) => setNewName(e.target.value)}
-                            onKeyDown={(e) => handleKeyDown(e, file.id)}
-                            autoFocus
+                            onKeyDown={(e) =>
+                              e.key === "Enter" && handleRenameConfirm(file.id)
+                            }
                           />
                           <button onClick={() => handleRenameConfirm(file.id)}>
                             확인
@@ -300,10 +205,13 @@ const DriveMain = () => {
                         <>
                           <span
                             className={`star-icon ${
-                              file.favorite ? "active" : ""
+                              file.favorite === true ||
+                              file.favorite === 1 ||
+                              file.favorite === "1"
+                                ? "active"
+                                : ""
                             }`}
                             onClick={() => toggleFavorite(file.id)}
-                            style={{ cursor: "pointer", marginRight: "5px" }}
                           >
                             ★
                           </span>
@@ -329,7 +237,7 @@ const DriveMain = () => {
                           <ul>
                             <li>
                               <button onClick={() => toggleFavorite(file.id)}>
-                                {file.favorite ? "즐겨찾기 해제" : "즐겨찾기"}
+                                즐겨찾기
                               </button>
                             </li>
                             <li>

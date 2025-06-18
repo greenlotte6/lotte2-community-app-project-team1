@@ -1,10 +1,8 @@
 package kr.co.J2SM.repository.drive;
 
 import kr.co.J2SM.entity.drive.Drive;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Collection;
 import java.util.List;
 
 public interface DriveRepository extends JpaRepository<Drive, Long> {
@@ -19,4 +17,5 @@ public interface DriveRepository extends JpaRepository<Drive, Long> {
     List<Drive> findByDeletedTrueAndUserOrderByUploadedAtDesc(String user);
 
 
+    List<Drive> findByDeletedFalseAndUser(String user);
 }
