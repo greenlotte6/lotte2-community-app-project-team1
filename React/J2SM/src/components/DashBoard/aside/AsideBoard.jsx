@@ -60,7 +60,7 @@ const AsideBoard = () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(CATEGORY_DELETE(cno));
+      await axios.delete(CATEGORY_DELETE(categoryId));
       alert("삭제되었습니다.");
       fetchCategories(); // 목록 새로고침
     } catch (err) {

@@ -1,6 +1,7 @@
 package kr.co.J2SM.controller.borad;
 
 
+import kr.co.J2SM.dto.ArticleDTO;
 import kr.co.J2SM.dto.board.BoardDTO;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.service.board.BoardService;
@@ -36,6 +37,10 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BoardDTO> getDetail(@PathVariable Long id) {
+        log.info("게시글 불러오기");
         return ResponseEntity.ok(boardService.getBoardDetail(id));
     }
+
+
+
 }

@@ -84,7 +84,35 @@ const WriteModal = ({ onClose, categoryId }) => {
             />
           </div>
 
-          <div className="form-group editor-toolbar">{/* 툴바 자리 */}</div>
+          <div className="form-group editor-toolbar">
+            <button onClick={() => document.execCommand("bold")}>B</button>
+            <select
+              onChange={(e) =>
+                document.execCommand("fontName", false, e.target.value)
+              }
+            >
+              <option value="Arial">Arial</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Courier New">Courier</option>
+            </select>
+            <select
+              onChange={(e) =>
+                document.execCommand("fontSize", false, e.target.value)
+              }
+            >
+              <option value="1">크기 1</option>
+              <option value="2">크기 2</option>
+              <option value="3">크기 3</option>
+              <option value="4">크기 4</option>
+              <option value="5">크기 5</option>
+            </select>
+            <input
+              type="color"
+              onChange={(e) =>
+                document.execCommand("foreColor", false, e.target.value)
+              }
+            />
+          </div>
 
           <div className="form-group">
             <div
