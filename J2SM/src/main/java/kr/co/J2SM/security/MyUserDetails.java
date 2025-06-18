@@ -11,21 +11,32 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 @Log4j2
 @Getter
 @Setter
 @ToString
 @Builder
-public class MyUserDetails implements UserDetails {
+public class MyUserDetails implements UserDetails, OAuth2User {
+
+    // 구글 사용자 정보
+    private Map<String, Object> attributes;
+    private String accessToken;
 
     // User 엔티티
     private User user;
+
+    @Override
+    public <A> A getAttribute(String name) {
+        return OAuth2User.super.getAttribute(name);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -71,5 +82,8 @@ public class MyUserDetails implements UserDetails {
     }
 
 
-
+    @Override
+    public String getName() {
+        return user.getName(); // 또는 UID
+    }
 }

@@ -3,6 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import { postUserLogin } from "../../api/userAPI";
 import Logo from "./Logo";
+import { getNaver } from "../../api/socialAPI";
 
 const initState = {
   uid: "",
@@ -18,6 +19,24 @@ const Login = () => {
   const changeHandler = (e) => {
     e.preventDefault();
     setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  // 네이버
+  const naverHandler = (e) => {
+    e.preventDefault();
+    window.location.href = "http://localhost:8080/oauth2/authorization/naver";
+  };
+
+  // 구글
+  const googleHandler = (e) => {
+    e.preventDefault();
+    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+  };
+
+  // 카카오
+  const kakaoHandler = (e) => {
+    e.preventDefault();
+    window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
   };
 
   const submitHandler = (e) => {
@@ -100,11 +119,23 @@ const Login = () => {
           </form>
 
           <div id="social_login">
-            <img src="/images/user/kakao_small.png" alt="카카오 로그인" />
+            <img
+              src="/images/user/kakao_small.png"
+              alt="카카오 로그인"
+              onClick={kakaoHandler}
+            />
 
-            <img src="/images/user/naver_small.png" alt="네이버 로그인" />
+            <img
+              src="/images/user/naver_small.png"
+              alt="네이버 로그인"
+              onClick={naverHandler}
+            />
 
-            <img src="/images/user/google_small.png" alt="구글 로그인" />
+            <img
+              src="/images/user/google_small.png"
+              alt="구글 로그인"
+              onClick={googleHandler}
+            />
           </div>
         </div>
       </div>

@@ -26,9 +26,6 @@ public class JasyptConfig {
         config.setStringOutputType("base64");
         encryptor.setConfig(config);
 
-        // 카카오 페이 변환
-        String encryptedText = encryptor.encrypt("acd8e94e5152612f7353bb660fc2930b");
-
         return encryptor;
     }
 }
