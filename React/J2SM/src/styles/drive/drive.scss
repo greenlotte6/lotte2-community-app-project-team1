@@ -1325,3 +1325,110 @@
     }
   }
 }
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.modal-content h3 {
+  margin-bottom: 1.2rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  margin-bottom: 1.2rem;
+  font-size: 0.95rem;
+  background-color: #f9f9f9;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal-actions button {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.modal-actions button:first-child {
+  background-color: #00c896;
+  color: #fff;
+}
+
+.modal-actions button:first-child:hover {
+  background-color: #00b285;
+}
+
+.modal-actions button:last-child {
+  background-color: #e0e0e0;
+  color: #333;
+}
+
+.modal-actions button:last-child:hover {
+  background-color: #ccc;
+}
+
+/* 다크모드 지원 */
+body.dark-mode .modal-content {
+  background-color: #2a2a2a;
+  color: #f0f0f0;
+}
+
+body.dark-mode .modal-content input {
+  background-color: #444;
+  color: #fff;
+  border: 1px solid #666;
+}
+
+body.dark-mode .modal-actions button:last-child {
+  background-color: #444;
+  color: #eee;
+}
+
+body.dark-mode .modal-actions button:last-child:hover {
+  background-color: #555;
+}
+
+/* 간단한 fadeIn 애니메이션 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
