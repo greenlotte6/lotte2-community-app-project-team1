@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import useAuth from "../../../hooks/useAuth";
 import axios from "axios";
 import { COMPANY, USER_INVITE } from "../../../api/_http";
+import { checkEmail } from "../../../api/userAPI";
 
 const InviteModal = ({ onClose }) => {
   const { company } = useAuth();
@@ -11,6 +12,7 @@ const InviteModal = ({ onClose }) => {
   const [name, setName] = useState("");
   const [dtext, setDtext] = useState();
   const [etext, setEtext] = useState();
+  const [userEmailCheck, setUserEmailCheck] = useState(false);
 
   const [departments, setDepartments] = useState([]); // 부서 목록 상태
   // 부서 정보 가져오기
@@ -51,7 +53,7 @@ const InviteModal = ({ onClose }) => {
     if (deptNames.includes(value.trim())) {
       setDtext("");
     } else {
-      setDtext("등록되지 않은 부서입니다.");
+      setDtext("등록하시면 부서가 만들어집니다.");
     }
   };
 
@@ -62,8 +64,27 @@ const InviteModal = ({ onClose }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(value)) {
       setEtext("");
+
+      const fetchData = async () => {
+        try {
+          // 세션에 아이디, 비밀번호 저장
+          const data = await checkEmail(value);
+
+          if (data) {
+            setEtext("중복된 이메일입니다.");
+            setUserEmailCheck(false);
+          } else {
+            setEtext("");
+            setUserEmailCheck(true);
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
+
+      const exist = fetchData();
     } else {
-      setEtext("❌ 이메일 형식이 올바르지 않습니다.");
+      setEtext("이메일 형식이 올바르지 않습니다.");
     }
   };
 
@@ -72,13 +93,30 @@ const InviteModal = ({ onClose }) => {
 
   // 초대하기
   const handleInvite = async () => {
+    if (!userEmailCheck) {
+      alert("양식이 맞지 않습니다.");
+      return;
+    }
+
+    if (
+      !companyName.trim() ||
+      !department.trim() ||
+      !position.trim() ||
+      !name.trim() ||
+      !email.trim()
+    ) {
+      alert("모든 항목을 빠짐없이 입력해주세요.");
+      return;
+    }
+
     const inviteData = {
       inviteCode: 0, // 기본값 또는 서버에서 처리
-      company: companyName,
+      companyName: companyName,
       department,
       position,
       name,
       email,
+      cno: company.split(":")[0],
     };
 
     try {

@@ -4,7 +4,10 @@ import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import kr.co.J2SM.dto.user.InviteDTO;
+import kr.co.J2SM.entity.company.Company;
+import kr.co.J2SM.entity.company.Department;
 import kr.co.J2SM.entity.user.Invite;
+import kr.co.J2SM.repository.DepartmentRepository;
 import kr.co.J2SM.repository.InviteRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,15 +26,33 @@ public class InviteService {
     private final InviteRepository inviteRepository;
     private final ModelMapper modelMapper;
     private final JavaMailSenderImpl mailSender;
+    private final DepartmentRepository departmentRepository;
 
+    @Transactional
     public String save(InviteDTO inviteDTO) {
 
+        // 초대하기
         String inviteCode = generateInviteCode();
         log.info("초대 코드 생성: " + inviteCode);
 
         Invite invite = modelMapper.map(inviteDTO, Invite.class);
+
+        Company company = Company.builder()
+                .cno(inviteDTO.getCno())
+                .build();
         invite.setInviteCode(inviteCode);
+        invite.setCompany(company);
         inviteRepository.save(invite);
+
+        // 부서 만들기(부서 정보가 없을 때)
+        if(departmentRepository.findByCompanyAndDepartmentName(company, inviteDTO.getDepartment()).isEmpty()){
+            Department department = Department.builder()
+                    .company(company)
+                    .departmentName(inviteDTO.getDepartment())
+                    .build();
+
+            departmentRepository.save(department);
+        }
 
         return inviteCode;
     }

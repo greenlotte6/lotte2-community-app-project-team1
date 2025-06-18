@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Logo from "./Logo";
-import { checkId } from "../../api/userAPI";
+import { checkId, postUser } from "../../api/userAPI";
 import { USER_INVITE_CODE } from "../../api/_http";
 
 const Register = () => {
@@ -9,60 +9,46 @@ const Register = () => {
   const [userSpan, setUserSpan] = useState({ text: "", color: "" });
   const [passSpan, setPassSpan] = useState({ text: "", color: "" });
   const [form, setForm] = useState({
-    name: "",
-    uid: "",
+    uid: "", // 아이디
     tempcode: "",
-    pass: "",
+    pass: "", // 비밀번호
     pass2: "",
-    rdate: "",
-    profile: null,
+    rdate: "", // 입사일
+    profile: null, // 프로필
+    hp: "", // 전화번호
   });
 
   // 아이디 체크
   const userCheckHandler = (e) => {
-    e.preventDefault();
-    const fetchData = async () => {
-      try {
-        const data = await checkId(form);
-        console.log(data);
+    const uid = e.target.value;
 
-        if (data) {
-          setUserSpan({ text: "중복된 아이디입니다.", color: "red" });
-          setUserIdCheck(false);
-        } else {
-          setUserSpan({ text: "사용가능한 아이디입니다.", color: "green" });
-          setUserIdCheck(true);
+    if (uid.length >= 5) {
+      e.preventDefault();
+      const fetchData = async () => {
+        try {
+          const data = await checkId(form);
+          console.log(data);
+          if (data) {
+            setUserSpan({ text: "중복된 아이디입니다.", color: "red" });
+            setUserIdCheck(false);
+          } else {
+            setUserSpan({ text: "사용가능한 아이디입니다.", color: "green" });
+            setUserIdCheck(true);
+          }
+        } catch (err) {
+          console.error(err);
         }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
+      };
+      fetchData();
+    } else {
+      setUserSpan({ text: "아이디는 5자리 이상입니다.", color: "red" });
+      setUserIdCheck(false);
+    }
   };
 
   // 암호 번호 체크
   const inviteCheckHandler = (e) => {
     e.preventDefault();
-    console.log(form.tempcode);
-    const fetchData = async () => {
-      try {
-        const data = await USER_INVITE_CODE(form.tempcode);
-        console.log(data);
-
-        if (data) {
-          setUserSpan({ text: "중복된 아이디입니다.", color: "red" });
-          setUserIdCheck(false);
-        } else {
-          setUserSpan({ text: "사용가능한 아이디입니다.", color: "green" });
-          setUserIdCheck(true);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    fetchData();
   };
 
   const handleChange = (e) => {
@@ -78,7 +64,7 @@ const Register = () => {
 
       if (!passwordRegex.test(value)) {
         setPassSpan({
-          text: "영문, 숫자, 특수문자를 포함한 8자 이상이어야 합니다.",
+          text: "영문, 숫자, 특수문자를 포함한 8자 이상.",
           color: "red",
         });
         setUserPassCheck(false);
@@ -117,6 +103,28 @@ const Register = () => {
     // 실제 등록 로직 작성 위치
     console.log("회원가입 정보:", form);
 
+    const formData = new FormData();
+    formData.append("uid", form.uid);
+    formData.append("pass", form.pass);
+    formData.append("rdate", form.rdate);
+    formData.append("profile", form.profile); // 파일
+    formData.append("tempcode", form.tempcode); // 암호 번호도 필요하면
+    formData.append("hp", form.hp); //
+
+    // 서버 전송
+    const fetchData = async () => {
+      try {
+        // 상품 등록 요청
+        const data = await postUser(formData);
+        console.log(data);
+
+        // 요청 후 로그인 창으로
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
+
     alert("회원가입 완료 (예시)");
   };
 
@@ -129,17 +137,6 @@ const Register = () => {
           <p className="txt_title">회원가입</p>
           <form onSubmit={handleSubmit} id="login">
             <div className="signUp">
-              <label htmlFor="name">이름</label>
-              <input
-                type="text"
-                name="name"
-                className="m-10"
-                placeholder="이름을 입력해주세요."
-                value={form.name}
-                onChange={handleChange}
-                required
-              />
-
               <label htmlFor="uid">아이디</label>
               <input
                 type="text"
@@ -191,6 +188,19 @@ const Register = () => {
                   required
                 />
                 <span style={{ color: passSpan.color }}>{passSpan.text}</span>
+              </div>
+
+              <div className="input_wrap">
+                <label htmlFor="hp">전화번호</label>
+                <input
+                  type="text"
+                  name="hp"
+                  id="passwordConfirm"
+                  placeholder="전화번호를 입력해주세요"
+                  value={form.hp}
+                  onChange={handleChange}
+                  required
+                />
               </div>
 
               <div className="form-row">

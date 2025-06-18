@@ -5,11 +5,15 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 import kr.co.J2SM.dto.user.TermsDTO;
 import kr.co.J2SM.dto.user.UserDTO;
+import kr.co.J2SM.entity.company.Membership;
+import kr.co.J2SM.entity.user.Invite;
 import kr.co.J2SM.entity.user.Terms;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.entity.company.Company;
 import kr.co.J2SM.entity.company.Department;
 import kr.co.J2SM.repository.DepartmentRepository;
+import kr.co.J2SM.repository.InviteRepository;
+import kr.co.J2SM.repository.MembershipRepository;
 import kr.co.J2SM.repository.user.TermsRepository;
 import kr.co.J2SM.repository.user.UserRepository;
 import kr.co.J2SM.repository.company.CompanyRepository;
@@ -20,7 +24,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
@@ -37,6 +43,8 @@ public class UserService{
     private final TermsRepository termsRepository;
     private final ModelMapper modelMapper;
     private final JavaMailSenderImpl mailSender;
+    private final MembershipRepository membershipRepository;
+    private final InviteRepository inviteRepository;
 
     public String register(UserDTO userDTO) {
         String encoded = passwordEncoder.encode(userDTO.getPass());
@@ -103,12 +111,13 @@ public class UserService{
                 .build();
         List<Department> list = departmentRepository.findByCompany(company);
 
-        System.out.println(list);
-
     }
 
     // 관리자 회원가입
+    @Transactional
     public void register(UserDTO userDTO, UserDTO user) {
+
+        // 관리자 회원가입
         String encoded = passwordEncoder.encode(user.getPass());
         user.setPass(encoded);
         user.setName(userDTO.getName());
@@ -125,7 +134,33 @@ public class UserService{
         userEntity.setDepartment(department);
 
         userRepository.save(userEntity);
-        
+
+        // 결제 내역
+        String type = user.getMembership();
+        int price = membershipPrice(type);
+
+        Membership membership = Membership.builder()
+                .price(price) // 가격
+                .type(type) // 타입
+                .company(company) // 회사
+                .paymentMethod("카카오페이") //현재는 1개이기에 고정값
+                .status("SUCCESS")
+                .startDate(LocalDate.now())
+                .endDate(LocalDate.now().plusMonths(1))
+                .build();
+
+        membershipRepository.save(membership);
+
+    }
+
+    // 멤버십에 따른 가격 분류
+    public int membershipPrice(String membership){
+        switch(membership){
+            case "Basic": return 9900;
+            case "Standard": return 19900;
+            case "Premium": return 34900;
+            default: return 0;
+        }
     }
 
     // 회사 등록(회사 관리자 생성 시 )
@@ -186,5 +221,50 @@ public class UserService{
     public User findByUsername(String username) {
         return userRepository.findById(username)
                 .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다: " + username));
+    }
+
+    // 일반 사원 회원가입 로직
+    public void registerEmployee(UserDTO userDTO) {
+
+        // 일반 회원가입
+        String encoded = passwordEncoder.encode(userDTO.getPass());
+        userDTO.setPass(encoded);
+
+        Optional<Invite> inviteOpt = inviteRepository.findByInviteCode(userDTO.getTempcode());
+
+        // 초대 받을 때 작성했던 정보를 가져와서 입력
+        // 회사명, 백엔드, 이메일, 이름, 직책
+        if(inviteOpt.isPresent()) {
+            Invite invite = inviteOpt.get();
+            User user = modelMapper.map(userDTO, User.class);
+
+            String companyName = invite.getCompany().getCompanyName();
+            user.setCompany(companyName);
+
+            Company company = invite.getCompany();
+            String departmentName = invite.getDepartment();
+            Department department = departmentRepository.findByCompanyAndDepartmentName(company,departmentName).get();
+            user.setDepartment(department);
+            user.setRole("EMPLOYEE");
+            user.setName(invite.getName());
+            user.setEmail(invite.getEmail());
+            user.setPosition(invite.getPosition());
+
+            Optional<Membership> membershipOpt = membershipRepository.findTopByCompanyOrderByPaymentIdDesc(company);
+
+            if(membershipOpt.isPresent()) {
+                Membership membership = membershipOpt.get();
+                user.setMembership(membership.getType());
+            }else{
+                user.setMembership("free");
+            }
+
+            userRepository.save(user);
+
+            inviteRepository.delete(invite); // 초대 코드 사용 후 삭제
+
+        }
+
+
     }
 }

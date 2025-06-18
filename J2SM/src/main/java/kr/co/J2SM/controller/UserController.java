@@ -136,10 +136,12 @@ public class UserController {
         return ResponseEntity.ok().headers(headers).body(null);
     }
 
+    // 회원가입
     @PostMapping
     public Map<String, String> register(UserDTO userDTO, HttpServletRequest req){
 
         // 이미지 등록
+        log.info("userDTO : " + userDTO);
 
         List<MultipartFile> files = new ArrayList<>();
         files.add(userDTO.getProfile());
@@ -159,9 +161,12 @@ public class UserController {
             }
         }else{
             // 일반 회원가입 로직
-        }
+            userService.registerEmployee(userDTO);
 
-        log.info(userDTO);
+
+
+
+        }
 
         // String uid = userService.register(userDTO);
         String uid = "user";
