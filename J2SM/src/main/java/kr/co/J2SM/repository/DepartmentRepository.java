@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface DepartmentRepository  extends JpaRepository<Department, Integer> {
@@ -18,4 +19,6 @@ public interface DepartmentRepository  extends JpaRepository<Department, Integer
 
     @Query("SELECT d FROM Department d LEFT JOIN FETCH d.users WHERE d.company.companyName = :companyName")
     List<Department> findAllWithUsersByCompanyName(@Param("companyName") String companyName);
+
+    Optional<Department> findByCompanyAndDepartmentName(Company company, String department);
 }

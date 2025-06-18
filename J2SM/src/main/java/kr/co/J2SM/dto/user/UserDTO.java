@@ -37,6 +37,8 @@ public class UserDTO {
     private LocalDateTime regDate;
     private LocalDateTime leaveDate;
 
+    private String tempcode; // 초대받은 임시 코드
+
     /* board */
     public static UserDTO from(User user) {
         if (user == null) return null;
