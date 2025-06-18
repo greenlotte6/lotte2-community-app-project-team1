@@ -1,5 +1,6 @@
 package kr.co.J2SM.security;
 
+import kr.co.J2SM.oauth2.OAuth2LoginSuccessHandler;
 import kr.co.J2SM.util.JWTProvider;
 import kr.co.J2SM.security.filter.JWTAuthenticationFilter;
 import kr.co.J2SM.util.JWTProvider;
@@ -17,6 +18,7 @@ import org.springframework.security.config.annotation.web.configurers.HttpBasicC
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -29,6 +31,12 @@ public class SecurityConfig {
 
     @Autowired
     private JWTProvider jwtProvider;
+
+    @Autowired
+    private OAuth2UserService oauth2UserService;
+
+    @Autowired
+    private OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -52,7 +60,14 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST,"/article/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET,"/product/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/product/**").hasRole("ADMIN")
-                        .anyRequest().permitAll());
+                        .anyRequest().permitAll())
+
+                // ✅ 소셜 로그인 설정 추가
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/user/login")
+                        .userInfoEndpoint(userInfo -> userInfo.userService(oauth2UserService))
+                        .successHandler(oAuth2LoginSuccessHandler)
+                );
 
 
         return httpSecurity.build();

@@ -12,7 +12,7 @@ export const MyTop = ({
   normalList = [],
   favoriteList = [],
   trashList = [],
-  userGroups = [], // ⭐️ 부서별 사용자 정보(부모에서 내려주거나, 여기서 fetch)
+  userGroups = [],
 }) => {
   const isTrashed = selectedPage?.isDeleted;
   const [isFavorite, setIsFavorite] = useState(false);
@@ -28,7 +28,7 @@ export const MyTop = ({
     await deleteMyPage(selectedPage.id);
     setSelectedPage(null); // 삭제 후 선택 해제
     if (reloadLists) reloadLists(); // 목록 갱신
-    //window.location.reload();
+    window.location.reload();
   };
 
   const handleSave = async () => {
@@ -51,7 +51,7 @@ export const MyTop = ({
       await saveMyPage(payload);
       await reloadLists();
       alert("저장 완료!");
-      //window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.error("저장 실패", err);
       alert("저장 중 오류 발생");
@@ -69,7 +69,7 @@ export const MyTop = ({
       await reloadLists(); // ✅ 리스트 갱신만 호출!
       alert("휴지통으로 이동 완료!");
 
-      //window.location.reload();
+      window.location.reload();
     } catch (err) {
       console.error("삭제 실패", err);
     }
@@ -82,10 +82,6 @@ export const MyTop = ({
         ...selectedPage,
         isFavorite: !selectedPage.isFavorite,
       };
-      console.log("⭐️ handleFavorite updated", updated);
-      console.log("⭐️ handleFavorite updated", updated);
-      console.log("⭐️ handleFavorite updated", updated);
-      console.log("⭐️ handleFavorite updated", updated);
       await saveMyPage(updated); // 1. DB에 저장
       await reloadLists(); // 2. 리스트 재조회 (중복해도 됨)
       //setSelectedPage(updated); // 3. ★★★ 여기서 즉시 반영! ★★★
