@@ -25,6 +25,9 @@ export const ProjectRegisterTop = ({ projectName }) => {
               onChange={(e) => setTitle(e.target.value)}
             />
           </h3>
+          <button type="button" className="savebtn">
+            <img src="/images/Save.svg" alt="useradd" />
+          </button>
           <button type="button" id="openInviteModalBtn">
             <img src="/images/user-add.svg" alt="useradd" />
           </button>
