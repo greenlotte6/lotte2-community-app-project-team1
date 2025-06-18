@@ -4,6 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import { ARTICLE_LIST } from "../../api/_http";
 import useAuth from "../../hooks/useAuth";
+import "../../styles/DashBoard/boardlist.scss";
 
 const BoardList = () => {
   const [showWriteModal, setShowWriteModal] = useState(false);
@@ -24,9 +25,23 @@ const BoardList = () => {
     }
   };
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const postsPerPage = 8;
+
+  const indexOfLastPost = currentPage * postsPerPage;
+  const indexOfFirstPost = indexOfLastPost - postsPerPage;
+  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+
+  const totalPages = Math.ceil(posts.length / postsPerPage);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   useEffect(() => {
+    if (!company) return;
     fetchPosts();
-  }, [categoryId]);
+  }, [categoryId, company]);
 
   // 등록 완료 후 리스트 추가
   const handlePostCreated = (newPost) => {
@@ -76,8 +91,8 @@ const BoardList = () => {
           </thead>
 
           <tbody>
-            {Array.isArray(posts) && posts.length > 0 ? (
-              posts.map((post) => (
+            {Array.isArray(currentPosts) && currentPosts.length > 0 ? (
+              currentPosts.map((post) => (
                 <tr key={post.id}>
                   <td>
                     <input type="checkbox" className="rowCheckbox" />
@@ -109,6 +124,24 @@ const BoardList = () => {
           </tbody>
         </table>
         <div id="pagination" className="pagination"></div>
+      </div>
+      <div className="pagination">
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+          <button
+            key={pageNum}
+            onClick={() => handlePageChange(pageNum)}
+            style={{
+              margin: "0 5px",
+              padding: "5px 10px",
+              backgroundColor: currentPage === pageNum ? "#007bff" : "#fff",
+              color: currentPage === pageNum ? "#fff" : "#000",
+              border: "1px solid #ccc",
+              borderRadius: "4px",
+            }}
+          >
+            {pageNum}
+          </button>
+        ))}
       </div>
 
       {showWriteModal && (

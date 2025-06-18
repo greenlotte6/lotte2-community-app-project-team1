@@ -9,6 +9,7 @@ import kr.co.J2SM.repository.board.BoardRepository;
 import kr.co.J2SM.repository.board.CategoryRepository;
 import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,6 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BoardService {
@@ -58,7 +60,7 @@ public class BoardService {
         if(categoryopt.isPresent()) {
             Category category = categoryopt.get();
             if(category.getCompany().getCno() == companyId){
-                return boardRepository.findByCategory(category)
+                return boardRepository.findByCategoryIdOrderByLatest(categoryId)
                         .stream()
                         .map(boardMapper::toDTO)
                         .collect(Collectors.toList());
@@ -68,12 +70,19 @@ public class BoardService {
         return null;
     }
 
+
+    @Transactional
     public BoardDTO getBoardDetail(Long id) {
         Board board = boardRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("게시글 없음"));
         board.setHit(board.getHit() + 1); // 조회수 증가
         boardRepository.save(board);
 
+        log.info(board.toString());
+
         return boardMapper.toDTO(board);
     }
+
+
+
 }

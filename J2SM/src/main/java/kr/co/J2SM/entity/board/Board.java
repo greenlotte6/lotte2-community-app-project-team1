@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 @Table(name = "board")
 @Getter
 @Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

@@ -1,45 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const BoardView = () => {
+  const { id } = useParams(); // URL에서 글 ID 추출
+  const [post, setPost] = useState(null);
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+        const res = await axios.get(`http://localhost:8080/api/boards/${id}`, {
+          withCredentials: true,
+        });
+        setPost(res.data);
+        setComments(res.data.comments || []); // 댓글 포함 시
+      } catch (err) {
+        console.error("게시글 불러오기 실패", err);
+      }
+    };
+
+    fetchPost();
+  }, [id]);
+
+  if (!post) return <div>로딩 중...</div>;
+
   return (
     <>
       <div className="line"></div>
       <div className="contents-main">
         <div className="post-header">
-          <div className="post-title">[공지사항] 사내 워크숍 일정 안내</div>
+          <div className="post-title">{post?.title || "제목 없음"}</div>
           <div className="post-meta">
-            작성자: 홍길동 | 작성일: 2025.06.04 | 조회수: 45
+            작성자: {post?.writer?.name || "작성자 없음"} | 작성일:{" "}
+            {post.createdAt ? post.createdAt.substring(0, 10) : "-"} | 조회수:{" "}
+            {post.hit}
           </div>
         </div>
 
-        <div className="post-content">
-          안녕하세요. <br />
-          사내 워크숍 일정과 장소를 아래와 같이 안내드립니다.
-          <br />
-          <br />
-          ● 일정: 2025년 6월 15일 ~ 16일
-          <br />
-          ● 장소: OO리조트
-          <br />
-          ● 준비물: 개인 세면도구, 필기도구 등<br />
-          <br />
-          많은 참여 부탁드립니다.
-        </div>
-        <div className="post-attachments">
-          <h4>첨부파일</h4>
-          <ul>
-            <li>
-              <a href="/uploads/workshop_info.pdf" download>
-                워크숍 안내문.pdf
-              </a>
-            </li>
-          </ul>
-        </div>
+        <div className="post-content">{post.content}</div>
+
+        {post.attachments?.length > 0 && (
+          <div className="post-attachments">
+            <h4>첨부파일</h4>
+            <ul>
+              {post.attachments.map((file, index) => (
+                <li key={index}>
+                  <a href={`/uploads/${file}`} download>
+                    {file}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+
         <form className="comment-form">
-          <button className="memo-button" type="submit">
+          <button className="memo-button" type="button">
             삭제
           </button>
-          <button className="memo-button" type="submit">
+          <button className="memo-button" type="button">
             수정
           </button>
         </form>
@@ -50,27 +70,20 @@ const BoardView = () => {
             <textarea placeholder="댓글을 입력하세요..."></textarea>
             <button type="submit">등록</button>
           </form>
+
           <div className="comment-list">
-            <div className="comment">
-              <div className="comment-author">김철수</div>
-              <div className="comment-content">좋은 일정 감사합니다!</div>
+            {comments.map((comment, idx) => (
+              <div className="comment" key={idx}>
+                <div className="comment-author">{comment.author}</div>
+                <div className="comment-content">{comment.content}</div>
 
-              <button className="comment-options-button">⋮</button>
-              <div className="comment-options-menu">
-                <button className="edit-comment">수정</button>
-                <button className="delete-comment">삭제</button>
+                <button className="comment-options-button">⋮</button>
+                <div className="comment-options-menu">
+                  <button className="edit-comment">수정</button>
+                  <button className="delete-comment">삭제</button>
+                </div>
               </div>
-            </div>
-            <div className="comment">
-              <div className="comment-author">안영희</div>
-              <div className="comment-content">워크숍 기대가 됩니다~😍</div>
-
-              <button className="comment-options-button">⋮</button>
-              <div className="comment-options-menu">
-                <button className="edit-comment">수정</button>
-                <button className="delete-comment">삭제</button>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>

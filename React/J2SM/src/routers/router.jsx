@@ -83,6 +83,7 @@ const router = createBrowserRouter([
   { path: "/dashboard/board/list", element: <BoardListPage /> },
   { path: `/dashboard/board/list/:categoryId`, element: <BoardListPage /> },
   { path: "/dashboard/board/view", element: <BoardViewPage /> },
+  { path: "/dashboard/board/view/:id", element: <BoardViewPage /> },
 
   /* 캘린더 */
   { path: "/dashboard/calendar", element: <CalendarPage /> },

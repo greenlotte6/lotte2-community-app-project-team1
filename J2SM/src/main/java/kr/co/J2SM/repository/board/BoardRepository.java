@@ -11,6 +11,9 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
+    @Query("SELECT b FROM Board b WHERE b.category.id = :categoryId ORDER BY b.createdAt DESC")
+    List<Board> findByCategoryIdOrderByLatest(@Param("categoryId") Long categoryId);
+
 
     @Query("SELECT b FROM Board b WHERE b.category.company.id = :companyId")
     List<Board> findByCompanyId(@Param("companyId") Long companyId);
