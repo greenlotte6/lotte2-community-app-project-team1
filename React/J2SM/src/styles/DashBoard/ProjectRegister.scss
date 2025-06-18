@@ -369,17 +369,23 @@
     position: fixed;
     right: 223px;
   }
+  .Title .savebtn img {
+    position: fixed;
+    right: 260px;
+    top: 168px;
+  }
   .Title h3 {
     font-size: 24px;
     color: #2f80ed;
     margin-top: 3px;
-    margin-bottom: 7px;
+    margin-bottom: -2px;
     margin-left: 10px;
   }
   .Title input {
     border: none;
     padding: 10px;
-    font-size: 18px;
+    font-size: 24px;
+    font-weight: bold;
   }
   .Title input:focus {
     outline: none;
@@ -518,13 +524,13 @@
     border-radius: 10px;
     margin-bottom: 20px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    height: 100%;
   }
 
   .itemtop input {
     width: 100%;
     padding: 8px;
     margin-bottom: 12px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 6px;
   }
   .itemList div {
