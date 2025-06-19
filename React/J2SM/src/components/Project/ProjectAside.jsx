@@ -6,15 +6,17 @@ export const ProjectAside = ({ onNewProject }) => {
   const [projectName, setProjectName] = useState("");
   const navigate = useNavigate();
 
-  const handleConfirm = () => {
+  // 🚩 비동기로 변경 (onNewProject에서 await 가능)
+  const handleConfirm = async () => {
     if (!projectName.trim()) return;
-    // register로 projectName 같이 넘기기
-    navigate("/dashboard/project/projectRegister", { state: { projectName } });
-    // 프로젝트 목록에 추가 (임시, 나중에 register 페이지에서 관리)
-    if (onNewProject)
-      onNewProject({ name: projectName, status: "in progress" });
+    // 프로젝트 생성(백엔드 연동)
+    if (onNewProject) {
+      await onNewProject({ name: projectName, status: "in progress" });
+    }
     setIsModalOpen(false);
     setProjectName("");
+    // 필요한 경우만 이동(세부설정페이지 등)
+    // navigate("/dashboard/project/projectRegister", { state: { projectName } });
   };
 
   return (
@@ -53,10 +55,11 @@ export const ProjectAside = ({ onNewProject }) => {
               placeholder="프로젝트 이름 입력"
               value={projectName}
               onChange={(e) => setProjectName(e.target.value)}
+              onKeyDown={(e) => e.key === "Enter" && handleConfirm()}
             />
             <div className="modalButtons">
               <button className="configbtn" onClick={handleConfirm}>
-                세부 설정
+                생성
               </button>
               <button
                 className="cancelbtn"
