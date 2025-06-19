@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Element } from "react-scroll";
 import FeatureIntro from "../main/FeatureIntro";
 import CreditList from "./CreditList";
 import ImageList from "../main/ImageList";
+import axios from "axios";
+import useAuth from "../../hooks/useAuth";
 
 export const Main = () => {
   const navigate = useNavigate();

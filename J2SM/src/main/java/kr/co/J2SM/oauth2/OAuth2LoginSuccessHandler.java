@@ -1,5 +1,5 @@
 package kr.co.J2SM.oauth2;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import kr.co.J2SM.entity.user.User;
@@ -11,7 +11,6 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Map;
 
 @Log4j2
 @Component
@@ -31,13 +30,8 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // ✅ JWT 쿠키 세팅
         loginResponseService.setLoginResponse(response, user);
 
-        // ✅ 사용자 정보도 JSON으로 반환 (redirect 대신)
-        Map<String, Object> userInfo = loginResponseService.getUserInfo(user);
-
-        log.info("userInfo: {}", userInfo);
-
-        response.setContentType("application/json;charset=UTF-8");
-        response.setStatus(HttpServletResponse.SC_OK);
-        new ObjectMapper().writeValue(response.getWriter(), userInfo);
+        // ✅ React 앱으로 리다이렉트
+        String redirectUrl = "http://localhost:5173/dashboard/main"; // 여기에 React 리다이렉트 경로
+        response.sendRedirect(redirectUrl);
     }
 }
