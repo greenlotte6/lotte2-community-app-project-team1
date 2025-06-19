@@ -1,7 +1,6 @@
-package kr.co.J2SM.entity.Project;
+package kr.co.J2SM.dto.Project;
 
 import jakarta.persistence.*;
-import kr.co.J2SM.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,26 +12,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "projectSection")
-public class ProjectSection {
+public class ProjectSectionDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String title;
     private Integer orderNum;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projectId")
-    private Project project;
-
+    private Long projectId;
     private LocalDateTime createdAt;
-
     private String description;
     private String name;
     private LocalDateTime updatedAt;
-    private String createdBy;
 }
 

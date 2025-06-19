@@ -1,4 +1,4 @@
-package kr.co.J2SM.entity.Project;
+package kr.co.J2SM.dto.Project;
 
 import jakarta.persistence.*;
 import kr.co.J2SM.entity.user.User;
@@ -13,26 +13,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity
-@Table(name = "projectSection")
-public class ProjectSection {
+public class ProjectTaskDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private String title;
+    private Long sectionId;
+    private String content;
     private Integer orderNum;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "projectId")
-    private Project project;
-
+    private Boolean isCompleted = false;
+    private String assignedTo;
     private LocalDateTime createdAt;
-
-    private String description;
-    private String name;
     private LocalDateTime updatedAt;
-    private String createdBy;
 }
 
