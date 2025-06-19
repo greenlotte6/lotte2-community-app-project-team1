@@ -16,4 +16,6 @@ public class CommentDTO {
     private UserDTO writer; // 댓글 작성자 정보 (uid, name 등)
     private String content; // 댓글 내용
     private LocalDateTime createdAt; // 댓글 작성 시간
+
+
 }
