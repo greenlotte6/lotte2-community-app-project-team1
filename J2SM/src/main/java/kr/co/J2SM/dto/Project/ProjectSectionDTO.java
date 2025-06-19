@@ -22,5 +22,6 @@ public class ProjectSectionDTO {
     private String description;
     private String name;
     private LocalDateTime updatedAt;
+    private Long createdBy;
 }
 

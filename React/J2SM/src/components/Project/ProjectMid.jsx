@@ -14,7 +14,7 @@ export const ProjectMid = ({ projects = [], onRemoveProject }) => {
             <div className="contenttext">
               <span>{project.name}</span>
               <br />
-              <p>{project.status}</p>
+              <p>{project.status ?? "in progress"}</p>
             </div>
             <button onClick={() => onRemoveProject?.(project.id)}>
               <img src="/images/Trash 2.svg" alt="trash" />

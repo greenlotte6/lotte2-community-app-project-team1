@@ -153,3 +153,50 @@ export const DRIVE_API = {
   RECENT_LIST: `${SERVER_HOST}/api/drive/recent`,
   RECENT_VIEW: (id) => `${SERVER_HOST}/api/drive/view/${id}`,
 };
+
+//Project
+export const PROJECT = {
+  // 프로젝트 생성 (POST)
+  CREATE: `${SERVER_HOST}/api/projects`,
+  // 내 프로젝트 리스트 조회 (GET, ?userId=xxx)
+  LIST: (userId) => `${SERVER_HOST}/api/projects/my?userId=${userId}`,
+  // 프로젝트 상세 조회 (GET)
+  DETAIL: (projectId) => `${SERVER_HOST}/api/projects/${projectId}`,
+
+  // 프로젝트 수정 (PUT)
+  UPDATE: (projectId) => `${SERVER_HOST}/api/projects/${projectId}`,
+  // 프로젝트 삭제 (DELETE)
+  DELETE: (projectId) => `${SERVER_HOST}/api/projects/${projectId}`,
+};
+export const SECTION = {
+  // 특정 프로젝트의 섹션 목록 (GET)
+  LIST: (projectId) => `${SERVER_HOST}/api/projects/${projectId}/sections`,
+  // 섹션 생성 (POST)
+  CREATE: (projectId) => `${SERVER_HOST}/api/projects/${projectId}/sections`,
+  // 섹션 수정 (PUT)
+  UPDATE: (sectionId) => `${SERVER_HOST}/api/sections/${sectionId}`,
+  // 섹션 삭제 (DELETE)
+  DELETE: (sectionId) => `${SERVER_HOST}/api/sections/${sectionId}`,
+};
+export const TASK = {
+  // 특정 섹션의 태스크 목록 (GET)
+  LIST: (sectionId) => `${SERVER_HOST}/api/sections/${sectionId}/tasks`,
+  // 태스크 생성 (POST)
+  CREATE: (sectionId) => `${SERVER_HOST}/api/sections/${sectionId}/tasks`,
+  // 태스크 수정 (PUT)
+  UPDATE: (taskId) => `${SERVER_HOST}/api/tasks/${taskId}`,
+  // 태스크 삭제 (DELETE)
+  DELETE: (taskId) => `${SERVER_HOST}/api/tasks/${taskId}`,
+};
+export const PROJECT_MEMBER = {
+  // 프로젝트 멤버 리스트 (GET)
+  LIST: (projectId) => `${SERVER_HOST}/api/projects/${projectId}/members`,
+  // 멤버 추가 (POST)
+  ADD: (projectId) => `${SERVER_HOST}/api/projects/${projectId}/members`,
+  // 멤버 삭제 (DELETE)
+  REMOVE: (projectId, userId) =>
+    `${SERVER_HOST}/api/projects/${projectId}/members/${userId}`,
+  // 권한 변경 (PUT)
+  UPDATE_ROLE: (projectId, userId) =>
+    `${SERVER_HOST}/api/projects/${projectId}/members/${userId}/role`,
+};

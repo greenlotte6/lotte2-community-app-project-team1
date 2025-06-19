@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class ProjectMemberDTO {
 
     private Long id;
-    private ProjectDTO project;
+    private Long projectId;
     private String userId;
     private String role;
 }

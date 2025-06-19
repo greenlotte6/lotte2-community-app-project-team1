@@ -33,6 +33,9 @@ public class ProjectSection {
     private String description;
     private String name;
     private LocalDateTime updatedAt;
-    private String createdBy;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "createdBy")
+    private User user;
 }
 
