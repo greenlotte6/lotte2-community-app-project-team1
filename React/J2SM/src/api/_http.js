@@ -20,10 +20,10 @@ export const VERSION = `${SERVER_HOST}/version`;
 export const KAKAO_CREDIT = `${SERVER_HOST}/api/pay/ready`;
 
 // 소셜 로그인
+export const SOCIAL_TOKEN = `${SERVER_HOST}/api/user/me`;
 export const SOCIAL_NAVER = `${SERVER_HOST}/oauth2/authorization/naver`;
-export const SOCIAL_GOOGLE = `${SERVER_HOST}/oauth2/authorization/google`;
 export const SOCIAL_KAKAO = `${SERVER_HOST}/oauth2/authorization/kakao`;
-
+export const SOCIAL_GOOGLE = `${SERVER_HOST}/oauth2/authorization/google`;
 // user
 export const USER_REGISTER = `${SERVER_HOST}/user`;
 export const USER_LOGIN = `${SERVER_HOST}/user/login`;

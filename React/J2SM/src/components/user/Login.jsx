@@ -3,7 +3,7 @@ import useAuth from "../../hooks/useAuth";
 import { Link, useNavigate } from "react-router-dom";
 import { postUserLogin } from "../../api/userAPI";
 import Logo from "./Logo";
-import { getNaver } from "../../api/socialAPI";
+import { SOCIAL_GOOGLE, SOCIAL_KAKAO, SOCIAL_NAVER } from "../../api/_http";
 
 const initState = {
   uid: "",
@@ -24,19 +24,19 @@ const Login = () => {
   // 네이버
   const naverHandler = (e) => {
     e.preventDefault();
-    window.location.href = "http://localhost:8080/oauth2/authorization/naver";
+    window.location.href = SOCIAL_NAVER;
   };
 
   // 구글
   const googleHandler = (e) => {
     e.preventDefault();
-    window.location.href = "http://localhost:8080/oauth2/authorization/google";
+    window.location.href = SOCIAL_GOOGLE;
   };
 
   // 카카오
   const kakaoHandler = (e) => {
     e.preventDefault();
-    window.location.href = "http://localhost:8080/oauth2/authorization/kakao";
+    window.location.href = SOCIAL_KAKAO;
   };
 
   const submitHandler = (e) => {
