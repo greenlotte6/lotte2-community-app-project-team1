@@ -25,6 +25,10 @@
       "destination": "http://3.34.124.218:8080/version"
     },
     {
+      "source": "/oauth2/:path*",
+      "destination": "http://3.34.124.218:8080/oauth2/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
