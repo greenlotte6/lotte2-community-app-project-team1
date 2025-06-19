@@ -69,7 +69,7 @@ const BoardView = () => {
         withCredentials: true,
       });
       alert("게시글이 삭제되었습니다.");
-      navigate("/dashboard/board/list/main");
+      navigate("/dashboard/board/main");
     } catch (err) {
       console.error("게시글 삭제 실패", err);
       if (err.response && err.response.status === 403) {
