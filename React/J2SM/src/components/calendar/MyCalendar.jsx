@@ -59,6 +59,45 @@ const Calendar = () => {
     };
   }, []);
 
+  /*----------------------*/
+  useEffect(() => {
+    setTitle(cate !== "public" ? "마이 캘린더" : "소셜 캘린더");
+  }, [cate]);
+
+  // 일정 불러오기
+  useEffect(() => {
+    const loadSchedules = async () => {
+      try {
+        const data = await getCalendar(cate);
+        setSchedules(data);
+
+        const today = new Date().toISOString().split("T")[0];
+        const todayEvents = data.filter(
+          (e) => e.start <= today && e.end >= today
+        );
+        if (todayEvents.length > 0) {
+          const titles = todayEvents.map((e) => `• ${e.title}`).join("\n");
+          alert(`📌 오늘 일정이 ${todayEvents.length}건 있습니다:\n${titles}`);
+        }
+      } catch (err) {
+        console.error("일정 불러오기 실패", err);
+      }
+    };
+    loadSchedules();
+  }, [cate]);
+
+  useEffect(() => {
+    renderCalendar(currentYear, currentMonth);
+  }, [schedules, currentYear, currentMonth]);
+
+  useEffect(() => {
+    if (showDetailModal && startDateRef.current && endDateRef.current) {
+      flatpickr(startDateRef.current, { dateFormat: "Y-m-d" });
+      flatpickr(endDateRef.current, { dateFormat: "Y-m-d" });
+    }
+  }, [showDetailModal]);
+  /* */
+
   useEffect(() => {
     const handleEsc = (e) => {
       if (e.key === "Escape") {

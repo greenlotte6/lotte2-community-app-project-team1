@@ -1,12 +1,15 @@
 package kr.co.J2SM.controller.borad;
 
 
+import jakarta.transaction.Transactional;
 import kr.co.J2SM.dto.ArticleDTO;
 import kr.co.J2SM.dto.board.BoardDTO;
+import kr.co.J2SM.entity.board.Board;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.service.board.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +43,51 @@ public class BoardController {
         log.info("게시글 불러오기");
         return ResponseEntity.ok(boardService.getBoardDetail(id));
     }
+
+    @PutMapping("/{id}") // PUT 메서드로 매핑
+    public ResponseEntity<BoardDTO> updateBoard(
+            @PathVariable Long id,
+            @RequestBody BoardDTO updatedDto,
+            @AuthenticationPrincipal User user) {
+        log.info("게시물 수정 요청: ID - {}, DTO - {}", id, updatedDto);
+        try {
+            BoardDTO result = boardService.updateBoard(id, updatedDto, user); // BoardService의 메서드 호출
+            return ResponseEntity.ok(result); // 성공 시 200 OK와 수정된 DTO 반환
+        } catch (IllegalArgumentException e) {
+            log.error("게시물 수정 실패: {}", e.getMessage());
+            // 권한 없음 또는 게시물 없음 등의 경우 403 Forbidden 응답
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        } catch (Exception e) {
+            log.error("게시물 수정 중 예상치 못한 오류 발생: {}", e.getMessage());
+            // 다른 예외 발생 시 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+
+    @DeleteMapping("/{id}") // DELETE 메서드로 매핑
+    public ResponseEntity<Void> deleteBoard(
+            @PathVariable Long id,
+            @AuthenticationPrincipal User user) {
+        log.info("게시물 삭제 요청: ID - {}", id);
+        try {
+            boardService.deleteBoard(id, user); // BoardService의 메서드 호출
+            return ResponseEntity.noContent().build(); // 성공 시 204 No Content 반환
+        } catch (IllegalArgumentException e) {
+            log.error("게시물 삭제 실패: {}", e.getMessage());
+            // 권한 없음 또는 게시물 없음 등의 경우 403 Forbidden 응답
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        } catch (Exception e) {
+            log.error("게시물 삭제 중 예상치 못한 오류 발생: {}", e.getMessage());
+            // 다른 예외 발생 시 500 Internal Server Error
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+
+
+
+
 
 
 
