@@ -5,6 +5,8 @@ import MidArea from "../../components/DashBoard/MidArea";
 import BottomArea from "../../components/DashBoard/BottomArea";
 import "../../styles/DashBoard/dashboardMain.scss";
 import Aside from "../../components/DashBoard/Aside";
+import useAuth from "../../hooks/useAuth";
+import axios from "axios";
 
 const DashboardPage = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -52,6 +54,38 @@ const DashboardPage = () => {
   const handleCheckOut = () => {
     setStatusMessage(`퇴근 완료 (${new Date().toLocaleTimeString()})`);
   };
+
+  const { login } = useAuth();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/api/user/me", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log("인증됨", res.data);
+        const data = res.data;
+        console.log(res.data.uid);
+
+        if (res.data.uid) {
+          // context login 호출
+          login(
+            res.data.uid,
+            decodeURIComponent(res.data.department),
+            decodeURIComponent(res.data.company),
+            res.data.nick,
+            res.data.membership
+          );
+
+          // 메인 이동(컴포넌트 라우팅)
+          navigate("/dashboard/main");
+        }
+      })
+      .catch((err) => {
+        console.error("인증 실패 또는 쿠키 없음", err);
+      });
+  }, []);
+
   return (
     <div className="dashboardMainContent">
       <DashboardLayout>

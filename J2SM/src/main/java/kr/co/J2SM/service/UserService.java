@@ -267,4 +267,14 @@ public class UserService{
 
 
     }
+
+    // 소셜 로그인에서 uid에 따른 User 정보 추출
+    public UserDTO findUser(String uid) {
+        Optional<User> user = userRepository.findById(uid);
+        if(user.isPresent()) {
+            User userEntity = user.get();
+            return modelMapper.map(userEntity, UserDTO.class);
+        }
+        return null;
+    }
 }

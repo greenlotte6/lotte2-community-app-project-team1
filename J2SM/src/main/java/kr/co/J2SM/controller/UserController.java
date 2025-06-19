@@ -163,12 +163,8 @@ public class UserController {
             // 일반 회원가입 로직
             userService.registerEmployee(userDTO);
 
-
-
-
         }
 
-        // String uid = userService.register(userDTO);
         String uid = "user";
         return Map.of("userid", uid);
     }
