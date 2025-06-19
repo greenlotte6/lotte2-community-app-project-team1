@@ -30,8 +30,22 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         // ✅ JWT 쿠키 세팅
         loginResponseService.setLoginResponse(response, user);
 
+        // ✅ 요청 정보 기반 리다이렉트 경로 설정
+        String serverName = request.getServerName();
+        String redirectUrl;
+
+
+        log.info("serverName: {}", serverName);
+
+        // 예시 분기 (원하는 기준으로 수정 가능)
+        if (serverName.contains("localhost")) {
+            redirectUrl = "http://localhost:5173/dashboard/main";
+        } else {
+            redirectUrl = "https://lotte2-community-app-project-team1-sandy.vercel.app/dashboard/main";
+        }
+
+
         // ✅ React 앱으로 리다이렉트
-        String redirectUrl = "http://localhost:5173/dashboard/main"; // 여기에 React 리다이렉트 경로
         response.sendRedirect(redirectUrl);
     }
 }

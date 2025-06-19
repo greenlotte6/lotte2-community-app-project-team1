@@ -7,6 +7,7 @@ import "../../styles/DashBoard/dashboardMain.scss";
 import Aside from "../../components/DashBoard/Aside";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
+import { SOCIAL_TOKEN } from "../../api/_http";
 
 const DashboardPage = () => {
   const [currentTime, setCurrentTime] = useState("");
@@ -59,7 +60,7 @@ const DashboardPage = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/api/user/me", {
+      .get(SOCIAL_TOKEN, {
         withCredentials: true,
       })
       .then((res) => {
