@@ -47,4 +47,6 @@ public class Board {
     public void onCreate() {
         this.createdAt = java.time.LocalDateTime.now();
     }
+
+
 }

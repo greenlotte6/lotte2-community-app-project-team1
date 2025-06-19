@@ -13,6 +13,10 @@ const BoardList = () => {
   const location = useLocation();
   const categoryId = location.pathname.split("/")[4];
 
+  // 검색 기능을 위한 새로운 상태 추가
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+  const [searchCategory, setSearchCategory] = useState("전체"); // 검색 기준 상태 ('전체', '제목', '글쓴이')
+
   // 게시글 목록 가져오기
   const fetchPosts = async () => {
     if (!company) return;
@@ -25,14 +29,46 @@ const BoardList = () => {
     }
   };
 
+  // 페이지네이션 관련 상태
   const [currentPage, setCurrentPage] = useState(1);
   const postsPerPage = 8;
 
+  // 검색어와 검색 기준에 따라 게시글을 필터링하는 로직
+  const filteredPosts = posts.filter((post) => {
+    const lowerCaseSearchTerm = searchTerm.toLowerCase();
+
+    if (searchCategory === "전체") {
+      // 제목 또는 작성자에 검색어가 포함되어 있는지 확인
+      return (
+        (post.title &&
+          post.title.toLowerCase().includes(lowerCaseSearchTerm)) ||
+        (post.createdBy &&
+          post.createdBy.toLowerCase().includes(lowerCaseSearchTerm)) ||
+        (post.writer?.name &&
+          post.writer.name.toLowerCase().includes(lowerCaseSearchTerm))
+      );
+    } else if (searchCategory === "제목") {
+      // 제목에만 검색어가 포함되어 있는지 확인
+      return (
+        post.title && post.title.toLowerCase().includes(lowerCaseSearchTerm)
+      );
+    } else if (searchCategory === "글쓴이") {
+      // 작성자에만 검색어가 포함되어 있는지 확인
+      return (
+        (post.createdBy &&
+          post.createdBy.toLowerCase().includes(lowerCaseSearchTerm)) ||
+        (post.writer?.name &&
+          post.writer.name.toLowerCase().includes(lowerCaseSearchTerm))
+      );
+    }
+    return true; // 기본값 (모든 게시글 표시)
+  });
+
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
-  const currentPosts = posts.slice(indexOfFirstPost, indexOfLastPost);
+  const currentPosts = filteredPosts.slice(indexOfFirstPost, indexOfLastPost);
 
-  const totalPages = Math.ceil(posts.length / postsPerPage);
+  const totalPages = Math.ceil(filteredPosts.length / postsPerPage);
 
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -41,9 +77,13 @@ const BoardList = () => {
   useEffect(() => {
     if (!company) return;
     fetchPosts();
+    setCurrentPage(1);
   }, [categoryId, company]);
 
-  // 등록 완료 후 리스트 추가
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, searchCategory]);
+
   const handlePostCreated = (newPost) => {
     setPosts((prev) => [newPost, ...prev]);
   };
@@ -53,23 +93,32 @@ const BoardList = () => {
       <div className="line"></div>
       <div className="board-main">
         <div className="board-top">
+          {/* 게시판 카테고리 선택 (기존 코드) */}
           <select>
             <option>공지사항</option>
             <option>사내게시판</option>
             <option>익명게시판</option>
           </select>
           <div>
-            <select>
-              <option>전체</option>
-              <option>제목</option>
-              <option>글쓴이</option>
+            {/* 검색 기준 선택 드롭다운 */}
+            <select
+              value={searchCategory}
+              onChange={(e) => setSearchCategory(e.target.value)}
+            >
+              <option value="전체">전체</option>
+              <option value="제목">제목</option>
+              <option value="글쓴이">글쓴이</option>
             </select>
+            {/* 검색어 입력 필드 */}
             <input
               type="text"
               placeholder="검색어를 입력하세요"
               style={{ width: "180px", margin: "0 5px" }}
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button>검색</button>
+            <button onClick={() => setCurrentPage(1)}>검색</button>{" "}
+            {/* 검색 버튼 클릭 시 첫 페이지로 이동 */}
           </div>
         </div>
 

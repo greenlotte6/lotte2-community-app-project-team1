@@ -15,4 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
                 .allowCredentials(true) // ✅ 이거 중요: credentials: "include"를 허용
                 .exposedHeaders("Content-Disposition"); // 다운로드용
     }
+
+
+
 }

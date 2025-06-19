@@ -67,8 +67,8 @@ const WriteModal = ({ onClose, categoryId }) => {
         zIndex: 999,
       }}
     >
-      <div className="modal-content">
-        <div className="modal">
+      <div className="">
+        <div className="modal-content">
           <button className="close-btn" onClick={onClose}>
             &times;
           </button>

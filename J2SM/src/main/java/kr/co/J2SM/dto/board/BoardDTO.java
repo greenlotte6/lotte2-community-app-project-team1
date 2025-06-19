@@ -9,6 +9,7 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -26,5 +27,6 @@ public class BoardDTO {
     private String title;   // 제목
     private String content; //내용
     private UserDTO writer;
+    private List<AttachmentDTO> attachments;
 
 }

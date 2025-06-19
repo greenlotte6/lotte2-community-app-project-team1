@@ -15,6 +15,32 @@ const Aside = () => {
   const { username, company, role } = useAuth(); // 로그인 정보
   const isAdmin = role === "ADMIN";
 
+  const [hasTodaySchedule, setHasTodaySchedule] = useState(false);
+
+  useEffect(() => {
+    const loadTodaySchedules = async () => {
+      try {
+        const cno = company?.split(":")[0];
+        const cate = pathname.includes("/public") ? "public" : "my"; // 구분
+
+        const res = await axios.get(`/api/calendar/${cate}`, {
+          withCredentials: true,
+        });
+        const today = new Date().toISOString().split("T")[0];
+        const todayEvents = res.data.filter(
+          (e) => e.start <= today && e.end >= today
+        );
+        setHasTodaySchedule(todayEvents.length > 0);
+      } catch (err) {
+        console.error("오늘 일정 로딩 실패", err);
+      }
+    };
+
+    if (pathname.includes("/dashboard/calendar")) {
+      loadTodaySchedules();
+    }
+  }, [pathname]);
+
   // '/dashboard/calendar' 경로일 때
   if (pathname.includes("/dashboard/calendar")) {
     // 이 안에 로직 설정
