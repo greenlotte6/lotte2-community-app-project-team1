@@ -1,6 +1,7 @@
 package kr.co.J2SM.repository.board;
 
 import io.lettuce.core.dynamic.annotation.Param;
+import jakarta.transaction.Transactional;
 import kr.co.J2SM.entity.board.Board;
 import kr.co.J2SM.entity.board.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,4 +22,7 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     void deleteByCategory(Category category);
 
     List<Board> findByCategory(Category category);
+
+
+
 }

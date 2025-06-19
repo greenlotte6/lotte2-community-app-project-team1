@@ -73,7 +73,7 @@ const Login = () => {
 
   return (
     <div id="user_page">
-      <img src="/images/user/login.jpg" alt="로그인 화면" />
+      <img src="/images/user/login3.jpg" alt="로그인 화면" />
       <div id="login_form">
         <Logo />
         <div>

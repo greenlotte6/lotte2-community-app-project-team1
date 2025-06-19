@@ -48,6 +48,10 @@ const BoardView = () => {
     fetchPostAndComments();
   }, [id]);
 
+  useEffect(() => {
+    console.log("authUser 내용:", authUser);
+  }, [authUser]);
+
   // 수정모드 진입 시 기존 제목/내용 세팅
   useEffect(() => {
     if (post && editMode) {
@@ -65,7 +69,7 @@ const BoardView = () => {
         withCredentials: true,
       });
       alert("게시글이 삭제되었습니다.");
-      navigate("/dashboard/board/main");
+      navigate("/dashboard/board/list/main");
     } catch (err) {
       console.error("게시글 삭제 실패", err);
       if (err.response && err.response.status === 403) {
@@ -163,6 +167,10 @@ const BoardView = () => {
       }
     }
   };
+
+  useEffect(() => {
+    console.log("👤 로그인 사용자 정보:", authUser);
+  }, [authUser]);
 
   // 댓글 수정 취소
   const handleCancelEditComment = () => {

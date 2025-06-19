@@ -5,12 +5,14 @@ import kr.co.J2SM.entity.board.Board;
 import kr.co.J2SM.entity.board.Category;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.mapper.drive.BoardMapper;
+import kr.co.J2SM.repository.board.CommentRepository;
 import kr.co.J2SM.repository.board.BoardRepository;
 import kr.co.J2SM.repository.board.CategoryRepository;
 import kr.co.J2SM.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -88,6 +90,7 @@ public class BoardService {
         Board savedBoard = boardRepository.save(existingBoard);
         return boardMapper.toDTO(savedBoard);
     }
+    private final CommentRepository commentRepository;
 
     @Transactional
     public void deleteBoard(Long boardId, User currentUser) {
@@ -97,6 +100,8 @@ public class BoardService {
         if (existingBoard.getWriter() == null || !existingBoard.getWriter().getUid().equals(currentUser.getUid())) {
             throw new IllegalArgumentException("이 게시물을 삭제할 권한이 없습니다.");
         }
+
+        commentRepository.deleteByBoard_Id(boardId);
 
         boardRepository.delete(existingBoard);
     }

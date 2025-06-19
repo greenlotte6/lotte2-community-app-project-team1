@@ -6,6 +6,8 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "board")
@@ -47,6 +49,10 @@ public class Board {
     public void onCreate() {
         this.createdAt = java.time.LocalDateTime.now();
     }
+
+    @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
+    @Builder.Default // Builder 패턴 사용 시 List 필드 초기화
+    private List<Comment> comments = new ArrayList<>();
 
 
 }
