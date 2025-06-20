@@ -20,7 +20,7 @@ public class Drive {
 
     private String user;
     private String name;
-    private String type;
+    private String type; // "file" 또는 "folder"
     private String location;
     private LocalDateTime uploadedAt;
     private boolean favorite;
@@ -29,5 +29,14 @@ public class Drive {
     private String originalFilename;
 
     private boolean deleted;
-}
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Drive parent;
+
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL)
+    private java.util.List<Drive> children = new java.util.ArrayList<>();
+
+    @Column(name = "sort_order")
+    private Integer sortOrder;
+}

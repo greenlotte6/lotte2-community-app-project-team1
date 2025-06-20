@@ -17,4 +17,7 @@ public class DriveDTO {
     private String filePath;         // 서버 파일 경로 (다운로드에 사용)
     private String originalFilename;
     private boolean deleted;
+
+    private Long parentId; // ✅ 폴더 계층 구현을 위한 필드 추가
 }
+

@@ -22,6 +22,8 @@ public class DriveMapper {
                 .filePath(entity.getFilePath())
                 .originalFilename(entity.getOriginalFilename())
                 .deleted(entity.isDeleted())
+                .parentId(entity.getParent() != null ? entity.getParent().getId() : null) // ✅ 추가
                 .build();
     }
 }
+

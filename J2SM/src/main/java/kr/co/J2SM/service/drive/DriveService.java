@@ -21,23 +21,41 @@ public class DriveService {
     private final DriveRepository driveRepository;
     private final RecentDriveRepository recentDriveRepository;
 
-    // 전체 드라이브 목록 (휴지통 제외)
     public List<DriveDTO> getAllDriveFiles(User user) {
-
         return driveRepository.findByDeletedFalseAndUser(user.getUid())
                 .stream()
                 .map(DriveMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
-    // 개별 파일 조회
+    public List<DriveDTO> getDriveFilesByParent(String uid, Long parentId) {
+        List<Drive> drives;
+        if (parentId == null) {
+            drives = driveRepository.findByUserAndParentIsNullAndDeletedFalseOrderBySortOrderAsc(uid);
+        } else {
+            Drive parent = driveRepository.findById(parentId)
+                    .orElseThrow(() -> new IllegalArgumentException("폴더가 존재하지 않습니다."));
+            drives = driveRepository.findByUserAndParentAndDeletedFalseOrderBySortOrderAsc(uid, parent);
+        }
+        return drives.stream().map(DriveMapper::toDTO).collect(Collectors.toList());
+    }
+
+    public void updateSortOrder(List<Long> orderedIds) {
+        for (int i = 0; i < orderedIds.size(); i++) {
+            Long id = orderedIds.get(i);
+            Drive drive = driveRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("파일 없음: " + id));
+            drive.setSortOrder(i);
+        }
+        driveRepository.flush();
+    }
+
     public DriveDTO getDriveFile(Long id) {
         Drive entity = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
         return DriveMapper.toDTO(entity);
     }
 
-    // 즐겨찾기 토글
     public void toggleFavorite(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -45,7 +63,6 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // 파일명 변경
     public void renameFile(Long id, String newName) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -53,15 +70,24 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // 파일 삭제 (휴지통으로 이동)
     public void deleteFile(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
-        file.setDeleted(true);
-        driveRepository.save(file);
+        markAsDeletedRecursive(file);
     }
 
-    // 휴지통에서 복원
+    private void markAsDeletedRecursive(Drive file) {
+        file.setDeleted(true);
+        driveRepository.save(file);
+
+        if ("folder".equalsIgnoreCase(file.getType())) {
+            List<Drive> children = driveRepository.findByParent(file);
+            for (Drive child : children) {
+                markAsDeletedRecursive(child);
+            }
+        }
+    }
+
     public void restoreFile(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -69,12 +95,10 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // 파일 완전 삭제
     public void hardDeleteFile(Long id) {
         driveRepository.deleteById(id);
     }
 
-    // 공유 드라이브로 이동
     public void moveToSharedDrive(Long id) {
         Drive file = driveRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("파일 없음"));
@@ -82,7 +106,6 @@ public class DriveService {
         driveRepository.save(file);
     }
 
-    // 휴지통 목록 조회
     public List<DriveDTO> getTrashedFiles() {
         return driveRepository.findByDeletedTrueOrderByUploadedAtDesc()
                 .stream()
@@ -90,8 +113,23 @@ public class DriveService {
                 .collect(Collectors.toList());
     }
 
-    // 드라이브 업로드 저장
+    public List<DriveDTO> getTrashedFilesByUser(String uid) {
+        return driveRepository.findByDeletedTrueAndUserOrderByUploadedAtDesc(uid)
+                .stream()
+                .map(DriveMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
     public void saveDrive(String user, String originalName, String saveName, String relativePath) {
+        saveDrive(user, originalName, saveName, relativePath, null);
+    }
+
+    public void saveDrive(String user, String originalName, String saveName, String relativePath, Long parentId) {
+        Drive parent = null;
+        if (parentId != null) {
+            parent = driveRepository.findById(parentId).orElse(null);
+        }
+
         Drive drive = Drive.builder()
                 .user(user)
                 .name(originalName)
@@ -103,17 +141,11 @@ public class DriveService {
                 .uploadedAt(LocalDateTime.now())
                 .favorite(false)
                 .deleted(false)
+                .parent(parent)
                 .build();
 
         driveRepository.save(drive);
     }
-    public List<DriveDTO> getTrashedFilesByUser(String uid) {
-        return driveRepository.findByDeletedTrueAndUserOrderByUploadedAtDesc(uid)
-                .stream()
-                .map(DriveMapper::toDTO)
-                .collect(Collectors.toList());
-    }
-
 
     private String getFileExtension(String filename) {
         if (filename == null) return "unknown";
@@ -123,10 +155,7 @@ public class DriveService {
                 : "unknown";
     }
 
-
-    // ✅ 최근 본 드라이브 기록 저장
     public void recordRecentView(String userId, Long driveId) {
-        // 중복 기록 제거
         recentDriveRepository.deleteByUserIdAndDriveFileId(userId, driveId);
 
         RecentDrive recent = RecentDrive.builder()
@@ -138,7 +167,6 @@ public class DriveService {
         recentDriveRepository.save(recent);
     }
 
-    // ✅ 최근 본 드라이브 목록 조회
     public List<DriveDTO> getRecentDriveFiles(String userId) {
         return recentDriveRepository.findTop20ByUserIdOrderByViewedAtDesc(userId)
                 .stream()
@@ -149,19 +177,26 @@ public class DriveService {
                 .filter(dto -> dto != null)
                 .collect(Collectors.toList());
     }
-    public DriveDTO createFolder(String name, String uid) {
+
+    public DriveDTO createFolder(String name, String uid, Long parentId) {
+        Drive parent = null;
+        if (parentId != null) {
+            parent = driveRepository.findById(parentId)
+                    .orElseThrow(() -> new IllegalArgumentException("상위 폴더가 존재하지 않습니다."));
+        }
+
         Drive folder = Drive.builder()
                 .name(name)
                 .user(uid)
-                .type("folder") // 구분용
+                .type("folder")
                 .fileType("folder")
-                .location("내 드라이브") // 하드코딩된 문자열 그대로 사용
+                .location("내 드라이브")
                 .uploadedAt(LocalDateTime.now())
                 .favorite(false)
                 .deleted(false)
+                .parent(parent)
                 .build();
 
         return DriveMapper.toDTO(driveRepository.save(folder));
     }
-
 }
