@@ -35,22 +35,25 @@ public class DriveController {
     private final DriveRepository driveRepository;
     private final UserService userService;
 
-    private static final long MAX_FREE_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+    private static final long MAX_FREE_FILE_SIZE = 5 * 1024 * 1024;
 
     @GetMapping
-    public List<DriveDTO> listFiles(@AuthenticationPrincipal User user) {
-        log.info("유저 정보 "  + user);
-        return driveService.getAllDriveFiles(user);
+    public List<DriveDTO> listFiles(@AuthenticationPrincipal User user,
+                                    @RequestParam(value = "parentId", required = false) Long parentId) {
+        log.info("유저 정보: {} / parentId: {}", user.getUid(), parentId);
+        return driveService.getDriveFilesByParent(user.getUid(), parentId);
+    }
+    @PatchMapping("/reorder")
+    public ResponseEntity<?> updateSortOrder(@RequestBody List<Long> orderedIds) {
+        driveService.updateSortOrder(orderedIds);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/{id}/download")
     public ResponseEntity<Resource> downloadFile(@PathVariable Long id) throws IOException {
         DriveDTO dto = driveService.getDriveFile(id);
-
         Path rawPath = Paths.get(dto.getFilePath());
-        Path filePath = rawPath.isAbsolute()
-                ? rawPath
-                : Paths.get(System.getProperty("user.dir")).resolve(rawPath).normalize();
+        Path filePath = rawPath.isAbsolute() ? rawPath : Paths.get(System.getProperty("user.dir")).resolve(rawPath).normalize();
 
         if (!Files.exists(filePath) || !Files.isReadable(filePath)) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
@@ -67,14 +70,13 @@ public class DriveController {
                 .replaceAll("[^\\p{ASCII}]", "")
                 .replaceAll("[^a-zA-Z0-9._-]", "_");
 
-        if (fallback == null || fallback.trim().isEmpty() || fallback.startsWith(".")) {
+        if (fallback.isBlank() || fallback.startsWith(".")) {
             String ext = getFileExtension(originalFilename);
             fallback = "download-" + UUID.randomUUID().toString().substring(0, 8) + ext;
         }
 
         HttpHeaders headers = new HttpHeaders();
-        headers.add(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + fallback + "\"; filename*=UTF-8''" + encodedFilename);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + fallback + "\"; filename*=UTF-8''" + encodedFilename);
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 
         return ResponseEntity.ok().headers(headers).body(resource);
@@ -93,15 +95,14 @@ public class DriveController {
     private String getFileExtension(String filename) {
         if (filename == null) return "";
         int dotIndex = filename.lastIndexOf('.');
-        return (dotIndex != -1 && dotIndex < filename.length() - 1)
-                ? filename.substring(dotIndex)
-                : "";
+        return (dotIndex != -1 && dotIndex < filename.length() - 1) ? filename.substring(dotIndex) : "";
     }
 
     @PostMapping("/upload")
     public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile file,
                                         @RequestParam("user") String username,
-                                        @RequestParam("originalName") String originalName) {
+                                        @RequestParam("originalName") String originalName,
+                                        @RequestParam(value = "parentId", required = false) Long parentId) {
         try {
             User uploader = userService.findByUsername(username);
             long fileSize = file.getSize();
@@ -121,12 +122,11 @@ public class DriveController {
             file.transferTo(savePath.toFile());
 
             String relativePath = "uploads/" + saveName;
-            driveService.saveDrive(username, originalName, saveName, relativePath);
+            driveService.saveDrive(username, originalName, saveName, relativePath, parentId);
 
             return ResponseEntity.ok().build();
 
         } catch (IOException e) {
-            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("파일 업로드 실패");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원 정보 조회 실패");
@@ -174,13 +174,11 @@ public class DriveController {
         return ResponseEntity.ok().build();
     }
 
-    // 🔄 로그인 없이 최근 열람 목록 조회 (uid를 직접 전달받음)
     @GetMapping("/recent")
     public List<DriveDTO> getRecentViews(@RequestParam String uid) {
         return driveService.getRecentDriveFiles(uid);
     }
 
-    // 🔄 로그인 없이 최근 열람 기록 저장 (uid를 직접 전달받음)
     @PostMapping("/view/{id}")
     public ResponseEntity<?> recordView(@PathVariable Long id, @RequestParam String uid) {
         driveService.recordRecentView(uid, id);
@@ -197,12 +195,22 @@ public class DriveController {
     public ResponseEntity<DriveDTO> createFolder(@RequestBody Map<String, String> body,
                                                  @AuthenticationPrincipal User user) {
         String folderName = body.get("name");
+        String parentIdStr = body.get("parentId");
 
         if (folderName == null || folderName.trim().isEmpty()) {
             return ResponseEntity.badRequest().body(null);
         }
 
-        DriveDTO folder = driveService.createFolder(folderName, user.getUid());
+        Long parentId = null;
+        if (parentIdStr != null && !parentIdStr.trim().isEmpty()) {
+            try {
+                parentId = Long.parseLong(parentIdStr);
+            } catch (NumberFormatException e) {
+                return ResponseEntity.badRequest().body(null);
+            }
+        }
+
+        DriveDTO folder = driveService.createFolder(folderName, user.getUid(), parentId);
         return ResponseEntity.ok(folder);
     }
 }

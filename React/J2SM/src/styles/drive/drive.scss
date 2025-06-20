@@ -1419,7 +1419,23 @@ body.dark-mode .modal-actions button:last-child {
 body.dark-mode .modal-actions button:last-child:hover {
   background-color: #555;
 }
-
+.react-beautiful-dnd--placeholder {
+  background: #f0f8ff;
+  border: 2px dashed #a3a3a3;
+  height: 48px;
+  transition: background 0.2s ease;
+}
+.react-beautiful-dnd--placeholder {
+  background: #e0f7fa !important;
+  border: 2px dashed #00acc1;
+  height: 50px;
+}
+.highlight-movable {
+  background-color: #f0f8ff; /* 연한 파란색 */
+  border-top: 2px dashed #90caf9;
+  border-bottom: 2px dashed #90caf9;
+  transition: all 0.2s ease;
+}
 /* 간단한 fadeIn 애니메이션 */
 @keyframes fadeIn {
   from {
