@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface ProjectSectionRepository extends JpaRepository<ProjectSection, Long> {
     List<ProjectSection> findByProject_IdOrderByOrderNumAsc(Long projectId);
+    void deleteByProjectId(Long projectId);
 }

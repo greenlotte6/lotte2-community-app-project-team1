@@ -82,10 +82,8 @@ const EmptyDropZone = ({ areaId }) => {
   );
 };
 
-export const ProjectRegisterMid = () => {
-  const [areas, setAreas] = useState([]);
+export const ProjectRegisterMid = ({ areas, setAreas }) => {
   const [activeItem, setActiveItem] = useState(null);
-
   const sensors = useSensors(useSensor(PointerSensor));
 
   // 섹션(Area) 추가/삭제/수정

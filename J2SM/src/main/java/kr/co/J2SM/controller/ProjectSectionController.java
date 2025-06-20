@@ -1,5 +1,6 @@
 package kr.co.J2SM.controller;
 import kr.co.J2SM.dto.Project.ProjectSectionDTO;
+import kr.co.J2SM.dto.Project.ProjectSectionRequestDTO;
 import kr.co.J2SM.service.ProjectSectionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,15 @@ public class ProjectSectionController {
     @DeleteMapping("/sections/{sectionId}")
     public ResponseEntity<Void> deleteSection(@PathVariable Long sectionId) {
         sectionService.deleteSection(sectionId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/{projectId}/sections/bulk")
+    public ResponseEntity<Void> saveSectionsBulk(
+            @PathVariable Long projectId,
+            @RequestBody List<ProjectSectionRequestDTO> sections
+    ) {
+        sectionService.saveSectionsBulk(projectId, sections);
         return ResponseEntity.ok().build();
     }
 }

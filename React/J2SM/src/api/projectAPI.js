@@ -115,6 +115,24 @@ export const deleteSection = async (sectionId) => {
   }
 };
 
+// ✅ 섹션 + 태스크 bulk 저장
+export const saveSectionsBulk = async (projectId, sections) => {
+  try {
+    const res = await axios.post(
+      SECTION.BULK_SAVE(projectId), // URL
+      sections, // [{title, orderNum, tasks:[{content, ...}]} ...]
+      {
+        withCredentials: true,
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error("saveSectionsBulk error:", err);
+    throw err;
+  }
+};
+
 // ----------- 태스크(Task) -----------
 export const fetchTasks = async (sectionId) => {
   try {
