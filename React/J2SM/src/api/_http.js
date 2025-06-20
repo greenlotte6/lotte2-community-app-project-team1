@@ -177,6 +177,8 @@ export const SECTION = {
   UPDATE: (sectionId) => `${SERVER_HOST}/api/sections/${sectionId}`,
   // 섹션 삭제 (DELETE)
   DELETE: (sectionId) => `${SERVER_HOST}/api/sections/${sectionId}`,
+  BULK_SAVE: (projectId) =>
+    `${SERVER_HOST}/api/projects/${projectId}/sections/bulk`,
 };
 export const TASK = {
   // 특정 섹션의 태스크 목록 (GET)

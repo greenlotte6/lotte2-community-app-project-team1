@@ -11,12 +11,18 @@ export const ProjectAside = ({ onNewProject }) => {
     if (!projectName.trim()) return;
     // 프로젝트 생성(백엔드 연동)
     if (onNewProject) {
-      await onNewProject({ name: projectName, status: "in progress" });
+      // onNewProject는 프로젝트 생성 후 생성된 프로젝트 객체(res)를 반환해야 함!
+      const res = await onNewProject({
+        name: projectName,
+        status: "in progress",
+      });
+      setIsModalOpen(false);
+      setProjectName("");
+      // 신규 등록(설정) 페이지로 이동 (projectId 넘김)
+      navigate(`/dashboard/project/projectRegister`, {
+        state: { projectName: res.name, projectId: res.id, mode: "create" },
+      });
     }
-    setIsModalOpen(false);
-    setProjectName("");
-    // 필요한 경우만 이동(세부설정페이지 등)
-    // navigate("/dashboard/project/projectRegister", { state: { projectName } });
   };
 
   return (

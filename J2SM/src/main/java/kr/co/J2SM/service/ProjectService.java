@@ -60,7 +60,7 @@ public class ProjectService {
 
     // 2. 내 프로젝트 전체 조회
     public List<ProjectDTO> getProjectsByUser(String userId) {
-        return projectMemberRepository.findByUser_Uid(userId).stream()
+        return projectMemberRepository.findByUserUidWithProject(userId).stream()
                 .map(pm -> {
                     Project p = pm.getProject();
                     return ProjectDTO.builder()
@@ -96,6 +96,25 @@ public class ProjectService {
             throw new RuntimeException("Project not found: " + projectId);
         }
         projectRepository.deleteById(projectId);
+    }
+
+    @Transactional
+    public ProjectDTO updateProject(Long id, ProjectDTO dto) {
+        Project project = projectRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        // 필드 값 수정 (원하는 필드만)
+        project.setName(dto.getName());
+        project.setDescription(dto.getDescription());
+
+        // updatedAt 등 갱신 필요하면
+        project.setUpdatedAt(java.time.LocalDateTime.now());
+
+        // 저장 (JPA는 트랜잭션 내에서 알아서 merge)
+        // projectRepository.save(project); // 생략 가능
+
+        // 엔티티 → DTO 변환해서 반환 (toDto 메서드 등 필요)
+        return ProjectDTO.fromEntity(project);
     }
 }
 

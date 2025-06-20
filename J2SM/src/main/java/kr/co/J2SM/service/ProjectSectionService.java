@@ -1,12 +1,17 @@
 package kr.co.J2SM.service;
 
 import kr.co.J2SM.dto.Project.ProjectSectionDTO;
+import kr.co.J2SM.dto.Project.ProjectSectionRequestDTO;
+import kr.co.J2SM.dto.Project.ProjectTaskRequestDTO;
 import kr.co.J2SM.entity.Project.Project;
 import kr.co.J2SM.entity.Project.ProjectSection;
+import kr.co.J2SM.entity.Project.ProjectTask;
 import kr.co.J2SM.repository.Project.ProjectRepository;
 import kr.co.J2SM.repository.Project.ProjectSectionRepository;
+import kr.co.J2SM.repository.Project.ProjectTaskRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -18,6 +23,7 @@ public class ProjectSectionService {
 
     private final ProjectRepository projectRepository;
     private final ProjectSectionRepository sectionRepository;
+    private final ProjectTaskRepository projectTaskRepository;
 
     // 섹션 생성
     public ProjectSectionDTO createSection(Long projectId, ProjectSectionDTO dto) {
@@ -76,4 +82,42 @@ public class ProjectSectionService {
                 .updatedAt(section.getUpdatedAt())
                 .build();
     }
+
+    @Transactional
+    public void saveSectionsBulk(Long projectId, List<ProjectSectionRequestDTO> sectionDTOs) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Project not found"));
+
+        // 기존 섹션/태스크 전체 삭제
+        sectionRepository.deleteByProjectId(projectId);
+
+        // 새로 저장
+        int secOrder = 0;
+        for (ProjectSectionRequestDTO sectionDTO : sectionDTOs) {
+            ProjectSection section = ProjectSection.builder()
+                    .title(sectionDTO.getTitle())
+                    .orderNum(sectionDTO.getOrderNum() != null ? sectionDTO.getOrderNum() : secOrder++)
+                    .project(project)
+                    .createdAt(LocalDateTime.now())
+                    .updatedAt(LocalDateTime.now())
+                    .description(sectionDTO.getDescription())
+                    .name(sectionDTO.getName())
+                    .build();
+            section = sectionRepository.save(section);
+
+            if (sectionDTO.getTasks() != null) {
+                int taskOrder = 0;
+                for (ProjectTaskRequestDTO taskDTO : sectionDTO.getTasks()) {
+                    ProjectTask task = ProjectTask.builder()
+                            .section(section)
+                            .content(taskDTO.getContent())
+                            .orderNum(taskDTO.getOrderNum() != null ? taskDTO.getOrderNum() : taskOrder++)
+                            .isCompleted(taskDTO.getIsCompleted() != null ? taskDTO.getIsCompleted() : false)
+                            .build();
+                    projectTaskRepository.save(task);
+                }
+            }
+        }
+    }
 }
+

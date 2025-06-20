@@ -19,8 +19,16 @@ const ProjectPage = () => {
 
   // 최초 렌더링 시 내 프로젝트 불러오기
   useEffect(() => {
-    fetchMyProjects(userId).then(setProjects);
-  }, []);
+    // username(=userId)이 null/undefined/빈문자열일 때는 아예 요청 보내지 마라
+    if (!userId) {
+      console.log("❌ userId 없음");
+      return;
+    }
+    fetchMyProjects(userId).then((data) => {
+      console.log("📦 fetchMyProjects 결과:", data);
+      setProjects(data);
+    });
+  }, [userId]);
 
   // 프로젝트 삭제 → 서버/로컬 상태 갱신
   const handleRemoveProject = async (id) => {

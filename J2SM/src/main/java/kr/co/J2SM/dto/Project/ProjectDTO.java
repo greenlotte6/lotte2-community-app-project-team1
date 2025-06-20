@@ -1,6 +1,7 @@
 package kr.co.J2SM.dto.Project;
 
 import jakarta.persistence.*;
+import kr.co.J2SM.entity.Project.Project;
 import kr.co.J2SM.entity.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,6 +22,15 @@ public class ProjectDTO {
     private String createdBy;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    public static ProjectDTO fromEntity(Project entity) {
+        return ProjectDTO.builder()
+                .id(entity.getId())
+                .name(entity.getName())
+                .description(entity.getDescription())
+                // ... 기타 필드 세팅
+                .build();
+    }
 
 }
 

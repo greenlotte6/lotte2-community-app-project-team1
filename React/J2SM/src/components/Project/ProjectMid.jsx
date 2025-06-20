@@ -1,6 +1,8 @@
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const ProjectMid = ({ projects = [], onRemoveProject }) => {
+  const navigate = useNavigate();
+
   return (
     <div className="midArea">
       {projects.length === 0 ? (
@@ -9,14 +11,32 @@ export const ProjectMid = ({ projects = [], onRemoveProject }) => {
         </div>
       ) : (
         projects.map((project) => (
-          <div className="projectcontent" key={project.id}>
+          <div
+            className="projectcontent"
+            key={project.id}
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate("/dashboard/project/projectRegister", {
+                state: {
+                  projectId: project.id,
+                  projectName: project.name,
+                  mode: "edit",
+                },
+              })
+            }
+          >
             <img src="/images/Layers.svg" alt="layericon" />
             <div className="contenttext">
               <span>{project.name}</span>
               <br />
               <p>{project.status ?? "in progress"}</p>
             </div>
-            <button onClick={() => onRemoveProject?.(project.id)}>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                onRemoveProject?.(project.id);
+              }}
+            >
               <img src="/images/Trash 2.svg" alt="trash" />
             </button>
           </div>
