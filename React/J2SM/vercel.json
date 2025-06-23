@@ -1,10 +1,6 @@
 {
   "rewrites": [
     {
-      "source": "/user/login",
-      "destination": "/"
-    },
-    {
       "source": "/user/:path*",
       "destination": "http://3.34.124.218:8080/user/:path*"
     },
