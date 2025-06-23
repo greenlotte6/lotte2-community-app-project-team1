@@ -36,6 +36,7 @@ import DriveDeletePage from "../pages/drive/DriveDeletePage";
 import { TempPage } from "../pages/user/TempPage";
 import CreditSuccessPage from "../pages/lading/CreditSuccessPage";
 import ShareDrivePage from "../pages/drive/ShareDrivePage";
+import MySettingPage from "../pages/Setting/MySettingPage";
 
 // 라우터 생성
 const router = createBrowserRouter([
@@ -111,6 +112,7 @@ const router = createBrowserRouter([
 
   /* 세팅 라우터 시작 */
   { path: "/dashboard/setting", element: <SettingPage /> },
+  { path: "/dashboard/setting/my", element: <MySettingPage /> },
   /* 세팅 라우터 종료 */
 
   /* 드라이브 라우터 */
