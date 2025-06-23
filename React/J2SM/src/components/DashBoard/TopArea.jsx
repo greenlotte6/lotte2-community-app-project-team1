@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
+import { USER_THUMB } from "../../api/_http";
 import axios from "axios";
-import { USER_INFO } from "../../api/_http";
 import { getInfo } from "../../api/userAPI";
 
 const TopArea = () => {
@@ -43,7 +43,12 @@ const TopArea = () => {
         <h3>Personal Details</h3>
         <div className="infoArea">
           <div className="photoBox">
-            <div className="photoPlaceholder" />
+            <img
+              src={`${USER_THUMB}/${user?.profileImage}`}
+              className="photoPlaceholder"
+              alt="사진"
+            />
+
             <button className="verifyBtn">Verification Photo</button>
           </div>
           <ul className="detailList">

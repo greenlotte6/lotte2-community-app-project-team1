@@ -277,4 +277,51 @@ public class UserService{
         }
         return null;
     }
+
+    // 프로필 수정
+    public void modifyProfile(String profileImageName, User user) {
+
+        Optional<User> optUser = userRepository.findById(user.getUid());
+        if(optUser.isPresent()) {
+            User userEntity = optUser.get();
+            userEntity.setProfileImage(profileImageName);
+            userRepository.save(userEntity);
+        }
+
+    }
+
+    @Transactional
+    public void modifyUserInfo(UserDTO userDTO, User user) {
+
+        Optional<User> optUser = userRepository.findById(user.getUid());
+        if(optUser.isPresent()) {
+            User userEntity = optUser.get();
+            userEntity.setName(userDTO.getName());
+            userEntity.setHp(userDTO.getHp());
+            userEntity.setEmail(userDTO.getEmail());
+            userRepository.save(userEntity);
+        }
+    }
+
+    public String validPass(UserDTO userDTO, User user) {
+        String inputPass = userDTO.getPass(); // 현재 입력된 기존 비밀번호
+
+        Optional<User> userOpt = userRepository.findById(user.getUid());
+        if (userOpt.isPresent()) {
+            User userEntity = userOpt.get();
+            String dbPass = userEntity.getPass();
+
+            // 기존 비밀번호가 일치하는 경우
+            if (passwordEncoder.matches(inputPass, dbPass)) {
+                String encoded = passwordEncoder.encode(userDTO.getNewPass());
+                userEntity.setPass(encoded);
+                userRepository.save(userEntity);
+                return "성공";
+            }else{
+                return "비밀번호오류";
+            }
+        }
+
+        return "실패";
+    }
 }

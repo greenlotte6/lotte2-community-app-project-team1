@@ -24,10 +24,13 @@ export const SOCIAL_TOKEN = `${SERVER_HOST}/api/user/me`;
 export const SOCIAL_NAVER = `${SERVER_HOST}/oauth2/authorization/naver`;
 export const SOCIAL_KAKAO = `${SERVER_HOST}/oauth2/authorization/kakao`;
 export const SOCIAL_GOOGLE = `${SERVER_HOST}/oauth2/authorization/google`;
+
 // user
 export const USER_REGISTER = `${SERVER_HOST}/user`;
 export const USER_LOGIN = `${SERVER_HOST}/user/login`;
 export const USER_LOGOUT = `${SERVER_HOST}/user/logout`;
+export const USER_THUMB = `${SERVER_HOST}/user/thumb`;
+export const USER_MODIFY_INFO = `${SERVER_HOST}/user/modify/info`;
 
 // 유저 아이디 체크
 export const USER_ID_CHECK = `${SERVER_HOST}/user/idCheck`;

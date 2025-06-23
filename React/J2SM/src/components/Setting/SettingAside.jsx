@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export const SettingAside = () => {
   return (
@@ -8,7 +9,10 @@ export const SettingAside = () => {
           <h3>Setting</h3>
         </div>
         <div className="childArea">
-          <a href="#">Home</a>
+          <Link to={"/dashboard/setting"}>Home</Link>
+          <br></br>
+          <br></br>
+          <Link to={"/dashboard/setting/my"}>나의 설정</Link>
         </div>
       </div>
     </aside>

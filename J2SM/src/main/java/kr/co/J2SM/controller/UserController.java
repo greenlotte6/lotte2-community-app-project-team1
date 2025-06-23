@@ -1,5 +1,6 @@
 package kr.co.J2SM.controller;
 
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import kr.co.J2SM.dto.user.UserDTO;
@@ -11,6 +12,7 @@ import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.security.MyUserDetails;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -290,13 +292,32 @@ public class UserController {
     @PostMapping("/modify")
     public ResponseEntity modifyPass(@RequestBody UserDTO userDTO) {
         log.info("비밀번호 변경 : " + userDTO);
+
+
+        // 로그인 페이지 비밀번호 변경
         Boolean success = userService.modifyPass(userDTO);
         return ResponseEntity.ok(success);
     }
 
+    @PutMapping("/modify")
+    public ResponseEntity modifyPassDashboard(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User user) {
+        log.info("비밀번호 변경 : " + userDTO);
+
+        // 비밀번호 검증
+        String valid = userService.validPass(userDTO, user);
+
+        switch (valid) {
+            case "성공":
+                return ResponseEntity.ok("비밀번호가 성공적으로 변경되었습니다.");
+            case "비밀번호오류":
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("현재 비밀번호가 일치하지 않습니다.");
+            default:
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("비밀번호 변경에 실패했습니다.");
+        }
+    }
 
 
-        /* 테스트 용 곧 삭제 */
+    /* 테스트 용 곧 삭제 */
     @GetMapping("/company")
     public ResponseEntity company(){
         userService.companyAll();
@@ -327,6 +348,43 @@ public class UserController {
         return ResponseEntity.ok(userDTO);
     }
 
+    // 프로필 이미지 출력
+    @GetMapping("/thumb/{fileName}")
+    public ResponseEntity<Resource> viewFileGet(@PathVariable String fileName){
+        return fileUtil.getFile(fileName);
+    }
 
+    // 프로필 이미지 변경
+    @PutMapping("/thumb")
+    public ResponseEntity<?> updateProfile(@RequestParam MultipartFile profile,
+                                           @AuthenticationPrincipal User user) {
+
+        log.info("User : " + user );
+        log.info("updateProfile : " + profile);
+
+        List<MultipartFile> files = new ArrayList<>();
+        files.add(profile);
+        Map<String, String> uploadFileNames = fileUtil.saveFiles(files);
+
+        String profileImageName = uploadFileNames.get("profile");
+
+        log.info("updateProfile : " + profileImageName);
+        userService.modifyProfile(profileImageName, user);
+
+        return ResponseEntity.ok("ok");
+    }
+
+    // 나의 설정 변경
+    @PutMapping("/modify/info")
+    public ResponseEntity<?> updateInfo(@RequestBody UserDTO userDTO, @AuthenticationPrincipal User user) {
+
+        log.info("updateInfo : " + userDTO);
+        userService.modifyUserInfo(userDTO, user);
+        // 1. MultipartFile 저장 (예: uploads 디렉토리)
+        // 2. DB에 사용자 profileImage 필드 업데이트
+        // 3. return ok();
+
+        return ResponseEntity.ok("ok");
+    }
 
 }
