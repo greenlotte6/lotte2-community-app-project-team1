@@ -8,6 +8,7 @@ const WriteModal = ({ onClose, categoryId }) => {
   const { username } = useAuth();
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [file, setFile] = useState(null); // 첨부파일 상태
 
   // 바깥 클릭 시 닫기
   const handleOutsideClick = (e) => {
@@ -31,22 +32,32 @@ const WriteModal = ({ onClose, categoryId }) => {
     }
 
     try {
-      await axios.post(
-        BOARD,
-        {
-          title,
-          content,
-          fixed: false,
-          category: { id: categoryId },
+      const formData = new FormData();
+
+      const post = {
+        title,
+        content,
+        fixed: false,
+        category: { id: categoryId },
+      };
+
+      const postBlob = new Blob([JSON.stringify(post)], {
+        type: "application/json",
+      });
+
+      formData.append("post", postBlob);
+      if (file) formData.append("file", file);
+
+      await axios.post(BOARD, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
         },
-        {
-          withCredentials: true, // 필요 시 쿠키 포함
-        }
-      );
+        withCredentials: true,
+      });
 
       alert("게시글이 등록되었습니다.");
       onClose();
-      window.location.reload(); // or 상태 업데이트
+      window.location.reload();
     } catch (error) {
       console.error("등록 실패:", error);
       alert("게시글 등록에 실패했습니다.");
@@ -127,9 +138,10 @@ const WriteModal = ({ onClose, categoryId }) => {
               }}
             ></div>
           </div>
+
           <div className="form-group">
             <label>파일 첨부</label>
-            <input type="file" />
+            <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           </div>
 
           <div className="modal-footer">

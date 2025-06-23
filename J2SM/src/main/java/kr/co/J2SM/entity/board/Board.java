@@ -26,8 +26,8 @@ public class Board {
     @ManyToOne(fetch = FetchType.LAZY)
     private Category category; // 예: 공지사항, 사내게시판
 
-    @Column(name = "is_fixed")
-    private boolean fixed; // true면 수정/삭제 불가
+    @Column(name = "is_fixed", nullable = false)
+    private boolean fixed;// true면 수정/삭제 불가
 
     @Column(name = "created_by")
     private String createdBy; // 작성자
@@ -51,8 +51,7 @@ public class Board {
     }
 
     @OneToMany(mappedBy = "board", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Builder.Default // Builder 패턴 사용 시 List 필드 초기화
-    private List<Comment> comments = new ArrayList<>();
+    private List<Attachment> attachments = new ArrayList<>();
 
 
 }

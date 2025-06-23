@@ -42,6 +42,8 @@ public class CommentController {
     @GetMapping
     public ResponseEntity<List<CommentDTO>> getComments(@PathVariable Long boardId) {
         List<CommentDTO> comments = commentService.getCommentsByBoardId(boardId);
+
+        log.info(boardId + "의 게시물의 댓글 내용은 " + comments);
         return ResponseEntity.ok(comments);
     }
 

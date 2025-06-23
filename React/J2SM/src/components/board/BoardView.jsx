@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth"; // 현재 로그인한 사용자 정�
 
 const BoardView = () => {
   const { id } = useParams();
+  const { username, nick } = useAuth();
   const navigate = useNavigate();
   const { authUser } = useAuth(); // 현재 로그인한 사용자 정보 (authUser.uid 사용)
 
@@ -29,6 +30,8 @@ const BoardView = () => {
           withCredentials: true,
         }
       );
+
+      console.log(postRes);
       setPost(postRes.data);
 
       const commentsRes = await axios.get(
@@ -43,6 +46,13 @@ const BoardView = () => {
       // 에러 처리: 사용자에게 메시지 표시, 홈으로 리다이렉트 등
     }
   };
+
+  useEffect(() => {
+    if (post) {
+      console.log("📄 게시글 내용:", post);
+      console.log("📎 첨부파일 목록:", post.attachments);
+    }
+  }, [post]);
 
   useEffect(() => {
     fetchPostAndComments();
@@ -239,24 +249,6 @@ const BoardView = () => {
           <div className="post-content">{post.content}</div>
         )}
 
-        {post.attachments && post.attachments.length > 0 && (
-          <div className="post-attachments">
-            <h4>첨부파일</h4>
-            <ul>
-              {post.attachments.map((file, index) => (
-                <li key={index}>
-                  <a
-                    href={`http://localhost:8080${file.savedPath}`}
-                    download={file.fileName}
-                  >
-                    {file.fileName}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-
         <div className="comment-form" style={{ marginTop: "20px" }}>
           {editMode ? (
             <>
@@ -281,6 +273,25 @@ const BoardView = () => {
             </>
           )}
         </div>
+        <div>
+          {post.attachments && post.attachments.length > 0 && (
+            <div className="post-attachments">
+              <h4>첨부파일</h4>
+              <ul>
+                {post.attachments.map((file, index) => (
+                  <li key={index}>
+                    <a
+                      href={`http://localhost:8080/api/boards/files/${file.savedPath}`}
+                      download={file.fileName}
+                    >
+                      {file.fileName}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
 
         <div className="comment-section">
           <h3>댓글</h3>
@@ -298,15 +309,28 @@ const BoardView = () => {
                 <div className="comment" key={comment.id}>
                   <div className="comment-meta">
                     <span className="comment-author">
-                      {comment.writer?.name || "익명"}
+                      {comment.writer?.name || nick}
                     </span>
                     <span className="comment-date">
                       {comment.createdAt
                         ? comment.createdAt.substring(0, 10)
                         : ""}
                     </span>
+                    <div className="comment-content">
+                      {editingCommentId === comment.id ? (
+                        <textarea
+                          value={editedCommentContent}
+                          onChange={(e) =>
+                            setEditedCommentContent(e.target.value)
+                          }
+                          style={{ width: "100%", minHeight: "60px" }}
+                        />
+                      ) : (
+                        comment.content
+                      )}
+                    </div>
                     {/* 현재 로그인 사용자와 댓글 작성자가 동일한 경우에만 수정/삭제 버튼 표시 */}
-                    {authUser && authUser.uid === comment.writer?.uid && (
+                    {username === comment.writer?.uid && (
                       <div className="comment-actions">
                         {editingCommentId === comment.id ? (
                           <>
@@ -342,19 +366,6 @@ const BoardView = () => {
                           </>
                         )}
                       </div>
-                    )}
-                  </div>
-                  <div className="comment-content">
-                    {editingCommentId === comment.id ? (
-                      <textarea
-                        value={editedCommentContent}
-                        onChange={(e) =>
-                          setEditedCommentContent(e.target.value)
-                        }
-                        style={{ width: "100%", minHeight: "60px" }}
-                      />
-                    ) : (
-                      comment.content
                     )}
                   </div>
                 </div>
