@@ -4,6 +4,7 @@ import kr.co.J2SM.oauth2.OAuth2LoginSuccessHandler;
 import kr.co.J2SM.util.JWTProvider;
 import kr.co.J2SM.security.filter.JWTAuthenticationFilter;
 import kr.co.J2SM.util.JWTProvider;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
@@ -67,6 +69,12 @@ public class SecurityConfig {
                         .loginPage("/user/login")
                         .userInfoEndpoint(userInfo -> userInfo.userService(oauth2UserService))
                         .successHandler(oAuth2LoginSuccessHandler)
+                        .failureHandler((request, response, exception) -> {
+                            log.error("🔥 OAuth2 로그인 실패: {}", exception.getMessage(), exception);
+
+                            // 프론트에서 처리 가능한 경로로 리다이렉트 (SPA용)
+                            response.sendRedirect("https://lotte2-community-app-project-team1-sandy.vercel.app/login?error");
+                        })
                 );
 
 
