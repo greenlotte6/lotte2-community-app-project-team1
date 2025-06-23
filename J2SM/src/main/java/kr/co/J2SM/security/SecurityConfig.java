@@ -73,7 +73,7 @@ public class SecurityConfig {
                             log.error("🔥 OAuth2 로그인 실패: {}", exception.getMessage(), exception);
 
                             // 프론트에서 처리 가능한 경로로 리다이렉트 (SPA용)
-                            response.sendRedirect("https://lotte2-community-app-project-team1-sandy.vercel.app/login?error");
+                            response.sendRedirect("https://lotte2-community-app-project-team1-sandy.vercel.app/user/login?error");
                         })
                 );
 
