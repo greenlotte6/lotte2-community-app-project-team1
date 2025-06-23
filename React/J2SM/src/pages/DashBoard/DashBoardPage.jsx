@@ -8,12 +8,15 @@ import Aside from "../../components/DashBoard/Aside";
 import useAuth from "../../hooks/useAuth";
 import axios from "axios";
 import { SOCIAL_TOKEN } from "../../api/_http";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
   const [currentTime, setCurrentTime] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
+  const navigate = useNavigate();
   const visitAreaRef = useRef(null);
   const calendarRef = useRef(null);
+  const { username, nick, company } = useAuth();
 
   useEffect(() => {
     // 실시간 시간 갱신
@@ -59,6 +62,10 @@ const DashboardPage = () => {
   const { login } = useAuth();
 
   useEffect(() => {
+    if (nick !== null && username !== null && company !== null) {
+      return;
+    }
+
     axios
       .get(SOCIAL_TOKEN, {
         withCredentials: true,
