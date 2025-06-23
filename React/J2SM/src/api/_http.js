@@ -107,6 +107,7 @@ export const API = {
 
 // 캘린더
 export const CALENDAR = `${SERVER_HOST}/api/calendar`;
+export const CALENDAR_TODAY = `${SERVER_HOST}/api/calendar/my/today`;
 
 // Board 게시판
 export const BOARD = `${SERVER_HOST}/api/boards`;

@@ -63,6 +63,14 @@ public class CalendarController {
         calendarService.deleteSchedule(id);
     }
 
+    @GetMapping("/my/today")
+    public Boolean isToday(@AuthenticationPrincipal User user) {
+
+        Boolean exist = calendarService.findByUser(user);
+
+        return exist;
+    }
+
 
 }
 

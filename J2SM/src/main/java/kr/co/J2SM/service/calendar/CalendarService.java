@@ -2,6 +2,7 @@ package kr.co.J2SM.service.calendar;
 
 import kr.co.J2SM.dto.calendar.CalendarDTO;
 import kr.co.J2SM.entity.calendar.Calendar;
+import kr.co.J2SM.entity.company.Company;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.repository.calendar.CalendarRepository;
 import kr.co.J2SM.repository.user.UserRepository;
@@ -10,6 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -95,6 +97,21 @@ public class CalendarService {
         }
 
         return calendarRepository.save(schedule);
+    }
+
+    public Boolean findByUser(User user) {
+
+        String today = LocalDate.now().toString(); // yyyy-MM-dd 형식
+
+        List<Calendar> list = calendarRepository.findByUserAndStartLessThanEqualAndEndGreaterThanEqual(user, today, today);
+
+        if(list.isEmpty()){
+            Company company = userRepository.findById(user.getUid()).get().getDepartment().getCompany();
+            list = calendarRepository.findByCompanyAndStartLessThanEqualAndEndGreaterThanEqual(company.getCno(), today, today);
+        }
+
+        return !list.isEmpty(); // 하나라도 있으면 true
+
     }
 }
 
