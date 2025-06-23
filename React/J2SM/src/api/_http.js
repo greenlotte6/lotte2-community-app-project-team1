@@ -5,9 +5,9 @@ const isLocalhost = window.location.hostname.includes("localhost");
 const isHttps = window.location.protocol === "https:";
 
 // 배포 환경 서버 호스트 지정
-const SERVER_HOST = isLocalhost ? "http://localhost:8080" : "http://j2sm.site"; // 운영(프론트/백 분리면 경로 맞춰줘야 함)
+const SERVER_HOST = isLocalhost ? "http://localhost:8080" : ""; // 운영(프론트/백 분리면 경로 맞춰줘야 함)
 
-const WS_HOST = isLocalhost ? "localhost:8080" : "3.34.124.218";
+const WS_HOST = isLocalhost ? "localhost:8080" : "3.34.124.218:8080";
 const HTTP_PROTOCOL = isHttps ? "https" : "http";
 const WS_PROTOCOL = isHttps ? "wss" : "ws";
 
