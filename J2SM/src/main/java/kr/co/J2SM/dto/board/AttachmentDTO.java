@@ -18,6 +18,5 @@ public class AttachmentDTO {
     private Long fileSize;
     private String fileType;
     private LocalDateTime uploadedAt;
-    // 게시글 ID는 DTO로 직접 받기보다는 서비스 로직에서 BoardDTO를 통해 연결하거나 별도로 처리
     private Long boardId; // 어떤 게시글에 연결된 파일인지 (선택적)
 }

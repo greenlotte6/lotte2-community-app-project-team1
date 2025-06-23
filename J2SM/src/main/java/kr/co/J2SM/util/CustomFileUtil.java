@@ -14,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -77,6 +79,18 @@ public class CustomFileUtil {
         HttpHeaders headers = new HttpHeaders();
 
         try{
+
+            Path filePath = resource.getFile().toPath();
+
+            // Content-Type 설정
+            headers.add("Content-Type", Files.probeContentType(filePath));
+
+            // 원래 파일명 추정 (UUID_이후 이름)
+            String originalName = fileName.substring(fileName.indexOf("_") + 1);
+            String encodedName = URLEncoder.encode(originalName, StandardCharsets.UTF_8).replaceAll("\\+", "%20");
+
+            // 다운로드 유도
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename*=UTF-8''" + encodedName);
             headers.add("Content-Type", Files.probeContentType(resource.getFile().toPath()));
         } catch(Exception e){
             return ResponseEntity.internalServerError().build();
@@ -104,4 +118,6 @@ public class CustomFileUtil {
             }
         });
     }
+
+
 }

@@ -1,18 +1,21 @@
 package kr.co.J2SM.controller.borad;
 
 
+import com.nimbusds.jose.util.Resource;
 import jakarta.transaction.Transactional;
 import kr.co.J2SM.dto.ArticleDTO;
 import kr.co.J2SM.dto.board.BoardDTO;
 import kr.co.J2SM.entity.board.Board;
 import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.service.board.BoardService;
+import kr.co.J2SM.util.CustomFileUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -24,10 +27,15 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @PostMapping
-    public ResponseEntity<BoardDTO> write(@RequestBody BoardDTO dto, @AuthenticationPrincipal User user) {
-        log.info("게시물 저장 : " + dto);
-        BoardDTO saved = boardService.createBoard(dto, user);
+    @PostMapping(consumes = "multipart/form-data")
+    public ResponseEntity<BoardDTO> write(
+            @RequestPart("post") BoardDTO dto,
+            @RequestPart(value = "file", required = false) MultipartFile file,
+            @AuthenticationPrincipal User user) {
+
+        log.info("게시물 저장: {}", dto);
+
+        BoardDTO saved = boardService.createBoard(dto, file, user);
         return ResponseEntity.ok(saved);
     }
 
@@ -83,11 +91,6 @@ public class BoardController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
-
-
-
-
-
 
 
 
