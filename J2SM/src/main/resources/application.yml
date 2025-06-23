@@ -102,9 +102,6 @@ spring:
 
             # 카카오 > 내 애플리케이션 > 카카오 로그인 > 등록한 Redirect URI 입력
             redirect-uri: "http://3.34.124.218:8080/login/oauth2/code/kakao"
-            #http://localhost:8080/login/oauth2/code/kakao
-            #
-
 
             # 카카오 > 내 애플리케이션 > 요약정보 > REST API 키 입력
             client-id: ENC("hpNyTSxx9NBOfjlXKUcgsBa6yKEopqvJRACtBnhAWEQZIK8EsXehsKsNXCdrdTs5")
@@ -122,7 +119,6 @@ spring:
             client-id: ENC("Zh6K0NAxTsMzf4Niq7pX0Wadv/SPlDWenRb+RPMFdZTJejxjWKjfp7Vv+5AZ8RY0el1ZjrZipJdBZoKhLDogDxTH6ycZV6Bb4/Alz1TrmeF7N1Dlqd5+4g==")
             client-secret: ENC("Cw7UzPi6nXyZhDLmpqpu0Gp5KjlTot8dTAfMlgHS6xJQ6M/uhf2ny9l34sRs5CcA")
             redirect-uri: http://3.34.124.218:8080/login/oauth2/code/google
-            # redirect-uri: http://localhost:8080/login/oauth2/code/google
             scope:
               - email
               - profile
@@ -132,7 +128,6 @@ spring:
             client-name: naver
             authorization-grant-type: authorization_code
             redirect-uri: http://3.34.124.218:8080/login/oauth2/code/naver
-            # redirect-uri: http://localhost:8080/login/oauth2/code/naver
 
             client-id: ENC("ZHuXdKLvjMAOEVKvwerKQQsVXuw0JQRiYSPeGjBjqzg=")
             client-secret: ENC("GrZsCo49WqYaoVvzr0Dpz4Zbl5etFhd6")
