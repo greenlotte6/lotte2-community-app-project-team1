@@ -6,6 +6,8 @@ import kr.co.J2SM.entity.user.User;
 import kr.co.J2SM.repository.drive.DriveRepository;
 import kr.co.J2SM.service.UserService;
 import kr.co.J2SM.service.drive.DriveService;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import org.springframework.http.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -40,9 +43,10 @@ public class DriveController {
     @GetMapping
     public List<DriveDTO> listFiles(@AuthenticationPrincipal User user,
                                     @RequestParam(value = "parentId", required = false) Long parentId) {
-        log.info("유저 정보: {} / parentId: {}", user.getUid(), parentId);
+        log.info("📥 listFiles: uid={}, parentId={}", user.getUid(), parentId);
         return driveService.getDriveFilesByParent(user.getUid(), parentId);
     }
+
     @PatchMapping("/reorder")
     public ResponseEntity<?> updateSortOrder(@RequestBody List<Long> orderedIds) {
         driveService.updateSortOrder(orderedIds);
@@ -80,6 +84,34 @@ public class DriveController {
         headers.add(HttpHeaders.CONTENT_TYPE, contentType);
 
         return ResponseEntity.ok().headers(headers).body(resource);
+    }
+
+    @GetMapping("/download/zip")
+    public void downloadZip(@RequestParam List<Long> ids, HttpServletResponse response) {
+        try {
+            response.setContentType("application/zip");
+            response.setHeader("Content-Disposition", "attachment; filename=\"files.zip\"");
+
+            try (ZipOutputStream zos = new ZipOutputStream(response.getOutputStream())) {
+                for (Long id : ids) {
+                    DriveDTO fileDTO = driveService.getDriveFile(id);
+                    Path filePath = Paths.get(fileDTO.getFilePath());
+
+                    if (Files.exists(filePath)) {
+                        // ✅ 원본 파일 이름 사용
+                        String originalName = fileDTO.getOriginalFilename();
+                        ZipEntry zipEntry = new ZipEntry(originalName);
+                        zos.putNextEntry(zipEntry);
+                        Files.copy(filePath, zos);
+                        zos.closeEntry();
+                    }
+                }
+                zos.finish();
+            }
+        } catch (IOException e) {
+            log.error("ZIP 다운로드 실패", e);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
     }
 
     private String encodeFilenameRFC5987(String filename) {
@@ -122,7 +154,9 @@ public class DriveController {
             file.transferTo(savePath.toFile());
 
             String relativePath = "uploads/" + saveName;
-            driveService.saveDrive(username, originalName, saveName, relativePath, parentId);
+
+            // 🔥 실제 UID로 저장
+            driveService.saveDrive(uploader.getUid(), originalName, saveName, relativePath, parentId);
 
             return ResponseEntity.ok().build();
 
@@ -214,3 +248,4 @@ public class DriveController {
         return ResponseEntity.ok(folder);
     }
 }
+

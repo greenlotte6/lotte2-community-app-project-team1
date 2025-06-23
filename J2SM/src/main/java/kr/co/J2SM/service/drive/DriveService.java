@@ -40,6 +40,7 @@ public class DriveService {
         return drives.stream().map(DriveMapper::toDTO).collect(Collectors.toList());
     }
 
+
     public void updateSortOrder(List<Long> orderedIds) {
         for (int i = 0; i < orderedIds.size(); i++) {
             Long id = orderedIds.get(i);
@@ -124,14 +125,14 @@ public class DriveService {
         saveDrive(user, originalName, saveName, relativePath, null);
     }
 
-    public void saveDrive(String user, String originalName, String saveName, String relativePath, Long parentId) {
+    public void saveDrive(String uid, String originalName, String saveName, String relativePath, Long parentId) {
         Drive parent = null;
         if (parentId != null) {
             parent = driveRepository.findById(parentId).orElse(null);
         }
 
         Drive drive = Drive.builder()
-                .user(user)
+                .user(uid)
                 .name(originalName)
                 .originalFilename(originalName)
                 .fileType(getFileExtension(originalName))
@@ -200,3 +201,4 @@ public class DriveService {
         return DriveMapper.toDTO(driveRepository.save(folder));
     }
 }
+
