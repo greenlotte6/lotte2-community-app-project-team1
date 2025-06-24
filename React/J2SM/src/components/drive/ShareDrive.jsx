@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function ShareDrive() {
   const [files, setFiles] = useState([]);
-  const [currentFolderId, setCurrentFolderId] = useState(null); // ← 추가
+  const [currentFolderId, setCurrentFolderId] = useState(null);
   const [activeMenuId, setActiveMenuId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
@@ -16,34 +16,29 @@ export default function ShareDrive() {
   const { username } = useAuth();
   const navigate = useNavigate();
 
-  // 마운트 및 currentFolderId 변경 시 호출
   useEffect(() => {
     loadSharedFiles();
   }, [currentFolderId]);
 
   const loadSharedFiles = async () => {
     try {
-      // parentId 있으면 쿼리 스트링으로, 없으면 모든 공유된 루트
       const url = currentFolderId
-        ? `${DRIVE_API.LIST}?parentId=${currentFolderId}`
-        : DRIVE_API.LIST;
+        ? `${DRIVE_API.SHARED_LIST}?parentId=${currentFolderId}`
+        : DRIVE_API.SHARED_LIST;
       const res = await fetch(url, { credentials: "include" });
-      const all = await res.json();
-      // location이 "공유 드라이브"인 항목만 필터
-      setFiles(all.filter((f) => f.location === "공유 드라이브"));
+      const data = await res.json();
+      setFiles(data);
     } catch (err) {
       console.error("공유 드라이브 파일 로드 실패", err);
     }
   };
 
-  // 즐겨찾기/검색 필터
   const filtered = files.filter((f) => {
     const fav = showFavoritesOnly ? f.favorite : true;
-    const text = f.name.toLowerCase().includes(searchTerm.toLowerCase());
-    return fav && text;
+    const textMatch = f.name.toLowerCase().includes(searchTerm.toLowerCase());
+    return fav && textMatch;
   });
 
-  // API 호출 후 목록 갱신 + 메뉴 닫기
   const reloadAndClose = async (apiCall) => {
     try {
       await apiCall();
@@ -54,11 +49,18 @@ export default function ShareDrive() {
     }
   };
 
-  // 액션 핸들러
   const toggleFavorite = (id) =>
     reloadAndClose(() =>
       fetch(DRIVE_API.FAVORITE(id), { method: "PATCH", credentials: "include" })
     );
+
+  const handleDownload = (id) =>
+    fetch(DRIVE_API.RECENT_VIEW(id), { method: "POST", credentials: "include" })
+      .then(() => {
+        window.location.href = DRIVE_API.DOWNLOAD(id);
+      })
+      .catch(console.error);
+
   const handleDownloadZip = (ids) =>
     reloadAndClose(async () => {
       const q = ids.map((i) => `ids=${i}`).join("&");
@@ -73,43 +75,50 @@ export default function ShareDrive() {
       link.download = "shared-files.zip";
       link.click();
     });
+
   const moveToTrash = (id) =>
     reloadAndClose(() =>
       fetch(DRIVE_API.DELETE(id), { method: "DELETE", credentials: "include" })
     );
-  const handleDownload = (id) =>
-    fetch(DRIVE_API.RECENT_VIEW(id), { method: "POST", credentials: "include" })
-      .then(() => {
-        window.location.href = DRIVE_API.DOWNLOAD(id);
-      })
-      .catch(console.error);
 
-  // 드롭다운 외부 클릭 시 닫기
+  const unshare = (id) =>
+    reloadAndClose(() =>
+      fetch(DRIVE_API.UNSHARE(id), { method: "PATCH", credentials: "include" })
+    );
+
   useEffect(() => {
-    const onClick = (e) => {
+    const onClickOutside = (e) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
         setActiveMenuId(null);
       }
     };
-    document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("mousedown", onClickOutside);
+    return () => document.removeEventListener("mousedown", onClickOutside);
   }, []);
 
   return (
     <div className="cloud-main">
       <h3>공유 드라이브</h3>
 
-      {/* 상위 폴더로 이동 버튼 */}
+      {/* 내 드라이브로 돌아가기 */}
+      <button
+        onClick={() => navigate("/dashboard/drive")}
+        style={{ marginBottom: 16 }}
+      >
+        ⬅ 내 드라이브로
+      </button>
+
+      {/* 루트 공유 드라이브로 돌아가기 */}
       {currentFolderId && (
         <button
           onClick={() => setCurrentFolderId(null)}
-          style={{ marginBottom: 16 }}
+          style={{ marginLeft: 8, marginBottom: 16 }}
         >
           ⬅ 루트 공유 드라이브로
         </button>
       )}
 
-      {/* 검색 & 즐겨찾기 필터 */}
+      {/* 검색 및 즐겨찾기 필터 */}
       <div className="toolbar" style={{ marginBottom: 16 }}>
         <form
           className="search-bar"
@@ -131,6 +140,7 @@ export default function ShareDrive() {
         </button>
       </div>
 
+      {/* 파일 테이블 */}
       <div className="drivetable">
         <table className="drivetables">
           <thead>
@@ -150,11 +160,9 @@ export default function ShareDrive() {
                   style={{
                     cursor: file.type === "folder" ? "pointer" : "default",
                   }}
-                  onClick={() => {
-                    if (file.type === "folder") {
-                      setCurrentFolderId(file.id); // ← 폴더 클릭 시 내부로
-                    }
-                  }}
+                  onClick={() =>
+                    file.type === "folder" && setCurrentFolderId(file.id)
+                  }
                 >
                   {file.name}
                 </td>
@@ -174,32 +182,39 @@ export default function ShareDrive() {
                   {activeMenuId === file.id && (
                     <div className="dropdown-menu" ref={dropdownRef}>
                       <ul>
+                        {/* 누구나 가능 */}
                         <li>
                           <button onClick={() => toggleFavorite(file.id)}>
                             {file.favorite ? "즐겨찾기 해제" : "즐겨찾기"}
                           </button>
                         </li>
                         <li>
-                          <button onClick={() => handleDownloadZip([file.id])}>
-                            압축 다운로드
-                          </button>
-                        </li>
-                        <li>
-                          <button
-                            onClick={() => {
-                              if (file.type !== "folder") {
-                                handleDownload(file.id);
-                              }
-                            }}
-                          >
+                          <button onClick={() => handleDownload(file.id)}>
                             다운로드
                           </button>
                         </li>
-                        <li>
-                          <button onClick={() => moveToTrash(file.id)}>
-                            휴지통
-                          </button>
-                        </li>
+                        {/* 본인만 가능 */}
+                        {file.user === username && (
+                          <>
+                            <li>
+                              <button
+                                onClick={() => handleDownloadZip([file.id])}
+                              >
+                                압축 다운로드
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => moveToTrash(file.id)}>
+                                휴지통 이동
+                              </button>
+                            </li>
+                            <li>
+                              <button onClick={() => unshare(file.id)}>
+                                공유 취소
+                              </button>
+                            </li>
+                          </>
+                        )}
                       </ul>
                     </div>
                   )}

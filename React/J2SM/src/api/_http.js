@@ -146,18 +146,22 @@ export const DRIVE_API = {
   UPLOAD: `${SERVER_HOST}/api/drive/upload`, // 파일 업로드
   DOWNLOAD: (id) => `${SERVER_HOST}/api/drive/${id}/download`, // 파일 다운로드
   FAVORITE: (id) => `${SERVER_HOST}/api/drive/${id}/favorite`, // 즐겨찾기 토글
-  RENAME: (id) => `${SERVER_HOST}/api/drive/${id}/rename`, // 파일 이름 변경
+  RENAME: (id) => `${SERVER_HOST}/api/drive/${id}/rename`, // 파일명 변경
   DELETE: (id) => `${SERVER_HOST}/api/drive/${id}`, // 휴지통으로 이동
-  DELETE_LIST: `${SERVER_HOST}/api/drive/trash`, // 휴지통 리스트 출력
-  CREATE_FOLDER: `${SERVER_HOST}/api/drive/folder`,
-  RESTORE: (id) => `${SERVER_HOST}/api/drive/${id}/restore`,
-  PERMANENT_DELETE: (id) => `${SERVER_HOST}/api/drive/${id}/delete`,
-  MOVE_TO_SHARED: (id) => `${SERVER_HOST}/api/drive/${id}/move-to-shared`, // 공유드라이브 이동
-  // ✅ 최근 드라이브 관련
-  RECENT_LIST: `${SERVER_HOST}/api/drive/recent`,
-  RECENT_VIEW: (id) => `${SERVER_HOST}/api/drive/view/${id}`,
-};
+  DELETE_LIST: `${SERVER_HOST}/api/drive/trash`, // 휴지통 리스트
+  CREATE_FOLDER: `${SERVER_HOST}/api/drive/folder`, // 폴더 생성
+  RESTORE: (id) => `${SERVER_HOST}/api/drive/${id}/restore`, // 복원
+  PERMANENT_DELETE: (id) => `${SERVER_HOST}/api/drive/${id}/delete`, // 완전 삭제
+  MOVE_TO_SHARED: (id) => `${SERVER_HOST}/api/drive/${id}/move-to-shared`, // 공유 드라이브 이동
+  UNSHARE: (id) => `${SERVER_HOST}/api/drive/${id}/unshare`,
 
+  // ───────── 최근 드라이브 ─────────
+  RECENT_LIST: `${SERVER_HOST}/api/drive/recent`, // 최근 리스트
+  RECENT_VIEW: (id) => `${SERVER_HOST}/api/drive/view/${id}`, // 열람 기록
+
+  // ───────── 공유 드라이브 전용 ─────────
+  SHARED_LIST: `${SERVER_HOST}/api/drive/shared`, // 공유 드라이브 리스트
+};
 //Project
 export const PROJECT = {
   // 프로젝트 생성 (POST)

@@ -33,4 +33,19 @@ public interface DriveRepository extends JpaRepository<Drive, Long> {
 
     // ✅ 특정 유저의 루트 폴더 목록 정렬 조회 (선택)
     List<Drive> findByUserAndParentIsNullAndDeletedFalseOrderBySortOrderAsc(String user);
+
+    // ───────────── 공유 드라이브 전용 ─────────────
+
+    /**
+     * 루트(부모 없는) 공유 드라이브 파일/폴더 목록 조회
+     * @param location "공유 드라이브"
+     */
+    List<Drive> findByLocationAndParentIsNullAndDeletedFalseOrderBySortOrderAsc(String location);
+
+    /**
+     * 특정 폴더의 하위 공유 드라이브 파일/폴더 목록 조회
+     * @param location "공유 드라이브"
+     * @param parent 상위 폴더 엔티티
+     */
+    List<Drive> findByLocationAndParentAndDeletedFalseOrderBySortOrderAsc(String location, Drive parent);
 }
