@@ -5,6 +5,7 @@ import useAuth from "../../hooks/useAuth"; // 현재 로그인한 사용자 정�
 import DOMPurify from "dompurify";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import { BOARD } from "../../api/_http";
 
 const BoardView = () => {
   const { id } = useParams();
@@ -27,22 +28,16 @@ const BoardView = () => {
   // 게시글 상세 및 댓글 목록 불러오기
   const fetchPostAndComments = async () => {
     try {
-      const postRes = await axios.get(
-        `http://localhost:8080/api/boards/${id}`,
-        {
-          withCredentials: true,
-        }
-      );
+      const postRes = await axios.get(`${BOARD}/${id}`, {
+        withCredentials: true,
+      });
 
       console.log(postRes);
       setPost(postRes.data);
 
-      const commentsRes = await axios.get(
-        `http://localhost:8080/api/boards/${id}/comments`,
-        {
-          withCredentials: true,
-        }
-      );
+      const commentsRes = await axios.get(`${BOARD}/${id}/comments`, {
+        withCredentials: true,
+      });
       setComments(commentsRes.data || []);
     } catch (err) {
       console.error("게시글 또는 댓글 불러오기 실패", err);
@@ -78,7 +73,7 @@ const BoardView = () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(`http://localhost:8080/api/boards/${id}`, {
+      await axios.delete(`${BOARD}/${id}`, {
         withCredentials: true,
       });
       alert("게시글이 삭제되었습니다.");
@@ -97,7 +92,7 @@ const BoardView = () => {
   const handleUpdate = async () => {
     try {
       const res = await axios.put(
-        `http://localhost:8080/api/boards/${id}`,
+        `${BOARD}/${id}`,
         {
           title: editedTitle,
           content: editedContent,
@@ -128,7 +123,7 @@ const BoardView = () => {
 
     try {
       const res = await axios.post(
-        `http://localhost:8080/api/boards/${id}/comments`,
+        `${BOARD}/${id}/comments`,
         { content: newCommentContent },
         { withCredentials: true }
       );
@@ -160,7 +155,7 @@ const BoardView = () => {
 
     try {
       const res = await axios.put(
-        `http://localhost:8080/api/boards/${id}/comments/${commentId}`,
+        `${BOARD}/${id}/comments/${commentId}`,
         { content: editedCommentContent },
         { withCredentials: true }
       );
@@ -196,12 +191,9 @@ const BoardView = () => {
     if (!window.confirm("정말 이 댓글을 삭제하시겠습니까?")) return;
 
     try {
-      await axios.delete(
-        `http://localhost:8080/api/boards/${id}/comments/${commentId}`,
-        {
-          withCredentials: true,
-        }
-      );
+      await axios.delete(`${BOARD}/${id}/comments/${commentId}`, {
+        withCredentials: true,
+      });
       // 삭제된 댓글을 제외하고 comments 상태 업데이트
       setComments((prevComments) =>
         prevComments.filter((c) => c.id !== commentId)
