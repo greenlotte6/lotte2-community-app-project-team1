@@ -15,7 +15,7 @@ const WS_PROTOCOL = isHttps ? "wss" : "ws";
 export const SOCKET_URL = `${HTTP_PROTOCOL}://${WS_HOST}/ws-chat`;
 // 버전 정보
 export const VERSION = `${SERVER_HOST}/version`;
-
+// 주석추가
 // 카카오 결제
 export const KAKAO_CREDIT = `${SERVER_HOST}/api/pay/ready`;
 
