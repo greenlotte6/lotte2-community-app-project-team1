@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import useAuth from "../../hooks/useAuth"; // 현재 로그인한 사용자 정보 가져오기
+import DOMPurify from "dompurify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const BoardView = () => {
   const { id } = useParams();
@@ -240,15 +243,46 @@ const BoardView = () => {
         </div>
 
         {editMode ? (
-          <textarea
+          <ReactQuill
             value={editedContent}
-            onChange={(e) => setEditedContent(e.target.value)}
-            style={{ width: "100%", minHeight: "200px", margin: "20px 0" }}
+            onChange={setEditedContent}
+            theme="snow"
+            modules={{
+              toolbar: [
+                [{ header: [1, 2, false] }],
+                ["bold", "italic", "underline", "strike", "blockquote"],
+                [{ list: "ordered" }, { list: "bullet" }],
+                [{ indent: "-1" }, { indent: "+1" }],
+                ["link", "image"],
+                [{ color: [] }, { background: [] }],
+                ["clean"],
+              ],
+            }}
+            formats={[
+              "header",
+              "bold",
+              "italic",
+              "underline",
+              "strike",
+              "blockquote",
+              "list",
+              "bullet",
+              "indent",
+              "link",
+              "image",
+              "color",
+              "background",
+            ]}
+            style={{ minHeight: "200px", margin: "20px 0" }}
           />
         ) : (
-          <div className="post-content">{post.content}</div>
+          <div
+            className="post-content"
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(post.content ?? ""),
+            }}
+          ></div>
         )}
-
         <div className="comment-form" style={{ marginTop: "20px" }}>
           {editMode ? (
             <>

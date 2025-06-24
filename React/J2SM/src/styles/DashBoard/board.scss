@@ -202,7 +202,6 @@
     z-index: 1000;
   }
   .modal-content {
-    width: 400px;
     margin: auto;
     background: white;
     border-radius: 10px;
@@ -496,6 +495,7 @@
 
   table {
     width: 100%;
+    table-layout: fixed;
     border-collapse: collapse;
   }
 
@@ -574,7 +574,7 @@
   }
 
   .modal-content {
-    width: 400px;
+    width: 800px;
     margin: auto;
     background: white;
     border-radius: 10px;

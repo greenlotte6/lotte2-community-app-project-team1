@@ -40,9 +40,15 @@ const AsideBoard = () => {
     }
   }, [pathname, cno]);
 
+  const { membership } = useAuth();
+
   // ✅ 게시판 생성
   const handleBoardCreate = async (boardName) => {
     if (!cno) return alert("회사 정보가 없습니다.");
+    if (membership === "free" && categories.length >= 3) {
+      alert("Free 요금제는 최대 3개의 게시판만 생성할 수 있습니다.");
+      return;
+    }
     try {
       await axios.post(CATEGORY_LIST(cno), {
         name: boardName,
@@ -83,7 +89,19 @@ const AsideBoard = () => {
             </div>
 
             <div className="side-icon">
-              <button className="side-click" onClick={handleBoardModalOpen}>
+              <button
+                className="side-click"
+                onClick={handleBoardModalOpen}
+                disabled={membership === "Free" && categories.length >= 3}
+                style={{
+                  opacity:
+                    membership === "Free" && categories.length >= 3 ? 0.5 : 1,
+                  cursor:
+                    membership === "Free" && categories.length >= 3
+                      ? "not-allowed"
+                      : "pointer",
+                }}
+              >
                 + New BOARD
               </button>
             </div>
