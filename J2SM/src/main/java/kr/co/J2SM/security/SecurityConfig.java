@@ -100,6 +100,7 @@ public class SecurityConfig {
                         "http://localhost:5173",
                         "http://127.0.0.1:5173",
                         "https://lotte2-community-app-project-team1-sandy.vercel.app"
+                        "https://www.j2sm.site"
                 )
         );
         config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
