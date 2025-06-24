@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { BOARD } from "../../api/_http";
 import useAuth from "../../hooks/useAuth";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const WriteModal = ({ onClose, categoryId }) => {
   const modalRef = useRef(null);
@@ -17,12 +19,54 @@ const WriteModal = ({ onClose, categoryId }) => {
     }
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }], // h1, h2, 일반 텍스트
+      ["bold", "italic", "underline", "strike", "blockquote"], // 볼드, 기울임꼴, 밑줄, 취소선, 인용구
+      [{ list: "ordered" }, { list: "bullet" }], // 순서 있는 목록, 순서 없는 목록
+      [{ indent: "-1" }, { indent: "+1" }], // 들여쓰기, 내어쓰기
+      ["link", "image"], // 링크, 이미지 삽입 (비디오도 추가 가능)
+      [{ color: [] }, { background: [] }], // 텍스트 색상, 배경색
+      ["clean"], // 서식 지우기
+    ],
+  };
+
+  const formats = [
+    "header",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "color",
+    "background",
+  ];
+
+  useEffect(() => {
+    const handleEscKey = (e) => {
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleEscKey);
+    return () => {
+      window.removeEventListener("keydown", handleEscKey);
+    };
+  }, []);
+  /*
   useEffect(() => {
     window.addEventListener("click", handleOutsideClick);
     return () => {
       window.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+  */
 
   // 등록 버튼 동작
   const handleSubmit = async () => {
@@ -95,48 +139,21 @@ const WriteModal = ({ onClose, categoryId }) => {
             />
           </div>
 
-          <div className="form-group editor-toolbar">
-            <button onClick={() => document.execCommand("bold")}>B</button>
-            <select
-              onChange={(e) =>
-                document.execCommand("fontName", false, e.target.value)
-              }
-            >
-              <option value="Arial">Arial</option>
-              <option value="Georgia">Georgia</option>
-              <option value="Courier New">Courier</option>
-            </select>
-            <select
-              onChange={(e) =>
-                document.execCommand("fontSize", false, e.target.value)
-              }
-            >
-              <option value="1">크기 1</option>
-              <option value="2">크기 2</option>
-              <option value="3">크기 3</option>
-              <option value="4">크기 4</option>
-              <option value="5">크기 5</option>
-            </select>
-            <input
-              type="color"
-              onChange={(e) =>
-                document.execCommand("foreColor", false, e.target.value)
-              }
-            />
-          </div>
-
-          <div className="form-group">
-            <div
-              className="editor-area"
-              contentEditable
-              onInput={(e) => setContent(e.currentTarget.innerHTML)}
+          <div className="form-group editor-container">
+            <ReactQuill
+              theme="snow" // 또는 "bubble"
+              value={content}
+              onChange={setContent}
+              modules={modules} // 여기에 modules 변수 사용
+              formats={formats} // 여기에 formats 변수 사용
+              placeholder="내용을 입력하세요..."
               style={{
                 border: "1px solid #ccc",
                 padding: "8px",
-                minHeight: "120px",
+                minHeight: "200px",
                 backgroundColor: "#fff",
               }}
-            ></div>
+            />
           </div>
 
           <div className="form-group">
