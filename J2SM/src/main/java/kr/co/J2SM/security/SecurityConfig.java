@@ -102,7 +102,7 @@ public class SecurityConfig {
                         "https://lotte2-community-app-project-team1-sandy.vercel.app"
                 )
         );
-        config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(java.util.List.of("GET", "POST", "PUT","PATCH",     "DELETE", "OPTIONS"));
         config.setAllowedHeaders(java.util.List.of("*"));
         config.setAllowCredentials(true);
 
