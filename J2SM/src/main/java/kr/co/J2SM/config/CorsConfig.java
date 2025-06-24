@@ -15,6 +15,7 @@ public class CorsConfig implements WebMvcConfigurer {
         registry
                 .addMapping("/**")        // 모든 엔드포인트에 대한 접근허용
                 //.allowedOriginPatterns("http://127.0.0.1:5173", "http://localhost:5174")
+                //.allowedOriginPatterns("*", "https://lotte2-community-app-project-team1-sandy.vercel.app")
                 .allowedOriginPatterns(
                         "https://www.j2sm.site",
                         "https://lotte2-community-app-project-team1-sandy.vercel.app",
