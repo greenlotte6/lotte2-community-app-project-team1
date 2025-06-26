@@ -89,7 +89,7 @@ const DashboardPage = () => {
           );
 
           // 메인 이동(컴포넌트 라우팅)
-          navigate("/dashboard/main");
+          // navigate("/dashboard/main");
         }
       })
       .catch((err) => {
