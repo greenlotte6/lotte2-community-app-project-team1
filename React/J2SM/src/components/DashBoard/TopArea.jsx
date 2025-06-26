@@ -23,7 +23,7 @@ const TopArea = () => {
   useEffect(() => {
     const fetchUser = async () => {
       if (!username) return;
-      const data = await getInfo(); // ✅ 여기를 직접 호출
+      const data = await getInfo();
       setUser(data);
       console.log("📦 유저 데이터:", data);
     };
