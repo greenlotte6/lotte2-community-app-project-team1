@@ -59,6 +59,8 @@ const DashboardPage = () => {
     setStatusMessage(`퇴근 완료 (${new Date().toLocaleTimeString()})`);
   };
 
+  // 소셜 로그인 토큰
+
   const { login } = useAuth();
 
   useEffect(() => {
