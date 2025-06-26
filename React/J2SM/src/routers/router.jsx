@@ -67,6 +67,8 @@ const router = createBrowserRouter([
   { path: "/user/register", element: <RegisterPage /> },
   { path: "/user/temp", element: <TempPage /> },
   { path: "/user/logout", element: null },
+
+  { path: "/register", element: <RegisterPage /> },
   /* 유저 라우터 종료 */
 
   /* 대시보드 라우터 시작 */
