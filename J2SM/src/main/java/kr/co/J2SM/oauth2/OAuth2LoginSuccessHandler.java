@@ -41,7 +41,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         if (serverName.contains("localhost")) {
             redirectUrl = "http://localhost:5173/dashboard/main";
         } else {
-            redirectUrl = "https://lotte2-community-app-project-team1-sandy.vercel.app/dashboard/main";
+            redirectUrl = "https://www.j2sm.site/dashboard/main";
         }
 
 

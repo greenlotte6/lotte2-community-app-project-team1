@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/api/**")
-                .allowedOrigins("http://localhost:5173") // 프론트 주소
+                .allowedOrigins("*") // 프론트 주소
                 .allowedMethods("GET", "POST", "PATCH", "DELETE", "PUT", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true) // ✅ 이거 중요: credentials: "include"를 허용

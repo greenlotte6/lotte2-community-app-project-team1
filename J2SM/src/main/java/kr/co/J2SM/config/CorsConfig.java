@@ -8,7 +8,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class CorsConfig implements WebMvcConfigurer {
     // HTTP/CORS 전역 설정
 
-
     @Override
     public void addCorsMappings(CorsRegistry registry) {
 
@@ -25,7 +24,9 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "https://www.j2sm.site",
                         "https://lotte2-community-app-project-team1-sandy.vercel.app",
-                        "https://api.j2sm.site"
+                        "https://api.j2sm.site",
+                        "*"
+
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // 허용할 Methods 설정
                 .allowedHeaders("*")        // 모든 헤더 정보 허용
