@@ -69,11 +69,11 @@ const DashboardPage = () => {
     }
 
     axios
-      .get(SOCIAL_TOKEN, {
+      .get("https://api.j2sm.site/api/user/me", {
         withCredentials: true,
       })
       .then((res) => {
-        console.log("인증됨", res.data);
+        console.log("소셜 인증됨 ", res.data);
         const data = res.data;
         console.log(res.data.uid);
 
