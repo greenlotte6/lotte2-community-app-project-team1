@@ -24,9 +24,7 @@ public class CorsConfig implements WebMvcConfigurer {
                 .allowedOrigins(
                         "https://www.j2sm.site",
                         "https://lotte2-community-app-project-team1-sandy.vercel.app",
-                        "https://api.j2sm.site",
-                        "*"
-
+                        "https://api.j2sm.site"
                 )
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")  // 허용할 Methods 설정
                 .allowedHeaders("*")        // 모든 헤더 정보 허용
