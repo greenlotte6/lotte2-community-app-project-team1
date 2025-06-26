@@ -24,10 +24,7 @@
       "source": "/version",
       "destination": "https://api.j2sm.site/version"
     },
-    {
-      "source": "/oauth2/:path*",
-      "destination": "https://api.j2sm.site/oauth2/:path*"
-    },
+
     {
       "source": "/(.*)",
       "destination": "/"
