@@ -2,10 +2,17 @@ import React, { useEffect, useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import { USER_THUMB } from "../../api/_http";
 import axios from "axios";
-import { getInfo } from "../../api/userAPI";
+import { getInfo, postUserLogin } from "../../api/userAPI";
+
+const initState = {
+  uid: "",
+  pass: "",
+};
 
 const TopArea = () => {
   const [user, setUser] = useState(null);
+  const [loginUser, setLoginUser] = useState(null);
+
   const [currentTime, setCurrentTime] = useState("--:--:--");
   const [statusMessage, setStatusMessage] = useState("");
   const { username, nick, company } = useAuth();
@@ -25,36 +32,41 @@ const TopArea = () => {
   const { login } = useAuth();
 
   useEffect(() => {
-    if (nick !== null && username !== null && company !== null) {
-      return;
-    }
+    if (nick !== null && username !== null && company !== null) return;
 
     axios
       .get("https://api.j2sm.site/api/user/me", {
         withCredentials: true,
       })
-      .then((res) => {
+      .then(async (res) => {
         console.log("소셜 인증됨 ", res.data);
         const data = res.data;
-        console.log(res.data.uid);
-        console.log(res.data.name);
 
-        if (res.data.uid) {
-          // context login 호출
-          login(
-            res.data.uid,
-            decodeURIComponent(res.data.department),
-            decodeURIComponent(res.data.company),
-            res.data.name,
-            res.data.membership
-          );
+        // 👉 userDTO 구조에 맞게 로그인 시도
+        const loginDTO = {
+          uid: data.uid,
+          pass: "SOCIAL_LOGIN", // 비밀번호는 소셜 로그인 시 의미 없음 (임의값)
+        };
 
-          // 메인 이동(컴포넌트 라우팅)
-          // navigate("/dashboard/main");
+        try {
+          const result = await postUserLogin(loginDTO);
+          console.log("postUserLogin 결과:", result);
+
+          if (result.username) {
+            login(
+              result.username,
+              decodeURIComponent(result.department),
+              decodeURIComponent(result.company),
+              result.nick,
+              result.membership
+            );
+          }
+        } catch (err) {
+          console.error("소셜 로그인 후 postUserLogin 실패:", err);
         }
       })
       .catch((err) => {
-        console.error("인증 실패 또는 쿠키 없음", err);
+        console.error("소셜 인증 실패 또는 쿠키 없음", err);
       });
   }, []);
 
