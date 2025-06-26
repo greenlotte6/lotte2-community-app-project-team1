@@ -105,8 +105,9 @@ const Login = () => {
               <label className="switch">
                 <input type="checkbox" name="remember" />
                 <span className="slider round"></span>
-                자동 로그인
+                자동
                 <div className="find_tag">
+                  <Link to="/user/temp">회원가입ㅣ</Link>
                   <Link to="/user/findid">아이디 찾기ㅣ</Link>
                   <Link to="/user/findpass">비밀번호 찾기</Link>
                 </div>
