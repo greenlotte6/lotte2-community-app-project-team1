@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import Logo from "./Logo";
 import { checkId, postUser } from "../../api/userAPI";
 import { USER_INVITE_CODE } from "../../api/_http";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [userIdCheck, setUserIdCheck] = useState(false);
   const [userPassCheck, setUserPassCheck] = useState(false);
   const [userSpan, setUserSpan] = useState({ text: "", color: "" });
   const [passSpan, setPassSpan] = useState({ text: "", color: "" });
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     uid: "", // 아이디
     tempcode: "",
@@ -116,6 +118,7 @@ const Register = () => {
       try {
         // 상품 등록 요청
         const data = await postUser(formData);
+        navigate("/");
         console.log(data);
 
         // 요청 후 로그인 창으로
