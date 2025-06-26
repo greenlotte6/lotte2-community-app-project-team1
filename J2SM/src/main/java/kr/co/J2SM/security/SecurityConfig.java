@@ -56,14 +56,20 @@ public class SecurityConfig {
                 .addFilterBefore(new JWTAuthenticationFilter(jwtProvider), UsernamePasswordAuthenticationFilter.class)
 
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(
+                                "/", "/index.html",
+                                "/favicon.ico", "/manifest.json",
+                                "/static/**", "/css/**", "/js/**", "/images/**"
+                        ).permitAll()
+
                         .requestMatchers("/admin/**").hasRole("ADMIN")
-                        //.requestMatchers("/article/**").hasAnyRole("ADMIN", "USER") <- 프론트에서 테스트할 때 인가 처리 아래처럼 수정
                         .requestMatchers(HttpMethod.GET,"/article/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/article/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers(HttpMethod.GET,"/product/**").permitAll()
                         .requestMatchers(HttpMethod.POST,"/product/**").hasRole("ADMIN")
-                        .anyRequest().permitAll())
 
+                        .anyRequest().permitAll()
+                )
                 // ✅ 소셜 로그인 설정 추가
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/user/login")
