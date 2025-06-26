@@ -24,11 +24,14 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException {
 
+        /*
         MyUserDetails userDetails = (MyUserDetails) authentication.getPrincipal();
         User user = userDetails.getUser();
 
         // ✅ JWT 쿠키 세팅
         loginResponseService.setLoginResponse(response, user);
+
+        */
 
         // ✅ 요청 정보 기반 리다이렉트 경로 설정
         String serverName = request.getServerName();
