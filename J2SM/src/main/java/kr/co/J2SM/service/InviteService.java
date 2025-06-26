@@ -87,7 +87,7 @@ public class InviteService {
         if ("localhost".equals(host) || "127.0.0.1".equals(host)) {
             inviteUrl = "http://localhost:5173";
         } else {
-            inviteUrl = "https://lotte2-community-app-project-team1-sandy.vercel.app";
+            inviteUrl = "https://www.j2sm.site";
         }
 
         inviteUrl += "/user/temp";
