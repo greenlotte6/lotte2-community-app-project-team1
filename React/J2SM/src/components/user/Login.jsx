@@ -21,6 +21,7 @@ const Login = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
+  /*
   // 네이버
   const naverHandler = (e) => {
     e.preventDefault();
@@ -38,6 +39,7 @@ const Login = () => {
     e.preventDefault();
     window.location.href = SOCIAL_KAKAO;
   };
+  */
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -122,19 +124,19 @@ const Login = () => {
             <img
               src="/images/user/kakao_small.png"
               alt="카카오 로그인"
-              onClick={kakaoHandler}
+              //  onClick={kakaoHandler}
             />
 
             <img
               src="/images/user/naver_small.png"
               alt="네이버 로그인"
-              onClick={naverHandler}
+              // onClick={naverHandler}
             />
 
             <img
               src="/images/user/google_small.png"
               alt="구글 로그인"
-              onClick={googleHandler}
+              // onClick={googleHandler}
             />
           </div>
         </div>
