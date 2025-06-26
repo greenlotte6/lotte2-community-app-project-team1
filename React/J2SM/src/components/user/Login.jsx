@@ -24,7 +24,6 @@ const Login = () => {
   // 네이버 로그인
   const naverHandler = (e) => {
     e.preventDefault();
-    // window.location.href = SOCIAL_NAVER;
     window.location.href = "https://api.j2sm.site/oauth2/authorization/naver";
   };
 
@@ -32,14 +31,12 @@ const Login = () => {
   const googleHandler = (e) => {
     e.preventDefault();
     window.location.href = "https://api.j2sm.site/oauth2/authorization/google";
-    //window.location.href = SOCIAL_GOOGLE;
   };
 
   // 카카오
   const kakaoHandler = (e) => {
     e.preventDefault();
     window.location.href = "https://api.j2sm.site/oauth2/authorization/kakao";
-    // window.location.href = SOCIAL_KAKAO;
   };
 
   const submitHandler = (e) => {
