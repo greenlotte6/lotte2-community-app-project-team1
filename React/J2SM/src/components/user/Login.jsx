@@ -21,7 +21,7 @@ const Login = () => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };
 
-  // 네이버
+  // 네이버 로그인
   const naverHandler = (e) => {
     e.preventDefault();
     window.location.href = SOCIAL_NAVER;
