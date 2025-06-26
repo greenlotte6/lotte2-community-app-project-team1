@@ -76,6 +76,7 @@ const DashboardPage = () => {
         console.log("소셜 인증됨 ", res.data);
         const data = res.data;
         console.log(res.data.uid);
+        console.log(res.data.nick);
 
         if (res.data.uid) {
           // context login 호출
