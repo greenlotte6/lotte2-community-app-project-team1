@@ -1,6 +1,34 @@
 {
   "rewrites": [
     {
+      "source": "/user/:path*",
+      "destination": "https://www.j2sm.site/user/:path*"
+    },
+    {
+      "source": "/article/:path*",
+      "destination": "https://www.j2sm.site/article/:path*"
+    },
+    {
+      "source": "/product/:path*",
+      "destination": "https://www.j2sm.site/product/:path*"
+    },
+    {
+      "source": "/qna/:path*",
+      "destination": "https://www.j2sm.site/qna/:path*"
+    },
+    {
+      "source": "/api/:path*",
+      "destination": "https://www.j2sm.site/api/:path*"
+    },
+    {
+      "source": "/version",
+      "destination": "https://www.j2sm.site/version"
+    },
+    {
+      "source": "/oauth2/:path*",
+      "destination": "https://www.j2sm.site/oauth2/:path*"
+    },
+    {
       "source": "/(.*)",
       "destination": "/"
     }
