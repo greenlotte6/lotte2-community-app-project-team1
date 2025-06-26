@@ -76,7 +76,7 @@ const DashboardPage = () => {
         console.log("소셜 인증됨 ", res.data);
         const data = res.data;
         console.log(res.data.uid);
-        console.log(res.data.nick);
+        console.log(res.data.name);
 
         if (res.data.uid) {
           // context login 호출
@@ -84,7 +84,7 @@ const DashboardPage = () => {
             res.data.uid,
             decodeURIComponent(res.data.department),
             decodeURIComponent(res.data.company),
-            res.data.nick,
+            res.data.name,
             res.data.membership
           );
 
