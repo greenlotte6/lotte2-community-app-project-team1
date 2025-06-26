@@ -22,7 +22,7 @@ const Temp = () => {
   }, []);
 
   const submitHandler = (e) => {
-    navigate("/user/register");
+    navigate("/register");
   };
 
   return (
