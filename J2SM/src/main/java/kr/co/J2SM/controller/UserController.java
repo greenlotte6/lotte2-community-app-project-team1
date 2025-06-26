@@ -45,7 +45,18 @@ public class UserController {
     public ResponseEntity login(@RequestBody UserDTO userDTO){
 
         log.info("login...1 : " + userDTO);
+
         try {
+            // 소셜 로그인할 때 (이건 추후에 수정 예정)
+
+            System.out.println("pass" +userDTO.getPass());
+            if(userDTO.getPass().length()>18){
+                String pass = userDTO.getPass();
+                User OauthUser = userService.findUserByUid(userDTO.getUid());
+                System.out.println("uid" +userDTO.getUid());
+                userDTO.setPass(OauthUser.getPass());
+            }
+
             // Security 인증 처리
             UsernamePasswordAuthenticationToken authToken
                     = new UsernamePasswordAuthenticationToken(userDTO.getUid(), userDTO.getPass());

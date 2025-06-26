@@ -324,4 +324,8 @@ public class UserService{
 
         return "실패";
     }
+
+    public User findUserByUid(String uid) {
+        return userRepository.findById(uid).get();
+    }
 }
