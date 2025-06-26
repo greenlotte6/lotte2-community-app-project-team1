@@ -22,14 +22,13 @@ const TopArea = () => {
 
   useEffect(() => {
     const fetchUser = async () => {
-      //  if (!username) return;
-      const data = await getInfo();
+      const data = await getInfo(); // ✅ 여기를 직접 호출
       setUser(data);
       console.log("📦 유저 데이터:", data);
     };
 
     fetchUser();
-  }, []);
+  }, [username]);
 
   const handleCheckIn = () => {
     setStatusMessage(`출근 완료 (${new Date().toLocaleTimeString()})`);
