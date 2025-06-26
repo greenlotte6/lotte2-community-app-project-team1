@@ -32,7 +32,7 @@ public class KakaoPayService {
         if ("localhost".equals(host) || "127.0.0.1".equals(host)) {
             redirectBaseUrl = "http://localhost:5173";
         } else {
-            redirectBaseUrl = "https://lotte2-community-app-project-team1-sandy.vercel.app";
+            redirectBaseUrl = "https://www.j2sm.site";
         }
 
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
