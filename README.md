@@ -107,3 +107,12 @@
     </tr>
   </tbody>
 </table>
+
+
+---
+
+## 🔗 관련 링크
+
+- 🔗 GitHub Repository: [lotte2-community-app-project-team1](https://github.com/greenlotte6/lotte2-community-app-project-team1)
+- 🎬 [시연 영상 보기]([https://www.youtube.com/watch?v=jYgzeDvy4DM](https://www.youtube.com/watch?v=WkWGYTKDvhs]))
+- 📘 Notion 문서 https://chhak0503.notion.site/21a7537e85eb80aeaf96ccca0071ffa8?source=copy_link
